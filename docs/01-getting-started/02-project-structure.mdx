@@ -1,0 +1,151 @@
+---
+title: Next.js 项目结构
+link_title: 项目结构
+description: Next.js项目中的文件夹和文件约定列表
+---
+
+本页概述了Next.js项目的文件和文件夹结构。
+它涵盖了`app`和`pages`目录下的顶级文件和文件夹、配置文件和路由约定。
+
+## 顶级文件
+
+| 文件                                                                                        | 描述                           |
+| ------------------------------------------------------------------------------------------- | ------------------------------ |
+| **Next.js**                                                                                 |                                |
+| [`next.config.js`](/docs/app/api-reference/next-config-js)                                  | Next.js的配置文件              |
+| [`middleware.ts`](/docs/app/building-your-application/routing/middleware)                   | Next.js请求中间件              |
+| [`instrumentation.ts`](/docs/app/building-your-application/optimizing/instrumentation)      | 开放遥测和插装                 |
+| [`.env`](/docs/app/building-your-application/configuring/environment-variables)             | 环境变量                       |
+| [`.env.local`](/docs/app/building-your-application/configuring/environment-variables)       | 局部环境变量                   |
+| [`.env.production`](/docs/app/building-your-application/configuring/environment-variables)  | 生产环境变量                   |
+| [`.env.development`](/docs/app/building-your-application/configuring/environment-variables) | 开发环境变量                   |
+| `.next-env.d.ts`                                                                            | TypeScript 为 Next.js 声明文件 |
+| **Ecosystem**                                                                               |                                |
+| [`package.json`](/docs/getting-started/installation#manual-installation)                    | 项目依赖项和脚本               |
+| `.gitignore`                                                                                | Git忽略的文件和文件夹          |
+| `tsconfig.json`                                                                             | TypeScript的配置文件           |
+| `jsconfig.json`                                                                             | JavaScript脚本的配置文件       |
+| [`.eslintrc.json`](/docs/app/building-your-application/configuring/eslint)                  | ESLint的配置文件               |
+
+## 顶级文件夹
+
+| 文件                                                                      | 描述                 |
+| ------------------------------------------------------------------------- | -------------------- |
+| [`app`](/docs/app/building-your-application/routing)                      | 应用路由器           |
+| [`pages`](/docs/pages/building-your-application/routing)                  | 页面的路由器         |
+| [`public`](/docs/getting-started/installation#the-public-folder-optional) | 要服务的静态资产     |
+| [`src`](/docs/app/building-your-application/configuring/src-directory)    | 可选应用程序源文件夹 |
+
+## `app` 路由规则
+
+### 路由文件
+
+| 文件                                                                            |                     | 描述           |
+| ------------------------------------------------------------------------------- | ------------------- | -------------- |
+| [`layout`](/docs/app/api-reference/file-conventions/layout)                     | `.js` `.jsx` `.tsx` | 布局           |
+| [`page`](/docs/app/api-reference/file-conventions/page)                         | `.js` `.jsx` `.tsx` | 页面           |
+| [`loading`](/docs/app/api-reference/file-conventions/loading)                   | `.js` `.jsx` `.tsx` | 加载 UI        |
+| [`not-found`](/docs/app/api-reference/file-conventions/not-found)               | `.js` `.jsx` `.tsx` | 未找到 UI      |
+| [`error`](/docs/app/api-reference/file-conventions/error)                       | `.js` `.jsx` `.tsx` | 错误 UI        |
+| [`global-error`](/docs/app/api-reference/file-conventions/error#global-errorjs) | `.js` `.jsx` `.tsx` | 全局错误 UI    |
+| [`route`](/docs/app/api-reference/file-conventions/route)                       | `.js` `.ts`         | API 端点       |
+| [`template`](/docs/app/api-reference/file-conventions/template)                 | `.js` `.jsx` `.tsx` | 重新渲染布局   |
+| [`default`](/docs/app/api-reference/file-conventions/default)                   | `.js` `.jsx` `.tsx` | 平行路由回退页 |
+
+### 嵌套路由
+
+| 文件                                                                         | 描述       |
+| ---------------------------------------------------------------------------- | ---------- |
+| [`folder`](/docs/app/building-your-application/routing#route-segments)       | 路由段     |
+| [`folder/folder`](/docs/app/building-your-application/routing#nested-routes) | 嵌套路由段 |
+
+### 动态路由
+
+| 文件                                                                                                      | 描述           |
+| --------------------------------------------------------------------------------------------------------- | -------------- |
+| [`[folder]`](/docs/app/building-your-application/routing/dynamic-routes#convention)                       | 动态路由段     |
+| [`[...folder]`](/docs/app/building-your-application/routing/dynamic-routes#catch-all-segments)            | 捕捉所有片段   |
+| [`[[...folder]]`](/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | 可选捕获所有段 |
+
+### 路由组和私有文件夹
+
+| 文件                                                                                | 描述                               |
+| ----------------------------------------------------------------------------------- | ---------------------------------- |
+| [`(folder)`](/docs/app/building-your-application/routing/route-groups#convention)   | 在不影响路由的情况下对路由进行分组 |
+| [`_folder`](/docs/app/building-your-application/routing/colocation#private-folders) | Opt文件夹和所有子段退出路由        |
+
+### 平行及拦截路由
+
+| 文件                                                                                           | 描述         |
+| ---------------------------------------------------------------------------------------------- | ------------ |
+| [`@folder`](/docs/app/building-your-application/routing/parallel-routes#convention)            | 命名槽       |
+| [`(.)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)      | 截距同水位线 |
+| [`(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)     | 截距上一层   |
+| [`(..)(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention) | 截距两层以上 |
+| [`(...)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)    | 从根截获     |
+
+### 元数据文件约定
+
+#### 应用程序图标
+
+| 文件                                                                                                            | 后缀                                | 描述               |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------ |
+| [`favicon`](/docs/app/api-reference/file-conventions/metadata/app-icons#favicon)                                | `.ico`                              | 收藏夹图标文件     |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#icon)                                      | `.ico` `.jpg` `.jpeg` `.png` `.svg` | 应用图标文件       |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx)       | `.js` `.ts` `.tsx`                  | 生成的应用图标     |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#apple-icon)                          | `.jpg` `.jpeg`, `.png`              | 苹果应用图标文件   |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`                  | 生成的苹果应用图标 |
+
+#### 打开图形和Twitter图像
+
+| 文件                                                                                                                        | 后缀                         | 描述             |
+| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ---------------- |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#opengraph-image)                      | `.jpg` `.jpeg` `.png` `.gif` | 开放图形图像文件 |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`           | 生成的开放图图像 |
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#twitter-image)                          | `.jpg` `.jpeg` `.png` `.gif` | 推特图片文件     |
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx)   | `.js` `.ts` `.tsx`           | 生成的推特图像   |
+
+#### SEO
+
+| 文件                                                                                        |             | 描述             |
+| ------------------------------------------------------------------------------------------- | ----------- | ---------------- |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#static-sitemapxml)    | `.xml`      | 站点地图文件     |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap)   | `.js` `.ts` | 生成网站地图     |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#static-robotstxt)       | `.txt`      | 机器人文件       |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file) | `.js` `.ts` | 生成的机器人文件 |
+
+## `pages` 路由规则
+
+### 特殊文件
+
+| 文件                                                                                                        |                     | 描述           |
+| ----------------------------------------------------------------------------------------------------------- | ------------------- | -------------- |
+| [`_app`](/docs/pages/building-your-application/routing/custom-app)                                          | `.js` `.jsx` `.tsx` | 自定义应用程序 |
+| [`_document`](/docs/pages/building-your-application/routing/custom-document)                                | `.js` `.jsx` `.tsx` | 自定义文档     |
+| [`_error`](/docs/pages/building-your-application/routing/custom-error#more-advanced-error-page-customizing) | `.js` `.jsx` `.tsx` | 自定义错误页面 |
+| [`404`](/docs/pages/building-your-application/routing/custom-error#404-page)                                | `.js` `.jsx` `.tsx` | 404 错误页面   |
+| [`500`](/docs/pages/building-your-application/routing/custom-error#500-page)                                | `.js` `.jsx` `.tsx` | 500 错误页面   |
+
+### 路由
+
+| 文件                                                                                           |                     | 描述     |
+| ---------------------------------------------------------------------------------------------- | ------------------- | -------- |
+| **文件夹公约**                                                                                 |                     |          |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 主页     |
+| [`folder/index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes) | `.js` `.jsx` `.tsx` | 嵌套页面 |
+| **文件公约**                                                                                   |                     |          |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 主页     |
+| [`file`](/docs/pages/building-your-application/routing/pages-and-layouts)                      | `.js` `.jsx` `.tsx` | 嵌套页面 |
+
+### 动态路由
+
+| 文件                                                                                                              |                     | 描述              |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------- | ----------------- |
+| **文件夹公约**                                                                                                    |                     |                   |
+| [`[folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes)                                  | `.js` `.jsx` `.tsx` | 动态路由段        |
+| [`[...folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)            | `.js` `.jsx` `.tsx` | 捕捉所有片段      |
+| [`[[...folder]]/index`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | `.js` `.jsx` `.tsx` | 可选 捕捉所有片段 |
+| **文件公约**                                                                                                      |                     |                   |
+| [`[file]`](/docs/pages/building-your-application/routing/dynamic-routes)                                          | `.js` `.jsx` `.tsx` | 动态路由段        |
+| [`[...file]`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)                    | `.js` `.jsx` `.tsx` | 捕捉所有片段      |
+| [`[[...file]]`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments)         | `.js` `.jsx` `.tsx` | 可选 捕捉所有片段 |
