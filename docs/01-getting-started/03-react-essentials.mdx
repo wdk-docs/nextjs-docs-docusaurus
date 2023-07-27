@@ -18,11 +18,11 @@ description: 概述构建Next.js应用程序(包括服务器组件)所需的基�
 
 ### 服务器组件的思考
 
-Similar to how React changed the way we think about building UIs, React Server Components introduce a new mental model for building hybrid applications that leverage the [server and the client](/docs/app/building-your-application/rendering#rendering-environments).
+与React改变了我们构建ui的方式类似，React服务器组件引入了一种新的心智模型，用于构建利用[服务器和客户端](/docs/app/building-your-application/rendering#rendering-environments)的混合应用程序。
 
-Instead of React rendering your whole application client-side (such as in the case of Single-Page Applications), React now gives you the flexibility to choose where to render your components based on their purpose.
+React不再呈现整个应用程序的客户端(比如单页应用程序)，而是让你可以根据组件的用途灵活地选择在哪里呈现组件。
 
-For example, consider a [page](/docs/app/building-your-application/routing/pages-and-layouts#pages) in your application:
+例如，在你的应用程序中考虑一个[页面](/docs/app/building-your-application/routing/pages-and-layouts#pages):
 
 <Image
   alt="Thinking in Server Components"
@@ -32,27 +32,38 @@ For example, consider a [page](/docs/app/building-your-application/routing/pages
   height="652"
 />
 
-If we were to split the page into smaller components, you'll notice that the majority of components are non-interactive and can be rendered on the server as Server Components. For smaller pieces of interactive UI, we can _sprinkle in_ Client Components. This aligns with Next.js server-first approach.
+如果我们将页面拆分为更小的组件，您将注意到大多数组件是非交互式的，并且可以作为服务器组件在服务器上呈现。
+对于 _较小_ 的交互式UI，我们可以使用客户端组件。
+这与Next.js服务器优先的方法是一致的。
 
 ### 为什么是服务器组件?
 
-So, you may be thinking, why Server Components? What are the advantages of using them over Client Components?
+因此，您可能会想，为什么要使用服务器组件?与客户端组件相比，使用它们的优势是什么?
 
-Server Components allow developers to better leverage server infrastructure. For example, you can move data fetching to the server, closer to your database, and keep large dependencies that previously would impact the client JavaScript bundle size on the server, leading to improved performance. Server Components make writing a React application feel similar to PHP or Ruby on Rails, but with the power and flexibility of React and the components model for templating UI.
+服务器组件允许开发人员更好地利用服务器基础设施。
+例如，您可以将数据获取移到离数据库更近的服务器上，并保留以前会影响服务器上客户端JavaScript包大小的大型依赖项，从而提高性能。
+服务器组件使编写React应用程序感觉类似于PHP或Ruby on Rails，但具有React的功能和灵活性以及用于模板UI的组件模型。
 
-With Server Components, the initial page load is faster, and the client-side JavaScript bundle size is reduced. The base client-side runtime is **cacheable** and **predictable** in size, and does _not_ increase as your application grows. Additional JavaScript is _only added_ as client-side interactivity is used in your application through [Client Components](#client-components).
+使用服务器组件，初始页面加载速度更快，并且减少了客户端JavaScript包的大小。
+基本客户端运行时的大小是 **可缓存的** 和 **可预测的**，并且不会随着应用程序的增长而增加。
+附加的JavaScript只在客户端交互通过[客户端组件](#client-components)在你的应用中使用时才会被添加。
 
-When a route is loaded with Next.js, the initial HTML is rendered on the server. This HTML is then **progressively enhanced** in the browser, allowing the client to take over the application and add interactivity, by asynchronously loading the Next.js and React client-side runtime.
+当用Next.js加载路由时，初始HTML就会在服务器端呈现。
+然后这个HTML在浏览器中被逐步增强，允许客户端通过异步加载Next.js和React客户端运行时来接管应用程序并添加交互性。
 
-To make the transition to Server Components easier, all components inside the [App Router](/docs/app/building-your-application/routing#the-app-router) are Server Components by default, including [special files](/docs/app/building-your-application/routing#file-conventions) and [colocated components](/docs/app/building-your-application/routing#colocation). This allows you to automatically adopt them with no extra work, and achieve great performance out of the box. You can also optionally opt-in to Client Components using the ['use client' directive](#the-use-client-directive).
+为了更容易过渡到服务器组件，默认情况下，[应用路由器](/docs/app/building-your-application/routing#the-app-router)中的所有组件都是服务器组件，包括[特殊文件](/docs/app/building-your-application/routing#file-conventions)和[colocation组件](/docs/app/building-your-application/routing#colocation)。
+这允许您自动采用它们，而不需要额外的工作，并获得开箱即用的出色性能。
+你也可以通过['use client' 指令](#the-use-client-directive)选择加入客户端组件。
 
 ## 客户端组件
 
-Client Components enable you to add client-side interactivity to your application. In Next.js, they are [pre-rendered](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering) on the server and [hydrated](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering) on the client. You can think of Client Components as how components in the [Pages Router](/docs/pages) have always worked.
+客户端组件使您能够向应用程序添加客户端交互性。
+在Next.js中，它们在服务器端是[预渲染](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering)，在客户端是[水合作用](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering)。
+你可以把客户端组件想象成[页面的路由器](/docs/pages)中的组件是如何工作的。
 
 ### "use client" 指令
 
-The [`"use client"` directive](https://github.com/reactjs/rfcs/pull/227) is a convention to declare a boundary between a Server and Client Component module graph.
+[`"use client"` 指令](https://github.com/reactjs/rfcs/pull/227)是一个约定，用于声明服务器和客户端组件模块图之间的边界。
 
 ```tsx filename="app/counter.tsx" highlight={1} switcher
 'use client'
@@ -96,44 +107,46 @@ export default function Counter() {
   height="1320"
 />
 
-`"use client"` _sits_ between server-only and client code. It's placed at the top of a file, above imports, to define the _cut-off_ point where it crosses the boundary from the server-only to the client part. Once `"use client"` is defined in a file, all other modules imported into it, including child components, are considered part of the client bundle.
+`"use client"` _位于_ 仅服务器代码和客户机代码之间。
+它被放置在文件的顶部，在导入的上方，以定义从仅服务器部分到客户机部分的边界的 _分界点_。
+一旦在文件中定义了`"use client"`， 导入其中的所有其他模块，包括子组件，都被视为客户端包的一部分。
 
-Since Server Components are the default, all components are part of the Server Component module graph unless defined or imported in a module that starts with the `"use client"` directive.
+由于服务器组件是默认的，所以所有组件都是服务器组件模块图的一部分，除非在以“use client”指令开头的模块中定义或导入。
 
 > **Good to know**:
 >
-> - Components in the Server Component module graph are guaranteed to be only rendered on the server.
-> - Components in the Client Component module graph are primarily rendered on the client, but with Next.js, they can also be pre-rendered on the server and hydrated on the client.
-> - The `"use client"` directive must be defined at the **top of a file** before any imports.
-> - `"use client"` does **not** need to be defined in every file. The Client module boundary only needs to be defined once, at the "entry point", for all modules imported into it to be considered a Client Component.
+> - 服务器组件模块图中的组件保证只在服务器上呈现。
+> - 客户端组件模块图中的组件主要在客户端上呈现，但是使用Next.js，它们也可以在服务器上预呈现，并在客户端上进行渲染。
+> - The `"use client"` 指令必须在导入之前定义在文件的 **顶部**。
+> - `"use client"`**不** 需要在每个文件中定义。 客户端模块边界只需要在“入口点”定义一次，所有导入的模块都可以被视为客户端组件。
 
 ## 何时使用服务器和客户端组件?
 
-To simplify the decision between Server and Client Components, we recommend using Server Components (default in the `app` directory) until you have a use case for a Client Component.
+为了简化服务器组件和客户端组件之间的选择，我们建议使用服务器组件(默认在“app”目录中)，直到你有了客户端组件的用例。
 
-This table summarizes the different use cases for Server and Client Components:
+下表总结了服务器和客户端组件的不同用例:
 
-| What do you need to do?                                                            | Server Component    | Client Component    |
-| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
-| Fetch data.                                                                        | <Check size={18} /> | <Cross size={18} /> |
-| Access backend resources (directly)                                                | <Check size={18} /> | <Cross size={18} /> |
-| Keep sensitive information on the server (access tokens, API keys, etc)            | <Check size={18} /> | <Cross size={18} /> |
-| Keep large dependencies on the server / Reduce client-side JavaScript              | <Check size={18} /> | <Cross size={18} /> |
-| Add interactivity and event listeners (`onClick()`, `onChange()`, etc)             | <Cross size={18} /> | <Check size={18} /> |
-| Use State and Lifecycle Effects (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
-| Use browser-only APIs                                                              | <Cross size={18} /> | <Check size={18} /> |
-| Use custom hooks that depend on state, effects, or browser-only APIs               | <Cross size={18} /> | <Check size={18} /> |
-| Use [React Class components](https://react.dev/reference/react/Component)          | <Cross size={18} /> | <Check size={18} /> |
+| 你需要做什么?                                                             | 服务器组件          | 客户端组件          |
+| ------------------------------------------------------------------------- | ------------------- | ------------------- |
+| 获取数据。                                                                | <Check size={18} /> | <Cross size={18} /> |
+| 访问后端资源(直接)                                                        | <Check size={18} /> | <Cross size={18} /> |
+| 将敏感信息保存在服务器上(访问令牌、API密钥等)                             | <Check size={18} /> | <Cross size={18} /> |
+| 保持对服务器的大量依赖/减少客户端JavaScript                               | <Check size={18} /> | <Cross size={18} /> |
+| 添加交互性和事件侦听器 (`onClick()`, `onChange()`, etc)                   | <Cross size={18} /> | <Check size={18} /> |
+| 使用状态和生命周期效果 (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
+| 使用仅针对浏览器的APIs                                                    | <Cross size={18} /> | <Check size={18} /> |
+| 使用依赖于状态、效果或仅浏览器APIs的自定义钩子                            | <Cross size={18} /> | <Check size={18} /> |
+| 使用[React类组件](https://react.dev/reference/react/Component)            | <Cross size={18} /> | <Check size={18} /> |
 
 ## 模式
 
 ### 将客户端组件移动到叶子
 
-To improve the performance of your application, we recommend moving Client Components to the leaves of your component tree where possible.
+为了提高应用程序的性能，我们建议尽可能将客户端组件移动到组件树的叶子位置。
 
-For example, you may have a Layout that has static elements (e.g. logo, links, etc) and an interactive search bar that uses state.
+例如，你可能有一个布局，它有静态元素(如logo，链接等)和一个使用状态的交互式搜索栏。
 
-Instead of making the whole layout a Client Component, move the interactive logic to a Client Component (e.g. `<SearchBar />`) and keep your layout as a Server Component. This means you don't have to send all the component Javascript of the layout to the client.
+不要把整个布局做成一个客户端组件，而是把交互逻辑移到一个客户端组件(例如:`<SearchBar />`)，并保持你的布局作为一个服务器组件。这意味着您不必将布局的所有Javascript组件发送到客户端。
 
 ```tsx filename="app/layout.tsx" switcher
 // SearchBar is a Client Component
@@ -177,25 +190,25 @@ export default function Layout({ children }) {
 
 ### 组合客户端和服务器组件
 
-Server and Client Components can be combined in the same component tree.
+服务器组件和客户端组件可以组合在同一个组件树中。
 
-Behind the scenes, React handles rendering as follows:
+在幕后，React处理渲染如下:
 
-- On the server, React renders **all** Server Components **before** sending the result to the client.
-  - This includes Server Components nested inside Client Components.
-  - Client Components encountered during this stage are skipped.
-- On the client, React renders Client Components and _slots in_ the rendered result of Server Components, merging the work done on the server and client.
-  - If any Server Components are nested inside a Client Component, their rendered content will be placed correctly within the Client Component.
+- 在服务器端，React在将结果发送到客户端之前渲染**所有**服务器组件。
+  - 这包括嵌套在客户端组件中的服务器组件。
+  - 跳过此阶段遇到的客户端组件。
+- 在客户端，React渲染客户端组件和服务器组件的渲染结果，合并服务器和客户端上完成的工作。
+  - 如果任何服务器组件嵌套在客户端组件中，它们呈现的内容将被正确地放置在客户端组件中。
 
-> **Good to know**: In Next.js, during the initial page load, both the rendered result of Server Components from the above step and Client Components are [pre-rendered on the server as HTML](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server) to produce a faster initial page load.
+> **Good to know**: 在Next.js中，在初始页面加载期间，上述步骤中服务器组件和客户端组件的渲染结果都[在服务器上预渲染为HTML](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server)，以产生更快的初始页面加载。
 
 ### 在客户端组件中嵌套服务器组件
 
-Given the rendering flow outlined above, there is a restriction around importing a Server Component into a Client Component, as this approach would require an additional server round trip.
+鉴于上面概述的呈现流，将服务器组件导入到客户端组件有一个限制，因为这种方法需要额外的服务器往返。
 
 #### 不支持的模式:将服务器组件导入客户端组件
 
-The following pattern is not supported. You cannot import a Server Component into a Client Component:
+不支持以下模式。你不能将服务器组件导入到客户端组件中:
 
 ```tsx filename="app/example-client-component.tsx" switcher highlight={5,18}
 'use client'
@@ -243,11 +256,11 @@ export default function ExampleClientComponent({ children }) {
 
 #### 推荐模式:将服务器组件作为道具传递给客户端组件
 
-Instead, when designing Client Components you can use React props to mark _"slots"_ for Server Components.
+相反，在设计客户端组件时，你可以使用React props为服务器组件标记 _“slots”_。
 
-The Server Component will be rendered on the server, and when the Client Component is rendered on the client, the _"slot"_ will be filled in with the rendered result of the Server Component.
+服务器组件将在服务器上呈现，当客户端组件在客户端上呈现时， _"slot"_ 将被服务器组件的呈现结果填充。
 
-A common pattern is to use the React `children` prop to create the _"slot"_. We can refactor `<ExampleClientComponent>` to accept a generic `children` prop and move the import and explicit nesting of `<ExampleClientComponent>` up to a parent component.
+一个常见的模式是使用React的`children`属性来创建 _"slot"_ 。我们可以重构`<ExampleClientComponent>`，让它接受一个通用的`children`属性，并把`<ExampleClientComponent>`的导入和显式嵌套移到父组件中。
 
 ```tsx filename="app/example-client-component.tsx" switcher highlight={6,16}
 'use client'
