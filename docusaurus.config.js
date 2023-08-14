@@ -7,12 +7,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Next.js 文档',
-  tagline: 'Dinosaurs are cool',
+  title: 'Web的React框架',
+  tagline:
+    '由一些世界上最大的公司使用，Next.js使您能够通过扩展最新的React功能来创建全栈Web应用程序，并集成强大的基于Rust的JavaScript工具，以实现最快的构建。',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://wdk-docs.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',

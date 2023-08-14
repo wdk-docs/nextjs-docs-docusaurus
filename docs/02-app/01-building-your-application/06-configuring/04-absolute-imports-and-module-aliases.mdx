@@ -1,20 +1,25 @@
 ---
-title: Absolute Imports and Module Path Aliases
-description: Configure module path aliases that allow you to remap certain import paths.
+title: 绝对导入和模块别名
+description: 配置模块路径别名，允许您重新映射某些导入路径。
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+# 绝对导入和模块路径别名
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 <details>
-  <summary>Examples</summary>
+  <summary>例子</summary>
 
-- [Absolute Imports and Aliases](https://github.com/vercel/next.js/tree/canary/examples/with-absolute-imports)
+- [绝对导入和别名](https://github.com/vercel/next.js/tree/canary/examples/with-absolute-imports)
 
 </details>
 
-Next.js has in-built support for the `"paths"` and `"baseUrl"` options of `tsconfig.json` and `jsconfig.json` files.
+Next.js内置了对`tsconfig.json`和`jsconfig.json`文件的`paths`和`baseUrl`选项的支持。
 
-These options allow you to alias project directories to absolute paths, making it easier to import modules. For example:
+这些选项允许您将项目目录别名为绝对路径，从而更容易导入模块。例如:
 
 ```tsx
 // before
@@ -24,13 +29,13 @@ import { Button } from '../../../components/button'
 import { Button } from '@/components/button'
 ```
 
-> **Good to know**: `create-next-app` will prompt to configure these options for you.
+> **注意事项**: `create-next-app` 将提示为您配置这些选项。
 
-## Absolute Imports
+## 绝对导入
 
-The `baseUrl` configuration option allows you to import directly from the root of the project.
+`baseUrl`配置选项允许您直接从项目的根目录导入。
 
-An example of this configuration:
+这个配置的一个例子:
 
 ```json filename="tsconfig.json or jsconfig.json"
 {
@@ -40,17 +45,29 @@ An example of this configuration:
 }
 ```
 
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
 ```tsx filename="components/button.tsx" switcher
 export default function Button() {
   return <button>Click me</button>
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="components/button.js" switcher
 export default function Button() {
   return <button>Click me</button>
 }
 ```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/page.tsx" switcher
 import Button from 'components/button'
@@ -65,6 +82,9 @@ export default function HomePage() {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/page.js" switcher
 import Button from 'components/button'
 
@@ -78,11 +98,14 @@ export default function HomePage() {
 }
 ```
 
-## Module Aliases
+</TabItem>
+</Tabs>
 
-In addition to configuring the `baseUrl` path, you can use the `"paths"` option to "alias" module paths.
+## 模块的别名
 
-For example, the following configuration maps `@/components/*` to `components/*`:
+除了配置`baseUrl`路径，你还可以使用`"paths"`选项来“别名”模块路径。
+
+例如，下面的配置将`@/components/*`映射到`components/*`:
 
 ```json filename="tsconfig.json or jsconfig.json"
 {
@@ -95,17 +118,29 @@ For example, the following configuration maps `@/components/*` to `components/*`
 }
 ```
 
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
 ```tsx filename="components/button.tsx" switcher
 export default function Button() {
   return <button>Click me</button>
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="components/button.js" switcher
 export default function Button() {
   return <button>Click me</button>
 }
 ```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/page.tsx" switcher
 import Button from '@/components/button'
@@ -120,6 +155,9 @@ export default function HomePage() {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/page.js" switcher
 import Button from '@/components/button'
 
@@ -133,7 +171,10 @@ export default function HomePage() {
 }
 ```
 
-Each of the `"paths"` are relative to the `baseUrl` location. For example:
+</TabItem>
+</Tabs>
+
+每个`"paths"`都相对于`baseUrl`位置。例如:
 
 ```json
 // tsconfig.json or jsconfig.json

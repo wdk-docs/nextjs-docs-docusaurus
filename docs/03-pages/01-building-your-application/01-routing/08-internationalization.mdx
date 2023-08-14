@@ -179,7 +179,10 @@ export async function middleware(req: NextRequest) {
     const locale = req.cookies.get('NEXT_LOCALE')?.value || 'en'
 
     return NextResponse.redirect(
-      new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
+      new URL(
+        `/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`,
+        req.url,
+      ),
     )
   }
 }
@@ -352,4 +355,4 @@ export async function getStaticProps({ locale }) {
 - `locales`: 100 total locales
 - `domains`: 100 total locale domain items
 
-> **Good to know**: These limits have been added initially to prevent potential [performance issues at build time](#dynamic-routes-and-getstaticprops-pages). You can workaround these limits with custom routing using [Middleware](/docs/pages/building-your-application/routing/middleware) in Next.js 12.
+> **注意事项**: These limits have been added initially to prevent potential [performance issues at build time](#dynamic-routes-and-getstaticprops-pages). You can workaround these limits with custom routing using [Middleware](/docs/pages/building-your-application/routing/middleware) in Next.js 12.

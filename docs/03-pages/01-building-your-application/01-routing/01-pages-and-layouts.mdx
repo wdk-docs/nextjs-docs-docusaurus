@@ -3,6 +3,9 @@ title: Pages and Layouts
 description: Create your first page and shared layout with the Pages Router.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 The Pages Router has a file-system based router built on the [concept of pages](/docs/pages/building-your-application/routing/pages-and-layouts).
 
 When a file is added to the `pages` directory, it's automatically available as a route.
@@ -111,7 +114,7 @@ When navigating between pages, we want to _persist_ page state (input values, sc
 
 This layout pattern enables state persistence because the React component tree is maintained between page transitions. With the component tree, React can understand which elements have changed to preserve state.
 
-> **Good to know**: This process is called [reconciliation](https://react.dev/learn/preserving-and-resetting-state), which is how React understands which elements have changed.
+> **注意事项**: This process is called [reconciliation](https://react.dev/learn/preserving-and-resetting-state), which is how React understands which elements have changed.
 
 ### With TypeScript
 

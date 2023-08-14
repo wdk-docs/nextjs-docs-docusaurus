@@ -29,7 +29,7 @@ Open `next.config.js` and add the following `exportPathMap` config:
 module.exports = {
   exportPathMap: async function (
     defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
+    { dev, dir, outDir, distDir, buildId },
   ) {
     return {
       '/': { page: '/' },
@@ -42,7 +42,7 @@ module.exports = {
 }
 ```
 
-> **Good to know**: the `query` field in `exportPathMap` cannot be used with [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) or [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props) as they are rendered to HTML files at build-time and additional query information cannot be provided during `next export`.
+> **注意事项**: the `query` field in `exportPathMap` cannot be used with [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) or [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props) as they are rendered to HTML files at build-time and additional query information cannot be provided during `next export`.
 
 The pages will then be exported as HTML files, for example, `/about` will become `/about.html`.
 

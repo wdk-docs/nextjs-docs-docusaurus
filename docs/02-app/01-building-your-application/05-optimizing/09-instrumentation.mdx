@@ -1,6 +1,6 @@
 ---
-title: Instrumentation
-description: Learn how to use instrumentation to run code at server startup in your Next.js app
+title: 插装
+description: 学习如何在Next.js应用程序的服务器启动时使用检测来运行代码
 ---
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
@@ -9,7 +9,7 @@ If you export a function named `register` from a `instrumentation.ts` (or `.js`)
 
 <AppOnly>
 
-> **Good to know**
+> **注意事项**
 >
 > - This feature is **experimental**. To use it, you must explicitly opt in by defining `experimental.instrumentationHook = true;` in your `next.config.js`.
 > - The `instrumentation` file should be in the root of your project and not inside the `app` or `pages` directory. If you're using the `src` folder, then place the file inside `src` alongside `pages` and `app`.
@@ -20,7 +20,7 @@ If you export a function named `register` from a `instrumentation.ts` (or `.js`)
 
 <PagesOnly>
 
-> **Good to know**
+> **注意事项**
 >
 > - This feature is **experimental**. To use it, you must explicitly opt in by defining `experimental.instrumentationHook = true;` in your `next.config.js`.
 > - The `instrumentation` file should be in the root of your project and not inside the `app` or `pages` directory. If you're using the `src` folder, then place the file inside `src` alongside `pages` and `app`.

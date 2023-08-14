@@ -3,6 +3,9 @@ title: getStaticProps
 description: Fetch data and generate static pages with `getStaticProps`. Learn more about this API for data fetching in Next.js.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 If you export a function called `getStaticProps` (Static Site Generation) from a page, Next.js will pre-render this page at build time using the props returned by `getStaticProps`.
 
 ```tsx filename="pages/index.tsx" switcher
@@ -189,7 +192,7 @@ One of the reasons for this restriction is that React needs to have all the requ
 
 Also, you must use export `getStaticProps` as a standalone function — it will **not** work if you add `getStaticProps` as a property of the page component.
 
-> **Good to know**: if you have created a [custom app](/docs/pages/building-your-application/routing/custom-app), ensure you are passing the `pageProps` to the page component as shown in the linked document, otherwise the props will be empty.
+> **注意事项**: if you have created a [custom app](/docs/pages/building-your-application/routing/custom-app), ensure you are passing the `pageProps` to the page component as shown in the linked document, otherwise the props will be empty.
 
 ## Runs on every request in development
 

@@ -1,5 +1,6 @@
 {
-    "[svg]": {
-        "editor.defaultFormatter": "redhat.vscode-xml"
-    }
+  "[svg]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "cSpell.words": ["agbonze", "Frontmatter", "rehype", "Vercel"]
 }

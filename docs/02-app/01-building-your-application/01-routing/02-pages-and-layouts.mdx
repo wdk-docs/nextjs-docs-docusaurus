@@ -1,17 +1,24 @@
 ---
 title: 页面和布局
-description: Create your first page and shared layout with the App Router.
+description: 用应用路由器创建你的第一个页面和共享布局。
 ---
 
-> We recommend reading the [Routing Fundamentals](/docs/app/building-your-application/routing) and [Defining Routes](/docs/app/building-your-application/routing/defining-routes) pages before continuing.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-The App Router inside Next.js 13 introduced new file conventions to easily create [pages](#pages), [shared layouts](#layouts), and [templates](#templates). This page will guide you through how to use these special files in your Next.js application.
+> 我们建议在继续之前先阅读[路由基础](/docs/app/building-your-application/routing)和[定义路由](/docs/app/building-your-application/routing/defining-routes)两页。
 
-## Pages
+Next.js 13中的应用路由器引入了新的文件约定，
+可以轻松创建[页面](#pages)、[共享布局](#layouts)和[模板](#templates)。
+本页将指导您如何在Next.js应用程序中使用这些特殊文件。
 
-A page is UI that is **unique** to a route. You can define pages by exporting a component from a `page.js` file. Use nested folders to [define a route](/docs/app/building-your-application/routing/defining-routes) and a `page.js` file to make the route publicly accessible.
+## 页面
 
-Create your first page by adding a `page.js` file inside the `app` directory:
+页面是对路由**唯一的**UI。
+你可以通过从`page.js`文件导出组件来定义页面。
+使用嵌套文件夹来[定义路由](/docs/app/building-your-application/routing/defining-routes)，并使用`page.js`文件使该路由可公开访问。
+
+通过在`app`目录下添加一个`page.js`文件来创建你的第一个页面:
 
 <Image
   alt="page.js special file"
@@ -49,19 +56,22 @@ export default function Page() {
 }
 ```
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - A page is always the [leaf](/docs/app/building-your-application/routing#terminology) of the [route subtree](/docs/app/building-your-application/routing#terminology).
-> - `.js`, `.jsx`, or `.tsx` file extensions can be used for Pages.
-> - A `page.js` file is required to make a route segment publicly accessible.
-> - Pages are [Server Components](/docs/getting-started/react-essentials) by default but can be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
-> - Pages can fetch data. View the [Data Fetching](/docs/app/building-your-application/data-fetching) section for more information.
+> - 页面总是[路由子树](/docs/app/building-your-application/routing#terminology)的[叶子](/docs/app/building-your-application/routing#terminology)。
+> - `.js`, `.jsx`, or `.tsx` 文件扩展名可用于Pages。
+> - `page.js` 文件需要使路由段可公开访问。
+> - 页面默认是[服务器组件](/docs/getting-started/react-essentials)，但可以设置为[客户端组件](/docs/getting-started/react-essentials#client-components)。
+> - 页面可以获取数据。查看[Data抓取](/docs/app/building-your-application/data-fetching)小节了解更多信息。
 
-## Layouts
+## 布局
 
-A layout is UI that is **shared** between multiple pages. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be [nested](#nesting-layouts).
+布局是在多个页面之间共享的UI。
+在导航上，布局保持状态，保持交互，不重新呈现。
+布局也可以[嵌套](#nesting-layouts)。
 
-You can define a layout by `default` exporting a React component from a `layout.js` file. The component should accept a `children` prop that will be populated with a child layout (if it exists) or a child page during rendering.
+你可以通过`default`从`layout.js`文件导出React组件来定义布局。
+组件应该接受一个`children`属性，它将在渲染过程中使用子布局(如果存在的话)或子页面填充。
 
 <Image
   alt="layout.js special file"
@@ -103,22 +113,22 @@ export default function DashboardLayout({
 }
 ```
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - The top-most layout is called the [Root Layout](#root-layout-required). This **required** layout is shared across all pages in an application. Root layouts must contain `html` and `body` tags.
-> - Any route segment can optionally define its own [Layout](#nesting-layouts). These layouts will be shared across all pages in that segment.
-> - Layouts in a route are **nested** by default. Each parent layout wraps child layouts below it using the React `children` prop.
-> - You can use [Route Groups](/docs/app/building-your-application/routing/route-groups) to opt specific route segments in and out of shared layouts.
-> - Layouts are [Server Components](/docs/getting-started/react-essentials) by default but can be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
-> - Layouts can fetch data. View the [Data Fetching](/docs/app/building-your-application/data-fetching) section for more information.
-> - Passing data between a parent layout and its children is not possible. However, you can fetch the same data in a route more than once, and React will [automatically dedupe the requests](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) without affecting performance.
-> - Layouts do not have access to the current route segment(s). To access route segments, you can use [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) or [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments) in a Client Component.
-> - `.js`, `.jsx`, or `.tsx` file extensions can be used for Layouts.
-> - A `layout.js` and `page.js` file can be defined in the same folder. The layout will wrap the page.
+> - 最上面的布局被称为[根布局](#root-layout-required)。这个**必需的**布局在应用程序的所有页面上共享。根布局必须包含`html`和`body`标签。
+> - 任何路由段都可以选择定义自己的[Layout](# nested -layouts)。这些布局将在该段的所有页面上共享。
+> - 默认情况下，路由中的布局是嵌套的。每个父布局使用React的“children”属性将子布局封装在它下面。
+> - 你可以使用[路由组](/docs/app/building-your-application/routing/route-groups)来选择共享布局中的特定路由段。
+> - 布局默认为[服务器组件](/docs/getting-started/react-essentials)，但可以设置为[客户端组件](/docs/getting-started/react-essentials#client-components)。
+> - 布局可以获取数据。查看[Data抓取](/docs/app/ build-your-application / Data -抓取)小节了解更多信息。
+> - 不能在父布局和子布局之间传递数据。然而，你可以在一个路由中多次获取相同的数据，React会[自动删除请求](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping)，而不会影响性能。
+> - 布局不能访问当前的路由段。要访问路由段，你可以在客户端组件中使用[`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment)或[`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)。
+> - `.js`, `.jsx`, or `.tsx` 文件扩展名可用于布局。
+> - A `layout.js` and `page.js` 文件可以在同一文件夹中定义。布局将包裹页面。
 
-### Root Layout (Required)
+### 根布局(必选)
 
-The root layout is defined at the top level of the `app` directory and applies to all routes. This layout enables you to modify the initial HTML returned from the server.
+根布局定义在`app`目录的顶层，适用于所有路由。这种布局使您能够修改从服务器返回的初始HTML。
 
 ```tsx filename="app/layout.tsx" switcher
 export default function RootLayout({
@@ -144,19 +154,19 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - The `app` directory **must** include a root layout.
-> - The root layout must define `<html>` and `<body>` tags since Next.js does not automatically create them.
-> - You can use the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata) to manage `<head>` HTML elements, for example, the `<title>` element.
-> - You can use [route groups](/docs/app/building-your-application/routing/route-groups) to create multiple root layouts. See an [example here](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts).
-> - The root layout is a [Server Component](/docs/getting-started/react-essentials) by default and **can not** be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
+> - `app`目录**必须**包含根目录。
+> - 根布局必须定义`<html>`和`<body>`标签，因为Next.js不会自动创建它们。
+> - 你可以使用[内置的SEO支持](/docs/app/building-your-application/optimizing/metadata)来管理`<head>` HTML元素，例如`<title>`元素。
+> - 你可以使用[route groups](/docs/app/building-your-application/routing/route-groups)来创建多个根布局。参见[示例](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)。
+> - 根布局默认为[服务器组件](/docs/getting-started/react-essentials)， **不能**设置为[客户端组件](/docs/getting-started/react-essentials#Client-components)。
 
-> **Migrating from the `pages` directory:** The root layout replaces the [`_app.js`](/docs/pages/building-your-application/routing/custom-app) and [`_document.js`](/docs/pages/building-your-application/routing/custom-document) files. [View the migration guide](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs).
+> \*\*根布局替换了[' \_app.js '](/docs/pages/building-your-application/routing/custom-app)和[`_document.js`](/docs/pages/building-your-application/routing/custom-document)文件。[查看迁移指南](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs)。
 
-### Nesting Layouts
+### 嵌套布局
 
-Layouts defined inside a folder (e.g. `app/dashboard/layout.js`) apply to specific route segments (e.g. `acme.com/dashboard`) and render when those segments are active. By default, layouts in the file hierarchy are **nested**, which means they wrap child layouts via their `children` prop.
+在文件夹内定义的布局(例如:`app/dashboard/layout.js`)应用于特定的路由段(例如:`acme.com/dashboard`)和渲染时，这些段是活跃的。默认情况下，文件层次结构中的布局是嵌套的，这意味着它们通过`children`属性包装子布局。
 
 <Image
   alt="Nested Layout"
@@ -182,13 +192,13 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - Only the root layout can contain `<html>` and `<body>` tags.
+> - 只有根布局可以包含`<html>`和`<body>`标签。
 
-If you were to combine the two layouts above, the root layout (`app/layout.js`) would wrap the dashboard layout (`app/dashboard/layout.js`), which would wrap route segments inside `app/dashboard/*`.
+如果你要把上面的两个布局结合起来，根布局(`app/layout.js`)会包裹仪表板布局(`app/dashboard/layout.js`)，它会包裹在`app/dashboard/*`里面的路由段。
 
-The two layouts would be nested as such:
+这两个布局将像这样嵌套:
 
 <Image
   alt="Nested Layouts"
@@ -198,21 +208,22 @@ The two layouts would be nested as such:
   height="1026"
 />
 
-You can use [Route Groups](/docs/app/building-your-application/routing/route-groups) to opt specific route segments in and out of shared layouts.
+你可以使用[路由组](/docs/app/building-your-application/routing/route-groups)来选择共享布局中的特定路由段。
 
-## Templates
+## 模板
 
-Templates are similar to layouts in that they wrap each child layout or page. Unlike layouts that persist across routes and maintain state, templates create a new instance for each of their children on navigation. This means that when a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is **not** preserved, and effects are re-synchronized.
+模板类似于布局，因为它们包装每个子布局或页面。与跨路由持久保存和维护状态的布局不同，模板在导航上为它们的每个子实例创建一个新实例。
+这意味着，当用户在共享一个模板的路由之间导航时，组件的新实例会被挂载，DOM元素会被重新创建，状态不会被保留，效果会被重新同步。
 
-There may be cases where you need those specific behaviors, and templates would be a more suitable option than layouts. For example:
+在某些情况下，您可能需要这些特定的行为，而模板将是比布局更合适的选择。例如:
 
-- Enter/exit animations using CSS or animation libraries.
-- Features that rely on `useEffect` (e.g logging page views) and `useState` (e.g a per-page feedback form).
-- To change the default framework behavior. For example, Suspense Boundaries inside layouts only show the fallback the first time the Layout is loaded and not when switching pages. For templates, the fallback is shown on each navigation.
+- 使用CSS或动画库进入/退出动画。
+- 依赖于“useEffect”(例如记录页面浏览量)和`useState`(例如每页反馈表单)的功能。
+- 更改默认的框架行为。例如，布局中的悬念边界仅在布局第一次加载时显示回退，而在切换页面时则不显示。对于模板，回退显示在每个导航栏上。
 
-> **Recommendation:** We recommend using Layouts unless you have a specific reason to use Template.
+> **建议:**我们建议使用布局，除非你有一个特定的理由使用模板。
 
-A template can be defined by exporting a default React component from a `template.js` file. The component should accept a `children` prop which will be nested segments.
+模板可以通过从`template.js`文件中导出一个默认的React组件来定义。组件应该接受一个“children”属性，它将被嵌套成段。
 
 <Image
   alt="template.js special file"
@@ -234,7 +245,7 @@ export default function Template({ children }) {
 }
 ```
 
-The rendered output of a route segment with a layout and a template will be as such:
+带有布局和模板的路由段的渲染输出如下所示:
 
 ```jsx filename="Output"
 <Layout>
@@ -243,11 +254,11 @@ The rendered output of a route segment with a layout and a template will be as s
 </Layout>
 ```
 
-## Modifying `<head>`
+## 修改 `<head>`
 
-In the `app` directory, you can modify the `<head>` HTML elements such as `title` and `meta` using the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata).
+在`app`目录中，你可以使用[内置的SEO支持](/docs/app/building-your-application/optimizing/metadata)修改`<head>` HTML元素，如`title`和`meta`。
 
-Metadata can be defined by exporting a [`metadata` object](/docs/app/api-reference/functions/generate-metadata#the-metadata-object) or [`generateMetadata` function](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) in a [`layout.js`](/docs/app/api-reference/file-conventions/layout) or [`page.js`](/docs/app/api-reference/file-conventions/page) file.
+元数据可以通过导出[`Metadata` object](/docs/app/api-reference/functions/generate-metadata#the-metadata-object)或[`generateMetadata` function](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)在[`layout.js`](/docs/app/api-reference/file-conventions/layout)或[`page.js`](/docs/app/api-reference/file-conventions/page)文件中定义。
 
 ```tsx filename="app/page.tsx" switcher
 import { Metadata } from 'next'
@@ -271,6 +282,6 @@ export default function Page() {
 }
 ```
 
-> **Good to know**: You should **not** manually add `<head>` tags such as `<title>` and `<meta>` to root layouts. Instead, you should use the [Metadata API](/docs/app/api-reference/functions/generate-metadata) which automatically handles advanced requirements such as streaming and de-duplicating `<head>` elements.
+> **注意事项:**: 你 **不应该** 手动添加`<head>`标签，如`<title>`和`<meta>`到根布局。相反，你应该使用[元数据API](/docs/app/API-reference/functions/generate-metadata)，它会自动处理高级需求，比如流式传输和重复删除`<head>`元素。
 
-[Learn more about available metadata options in the API reference.](/docs/app/api-reference/functions/generate-metadata)
+[在API参考中了解有关可用元数据选项的更多信息。](/docs/app/api-reference/functions/generate-metadata)

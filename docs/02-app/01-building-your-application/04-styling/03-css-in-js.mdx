@@ -1,7 +1,10 @@
 ---
 title: CSS-in-JS
-description: Use CSS-in-JS libraries with Next.js
+description: 在Next.js中使用CSS-in-JS库
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
@@ -26,7 +29,7 @@ The following are currently working on support:
 
 - [`emotion`](https://github.com/emotion-js/emotion/issues/2928)
 
-> **Good to know**: We're testing out different CSS-in-JS libraries and we'll be adding more examples for libraries that support React 18 features and/or the `app` directory.
+> **注意事项**: We're testing out different CSS-in-JS libraries and we'll be adding more examples for libraries that support React 18 features and/or the `app` directory.
 
 If you want to style Server Components, we recommend using [CSS Modules](/docs/app/building-your-application/styling/css-modules) or other solutions that output CSS files, like PostCSS or [Tailwind CSS](/docs/app/building-your-application/styling/tailwind-css).
 
@@ -228,7 +231,7 @@ export default function RootLayout({ children }) {
 
 [View an example here](https://github.com/vercel/app-playground/tree/main/app/styling/styled-components).
 
-> **Good to know**:
+> **注意事项**:
 >
 > - During server rendering, styles will be extracted to a global registry and flushed to the `<head>` of your HTML. This ensures the style rules are placed before any content that might use them. In the future, we may use an upcoming React feature to determine where to inject the styles.
 > - During streaming, styles from each chunk will be collected and appended to existing styles. After client-side hydration is complete, `styled-components` will take over as usual and inject any further dynamic styles.

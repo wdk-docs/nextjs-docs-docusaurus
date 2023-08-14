@@ -1,6 +1,6 @@
 ---
 title: 路由处理程序
-description: Create custom request handlers for a given route using the Web's Request and Response APIs.
+description: 使用Web的请求和响应api为给定的路由创建自定义请求处理程序。
 related:
   title: API Reference
   description: Learn more about the route.js file.
@@ -8,7 +8,7 @@ related:
     - app/api-reference/file-conventions/route
 ---
 
-Route Handlers allow you to create custom request handlers for a given route using the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) APIs.
+路由处理程序允许您使用Web [request](https://developer.mozilla.org/en-US/docs/Web/API/Request)和[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) api为给定的路由创建自定义请求处理程序。
 
 <Image
   alt="Route.js Special File"
@@ -18,11 +18,13 @@ Route Handlers allow you to create custom request handlers for a given route usi
   height="444"
 />
 
-> **Good to know**: Route Handlers are only available inside the `app` directory. They are the equivalent of [API Routes](/docs/pages/building-your-application/routing/api-routes) inside the `pages` directory meaning you **do not** need to use API Routes and Route Handlers together.
+> **注意事项**:
+> 路由处理程序只能在`app`目录下使用。
+> 它们相当于`pages`目录下的[API路由](/docs/pages/building-your-application/routing/api-routes)，这意味着你**不需要**同时使用API路由和路由处理程序。
 
-## Convention
+## 公约
 
-Route Handlers are defined in a [`route.js|ts` file](/docs/app/api-reference/file-conventions/route) inside the `app` directory:
+路由处理程序定义在`app`目录下的[`route.js|ts` 文件](/docs/app/api-reference/file-conventions/route)中:
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {}
@@ -32,22 +34,24 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-Route Handlers can be nested inside the `app` directory, similar to `page.js` and `layout.js`. But there **cannot** be a `route.js` file at the same route segment level as `page.js`.
+路由处理程序可以嵌套在`app`目录中，类似于“page.js”和“layout.js”。
+但是不可能有一个' route.js '文件与' page.js '在同一路由段级别。
 
-### Supported HTTP Methods
+### 支持的HTTP方法
 
-The following [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, and `OPTIONS`. If an unsupported method is called, Next.js will return a `405 Method Not Allowed` response.
+支持如下[HTTP方法](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods): `GET`， `POST`， `PUT`， `PATCH`， `DELETE`， `HEAD`和`OPTIONS`。
+如果调用了不支持的方法，Next.js将返回一个`405 method Not Allowed`响应。
 
-### Extended `NextRequest` and `NextResponse` APIs
+### 扩展了`NextRequest`和`NextResponse` api
 
 In addition to supporting native [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response). Next.js extends them with
 [`NextRequest`](/docs/app/api-reference/functions/next-request) and [`NextResponse`](/docs/app/api-reference/functions/next-response) to provide convenient helpers for advanced use cases.
 
-## Behavior
+## 行为
 
-### Static Route Handlers
+### 静态路由处理程序
 
-Route Handlers are [statically evaluated](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching) by default when using the `GET` method with the `Response` object.
+当对`Response`对象使用`GET`方法时，路由处理程序默认是[静态计算](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching)。
 
 ```ts filename="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
@@ -83,7 +87,7 @@ export async function GET() {
 
 > **TypeScript Warning:** Although `Response.json()` is valid, native TypeScript types currently shows an error, you can use [`NextResponse.json()`](/docs/app/api-reference/functions/next-response#json) for typed responses instead.
 
-### Dynamic Route Handlers
+### 动态路由处理程序
 
 Route handlers are evaluated dynamically when:
 
@@ -170,9 +174,9 @@ export async function POST() {
 }
 ```
 
-> **Good to know**: Previously, API Routes could have been used for use cases like handling form submissions. Route Handlers are likely not the solution for these use cases. We will be recommending the use of [mutations](/docs/app/building-your-application/data-fetching/server-actions) for this when ready.
+> **注意事项**: Previously, API Routes could have been used for use cases like handling form submissions. Route Handlers are likely not the solution for these use cases. We will be recommending the use of [mutations](/docs/app/building-your-application/data-fetching/server-actions) for this when ready.
 
-### Route Resolution
+### 路由决议
 
 You can consider a `route` the lowest level routing primitive.
 
@@ -197,11 +201,11 @@ export default function Page() {
 export async function POST(request) {}
 ```
 
-## Examples
+## 例子
 
 The following examples show how to combine Route Handlers with other Next.js APIs and features.
 
-### Revalidating Static Data
+### 重新验证静态数据
 
 You can [revalidate static data](/docs/app/building-your-application/data-fetching/revalidating) fetches using the [`next.revalidate`](/docs/app/building-your-application/data-fetching/fetching#revalidating-data) option:
 
@@ -237,11 +241,11 @@ Alternatively, you can use the [`revalidate` segment config option](/docs/app/ap
 export const revalidate = 60
 ```
 
-### Dynamic Functions
+### 动态功能
 
 Route Handlers can be used with dynamic functions from Next.js, like [`cookies`](/docs/app/api-reference/functions/cookies) and [`headers`](/docs/app/api-reference/functions/headers).
 
-#### Cookies
+#### 饼干
 
 You can read cookies with [`cookies`](/docs/app/api-reference/functions/cookies) from `next/headers`. This server function can be called directly in a Route Handler, or nested inside of another function.
 
@@ -291,7 +295,7 @@ export async function GET(request) {
 }
 ```
 
-#### Headers
+#### 头
 
 You can read headers with [`headers`](/docs/app/api-reference/functions/headers) from `next/headers`. This server function can be called directly in a Route Handler, or nested inside of another function.
 
@@ -341,7 +345,7 @@ export async function GET(request) {
 }
 ```
 
-### Redirects
+### 重定向
 
 ```ts filename="app/api/route.ts" switcher
 import { redirect } from 'next/navigation'
@@ -359,7 +363,7 @@ export async function GET(request) {
 }
 ```
 
-### Dynamic Route Segments
+### 动态路由段
 
 > We recommend reading the [Defining Routes](/docs/app/building-your-application/routing/defining-routes) page before continuing.
 
@@ -386,7 +390,7 @@ export async function GET(request, { params }) {
 | `app/items/[slug]/route.js` | `/items/b`  | `{ slug: 'b' }` |
 | `app/items/[slug]/route.js` | `/items/c`  | `{ slug: 'c' }` |
 
-### Streaming
+### 流媒体
 
 Streaming is commonly used in combination with Large Language Models (LLMs), such an OpenAI, for AI-generated content. Learn more about the [AI SDK](https://sdk.vercel.ai/docs).
 
@@ -544,7 +548,7 @@ export async function POST(request) {
 }
 ```
 
-### Request Body FormData
+### 请求主体FormData
 
 You can read the `FormData` using the the `request.formData()` function:
 
@@ -596,19 +600,20 @@ export async function GET(request) {
 }
 ```
 
-### Edge and Node.js Runtimes
+### Edge和Node.js运行时
 
-Route Handlers have an isomorphic Web API to support both Edge and Node.js runtimes seamlessly, including support for streaming. Since Route Handlers use the same [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config) as Pages and Layouts, they support long-awaited features like general-purpose [statically regenerated](/docs/app/building-your-application/data-fetching/revalidating) Route Handlers.
+路由处理程序有一个同构的Web API来无缝地支持Edge和Node.js运行时，包括对流的支持。
+由于路由处理程序使用与Pages和Layouts相同的[路由段配置](/docs/app/api-reference/file-conventions/route-segment-config)，它们支持人们期待已久的特性，比如通用的[静态再生](/docs/app/building-your-application/data-fetching/revalidating)路由处理程序。
 
-You can use the `runtime` segment config option to specify the runtime:
+你可以使用`runtime`段配置选项来指定运行时:
 
 ```ts
 export const runtime = 'edge' // 'nodejs' is the default
 ```
 
-### Non-UI Responses
+### 非ui的反应
 
-You can use Route Handlers to return non-UI content. Note that [`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), and [open graph images](/docs/app/api-reference/file-conventions/metadata/opengraph-image) all have built-in support.
+你可以使用路由处理程序返回非ui内容。请注意,[`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), 和[开放图形图像](/docs/app/api-reference/file-conventions/metadata/opengraph-image)都有内置支持.
 
 ```ts filename="app/rss.xml/route.ts" switcher
 export async function GET() {
@@ -640,9 +645,9 @@ export async function GET() {
 }
 ```
 
-### Segment Config Options
+### 段配置选项
 
-Route Handlers use the same [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config) as pages and layouts.
+路由处理程序使用相同的[路由段配置](/docs/app/api-reference/file-conventions/route-segment-config)作为页面和布局。
 
 ```ts filename="app/items/route.ts" switcher
 export const dynamic = 'auto'
@@ -662,4 +667,4 @@ export const runtime = 'nodejs'
 export const preferredRegion = 'auto'
 ```
 
-See the [API reference](/docs/app/api-reference/file-conventions/route-segment-config) for more details.
+查看[API参考](/docs/app/api-reference/file-conventions/route-segment-config)了解更多细节。

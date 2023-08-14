@@ -7,6 +7,9 @@ related:
     - app/building-your-application/routing/error-handling
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 An **error** file defines an error UI boundary for a route segment.
 
 It is useful for catching **unexpected** errors that occur in Server Components and Client Components and displaying a fallback UI.
@@ -94,7 +97,7 @@ A function to reset the error boundary. When executed, the function will try to 
 
 Can be used to prompt the user to attempt to recover from the error.
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `error.js` boundaries must be **[Client Components](/docs/getting-started/react-essentials)**.
 > - In Production builds, errors forwarded from Server Components will be stripped of specific error details to avoid leaking sensitive information.
@@ -142,7 +145,7 @@ export default function GlobalError({ error, reset }) {
 }
 ```
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `global-error.js` replaces the root `layout.js` when active and so **must** define its own `<html>` and `<body>` tags.
 > - While designing error UI, you may find it helpful to use the [React Developer Tools](https://react.dev/learn/react-developer-tools) to manually toggle Error boundaries.

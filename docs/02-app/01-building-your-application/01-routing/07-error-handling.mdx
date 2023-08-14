@@ -1,19 +1,22 @@
 ---
 title: 错误处理
-description: Handle runtime errors by automatically wrapping route segments and their nested children in a React Error Boundary.
+description: 通过在React错误边界中自动包装路由段及其嵌套子段来处理运行时错误。
 related:
   links:
     - app/api-reference/file-conventions/error
 ---
 
-The `error.js` file convention allows you to gracefully handle unexpected runtime errors in [nested routes](/docs/app/building-your-application/routing#nested-routes).
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-- Automatically wrap a route segment and its nested children in a [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary).
-- Create error UI tailored to specific segments using the file-system hierarchy to adjust granularity.
-- Isolate errors to affected segments while keeping the rest of the application functional.
-- Add functionality to attempt to recover from an error without a full page reload.
+`error.js`文件约定允许你优雅地处理[嵌套路由](/docs/app/building-your-application/routing#nested-routes)中意外的运行时错误。
 
-Create error UI by adding an `error.js` file inside a route segment and exporting a React component:
+- 自动将路由段和它的嵌套子段封装在[React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)中。
+- 使用文件系统层次结构来调整粒度，创建适合特定段的错误UI。
+- 将错误隔离到受影响的段，同时保持应用程序的其余部分正常运行。
+- 添加尝试从错误中恢复而不重新加载整个页面的功能。
+
+通过在路由段中添加一个`error.js`文件并导出一个React组件来创建错误UI:
 
 <Image
   alt="error.js special file"
@@ -83,7 +86,7 @@ export default function Error({ error, reset }) {
 }
 ```
 
-### How `error.js` Works
+### `error.js`是如何工作的
 
 <Image
   alt="How error.js works"
@@ -98,7 +101,7 @@ export default function Error({ error, reset }) {
 - If an error is thrown within the error boundary, the error is **contained**, and the fallback component is **rendered**.
 - When the fallback error component is active, layouts **above** the error boundary **maintain** their state and **remain** interactive, and the error component can display functionality to recover from the error.
 
-### Recovering From Errors
+### 从错误中恢复
 
 The cause of an error can sometimes be temporary. In these cases, simply trying again might resolve the issue.
 
@@ -136,7 +139,7 @@ export default function Error({ error, reset }) {
 }
 ```
 
-### Nested Routes
+### 嵌套的路由
 
 React components created through [special files](/docs/app/building-your-application/routing#file-conventions) are rendered in a [specific nested hierarchy](/docs/app/building-your-application/routing#component-hierarchy).
 
@@ -155,7 +158,7 @@ The nested component hierarchy has implications for the behavior of `error.js` f
 - Errors bubble up to the nearest parent error boundary. This means an `error.js` file will handle errors for all its nested child segments. More or less granular error UI can be achieved by placing `error.js` files at different levels in the nested folders of a route.
 - An `error.js` boundary will **not** handle errors thrown in a `layout.js` component in the **same** segment because the error boundary is nested **inside** that layouts component.
 
-### Handling Errors in Layouts
+### 处理布局错误
 
 `error.js` boundaries do **not** catch errors thrown in `layout.js` or `template.js` components of the **same segment**. This [intentional hierarchy](#nested-routes) keeps important UI that is shared between sibling routes (such as navigation) visible and functional when an error occurs.
 
@@ -163,7 +166,7 @@ To handle errors within a specific layout or template, place an `error.js` file 
 
 To handle errors within the root layout or template, use a variation of `error.js` called `global-error.js`.
 
-### Handling Errors in Root Layouts
+### 处理根布局中的错误
 
 The root `app/error.js` boundary does **not** catch errors thrown in the root `app/layout.js` or `app/template.js` component.
 
@@ -211,11 +214,11 @@ export default function GlobalError({ error, reset }) {
 }
 ```
 
-### Handling Server Errors
+### 处理服务器错误
 
 If an error is thrown inside a Server Component, Next.js will forward an `Error` object (stripped of sensitive error information in production) to the nearest `error.js` file as the `error` prop.
 
-#### Securing Sensitive Error Information
+#### 保护敏感错误信息
 
 During production, the `Error` object forwarded to the client only includes a generic `message` and `digest` property.
 

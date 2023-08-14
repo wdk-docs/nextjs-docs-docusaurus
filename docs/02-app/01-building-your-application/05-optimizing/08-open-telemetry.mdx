@@ -1,11 +1,11 @@
 ---
 title: OpenTelemetry
-description: Learn how to instrument your Next.js app with OpenTelemetry.
+description: 学习如何使用OpenTelemetry检测Next.js应用程序。
 ---
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-> **Good to know**: This feature is **experimental**, you need to explicitly opt-in by providing `experimental.instrumentationHook = true;` in your `next.config.js`.
+> **注意事项**: This feature is **experimental**, you need to explicitly opt-in by providing `experimental.instrumentationHook = true;` in your `next.config.js`.
 
 Observability is crucial for understanding and optimizing the behavior and performance of your Next.js app.
 
@@ -20,7 +20,7 @@ This documentation uses terms like _Span_, _Trace_ or _Exporter_ throughout this
 Next.js supports OpenTelemetry instrumentation out of the box, which means that we already instrumented Next.js itself.
 When you enable OpenTelemetry we will automatically wrap all your code like `getStaticProps` in _spans_ with helpful attributes.
 
-> **Good to know**: We currently support OpenTelemetry bindings only in serverless functions.
+> **注意事项**: We currently support OpenTelemetry bindings only in serverless functions.
 > We don't provide any for `edge` or client side code.
 
 ## Getting Started
@@ -67,7 +67,7 @@ export function register() {
 
 <AppOnly>
 
-> **Good to know**
+> **注意事项**
 >
 > - The `instrumentation` file should be in the root of your project and not inside the `app` or `pages` directory. If you're using the `src` folder, then place the file inside `src` alongside `pages` and `app`.
 > - If you use the [`pageExtensions` config option](/docs/app/api-reference/next-config-js/pageExtensions) to add a suffix, you will also need to update the `instrumentation` filename to match.
@@ -77,7 +77,7 @@ export function register() {
 
 <PagesOnly>
 
-> **Good to know**
+> **注意事项**
 >
 > - The `instrumentation` file should be in the root of your project and not inside the `app` or `pages` directory. If you're using the `src` folder, then place the file inside `src` alongside `pages` and `app`.
 > - If you use the [`pageExtensions` config option](/docs/pages/api-reference/next-config-js/pageExtensions) to add a suffix, you will also need to update the `instrumentation` filename to match.

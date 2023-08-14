@@ -3,6 +3,9 @@ title: headers
 description: API reference for the headers function.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 The `headers` function allows you to read the HTTP incoming request headers from a [Server Component](/docs/getting-started/react-essentials).
 
 ## `headers()`
@@ -31,7 +34,7 @@ export default function Page() {
 }
 ```
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `headers()` is a **[Dynamic Function](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)** whose returned values cannot be known ahead of time. Using it in a layout or page will opt a route into **[dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering)** at request time.
 

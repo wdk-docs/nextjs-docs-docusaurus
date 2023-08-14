@@ -1,22 +1,27 @@
 ---
 title: 链接和导航
-description: Learn how navigation works in Next.js, and how to use the Link Component and `useRouter` hook.
+description: 学习导航在Next.js中是如何工作的，以及如何使用连接组件和`useRouter`钩子。
 ---
 
-The Next.js router uses [server-centric routing](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation) with [client-side navigation](#how-navigation-works). It supports [instant loading states](/docs/app/building-your-application/routing/loading-ui-and-streaming) and [concurrent rendering](https://react.dev/reference/react/startTransition). This means navigation maintains client-side state, avoids expensive re-renders, is interruptible, and doesn't cause race conditions.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-There are two ways to navigate between routes:
+Next.js路由器使用[以服务器为中心的路由](/docs/app/build -your-application/routing#server-centric-routing-with-client-side-navigation)和[客户端导航](#how-navigation-works)。
+它支持[即时加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming)和[并发渲染](https://react.dev/reference/react/startTransition)。
+这意味着导航维护客户端状态，避免昂贵的重新呈现，是可中断的，并且不会导致竞争条件。
 
-- [`<Link>` Component](#link-component)
-- [`useRouter` Hook](#userouter-hook)
+有两种方法可以在路由之间导航:
 
-This page will go through how to use `<Link>`, `useRouter()`, and dive deeper into how navigation works.
+- [`<Link>` 组件](#link-component)
+- [`useRouter` 钩子](#userouter-hook)
 
-## `<Link>` Component
+本页面将介绍如何使用`<Link>`， `useRouter()`，并深入了解导航的工作原理。
 
-`<Link>` is a React component that extends the HTML `<a>` element to provide [prefetching](#prefetching) and client-side navigation between routes. It is the primary way to navigate between routes in Next.js.
+## `<Link>` 组件
 
-To use `<Link>`, import it from `next/link`, and pass a `href` prop to the component:
+`<Link>`是一个React组件，它扩展了HTML `<a>`元素，以提供[预取](#prefetching)和路由之间的客户端导航。这是Next.js中导航路由的主要方式。
+
+要使用`<Link>`，请从`next/link`中导入它，并将'`href` prop传递给组件:
 
 ```tsx filename="app/page.tsx" switcher
 import Link from 'next/link'
@@ -34,13 +39,13 @@ export default function Page() {
 }
 ```
 
-There are optional props you can pass to `<Link>`. See the [API reference](/docs/app/api-reference/components/link) for more information.
+有一些可选的属性你可以传递给`<Link>`。查看[API参考](/docs/app/api-reference/components/link)了解更多信息。
 
-## Examples
+## 例子
 
-### Linking to Dynamic Segments
+### 链接到动态段
 
-When linking to [dynamic segments](/docs/app/building-your-application/routing/dynamic-routes), you can use [template literals and interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) to generate a list of links. For example, to generate a list of blog posts:
+当链接到[动态段](/docs/app/building-your-application/routing/dynamic-routes)时，你可以使用[模板字面量和插值](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)来生成一个链接列表。例如，要生成一个博客文章列表:
 
 ```jsx filename="app/blog/PostList.js"
 import Link from 'next/link'
@@ -58,9 +63,9 @@ export default function PostList({ posts }) {
 }
 ```
 
-### Checking Active Links
+### 检查活动链路
 
-You can use [`usePathname()`](/docs/app/api-reference/functions/use-pathname) to determine if a link is active. For example, to add a class to the active link, you can check if the current `pathname` matches the `href` of the link:
+你可以使用[`usePathname()`](/docs/app/api-reference/functions/use-pathname)来确定链接是否处于活动状态。例如，要向活动链接添加一个类，你可以检查当前的`pathname`是否与链接的`href`匹配:
 
 ```jsx filename="app/ui/Navigation.js"
 'use client'
@@ -91,15 +96,15 @@ export function Navigation({ navLinks }) {
 }
 ```
 
-### Scrolling to an `id`
+### 滚动到 `id`
 
-The default behavior of `<Link>` is to [scroll to the top of the route segment that has changed](#focus-and-scroll-management). When there is an `id` defined in `href`, it will scroll to the specific `id`, similarly to a normal `<a>` tag.
+`<Link>`的默认行为是[滚动到已经更改的路由段的顶部](#focus-and-scroll-management)。当`href`中定义了`id`时，它将滚动到特定的`id`，类似于普通的`<a>`标签。
 
-## `useRouter()` Hook
+## `useRouter()` 钩
 
-The `useRouter` hook allows you to programmatically change routes inside [Client Components](/docs/getting-started/react-essentials).
+`useRouter`钩子允许你在[客户端组件](/docs/getting-started/react-essentials)中以编程方式更改路由。
 
-To use `useRouter`, import it from `next/navigation`, and call the hook inside your Client Component:
+要使用`useRouter`，需要从`next/navigation`中导入它，并在客户端组件中调用该钩子:
 
 ```jsx filename="app/page.js"
 'use client'
@@ -117,70 +122,72 @@ export default function Page() {
 }
 ```
 
-The `useRouter` provides methods such as `push()`, `refresh()`, and more. See the [API reference](/docs/app/api-reference/functions/use-router) for more information.
+useRouter提供了`push()`, `refresh()`等方法。查看[API参考](/docs/app/api-reference/functions/use-router)了解更多信息。
 
-> **Recommendation:** Use the `<Link>` component to navigate between routes unless you have a specific requirement for using `useRouter`.
+> **建议:** 使用`<Link>`组件在路由之间导航，除非你特别需要使用`useRouter`。
 
-## How Navigation Works
+## 导航是如何工作的
 
-- A route transition is initiated using `<Link>` or calling `router.push()`.
-- The router updates the URL in the browser's address bar.
-- The router avoids unnecessary work by re-using segments that haven't changed (e.g. shared layouts) from the [client-side cache](#client-side-caching-of-rendered-server-components). This is also referred to as [partial rendering](/docs/app/building-your-application/routing#partial-rendering).
-- If the [conditions of soft navigation](#conditions-for-soft-navigation) are met, the router fetches the new segment from the cache rather than the server. If not, the router performs a [hard navigation](#hard-navigation) and fetches the Server Component payload from the server.
-- If created, [loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) is shown from the server while the payload is being fetched.
-- The router uses the cached or fresh payload to render the new segments on the client.
+- 使用`<Link>`或调用`router.push()`启动路由转换。
+- 路由器会在浏览器的地址栏中更新URL。
+- 路由器通过从[客户端缓存](#client-side-caching-of-rendered-server-components)中重用未更改的段(例如共享布局)来避免不必要的工作。这也被称为[局部渲染](/docs/app/building-your-application/routing#partial-rendering)。
+- 如果满足[软导航条件](#conditions-for-soft-navigation)，路由器会从缓存而不是服务器中获取新的段。如果没有，路由器就会执行[硬导航](#hard-navigation)，从服务器中获取服务器组件的有效负载。
+- 如果被创建，[加载 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)会在获取负载时从服务器显示。
+- 路由器使用缓存的或新的负载在客户端上呈现新的段。
 
-### Client-side Caching of Rendered Server Components
+### 渲染服务器组件的客户端缓存
 
-> **Good to know**: This client-side cache is different from the server-side [Next.js HTTP cache](/docs/app/building-your-application/data-fetching#caching-data).
+> **注意事项:**: 客户端缓存不同于服务器端[Next.js HTTP缓存](/docs/app/building-your-application/data-fetching#caching-data).
 
-The new router has an **in-memory client-side cache** that stores the **rendered result** of Server Components (payload). The cache is split by route segments which allows invalidation at any level and ensures consistency across concurrent renders.
+新的路由器有一个内存中的客户端缓存，用来存储服务器组件(payload)的渲染结果。缓存按路由段分割，允许在任何级别失效，并确保并发渲染的一致性。
 
-As users navigate around the app, the router will store the payload of previously fetched segments **and** [prefetched](#prefetching) segments in the cache.
+当用户在应用程序中导航时，路由器会在缓存中存储先前获取的段**和**[预取](#prefetch)段的有效载荷。
 
-This means, for certain cases, the router can re-use the cache instead of making a new request to the server. This improves performance by avoiding re-fetching data and re-rendering components unnecessarily.
+这意味着，在某些情况下，路由器可以重用缓存，而不是向服务器发出新的请求。这避免了不必要地重新获取数据和重新呈现组件，从而提高了性能。
 
-### Invalidating the Cache
+### 使缓存失效
 
-[Server Actions](/docs/app/building-your-application/data-fetching/server-actions) can be used to revalidate data on-demand by path ([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) or by cache tag ([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)).
+[服务器操作](/docs/app/building-your-application/data-fetching/server-actions) 是否可用于按路径([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath))或缓存标签([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag))重新验证数据.
 
-### Prefetching
+### 预取
 
-Prefetching is a way to preload a route in the background before it's visited. The rendered result of prefetched routes is added to the router's client-side cache. This makes navigating to a prefetched route near-instant.
+预取是在访问路由之前在后台预加载路由的一种方式。预取路由的渲染结果被添加到路由器的客户端缓存中。这使得导航到预取的路由几乎是瞬间的。
 
-By default, routes are prefetched as they become visible in the viewport when using the `<Link>` component. This can happen when the page first loads or through scrolling. Routes can also be programmatically prefetched using the `prefetch` method of the [`useRouter()` hook](/docs/app/api-reference/functions/use-router#userouter).
+默认情况下，当使用`<Link>`组件时，路由会在视图中可见时被预取。这可能发生在页面首次加载或滚动时。
+也可以使用[`useRouter()` 钩子](/docs/app/api-reference/functions/use-router#userouter)的`prefetch`方法以编程方式预取路由。
 
-**Static and Dynamic Routes**:
+**静态和动态路由**:
 
-- If the route is static, all the Server Component payloads for the route segments will be prefetched.
-- If the route is dynamic, the payload from the first shared layout down until the first `loading.js` file is prefetched. This reduces the cost of prefetching the whole route dynamically and allows [instant loading states](/docs/app/building-your-application/routing/loading-ui-and-streaming#instant-loading-states) for dynamic routes.
+- 如果路由是静态的，那么路由段的所有服务器组件有效负载都将被预取。
+- 如果路由是动态的，那么从第一个共享布局开始，直到第一个`loading.js`文件被预取。这减少了动态预取整个路由的成本，并允许动态路由使用[瞬时加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming#instant-loading-states)。
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - Prefetching is only enabled in production.
-> - Prefetching can be disabled by passing `prefetch={false}` to `<Link>`.
+> - 预取只在生产环境中启用。
+> - 可以通过将`prefetch={false}`传递给`<Link>`来禁用预取。
 
-### Soft Navigation
+### 软导航
 
-On navigation, the cache for changed segments is reused (if it exists), and no new requests are made to the server for data.
+在导航中，更改段的缓存被重用(如果存在的话)，并且不会向服务器发出新的数据请求。
 
-#### Conditions for Soft Navigation
+#### 软航条件
 
-On navigation, Next.js will use soft navigation if the route you are navigating to has been [**prefetched**](#prefetching), and either doesn't include [dynamic segments](/docs/app/building-your-application/routing/dynamic-routes) **or** has the same dynamic parameters as the current route.
+在导航方面，如果你要导航到的路由已经被[**预取**](#prefetch)，并且不包含[动态段](/docs/app/building-your-application/routing/dynamic-routes) **或** 与当前路由有相同的动态参数，Next.js将使用软导航。
 
-For example, consider the following route that includes a dynamic `[team]` segment: `/dashboard/[team]/*`. The cached segments below `/dashboard/[team]/*` will only be invalidated when the `[team]` parameter changes.
+例如，考虑下面的路由，它包含一个动态的`[team]`段:`/dashboard/[team]/*`。
+`/dashboard/[team]/*`下面的缓存段只有在`[team]`参数改变时才会失效。
 
-- Navigating from `/dashboard/team-red/*` to `/dashboard/team-red/*` will be a soft navigation.
-- Navigating from `/dashboard/team-red/*` to `/dashboard/team-blue/*` will be a hard navigation.
+- 从`/dashboard/team-red/*` 到 `/dashboard/team-red/*`将是一个软导航。
+- 从`/dashboard/team-red/*` 到 `/dashboard/team-blue/*`将是一个硬导航。
 
-### Hard Navigation
+### 硬导航
 
-On navigation, the cache is invalidated and the server refetches data and re-renders the changed segments.
+在导航时，缓存无效，服务器重新获取数据并重新呈现更改后的段。
 
-### Back/Forward Navigation
+### 后退/前进导航
 
-Back and forward navigation ([popstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event)) has a soft navigation behavior. This means, the client-side cache is re-used and navigation is near-instant.
+后退和前进导航([popstate事件](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event))具有软导航行为。这意味着，客户端缓存被重用，导航几乎是即时的。
 
-### Focus and Scroll Management
+### 焦点和滚动管理
 
-By default, Next.js will set focus and scroll into view the segment that's changed on navigation.
+默认情况下，Next.js将设置焦点，并将在导航中更改的部分滚动到视图中。

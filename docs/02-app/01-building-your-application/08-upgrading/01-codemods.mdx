@@ -1,32 +1,32 @@
 ---
 title: Codemods
-description: Use codemods to upgrade your Next.js codebase when new features are released.
+description: 当新特性发布时，使用codemods来升级你的Next.js代码库。
 ---
 
-Codemods are transformations that run on your codebase programmatically. This allows a large number of changes to be programmatically applied without having to manually go through every file.
+代码模块是以编程方式在代码库上运行的转换。这允许以编程方式应用大量更改，而不必手动遍历每个文件。
 
-Next.js provides Codemod transformations to help upgrade your Next.js codebase when an API is updated or deprecated.
+当API更新或弃用时，Next.js提供Codemod转换来帮助升级Next.js代码库。
 
-## Usage
+## 使用
 
-In your terminal, navigate (`cd`) into your project's folder, then run:
+在终端中，导航(`cd`)到你的项目文件夹，然后运行:
 
 ```bash filename="Terminal"
 npx @next/codemod <transform> <path>
 ```
 
-Replacing `<transform>` and `<path>` with appropriate values.
+有合适的值替换 `<transform>` 和 `<path>` .
 
-- `transform` - name of transform
-- `path` - files or directory to transform
-- `--dry` Do a dry-run, no code will be edited
-- `--print` Prints the changed output for comparison
+- `transform` - 变换名称
+- `path` - 要转换的文件或目录
+- `--dry` 做一次预演，没有代码会被编辑吗
+- `--print` 输出更改后的输出以供比较
 
 ## Next.js Codemods
 
 ### 13.2
 
-#### Use Built-in Font
+#### 使用内置字体
 
 ##### `built-in-next-font`
 
@@ -50,7 +50,7 @@ import { Inter } from 'next/font/google'
 
 ### 13.0
 
-#### Rename Next Image Imports
+#### 重命名下一个图像导入
 
 ##### `next-image-to-legacy-image`
 
@@ -94,7 +94,7 @@ export default function Home() {
 }
 ```
 
-#### Migrate to the New Image Component
+#### 迁移到新映像组件
 
 ##### `next-image-experimental`
 
@@ -110,7 +110,7 @@ Dangerously migrates from `next/legacy/image` to the new `next/image` by adding 
 - Removes `lazyBoundary` prop.
 - Removes `lazyRoot` prop.
 
-#### Remove `<a>` Tags From Link Components
+#### 从链接组件中删除 `<a>` 标签
 
 ##### `new-link`
 
@@ -180,7 +180,7 @@ Please share any feedback related to this transform [in this discussion](https:/
 
 ### 10
 
-#### Add React imports
+#### 添加React导入
 
 ##### `add-missing-react-import`
 
@@ -213,7 +213,7 @@ export default class Home extends React.Component {
 
 ### 9
 
-#### Transform Anonymous Components into Named Components
+#### 将匿名组件转换为命名组件
 
 ##### `name-default-component`
 
@@ -245,7 +245,7 @@ The component will have a camel-cased name based on the name of the file, and it
 
 ### 8
 
-#### Transform AMP HOC into page config
+#### 将AMP HOC转换为页面配置
 
 ##### `withamp-to-config`
 
@@ -281,7 +281,7 @@ export const config = {
 
 ### 6
 
-#### Use `withRouter`
+#### 使用 `withRouter`
 
 ##### `url-to-withrouter`
 
@@ -312,8 +312,8 @@ export default withRouter(
       const { pathname } = this.props.router
       return <div>Current pathname: {pathname}</div>
     }
-  }
+  },
 )
 ```
 
-This is one case. All the cases that are transformed (and tested) can be found in the [`__testfixtures__` directory](https://github.com/vercel/next.js/tree/canary/packages/next-codemod/transforms/__testfixtures__/url-to-withrouter).
+这是一种情况。所有被转换(和测试)的用例都可以在[`__testfixtures__`目录](https://github.com/vercel/next.js/tree/canary/packages/next-codemod/transforms/__testfixtures__/url-to-withrouter)中找到。

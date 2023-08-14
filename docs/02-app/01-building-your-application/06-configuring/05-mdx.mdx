@@ -1,43 +1,54 @@
 ---
 title: MDX
-description: Learn how to configure MDX to write JSX in your markdown files.
+description: 了解如何配置MDX以在markdown文件中编写JSX。
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-[Markdown](https://daringfireball.net/projects/markdown/syntax) is a lightweight markup language used to format text. It allows you to write using plain text syntax and convert it to structurally valid HTML. It's commonly used for writing content on websites and blogs.
+[Markdown](https://daringfireball.net/projects/markdown/syntax)是一种用于格式化文本的轻量级标记语言。
+它允许您使用纯文本语法编写并将其转换为结构有效的HTML。
+它通常用于在网站和博客上撰写内容。
 
-You write...
+你写…
 
 ```md
 I **love** using [Next.js](https://nextjs.org/)
 ```
 
-Output:
+输出:
 
 ```html
 <p>I <strong>love</strong> using <a href="https://nextjs.org/">Next.js</a></p>
 ```
 
-[MDX](https://mdxjs.com/) is a superset of markdown that lets you write [JSX](https://react.dev/learn/writing-markup-with-jsx) directly in your markdown files. It is a powerful way to add dynamic interactivity and embed React components within your content.
+[MDX](https://mdxjs.com/)是markdown的超集，它允许您直接在markdown文件中编写[JSX](https://react.dev/learn/writing-markup-with-jsx)。
+它是在内容中添加动态交互性和嵌入React组件的强大方式。
 
-Next.js can support both local MDX content inside your application, as well as remote MDX files fetched dynamically on the server. The Next.js plugin handles transforming Markdown and React components into HTML, including support for usage in Server Components (default in `app`).
+Next.js既可以支持应用程序中的本地MDX内容，也可以支持从服务器上动态获取的远程MDX文件。
+Next.js插件负责将Markdown和React组件转换为HTML，包括支持在服务器组件中使用(默认为`app`)。
 
 ## `@next/mdx`
 
-The `@next/mdx` package is configured in the `next.config.js` file at your projects root. **It sources data from local files**, allowing you to create pages with a `.mdx` extension, directly in your `/pages` or `/app` directory.
+`@next/mdx`包在项目根目录下的`next.config.js`文件中配置。
+**它从本地文件中获取数据**，允许您创建带有`.mdx`扩展，直接在你的`/pages`或`/app`目录。
 
-## Getting Started
+## 开始
+
+### AppOnly
 
 <AppOnly>
 
-Install the `@next/mdx` package:
+安装 `@next/mdx` 包:
 
 ```bash filename="Terminal"
 npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 ```
 
-Create `mdx-components.tsx` in the root of your application (the parent folder of `app/` or `src/`):
+在应用的根目录下创建`mdx-components.tsx` (`app/`或`src/`的父目录):
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="mdx-components.tsx" switcher
 import type { MDXComponents } from 'mdx/types'
@@ -57,6 +68,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```js filename="mdx-components.js" switcher
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -73,7 +87,10 @@ export function useMDXComponents(components) {
 }
 ```
 
-Update `next.config.js` to use `mdxRs`:
+</TabItem>
+</Tabs>
+
+使用 `mdxRs` 更新 `next.config.js`:
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -87,7 +104,7 @@ const withMDX = require('@next/mdx')()
 module.exports = withMDX(nextConfig)
 ```
 
-Add a new file with MDX content to your `app` directory:
+添加一个带有MDX内容的新文件到你的`app`目录:
 
 ```md filename="app/hello.mdx"
 Hello, Next.js!
@@ -95,7 +112,10 @@ Hello, Next.js!
 You can import and use React components in MDX files.
 ```
 
-Import the MDX file inside a `page` to display the content:
+将MDX文件导入`page`中以显示内容:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/page.tsx" switcher
 import HelloWorld from './hello.mdx'
@@ -105,6 +125,9 @@ export default function Page() {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/page.js" switcher
 import HelloWorld from './hello.mdx'
 
@@ -113,17 +136,23 @@ export default function Page() {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 </AppOnly>
+
+### PagesOnly
 
 <PagesOnly>
 
-Install the required packages:
+安装所需的软件包:
 
 ```bash filename="Terminal"
   npm install @next/mdx @mdx-js/loader @mdx-js/react
 ```
 
-Require the package and configure to support top level `.mdx` pages. The following adds the `options` object key allowing you to pass in any plugins:
+要求该包并配置为支持顶级`.mdx`的页面。
+下面添加了`options`对象键，允许你传入任何插件:
 
 ```js
 // next.config.js
@@ -153,7 +182,7 @@ const nextConfig = {
 module.exports = withMDX(nextConfig)
 ```
 
-- Create a new MDX page within the `/pages` directory:
+- 在`/pages`目录下创建一个新的MDX页面:
 
 ```txt
   your-project
@@ -162,7 +191,7 @@ module.exports = withMDX(nextConfig)
   └── package.json
 ```
 
-You can now import a React component directly inside your MDX page:
+现在你可以直接在MDX页面中导入React组件:
 
 ```mdx
 import { MyComponent } from 'my-components'
@@ -182,13 +211,15 @@ Checkout my React component:
 
 </PagesOnly>
 
-## Remote MDX
+## 远程 MDX
 
-If your Markdown or MDX files do _not_ live inside your application, you can fetch them dynamically on the server. This is useful for fetching content from a CMS or other data source.
+如果您的Markdown或MDX文件不在您的应用程序中，您可以在服务器上动态地获取它们。
+这对于从CMS或其他数据源获取内容非常有用。
 
-There are two popular community packages for fetching MDX content: [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote#react-server-components-rsc--nextjs-app-directory-support) and [`contentlayer`](https://www.contentlayer.dev/). For example, the following example uses `next-mdx-remote`:
+有两个流行的社区包用于获取MDX内容: [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote#react-server-components-rsc--nextjs-app-directory-support) and [`contentlayer`](https://www.contentlayer.dev/).
+例如，下面的例子使用`next-mdx-remote`:
 
-> **Good to know**: Please proceed with caution. MDX compiles to JavaScript and is executed on the server. You should only fetch MDX content from a trusted source, otherwise this can lead to remote code execution (RCE).
+> **注意事项**: 请小心行事。 MDX被编译成JavaScript，并在服务器上执行。 您应该只从可信源获取MDX内容，否则可能导致远程代码执行(RCE)。
 
 ```tsx filename="app/page.tsx" switcher
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -210,17 +241,18 @@ export default async function Home() {
 }
 ```
 
-## Layouts
+## 布局
 
 <AppOnly>
 
-To share a layout around MDX content, you can use the [built-in layouts support](/docs/app/building-your-application/routing/pages-and-layouts#layouts) with the App Router.
+为了围绕MDX内容共享布局，你可以使用应用路由器的[内置布局支持](/docs/app/building-your-application/routing/pages-and-layouts#layouts)。
 
 </AppOnly>
 
 <PagesOnly>
 
-To add a layout to your MDX page, create a new component and import it into the MDX page. Then you can wrap the MDX page with your layout component:
+要向MDX页面添加布局，请创建一个新组件并将其导入MDX页面。
+然后你可以用你的布局组件包装MDX页面:
 
 ```jsx filename="pages/index.js"
 import { MyLayoutComponent } from 'my-components';
@@ -237,11 +269,12 @@ export default Page({ children }) => (
 
 </PagesOnly>
 
-## Remark and Rehype Plugins
+## 备注和重新渲染插件
 
-You can optionally provide `remark` and `rehype` plugins to transform the MDX content. For example, you can use `remark-gfm` to support GitHub Flavored Markdown.
+您可以选择提供`remark` 和 `rehype`插件来转换MDX内容。
+例如，你可以使用`remark-gfm`来支持GitHub风格Markdown。
 
-Since the `remark` and `rehype` ecosystem is ESM only, you'll need to use `next.config.mjs` as the configuration file.
+因为`remark` 和 `rehype`生态系统只支持ESM，所以你需要使用 `next.config.mjs` 作为配置文件。
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -256,17 +289,18 @@ const withMDX = require('@next/mdx')({
     remarkPlugins: [],
     rehypePlugins: [],
     // If you use `MDXProvider`, uncomment the following line.
-    // providerImportSource: "@mdx-js/react",
+    providerImportSource: '@mdx-js/react',
   },
 })
 module.exports = withMDX(nextConfig)
 ```
 
-## Frontmatter
+## 文头
 
-Frontmatter is a YAML like key/value pairing that can be used to store data about a page. `@next/mdx` does **not** support frontmatter by default, though there are many solutions for adding frontmatter to your MDX content, such as [gray-matter](https://github.com/jonschlinkert/gray-matter).
+Frontmatter是一种类似于YAML的键/值配对，可用于存储关于页面的数据。
+`@next/mdx`默认情况下**不**支持frontmatter，尽管有许多解决方案可以将frontmatter添加到mdx内容中，例如[gray-matter](https://github.com/jonschlinkert/gray-matter)。
 
-To access page metadata with `@next/mdx`, you can export a meta object from within the `.mdx` file:
+要使用`@next/mdx`访问页面元数据，你可以从`.mdx`文件中导出一个元对象:
 
 ```mdx
 export const meta = {
@@ -276,9 +310,9 @@ export const meta = {
 # My MDX page
 ```
 
-## Custom Elements
+## 自定义元素
 
-One of the pleasant aspects of using markdown, is that it maps to native `HTML` elements, making writing fast, and intuitive:
+使用markdown的一个令人愉快的方面是，它映射到原生的`HTML`元素，使编写更快，更直观:
 
 ```md
 This is a list in markdown:
@@ -288,7 +322,7 @@ This is a list in markdown:
 - Three
 ```
 
-The above generates the following `HTML`:
+以上代码生成如下`HTML`:
 
 ```html
 <p>This is a list in markdown:</p>
@@ -300,9 +334,12 @@ The above generates the following `HTML`:
 </ul>
 ```
 
-When you want to style your own elements to give a custom feel to your website or application, you can pass in shortcodes. These are your own custom components that map to `HTML` elements. To do this you use the `MDXProvider` and pass a components object as a prop. Each object key in the components object maps to a `HTML` element name.
+当你想为你的网站或应用程序设计自己的元素样式时，你可以传入短代码。
+这些是映射到`HTML`元素的自定义组件。
+要做到这一点，你需要使用`MDXProvider`并传递一个组件对象作为属性。
+组件对象中的每个对象键都映射到一个`HTML`元素名。
 
-To enable you need to specify `providerImportSource: "@mdx-js/react"` in `next.config.js`.
+要启用，你需要在`next.config.js`中指定`providerImportSource: "@mdx-js/react"`。
 
 ```js filename="next.config.js"
 const withMDX = require('@next/mdx')({
@@ -313,7 +350,7 @@ const withMDX = require('@next/mdx')({
 })
 ```
 
-Then setup the provider in your page
+然后在页面中设置提供程序
 
 ```jsx filename="pages/index.js"
 import { MDXProvider } from '@mdx-js/react'
@@ -347,13 +384,15 @@ export default function Post(props) {
 }
 ```
 
-If you use it across the site you may want to add the provider to `_app.js` so all MDX pages pick up the custom element config.
+如果你在整个站点中使用它，你可能想要将提供程序添加到`_app.js`中，这样所有MDX页面都会选择自定义元素配置。
 
-## Deep Dive: How do you transform markdown into HTML?
+## 如何将markdown转换为HTML?
 
-React does not natively understand Markdown. The markdown plaintext needs to first be transformed into HTML. This can be accomplished with `remark` and `rehype`.
+React本身并不理解Markdown。首先需要将标记明文转换为HTML。这可以通过`remark` 和 `rehype`来实现。
 
-`remark` is an ecosystem of tools around markdown. `rehype` is the same, but for HTML. For example, the following code snippet transforms markdown into HTML:
+`remark`是一个围绕markdown的工具生态系统。
+`rehype`是一样的，但是针对HTML。
+例如，下面的代码片段将markdown转换为HTML:
 
 ```js
 import { unified } from 'unified'
@@ -376,13 +415,15 @@ async function main() {
 }
 ```
 
-The `remark` and `rehype` ecosystem contains plugins for [syntax highlighting](https://github.com/atomiks/rehype-pretty-code), [linking headings](https://github.com/rehypejs/rehype-autolink-headings), [generating a table of contents](https://github.com/remarkjs/remark-toc), and more.
+`remark` 和 `rehype`生态系统包含[语法高亮显示](https://github.com/atomiks/rehype-pretty-code)，[链接标题](https://github.com/rehypejs/rehype-autolink-headings)，[生成目录](https://github.com/remarkjs/remark-toc)等插件。
 
-When using `@next/mdx` as shown below, you **do not** need to use `remark` or `rehype` directly, as it is handled for you.
+当使用如下所示的`@next/mdx`时，你不需要直接使用`remark`或`rehype`，因为它已经为你处理了。
 
-## Using the Rust-based MDX compiler (Experimental)
+## 使用基于rust的MDX编译器(实验)
 
-Next.js supports a new MDX compiler written in Rust. This compiler is still experimental and is not recommended for production use. To use the new compiler, you need to configure `next.config.js` when you pass it to `withMDX`:
+Next.js支持用Rust编写的新的MDX编译器。
+该编译器仍处于实验阶段，不建议用于生产环境。
+要使用新的编译器，你需要在将`next.config.js`传递给`withMDX`时配置它:
 
 ```js filename="next.config.js"
 module.exports = withMDX({
@@ -392,7 +433,7 @@ module.exports = withMDX({
 })
 ```
 
-## Helpful Links
+## 有用的链接
 
 - [MDX](https://mdxjs.com)
 - [`@next/mdx`](https://www.npmjs.com/package/@next/mdx)

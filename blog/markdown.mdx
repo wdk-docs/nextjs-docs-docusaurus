@@ -1,0 +1,238 @@
+---
+authors: [robinson]
+tags: [markdown, mdx]
+description: markdown
+keywords: [markdown, mdx]
+date: 2020-12-17
+---
+
+# Markdown/MDX 与 Next.js
+
+> https://nextjs.org/blog/markdown
+
+如果你正在创建一个信息密集的网站，比如文档或博客，你可能会考虑使用Markdown。
+大多数开发人员从GitHub和其他在线社区熟悉Markdown。
+
+<!--truncate-->
+
+Markdown允许您将明文转换为格式化的元素。
+例如，您想写一篇2000个字符的博客文章，包括丰富的格式选项，如粗体文本、斜体文本和链接。
+你想优化写作，花更少的时间编码。
+老实说，写清楚是比较困难的。
+而不是像这样写HTML:
+
+```html
+<p>I <strong>love</strong> using <a href="https://nextjs.org/">Next.js</a></p>
+```
+
+相反，你可以用Markdown来表达你的风格:
+
+```
+I **love** using [Next.js](https://nextjs.org/)
+```
+
+本指南将分五个部分解释在`Next.js`中使用`Markdown`和`MDX`的不同方法:
+
+## 转换
+
+要在Next.js中使用Markdown，你必须首先将Markdown内容转换成React可以理解的内容。
+给定一些Markdown输入，我们希望在组件中输出JSX。最流行的解决方法是使用remark。
+
+Remark使用AST解析和编译Markdown。
+它由插件提供支持，允许您添加语法高亮显示，生成目录等。
+例如，可以使用`remark-html`将`Markdown`转换为`HTML`。
+
+Markdown还有一个超集`MDX`，它允许您在Markdown中编写JSX。
+您可以使用React中相同的基于组件的原则，并将其应用于编写Markdown文档。
+当您需要为每个Markdown文件提供动态内容(例如，像语言下拉菜单这样的动态全局状态)或通过交互式组件提供丰富的交互式体验时，MDX非常有用。
+在文件中使用JavaScript函数也很方便。
+
+## 数据源
+
+`Markdown`文件可以是本地的(在文件系统中)，也可以是远程的(存储在CMS中)。本地内容是一个很好的选择，当你想要允许协作(例如编辑这个页面在GitHub链接)与大量的人。对于小型的个人项目，它们也更有意义。如果非开发人员需要编辑内容，远程内容可能也是更好的选择。
+
+要在`Next.js`中使用本地`Markdown`内容，可以使用`remark`和`remark-html`将源文件(`/posts/my-post.md`)转换为HTML。这些Node库可以在`getStaticProps/getStaticPaths/getServerSideProps`中使用。例如，`blog-starter`示例读取`_posts`目录中的所有Markdown文件，并为每个单元格生成唯一的页面。此解决方案适用于本地和远程数据。如果您的数据是远程的，那么您只需从CMS而不是文件系统中读取数据。
+
+要将`MDX`与`Next.js`一起使用，您的方法将根据数据源位置的不同而有所不同。对于本地内容，可以使用`@next/mdx`包。这允许您在`pages/`文件夹中直接使用`.mdx`扩展名创建页面。对于远程数据，一种选择是使用`next-mdx-remote`(一个社区项目)在`getStaticProps/getStaticPaths`中获取`Markdown`内容。
+
+## 样式
+
+如果使用CSS或Sass，则可以将HTML元素定位在包含Markdown的组件中。例如，顺风式排版将使用prose类自动对元素中Markdown生成的HTML元素进行样式化。
+
+```html
+<article class="prose lg:prose-xl">
+  <h1>Garlic bread with cheese: What the science tells us</h1>
+  <p>
+    For years parents have espoused the health benefits of eating garlic bread
+    with cheese to their children, with the food earning such an iconic status
+    in our culture that kids will often dress up as warm, cheesy loaf for
+    Halloween.
+  </p>
+  <p>
+    But a recent study shows that the celebrated appetizer may be linked to a
+    series of rabies cases springing up around the country.
+  </p>
+  <!-- ... -->
+</article>
+```
+
+如果您正在使用CSS-in-JS或希望在组件级别进行更细粒度的控制，另一个选择是next-mdx-remote。这也允许你在Markdown中使用自定义组件(例如Heading)，方法是为Markdown提供一个可以转换为组件的对象。
+
+```js title="pages/index.js"
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
+
+import Heading from '../components/heading'
+
+const components = { Heading }
+
+export default function Post({ source }) {
+  return (
+    <div className="wrapper">
+      <MDXRemote {...source} components={components} />
+    </div>
+  )
+}
+
+export async function getStaticProps() {
+  // MDX text - can be from a local file, database, anywhere
+  const source = 'Some **mdx** text, with a component <Heading />'
+  const mdxSource = await serialize(source)
+  return { props: { source: mdxSource } }
+}
+```
+
+或 `@next/mdx` 使用一个 `MDXProvider`.
+
+```js title="pages/index.js"
+import { MDXProvider } from '@mdx-js/react'
+import Image from 'next/image'
+import { Heading, Text, Pre, Code, Table } from '../components'
+
+const ResponsiveImage = (props) => (
+  <Image alt={props.alt} layout="responsive" {...props} />
+)
+
+const components = {
+  img: ResponsiveImage,
+  h1: Heading.H1,
+  h2: Heading.H2,
+  p: Text,
+  code: Pre,
+  inlineCode: Code,
+}
+
+export default function Post(props) {
+  return (
+    <MDXProvider components={components}>
+      <main {...props} />
+    </MDXProvider>
+  )
+}
+```
+
+## 共享布局
+
+当使用具有动态路由的方法(例如`/pages/docs/[slug].js`)时，你可以用一个共享的`<Layout />`来包装返回的React组件。  
+因为它只是一个React组件，你可以有单独的布局，如`<BlogLayout />` 或 `<DocsLayout />`。
+
+```js title="pages/docs/[slug].js"
+import Layout from '../components/Layout'
+import { getAllDocs, getDocBySlug } from '../lib/docs'
+import markdownToHtml from '../lib/markdown'
+
+export default function Doc({ meta, content }) {
+  return <Layout meta={meta}>{content}</Layout>
+}
+
+export async function getStaticProps({ params }) {
+  const doc = getDocBySlug(params.slug)
+  const content = await markdownToHtml(doc.content || '')
+
+  return {
+    props: {
+      ...doc,
+      content,
+    },
+  }
+}
+
+export async function getStaticPaths() {
+  const docs = getAllDocs()
+
+  return {
+    paths: docs.map((doc) => {
+      return {
+        params: {
+          slug: doc.slug,
+        },
+      }
+    }),
+    fallback: false,
+  }
+}
+```
+
+当使用`@next/mdx`和基于文件系统的路由时，可以将Layout设置为文件的默认导出。
+
+```mdx title="pages/posts/markdown-with-next.mdx"
+import Layout from '../components/Layout'
+
+export const meta = {
+  title: 'Markdown/MDX with Next.js',
+  author: 'Lee Robinson',
+}
+
+I **love** using [Next.js](https://nextjs.org/)
+
+export default ({ children }) => <Layout meta={meta}>{children}</Layout
+
+>
+```
+
+## 元数据
+
+元数据允许您描述Markdown文件的内容。
+例如，添加博客文章的标题和作者。如果你正在使用Markdown, gray-matter可以让你像这样编写YAML的前置内容:
+
+```md
+---
+title: Markdown/MDX with Next.js
+author: Lee Robinson
+---
+```
+
+我**喜欢**使用[Next.js](https://nextjs.org/)，它可以在读取文件时转换为JS对象。
+
+```js
+import matter from 'gray-matter'
+
+const docsDirectory = join(process.cwd(), 'docs')
+
+export function getDocBySlug(slug) {
+  const realSlug = slug.replace(/\.md$/, '')
+  const fullPath = join(docsDirectory, `${realSlug}.md`)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const { data, content } = matter(fileContents)
+
+  return { slug: realSlug, meta: data, content }
+}
+```
+
+如果你正在使用MDX，你可以直接使用JS对象。
+
+```js title="pages/posts/markdown-with-next.mdx"
+export const meta = {
+  title: 'Markdown/MDX with Next.js',
+  author: 'Lee Robinson',
+}
+```
+
+## 结论
+
+在Next.js中使用Markdown或MDX有许多不同的方法。有关更完整的示例，请参见:
+
+- [本地 Markdown](https://github.com/vercel/next.js/tree/canary/examples/blog-starter)
+- [本地 MDX](https://github.com/vercel/next.js/tree/canary/examples/with-mdx)
+- [远程 Markdown 或 MDX](https://github.com/vercel/next.js/tree/canary/examples/with-mdx-remote)
+- [语法高亮标记](https://nextjs-prism.vercel.app/prism)

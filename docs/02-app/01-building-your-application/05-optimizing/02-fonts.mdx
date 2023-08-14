@@ -1,5 +1,5 @@
 ---
-title: Font Optimization
+title: 字体优化
 nav_title: Fonts
 description: Optimize your application's web fonts with the built-in `next/font` loaders.
 related:
@@ -8,6 +8,9 @@ related:
   links:
     - app/api-reference/components/font
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
@@ -162,7 +165,7 @@ const roboto = Roboto({
 })
 ```
 
-> **Good to know**: Use an underscore (\_) for font names with multiple words. E.g. `Roboto Mono` should be imported as `Roboto_Mono`.
+> **注意事项**: Use an underscore (\_) for font names with multiple words. E.g. `Roboto Mono` should be imported as `Roboto_Mono`.
 
 <PagesOnly>
 

@@ -1,9 +1,14 @@
 ---
 title: 加载UI和流
-description: Built on top of Suspense, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.
+description: 建立在悬念之上，加载UI允许你为特定的路由段创建一个回退，并自动流内容，因为它准备好了。
 ---
 
-The special file `loading.js` helps you create meaningful Loading UI with [React Suspense](https://react.dev/reference/react/Suspense). With this convention, you can show an [instant loading state](#instant-loading-states) from the server while the content of a route segment loads. The new content is automatically swapped in once rendering is complete.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+特殊文件`loading.js`可以帮助你用[React悬念](https://react.dev/reference/react/Suspense)创建有意义的加载UI。
+有了这个约定，当路由段的内容加载时，你可以从服务器显示一个[即时加载状态](#instant-loading-states)。
+一旦渲染完成，新内容将自动交换进来。
 
 <Image
   alt="Loading UI"
@@ -13,7 +18,7 @@ The special file `loading.js` helps you create meaningful Loading UI with [React
   height="691"
 />
 
-## Instant Loading States
+## 瞬时加载状态
 
 An instant loading state is fallback UI that is shown immediately upon navigation. You can pre-render loading indicators such as skeletons and spinners, or a small but meaningful part of future screens such as a cover photo, title, etc. This helps users understand the app is responding and provides a better user experience.
 
@@ -51,7 +56,7 @@ In the same folder, `loading.js` will be nested inside `layout.js`. It will auto
   height="768"
 />
 
-> **Good to know**:
+> **注意事项:**:
 >
 > - Navigation is immediate, even with [server-centric routing](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation).
 > - Navigation is interruptible, meaning changing routes does not need to wait for the content of the route to fully load before navigating to another route.
@@ -59,15 +64,15 @@ In the same folder, `loading.js` will be nested inside `layout.js`. It will auto
 
 > **Recommendation:** Use the `loading.js` convention for route segments (layouts and pages) as Next.js optimizes this functionality.
 
-## Streaming with Suspense
+## 带有悬念的流媒体
 
 In addition to `loading.js`, you can also manually create Suspense Boundaries for your own UI components. The App Router supports streaming with [Suspense](https://react.dev/reference/react/Suspense) for both [Node.js and Edge runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes).
 
-### What is Streaming?
+### 什么是流媒体?
 
-To learn how Streaming works in React and Next.js, it's helpful to understand **Server-Side Rendering (SSR)** and its limitations.
+要了解流媒体在React和Next.js中的工作原理，了解服务器端渲染(SSR)及其局限性是有帮助的。
 
-With SSR, there's a series of steps that need to be completed before a user can see and interact with a page:
+使用SSR，在用户可以看到页面并与之交互之前，需要完成一系列步骤:
 
 1. First, all data for a given page is fetched on the server.
 2. The server then renders the HTML for the page.

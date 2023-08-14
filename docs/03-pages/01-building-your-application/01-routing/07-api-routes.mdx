@@ -16,7 +16,7 @@ description: Next.js supports API Routes, which allow you to build your API with
 
 <PagesOnly>
 
-> **Good to know**: If you are using the App Router, you can use [Server Components](/docs/app/building-your-application/data-fetching/fetching) or [Route Handlers](/docs/app/building-your-application/routing/router-handlers) instead of API Routes.
+> **注意事项**: If you are using the App Router, you can use [Server Components](/docs/app/building-your-application/data-fetching/fetching) or [Route Handlers](/docs/app/building-your-application/routing/router-handlers) instead of API Routes.
 
 </PagesOnly>
 
@@ -32,7 +32,7 @@ export default function handler(req, res) {
 }
 ```
 
-> **Good to know**: API Routes will be affected by [`pageExtensions` configuration](/docs/pages/api-reference/next-config-js/pageExtensions) in `next.config.js`.
+> **注意事项**: API Routes will be affected by [`pageExtensions` configuration](/docs/pages/api-reference/next-config-js/pageExtensions) in `next.config.js`.
 
 For an API route to work, you need to export a function as default (a.k.a **request handler**), which then receives the following parameters:
 
@@ -161,7 +161,7 @@ export const setCookie = (
   res: NextApiResponse,
   name: string,
   value: unknown,
-  options: CookieSerializeOptions = {}
+  options: CookieSerializeOptions = {},
 ) => {
   const stringValue =
     typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
@@ -342,13 +342,13 @@ type ResponseData = {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<ResponseData>,
 ) {
   res.status(200).json({ message: 'Hello from Next.js!' })
 }
 ```
 
-> **Good to know**: The body of `NextApiRequest` is `any` because the client may include any payload. You should validate the type/shape of the body at runtime before using it.
+> **注意事项**: The body of `NextApiRequest` is `any` because the client may include any payload. You should validate the type/shape of the body at runtime before using it.
 
 ## Dynamic API Routes
 
@@ -389,7 +389,7 @@ API Routes can be extended to catch all paths by adding three dots (`...`) insid
 
 - `pages/api/post/[...slug].js` matches `/api/post/a`, but also `/api/post/a/b`, `/api/post/a/b/c` and so on.
 
-> **Good to know**: You can use names other than `slug`, such as: `[...param]`
+> **注意事项**: You can use names other than `slug`, such as: `[...param]`
 
 Matched parameters will be sent as a query parameter (`slug` in the example) to the page, and it will always be an array, so, the path `/api/post/a` will have the following `query` object:
 
@@ -474,7 +474,7 @@ export default async function handler(req: NextRequest) {
       headers: {
         'content-type': 'application/json',
       },
-    }
+    },
   )
 }
 ```
@@ -499,7 +499,7 @@ export default async function handler(req: NextRequest) {
         'content-type': 'application/json',
         'cache-control': 'public, s-maxage=1200, stale-while-revalidate=600',
       },
-    }
+    },
   )
 }
 ```
@@ -545,7 +545,7 @@ export default async function handler(req: NextRequest) {
 
 You may want to restrict your edge function to specific regions when deploying so that you can colocate near your data sources ensuring lower response times which can be achieved as shown.
 
-> **Good to know**: This configuration is available in `v12.3.2` of Next.js and up.
+> **注意事项**: This configuration is available in `v12.3.2` of Next.js and up.
 
 ```js
 import { NextResponse } from 'next/server'
@@ -566,6 +566,6 @@ Edge API Routes use the [Edge Runtime](/docs/pages/api-reference/edge), whereas 
 
 Edge API Routes can [stream responses](/docs/pages/api-reference/edge#stream-apis) from the server and run _after_ cached files (e.g. HTML, CSS, JavaScript) have been accessed. Server-side streaming can help improve performance with faster [Time To First Byte (TTFB)](https://web.dev/ttfb/).
 
-> **Good to know**: Using [Edge Runtime](/docs/pages/api-reference/edge) with `getServerSideProps` does not give you access to the response object. If you need access to `res`, you should use the [Node.js runtime](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) by setting `runtime: 'nodejs'`.
+> **注意事项**: Using [Edge Runtime](/docs/pages/api-reference/edge) with `getServerSideProps` does not give you access to the response object. If you need access to `res`, you should use the [Node.js runtime](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) by setting `runtime: 'nodejs'`.
 
 View the [supported APIs](/docs/pages/api-reference/edge) and [unsupported APIs](/docs/pages/api-reference/edge#unsupported-apis) for the Edge Runtime.

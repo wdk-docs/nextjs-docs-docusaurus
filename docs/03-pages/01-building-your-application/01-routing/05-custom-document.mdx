@@ -3,6 +3,9 @@ title: Custom Document
 description: Extend the default document markup added by Next.js.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 A custom `Document` can update the `<html>` and `<body>` tags used to render a [Page](/docs/pages/building-your-application/routing/pages-and-layouts).
 
 To override the default `Document`, create the file `pages/_document` as shown below:
@@ -39,7 +42,7 @@ export default function Document() {
 }
 ```
 
-> **Good to know**
+> **注意事项**
 >
 > - `_document` is only rendered on the server, so event handlers like `onClick` cannot be used in this file.
 > - `<Html>`, `<Head />`, `<Main />` and `<NextScript />` are required for the page to be properly rendered.
@@ -68,7 +71,7 @@ import Document, {
 
 class MyDocument extends Document {
   static async getInitialProps(
-    ctx: DocumentContext
+    ctx: DocumentContext,
   ): Promise<DocumentInitialProps> {
     const originalRenderPage = ctx.renderPage
 
@@ -141,7 +144,7 @@ class MyDocument extends Document {
 export default MyDocument
 ```
 
-> **Good to know**
+> **注意事项**
 >
 > - `getInitialProps` in `_document` is not called during client-side transitions.
 > - The `ctx` object for `_document` is equivalent to the one received in [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props#context-object), with the addition of `renderPage`.

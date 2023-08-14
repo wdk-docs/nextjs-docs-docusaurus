@@ -29,7 +29,7 @@ export async function GET(request) {
 
 <AppOnly>
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `revalidatePath` is available in both [Node.js and Edge runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes).
 > - `revalidatePath` will revalidate _all segments_ under a dynamic route segment. For example, if you have a dynamic segment `/product/[id]` and you call `revalidatePath('/product/[id]')`, then all segments under `/product/[id]` will be revalidated as requested.
@@ -39,7 +39,7 @@ export async function GET(request) {
 
 <PagesOnly>
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `revalidatePath` is available in both [Node.js and Edge runtimes](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes).
 > - `revalidatePath` will revalidate _all segments_ under a dynamic route segment. For example, if you have a dynamic segment `/product/[id]` and you call `revalidatePath('/product/[id]')`, then all segments under `/product/[id]` will be revalidated as requested.

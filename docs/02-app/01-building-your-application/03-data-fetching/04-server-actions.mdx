@@ -1,17 +1,22 @@
 ---
-title: Server Actions
-nav_title: Server Actions
-description: Use Server Actions to mutate data in your Next.js application.
+title: 服务器操作
+nav_title: 服务器操作
+description: 使用服务器操作来改变Next.js应用程序中的数据。
 related:
-  title: Next Steps
-  description: For more information on what to do next, we recommend the following sections
+  title: 下一个步骤
+  description: 有关下一步操作的更多信息，我们建议阅读以下部分
   links:
     - app/api-reference/functions/cookies
 ---
 
-[Server Actions](#server-actions) are an **alpha** feature in Next.js, built on top of React [Actions](#actions). They enable server-side data mutations, reduced client-side JavaScript, and progressively enhanced forms. They can be defined inside Server Components and/or called from Client Components:
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-**With Server Components:**
+[服务器操作](#server-actions)是Next.js中的一个**alpha**特性，构建在React[行动](#actions)之上。
+它们支持服务器端数据突变、减少客户端JavaScript和逐步增强的表单。
+它们可以在服务器组件内部定义和/或从客户端组件调用:
+
+**使用服务器组件:**
 
 ```jsx filename="app/add-to-cart.js" highlight={5, 6, 13}
 import { cookies } from 'next/headers'
@@ -33,7 +38,7 @@ export default function AddToCart({ productId }) {
 }
 ```
 
-**With Client Components:**
+**使用客户端组件:**
 
 ```jsx filename="app/actions.js" highlight={1, 3}
 'use server'
@@ -65,9 +70,9 @@ export default function AddToCart({ productId }) {
 > - React Actions, `useOptimistic`, and `useFormStatus` are not a Next.js or React Server Components specific features.
 > - Next.js integrates React Actions into the Next.js router, bundler, and caching system, including adding data mutation APIs like `revalidateTag` and `revalidatePath`.
 
-## Convention
+## 公约
 
-You can enable Server Actions in your Next.js project by enabling the **experimental** `serverActions` flag.
+你可以在Next.js项目中通过启用实验性的`serverActions`标志来启用Server Actions。
 
 ```js filename="next.config.js"
 module.exports = {
@@ -77,14 +82,14 @@ module.exports = {
 }
 ```
 
-### Creation
+### 创建
 
 Server Actions can be defined in two places:
 
 - Inside the component that uses it (Server Components only)
 - In a separate file (Client and Server Components), for reusability. You can define multiple Server Actions in a single file.
 
-#### With Server Components
+#### 使用服务器组件
 
 Create a Server Action by defining an asynchronous function with the `"use server"` directive at the top of the function body. This function should have **serializable arguments** and a **serializable return value** based on the React Server Components protocol.
 
@@ -97,7 +102,7 @@ export default function ServerComponent() {
 }
 ```
 
-#### With Client Components
+#### 使用客户端组件
 
 If you're using a Server Action inside a Client Component, create your action in a separate file with the "use server" directive at the top of the file. Then, import the Server Action into your Client Component:
 
@@ -123,9 +128,9 @@ export default function ClientComponent() {
 }
 ```
 
-> **Good to know**: When using a top-level `"use server"` directive, all exports below will be considered Server Actions. You can have multiple Server Actions in a single file.
+> **注意事项**: When using a top-level `"use server"` directive, all exports below will be considered Server Actions. You can have multiple Server Actions in a single file.
 
-### Invocation
+### 调用
 
 You can invoke Server Actions using the following methods:
 
@@ -154,7 +159,7 @@ export default function AddToCart({ productId }) {
 }
 ```
 
-> **Good to know**: An `action` is similar to the HTML primitive [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)
+> **注意事项**: An `action` is similar to the HTML primitive [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)
 
 #### `formAction`
 
@@ -182,13 +187,13 @@ export default function Form() {
 }
 ```
 
-> **Good to know**: A `formAction` is the HTML primitive [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction). React now allows you to pass functions to this attribute.
+> **注意事项**: A `formAction` is the HTML primitive [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction). React now allows you to pass functions to this attribute.
 
-#### Custom invocation using `startTransition`
+#### 使用`startTransition`自定义调用
 
 You can also invoke Server Actions without using `action` or `formAction`. You can achieve this by using `startTransition` provided by the `useTransition` hook, which can be useful if you want to use Server Actions outside of forms, buttons, or inputs.
 
-> **Good to know**: Using `startTransition` disables the out-of-the-box Progressive Enhancement.
+> **注意事项**: Using `startTransition` disables the out-of-the-box Progressive Enhancement.
 
 ```jsx filename="app/components/example-client-component.js" highlight={3, 7, 10}
 'use client'
@@ -217,7 +222,7 @@ export async function addItem(id) {
 }
 ```
 
-#### Custom invocation without `startTransition`
+#### 不带`startTransition`的自定义调用
 
 If you aren't doing [Server Mutations](#server-mutations), you can directly pass the function as a prop like any other function.
 
@@ -285,9 +290,9 @@ export default function LikeButton({ increment }) {
 }
 ```
 
-### Enhancements
+### 增强
 
-#### Experimental `useOptimistic`
+#### 实验 `useOptimistic`
 
 The experimental `useOptimistic` hook provides a way to implement optimistic updates in your application. Optimistic updates are a technique that enhances user experience by making the app appear more responsive.
 
@@ -302,7 +307,7 @@ import { send } from './actions.js'
 export function Thread({ messages }) {
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
-    (state, newMessage) => [...state, { message: newMessage, sending: true }]
+    (state, newMessage) => [...state, { message: newMessage, sending: true }],
   )
   const formRef = useRef()
 
@@ -330,7 +335,7 @@ export function Thread({ messages }) {
 }
 ```
 
-#### Experimental `useFormStatus`
+#### 实验 `useFormStatus`
 
 The **experimental** `useFormStatus` hook can be used within Form Actions, and provides the `pending` property.
 
@@ -354,7 +359,7 @@ function Submit() {
 }
 ```
 
-#### Progressive Enhancement
+#### 渐进增强
 
 Progressive Enhancement allows a `<form>` to function properly without JavaScript, or with JavaScript disabled. This allows users to interact with the form and submit data even if the JavaScript for the form hasn't been loaded yet or if it fails to load.
 
@@ -382,7 +387,7 @@ export default function ExampleClientComponent({ myAction }) {
 
 In both cases, the form is interactive before hydration occurs. Although Server Actions have the additional benefit of not relying on client JavaScript, you can still compose additional behavior with Client Actions where desired without sacrificing interactivity.
 
-### Size Limitation
+### 大小限制
 
 By default, the maximum size of the request body sent to a Server Action is 1MB. This prevents large amounts of data being sent to the server, which consumes a lot of server resource to parse.
 
@@ -397,9 +402,9 @@ module.exports = {
 }
 ```
 
-## Examples
+## 例子
 
-### Usage with Client Components
+### 客户端组件的使用
 
 #### Import
 
@@ -466,7 +471,7 @@ function ExampleClientComponent({ updateItem }) {
 }
 ```
 
-### On-demand Revalidation
+### 按需重新生效
 
 Server Actions can be used to revalidate data on-demand by path ([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) or by cache tag ([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)).
 
@@ -479,7 +484,7 @@ async function revalidate() {
 }
 ```
 
-### Validation
+### 验证
 
 The data passed to a Server Action can be validated or sanitized before invoking the action. For example, you can create a wrapper function that receives the action as its argument, and returns a function that invokes the action if it's valid.
 
@@ -510,7 +515,7 @@ export function withValidate(action) {
 }
 ```
 
-### Using headers
+### 使用标题
 
 You can read incoming request headers such as `cookies` and `headers` within a Server Action.
 
@@ -546,9 +551,9 @@ async function create(data) {
 }
 ```
 
-## Glossary
+## 术语表
 
-### Actions
+### 行动
 
 Actions are an experimental feature in React, allowing you to run `async` code in response to a user interaction.
 
@@ -558,20 +563,20 @@ Actions are defined through the `action` prop on an element. Typically when buil
 
 React also provides built-in solutions for [optimistic updates](#experimental-useoptimistic) with Actions. It's important to note new patterns are still being developed and new APIs may still be added.
 
-### Form Actions
+### 形式的行动
 
 [Actions](#actions) integrated into the web standard `<form>` API, and enable out-of-the-box progressive enhancement and [loading states](#experimental-useformstatus). Similar to the HTML primitive [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction).
 
-### Server Functions
+### 服务器功能
 
 Functions that run on the server, but can be called on the client.
 
-### Server Actions
+### 服务器操作
 
 [Server Functions](#server-functions) called as an action.
 
 Server Actions can be progressively enhanced by passing them to a [`form` element's `action` prop](#invocation). The form is interactive before any client-side JavaScript has loaded. This means React hydration is not required for the form to submit.
 
-### Server Mutations
+### 服务器突变
 
 [Server Actions](#server-actions) that mutates your data and calls `redirect`, `revalidatePath`, or `revalidateTag`.

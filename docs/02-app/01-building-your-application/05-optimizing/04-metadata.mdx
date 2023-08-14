@@ -1,5 +1,5 @@
 ---
-title: Metadata
+title: 元数据
 description: Use the Metadata API to define metadata in any layout or page.
 related:
   description: View all the Metadata API options.
@@ -7,6 +7,9 @@ related:
     - app/api-reference/functions/generate-metadata
     - app/api-reference/file-conventions/metadata
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 Next.js has a Metadata API that can be used to define your application metadata (e.g. `meta` and `link` tags inside your HTML `head` element) for improved SEO and web shareability.
 
@@ -57,7 +60,7 @@ type Props = {
 
 export async function generateMetadata(
   { params, searchParams }: Props,
-  parent?: ResolvingMetadata
+  parent?: ResolvingMetadata,
 ): Promise<Metadata> {
   // read route params
   const id = params.id
@@ -103,7 +106,7 @@ export default function Page({ params, searchParams }) {}
 
 For all the available params, see the [API Reference](/docs/app/api-reference/functions/generate-metadata).
 
-> **Good to know**:
+> **注意事项**:
 >
 > - Both static and dynamic metadata through `generateMetadata` are **only supported in Server Components**.
 > - When rendering a route, Next.js will [automatically deduplicate `fetch` requests](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) for the same data across `generateMetadata`, `generateStaticParams`, Layouts, Pages, and Server Components. React [`cache` can be used](/docs/app/building-your-application/data-fetching/caching#react-cache) if `fetch` is unavailable.
@@ -138,7 +141,7 @@ There are two default `meta` tags that are always added even if a route doesn't 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
-> **Good to know**: You can overwrite the default [`viewport`](/docs/app/api-reference/functions/generate-metadata#viewport) meta tag.
+> **注意事项**: You can overwrite the default [`viewport`](/docs/app/api-reference/functions/generate-metadata#viewport) meta tag.
 
 ### Ordering
 
@@ -276,7 +279,7 @@ export async function GET() {
     {
       width: 1200,
       height: 600,
-    }
+    },
   )
 }
 ```
@@ -285,7 +288,7 @@ export async function GET() {
 
 `ImageResponse` supports common CSS properties including flexbox and absolute positioning, custom fonts, text wrapping, centering, and nested images. [See the full list of supported CSS properties](/docs/app/api-reference/functions/image-response).
 
-> **Good to know**:
+> **注意事项**:
 >
 > - Examples are available in the [Vercel OG Playground](https://og-playground.vercel.app/).
 > - `ImageResponse` uses [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation), [Satori](https://github.com/vercel/satori), and Resvg to convert HTML and CSS into PNG.

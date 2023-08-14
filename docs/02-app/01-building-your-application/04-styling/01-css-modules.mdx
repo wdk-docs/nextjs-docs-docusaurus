@@ -1,7 +1,10 @@
 ---
-title: CSS Modules
+title: CSS 模块
 description: Style your Next.js Application with CSS Modules.
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
@@ -102,7 +105,7 @@ These `.css` files represent hot execution paths in your application, ensuring t
 <AppOnly>
 Global styles can be imported into any layout, page, or component inside the `app` directory.
 
-> **Good to know**: This is different from the `pages` directory, where you can only import global styles inside the `_app.js` file.
+> **注意事项**: This is different from the `pages` directory, where you can only import global styles inside the `_app.js` file.
 
 For example, consider a stylesheet named `app/global.css`:
 
@@ -234,7 +237,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **Good to know**: External stylesheets must be directly imported from an npm package or downloaded and colocated with your codebase. You cannot use `<link rel="stylesheet" />`.
+> **注意事项**: External stylesheets must be directly imported from an npm package or downloaded and colocated with your codebase. You cannot use `<link rel="stylesheet" />`.
 
 </AppOnly>
 

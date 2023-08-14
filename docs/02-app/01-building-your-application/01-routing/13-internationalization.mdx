@@ -1,18 +1,18 @@
 ---
 title: 国际化
-description: Add support for multiple languages with internationalized routing and localized content.
+description: 通过国际化路由和本地化内容添加对多语言的支持。
 ---
 
-Next.js enables you to configure the routing and rendering of content to support multiple languages. Making your site adaptive to different locales includes translated content (localization) and internationalized routes.
+js使您能够配置内容的路由和呈现，以支持多种语言。使您的站点适应不同的地区包括翻译内容(本地化)和国际化路由。
 
-## Terminology
+## 术语
 
 - **Locale:** An identifier for a set of language and formatting preferences. This usually includes the preferred language of the user and possibly their geographic region.
   - `en-US`: English as spoken in the United States
   - `nl-NL`: Dutch as spoken in the Netherlands
   - `nl`: Dutch, no specific region
 
-## Routing Overview
+## 路由概述
 
 It’s recommended to use the user’s language preferences in the browser to select which locale to use. Changing your preferred language will modify the incoming `Accept-Language` header to your application.
 
@@ -81,7 +81,7 @@ export default async function Page({ params: { lang } }) {
 
 The root layout can also be nested in the new folder (e.g. `app/[lang]/layout.js`).
 
-## Localization
+## 本地化
 
 Changing displayed content based on the user’s preferred locale, or localization, is not something specific to Next.js. The patterns described below would work the same with any web application.
 
@@ -129,7 +129,7 @@ export default async function Page({ params: { lang } }) {
 
 Because all layouts and pages in the `app/` directory default to [Server Components](/docs/getting-started/react-essentials#server-components), we do not need to worry about the size of the translation files affecting our client-side JavaScript bundle size. This code will **only run on the server**, and only the resulting HTML will be sent to the browser.
 
-## Static Generation
+## 静态生成
 
 To generate static routes for a given set of locales, we can use `generateStaticParams` with any page or layout. This can be global, for example, in the root layout:
 
@@ -147,7 +147,7 @@ export default function Root({ children, params }) {
 }
 ```
 
-## Examples
+## 例子
 
-- [Minimal i18n routing and translations](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing)
+- [最小的路由和转换](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing)
 - [next-intl](https://next-intl-docs.vercel.app/docs/next-13)

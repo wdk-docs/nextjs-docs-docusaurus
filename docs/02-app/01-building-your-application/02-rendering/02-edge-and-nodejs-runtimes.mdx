@@ -1,13 +1,16 @@
 ---
-title: Edge and Node.js Runtimes
-description: Learn about the switchable runtimes (Edge and Node.js) in Next.js.
+title: Edge和Node.js运行时
+description: 了解Next.js中的可切换运行时(Edge和Node.js)。
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-In the context of Next.js, "runtime" refers to the set of libraries, APIs, and general functionality available to your code during execution.
+在Next.js的上下文中，"runtime"指的是代码在执行期间可用的库、api和一般功能集。
 
-Next.js has two server runtimes where you can render parts of your application code:
+Next.js有两个服务器运行时，你可以渲染部分应用程序代码:
 
 - [Node.js Runtime](#nodejs-runtime)
 - [Edge Runtime](#edge-runtime)
@@ -16,9 +19,9 @@ Each runtime has its own set of APIs. Please refer to the [Node.js Docs](https:/
 
 By default, the `app` directory uses the Node.js runtime. However, you can opt into different runtimes (e.g. Edge) on a per-route basis.
 
-## Runtime Differences
+## 运行时的差异
 
-There are many considerations to make when choosing a runtime. This table shows the major differences at a glance. If you want a more in-depth analysis of the differences, check out the sections below.
+在选择运行时时需要考虑很多因素。这个表格一目了然地显示了主要的差异。如果您想要更深入地分析这些差异，请查看下面的部分。
 
 |                                                                                                                                                     | Node   | Serverless | Edge             |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ---------- | ---------------- |
@@ -32,33 +35,36 @@ There are many considerations to make when choosing a runtime. This table shows 
 
 ### Edge Runtime
 
-In Next.js, the lightweight Edge Runtime is a subset of available Node.js APIs.
+在Next.js中，轻量级Edge运行时是可用Node.js api的一个子集。
 
-The Edge Runtime is ideal if you need to deliver dynamic, personalized content at low latency with small, simple functions. The Edge Runtime's speed comes from its minimal use of resources, but that can be limiting in many scenarios.
+如果您需要通过小而简单的功能以低延迟交付动态、个性化的内容，Edge Runtime是理想的选择。
+Edge运行时的速度来自于它对资源的最小使用，但这在许多情况下可能会受到限制。
 
-For example, code executed in the Edge Runtime [on Vercel cannot exceed between 1 MB and 4 MB](https://vercel.com/docs/concepts/limits/overview#edge-middleware-and-edge-functions-size), this limit includes imported packages, fonts and files, and will vary depending on your deployment infrastructure.
+例如，在Edge运行时中执行的代码[在Vercel上不能超过1 MB到4 MB](https://vercel.com/docs/concepts/limits/overview#edge-middleware-and-edge-functions-size)，此限制包括导入的包、字体和文件，并将根据您的部署基础结构而变化。
 
 ### Node.js Runtime
 
-Using the Node.js runtime gives you access to all Node.js APIs, and all npm packages that rely on them. However, it's not as fast to start up as routes using the Edge runtime.
+使用Node.js运行时，你可以访问所有Node.js api，以及所有依赖于它们的npm包。然而，它的启动速度不如使用Edge运行时的路由快。
 
-Deploying your Next.js application to a Node.js server will require managing, scaling, and configuring your infrastructure. Alternatively, you can consider deploying your Next.js application to a serverless platform like Vercel, which will handle this for you.
+将Next.js应用程序部署到Node.js服务器将需要管理、扩展和配置基础架构。或者，您可以考虑将Next.js应用程序部署到像Vercel这样的无服务器平台，它将为您处理这些问题。
 
-### Serverless Node.js
+### 无服务器 Node.js
 
-Serverless is ideal if you need a scalable solution that can handle more complex computational loads than the Edge Runtime. With Serverless Functions on Vercel, for example, your overall code size is [50MB](https://vercel.com/docs/concepts/limits/overview#serverless-function-size) including imported packages, fonts, and files.
+如果您需要一个可以处理比Edge Runtime更复杂的计算负载的可扩展解决方案，无服务器是理想的选择。例如，使用Vercel上的Serverless Functions，您的总代码大小为[50MB](https://vercel.com/docs/concepts/limits/overview#serverless-function-size)，包括导入的包、字体和文件。
 
-The downside compared to routes using the [Edge](https://vercel.com/docs/concepts/functions/edge-functions) is that it can take hundreds of milliseconds for Serverless Functions to boot up before they begin processing requests. Depending on the amount of traffic your site receives, this could be a frequent occurrence as the functions are not frequently "warm".
+与使用[Edge](https://vercel.com/docs/concepts/functions/edge-functions)的路由相比，缺点是在开始处理请求之前，无服务器功能可能需要数百毫秒的时间才能启动。根据您的站点接收到的流量，这可能是一个经常发生的情况，因为这些功能并不经常"warm"。
 
 <AppOnly>
 
-## Examples
+## 例子
 
-### Segment Runtime Option
+### 段运行时选项
 
-You can specify a runtime for individual route segments in your Next.js application. To do so, [declare a variable called `runtime` and export it](/docs/app/api-reference/file-conventions/route-segment-config). The variable must be a string, and must have a value of either `'nodejs'` or `'edge'` runtime.
+你可以在Next.js应用中为单个路由段指定运行时。
+要做到这一点，[声明一个名为`runtime`的变量并导出它](/docs/app/api-reference/file-conventions/route-segment-config)。
+该变量必须是一个字符串，并且必须具有`'nodejs'` 或 `'edge'`runtime的值。
 
-The following example demonstrates a page route segment that exports a `runtime` with a value of `'edge'`:
+下面的例子演示了一个导出值为edge的`runtime`的页面路由段:
 
 ```tsx filename="app/page.tsx" switcher
 export const runtime = 'edge' // 'nodejs' (default) | 'edge'
@@ -68,6 +74,6 @@ export const runtime = 'edge' // 'nodejs' (default) | 'edge'
 export const runtime = 'edge' // 'nodejs' (default) | 'edge'
 ```
 
-If the segment runtime is _not_ set, the default `nodejs` runtime will be used. You do not need to use the `runtime` option if you do not plan to change from the Node.js runtime.
+如果段运行时设置为 _not_ ，则将使用默认的`nodejs`运行时。如果你不打算改变Node.js的运行时，你不需要使用`runtime`选项。
 
 </AppOnly>

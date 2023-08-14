@@ -6,7 +6,7 @@ description: Learn how to customize the webpack config used by Next.js
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-> **Good to know**: changes to webpack config are not covered by semver so proceed at your own risk
+> **注意事项**: changes to webpack config are not covered by semver so proceed at your own risk
 
 Before continuing to add custom webpack configuration to your application make sure Next.js doesn't already support your use-case:
 
@@ -42,7 +42,7 @@ In order to extend our usage of `webpack`, you can define a function that extend
 module.exports = {
   webpack: (
     config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
   ) => {
     // Important: return the modified config
     return config

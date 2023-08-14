@@ -1,11 +1,15 @@
 ---
-title: 平行路线
-description: Simultaneously render one or more pages in the same view that can be navigated independently. A pattern for highly dynamic applications.
+title: 并行路由
+description: 在可独立导航的同一视图中同时呈现一个或多个页面。用于高度动态应用程序的模式。
 ---
 
-Parallel Routing allows you to simultaneously or conditionally render one or more pages in the same layout. For highly dynamic sections of an app, such as dashboards and feeds on social sites, Parallel Routing can be used to implement complex routing patterns.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-For example, you can simultaneously render the team and analytics pages.
+并行路由允许您同时或有条件地呈现相同布局中的一个或多个页面。
+对于应用程序中高度动态的部分，比如社交网站上的仪表板和提要，并行路由可以用来实现复杂的路由模式。
+
+例如，您可以同时呈现团队和分析页面。
 
 <Image
   alt="Parallel Routes Diagram"
@@ -81,7 +85,7 @@ export default function Layout(props) {
 }
 ```
 
-> **Good to know**: The `children` prop is an implicit slot that does not need to be mapped to a folder. This means `app/page.js` is equivalent to `app/@children/page.js`.
+> **注意事项**: The `children` prop is an implicit slot that does not need to be mapped to a folder. This means `app/page.js` is equivalent to `app/@children/page.js`.
 
 ## Unmatched Routes
 

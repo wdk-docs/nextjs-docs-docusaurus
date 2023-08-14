@@ -3,6 +3,9 @@ title: not-found.js
 description: API reference for the not-found.js file.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 The **not-found** file is used to render UI when the [`notFound`](/docs/app/api-reference/functions/not-found) function is thrown within a route segment. Along with serving a custom UI, Next.js will also return a `404` HTTP status code.
 
 ```tsx filename="app/blog/not-found.tsx" switcher
@@ -37,7 +40,7 @@ export default function NotFound() {
 }
 ```
 
-> **Good to know**: In addition to catching expected `notFound()` errors, the root `app/not-found.js` file also handles any unmatched URLs for your whole application. This means users that visit a URL that is not handled by your app will be shown the UI exported by the `app/not-found.js` file.
+> **注意事项**: In addition to catching expected `notFound()` errors, the root `app/not-found.js` file also handles any unmatched URLs for your whole application. This means users that visit a URL that is not handled by your app will be shown the UI exported by the `app/not-found.js` file.
 
 ## Props
 

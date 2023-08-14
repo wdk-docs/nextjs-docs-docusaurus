@@ -1,15 +1,15 @@
 ---
 title: 渲染
-description: Learn the differences between Next.js rendering environments, strategies, and runtimes.
+description: 了解Next.js呈现环境、策略和运行时之间的差异。
 ---
 
-Rendering converts the code you write into user interfaces.
+呈现将您编写的代码转换为用户界面。
 
-React 18 and Next.js 13 introduced new ways to render your application. This page will help you understand the differences between rendering environments, strategies, runtimes, and how to opt into them.
+React 18和Next.js 13引入了渲染应用程序的新方法。本页将帮助您了解呈现环境、策略、运行时之间的差异，以及如何选择它们。
 
 ## Rendering Environments
 
-There are two environments where your application code can be rendered: the client and the server.
+有两种环境可以呈现应用程序代码:客户机和服务器。
 
 <Image
   alt="Client and Server Environments"
@@ -19,55 +19,59 @@ There are two environments where your application code can be rendered: the clie
   height="672"
 />
 
-- The **client** refers to the browser on a user's device that sends a request to a server for your application code. It then turns the response from the server into an interface the user can interact with.
-- The **server** refers to the computer in a data center that stores your application code, receives requests from a client, does some computation, and sends back an appropriate response.
+- **客户端**指的是用户设备上的浏览器，它为应用程序代码向服务器发送请求。然后，它将来自服务器的响应转换为用户可以与之交互的界面。
+- **服务器**是指数据中心中的计算机，它存储应用程序代码，接收来自客户机的请求，进行一些计算，并发回适当的响应。
 
-> **Good to know**: Server can refer to computers in regions where your application is deployed to, the [Edge Network](https://vercel.com/docs/concepts/edge-network/overview) where your application code is distributed, or [Content Delivery Networks (CDNs)](https://developer.mozilla.org/en-US/docs/Glossary/CDN) where the result of the rendering work can be cached.
+> **注意事项**: 服务器可以指部署应用程序所在区域的计算机，也可以指分发应用程序代码的[边缘网络](https://vercel.com/docs/concepts/edge-network/overview)，或者可以缓存呈现工作结果的[内容交付网络(cdn)](https://developer.mozilla.org/en-US/docs/Glossary/CDN)。
 
-## Component-level Client and Server Rendering
+## 组件级客户端和服务器呈现
 
-Before React 18, the primary way to render your application **using React** was entirely on the client.
+在React 18之前，使用React渲染应用程序的主要方式完全是在客户端。
 
-Next.js provided an easier way to break down your application into **pages** and prerender on the server by generating HTML and sending it to the client to be [hydrated](https://react.dev/reference/react-dom/hydrate#hydrating-server-rendered-html) by React. However, this led to additional JavaScript needed on the client to make the initial HTML interactive.
+Next.js提供了一种更简单的方法，通过生成HTML并将其发送到客户端由React[处理](https://react.dev/reference/react-dom/hydrate#hydrating-server-rendered-html)，将应用程序分解为**页面**和服务器上的预呈现。
+然而，这导致客户端需要额外的JavaScript来使初始HTML具有交互性。
 
-Now, with [Server and Client Components](/docs/getting-started/react-essentials), React can render on the client **and** the server meaning you can choose the rendering environment at the component level.
+现在，有了[服务器和客户端组件](/docs/getting-started/react-essentials)， React可以在客户端和服务器端进行渲染，这意味着你可以在组件级别选择渲染环境。
 
-By default, the [`app` router uses **Server Components**](/docs/getting-started/react-essentials#server-components), allowing you to easily render components on the server and reducing the amount of JavaScript sent to the client.
+默认情况下，[`app`路由器使用**服务器组件**](/docs/getting-started/react-essentials#Server-Components)，允许你在服务器端轻松渲染组件，减少发送到客户端的JavaScript量。
 
-## Static and Dynamic Rendering on the Server
+## 服务器上的静态和动态渲染
 
-In addition to client-side and server-side rendering with React components, Next.js gives you the option to optimize rendering on the server with **Static** and **Dynamic** Rendering.
+除了使用React组件进行客户端和服务器端渲染之外，Next.js还为您提供了使用**静态**和**动态**渲染来优化服务器端渲染的选项。
 
-### Static Rendering
+### 静态呈现
 
-With **Static Rendering**, both Server _and_ Client Components can be prerendered on the server at **build time**. The result of the work is [cached](/docs/app/building-your-application/data-fetching/caching) and reused on subsequent requests. The cached result can also be [revalidated](/docs/app/building-your-application/data-fetching#revalidating-data).
+使用**静态渲染**，服务器和客户端组件都可以在**构建时**在服务器上预渲染。
+工作的结果被[缓存](/docs/app/building-your-application/data-fetching/caching)并在后续请求中重用。
+缓存的结果也可以[重新验证](/docs/app/building-your-application/data-fetching#revalidating-data)。
 
-> **Good to know**: This is equivalent to [Static Site Generation (SSG)](/docs/pages/building-your-application/rendering/static-site-generation) and [Incremental Static Regeneration (ISR)](/docs/pages/building-your-application/rendering/incremental-static-regeneration) in the [Pages Router](/docs/pages/building-your-application/rendering).
+> **注意事项:**: 这相当于在[页面路由器](/docs/pages/building-your-application/rendering)里[静态网站生成(SSG)](/docs/pages/building-your-application/rendering/static-site-generation)和[增量静态再生(ISR)](/docs/pages/building-your-application/rendering/incremental-static-regeneration).
 
-Server and Client Components are rendered differently during Static Rendering:
+在静态渲染期间，服务器和客户端组件的呈现方式不同:
 
-- Client Components have their HTML and JSON prerendered and cached on the server. The cached result is then sent to the client for hydration.
-- Server Components are rendered on the server by React, and their payload is used to generate HTML. The same rendered payload is also used to hydrate the components on the client, resulting in no JavaScript needed on the client.
+- 客户端组件将其HTML和JSON预渲染并缓存在服务器上。然后将缓存的结果发送给客户端进行补水。
+- 服务器组件由React在服务器上呈现，它们的有效负载用于生成HTML。同样呈现的有效负载也用于在客户端上填充组件，从而在客户端上不需要JavaScript。
 
-### Dynamic Rendering
+### 动态呈现
 
-With Dynamic Rendering, both Server _and_ Client Components are rendered on the server at **request time**. The result of the work is not cached.
+使用动态渲染，服务器和客户端组件都在请求时间在服务器上呈现。没有缓存工作的结果。
 
-> **Good to know**: This is equivalent to [Server-Side Rendering (`getServerSideProps()`)](/docs/pages/building-your-application/rendering/server-side-rendering) in the [Pages Router](/docs/pages/building-your-application/rendering).
+> **注意事项:**: 这相当于在[页面路由器](/docs/pages/building-your-application/rendering)里[服务器端渲染 (`getServerSideProps()`)](/docs/pages/building-your-application/rendering/server-side-rendering).
 
-To learn more about static and dynamic behavior, see the [Static and Dynamic Rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering) page. To learn more about caching, see the [Caching](/docs/app/building-your-application/data-fetching/caching) sections.
+要了解更多关于静态和动态行为，请参阅[静态和动态渲染](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)页面。
+要了解更多关于缓存的信息，请参阅[caching](/docs/app/building-your-application/data-fetching/caching)部分。
 
-## Edge and Node.js Runtimes
+## Edge和Node.js运行时
 
-On the server, there are two runtimes where your pages can be rendered:
+在服务器上，有两种运行时可以呈现页面:
 
-- The **Node.js Runtime** (default) has access to all Node.js APIs and compatible packages from the ecosystem.
-- The **Edge Runtime** is based on [Web APIs](/docs/app/api-reference/edge).
+- **Node.js Runtime**(默认)可以访问生态系统中的所有Node.js api和兼容包。
+- **Edge运行时**基于[Web api](/docs/app/api-reference/edge)。
 
-Both runtimes support [streaming](/docs/app/building-your-application/routing/loading-ui-and-streaming) from the server, depending on your deployment infrastructure.
+两个运行时都支持来自服务器的[流媒体](/docs/app/building-your-application/routing/loading-ui-and-streaming)，这取决于你的部署基础设施。
 
-To learn how to switch between runtimes, see the [Edge and Node.js Runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) page.
+要了解如何在运行时之间切换，请参阅[Edge和Node.js运行时](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)页面。
 
-## Next Steps
+## 下一个步骤
 
-Now that you understand the fundamentals of rendering, you can learn more about implementing the different rendering strategies and runtimes:
+现在你已经了解了渲染的基本原理，你可以学习更多关于实现不同渲染策略和运行时的知识:

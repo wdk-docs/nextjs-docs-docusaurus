@@ -1,13 +1,19 @@
 ---
-title: Draft Mode
-description: Next.js has draft mode to toggle between static and dynamic pages. You can learn how it works with App Router here.
+title: 草稿模式
+description: Next.js有草稿模式，可以在静态和动态页面之间切换。你可以在这里了解它如何与应用路由器一起工作。
 ---
 
-Static rendering is useful when your pages fetch data from a headless CMS. However, it’s not ideal when you’re writing a draft on your headless CMS and want to view the draft immediately on your page. You’d want Next.js to render these pages at **request time** instead of build time and fetch the draft content instead of the published content. You’d want Next.js to switch to [dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering) only for this specific case.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-Next.js has a feature called **Draft Mode** which solves this problem. Here are instructions on how to use it.
+当您的页面从无头CMS获取数据时，静态呈现非常有用。
+但是，当您在无头CMS上编写草稿并希望立即在页面上查看草稿时，这并不理想。
+您希望Next.js在请求时间而不是构建时间呈现这些页面，并获取草稿内容而不是发布内容。
+你想要Next.js切换到[动态渲染](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)只针对这个特定的情况。
 
-## Step 1: Create and access the Route Handler
+Next.js有一个叫做草稿模式的特性解决了这个问题。这是如何使用它的说明。
+
+## 步骤1:创建并访问路由处理程序
 
 First, create a [Route Handler](/docs/app/building-your-application/routing/router-handlers). It can have any name - e.g. `app/api/draft/route.ts`
 
@@ -37,7 +43,7 @@ This will set a **cookie** to enable draft mode. Subsequent requests containing 
 
 You can test this manually by visiting `/api/draft` and looking at your browser’s developer tools. Notice the `Set-Cookie` response header with a cookie named `__prerender_bypass`.
 
-### Securely accessing it from your Headless CMS
+### 安全地访问它从您的无头CMS
 
 In practice, you’d want to call this Route Handler _securely_ from your headless CMS. The specific steps will vary depending on which headless CMS you’re using, but here are some common steps you could take.
 
@@ -135,7 +141,7 @@ export async function GET(request) {
 
 If it succeeds, then the browser will be redirected to the path you want to view with the draft mode cookie.
 
-## Step 2: Update page
+## 步骤2:更新页面
 
 The next step is to update your page to check the value of `draftMode().isEnabled`.
 
@@ -207,9 +213,9 @@ Set this as the draft URL on your headless CMS or access manually, and you shoul
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
-## More Details
+## 更多的细节
 
-### Clear the Draft Mode cookie
+### 清除草稿模式cookie
 
 By default, the Draft Mode session ends when the browser is closed.
 
@@ -235,10 +241,10 @@ export async function GET(request) {
 
 Then, send a request to `/api/disable-draft` to invoke the Route Handler. If calling this route using [`next/link`](/docs/app/api-reference/components/link), you must pass `prefetch={false}` to prevent accidentally deleting the cookie on prefetch.
 
-### Unique per `next build`
+### `next build`都是独一无二的
 
-A new bypass cookie value will be generated each time you run `next build`.
+每次运行`next build`时都会生成一个新的绕过cookie值。
 
-This ensures that the bypass cookie can’t be guessed.
+这确保了旁路cookie不会被猜到。
 
-> **Good to know**: To test Draft Mode locally over HTTP, your browser will need to allow third-party cookies and local storage access.
+> **注意事项**: 要通过HTTP本地测试Draft Mode，您的浏览器需要允许第三方cookie和本地存储访问。

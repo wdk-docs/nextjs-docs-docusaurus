@@ -1,22 +1,25 @@
 ---
-title: App Router Incremental Adoption Guide
-nav_title: App Router Migration
-description: Learn how to upgrade your existing Next.js application from the Pages Router to the App Router.
+title: 应用路由器增量采用指南
+nav_title: 应用路由器迁移
+description: 学习如何将现有的Next.js应用从Pages路由器升级到App路由器。
 ---
 
-This guide will help you:
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-- [Update your Next.js application from version 12 to version 13](#nextjs-version)
-- [Upgrade features that work in both the `pages` and the `app` directories](#upgrading-new-features)
-- [Incrementally migrate your existing application from `pages` to `app`](#migrating-from-pages-to-app)
+本指南将帮助您:
 
-## Upgrading
+- [将Next.js应用程序从版本12更新到版本13](#nextjs-version)
+- [升级在`pages`和`app`目录下都有效的功能](#upgrading-new-features)
+- [逐步将现有应用程序从`pages`迁移到`app`](#migrating-from-pages-to-app)
 
-### Node.js Version
+## 升级
+
+### Node.js 版本
 
 The minimum Node.js version is now **v16.8**. See the [Node.js documentation](https://nodejs.org/docs/latest-v16.x/api/) for more information.
 
-### Next.js Version
+### Next.js 版本
 
 To update to Next.js version 13, run the following command using your preferred package manager:
 
@@ -24,7 +27,7 @@ To update to Next.js version 13, run the following command using your preferred 
 npm install next@latest react@latest react-dom@latest
 ```
 
-### ESLint Version
+### ESLint 版本
 
 If you're using ESLint, you need to upgrade your ESLint version:
 
@@ -32,22 +35,22 @@ If you're using ESLint, you need to upgrade your ESLint version:
 npm install -D eslint-config-next@latest
 ```
 
-> **Good to know**: You may need to restart the ESLint server in VS Code for the ESLint changes to take effect. Open the Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows) and search for `ESLint: Restart ESLint Server`.
+> **注意事项**: You may need to restart the ESLint server in VS Code for the ESLint changes to take effect. Open the Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows) and search for `ESLint: Restart ESLint Server`.
 
-## Next Steps
+## 下一个步骤
 
 After you've updated, see the following sections for next steps:
 
 - [Upgrade new features](#upgrading-new-features): A guide to help you upgrade to new features such as the improved Image and Link Components.
 - [Migrate from the `pages` to `app` directory](#migrating-from-pages-to-app): A step-by-step guide to help you incrementally migrate from the `pages` to the `app` directory.
 
-## Upgrading New Features
+## 升级新特性
 
 Next.js 13 introduced the new [App Router](/docs/app/building-your-application/routing) with new features and conventions. The new Router is available in the `app` directory and co-exists with the `pages` directory.
 
 Upgrading to Next.js 13 does **not** require using the new [App Router](/docs/app/building-your-application/routing#the-app-router). You can continue using `pages` with new features that work in both directories, such as the updated [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), and [Font optimization](#font-optimization).
 
-### `<Image/>` Component
+### `<Image/>` 组件
 
 Next.js 12 introduced new improvements to the Image Component with a temporary import: `next/future/image`. These improvements included less client-side JavaScript, easier ways to extend and style images, better accessibility, and native browser lazy loading.
 
@@ -58,7 +61,7 @@ There are two codemods to help you migrate to the new Image Component:
 - [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): Safely and automatically renames `next/image` imports to `next/legacy/image`. Existing components will maintain the same behavior.
 - [**`next-image-experimental` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): Dangerously adds inline styles and removes unused props. This will change the behavior of existing components to match the new defaults. To use this codemod, you need to run the `next-image-to-legacy-image` codemod first.
 
-### `<Link>` Component
+### `<Link>` 组件
 
 The [`<Link>` Component](/docs/app/building-your-application/routing/linking-and-navigating#link-component) no longer requires manually adding an `<a>` tag as a child. This behavior was added as an experimental option in [version 12.2](https://nextjs.org/blog/next-12-2) and is now the default. In Next.js 13, `<Link>` always renders `<a>` and allows you to forward props to the underlying tag.
 
@@ -80,7 +83,7 @@ import Link from 'next/link'
 
 To upgrade your links to Next.js 13, you can use the [`new-link` codemod](/docs/app/building-your-application/upgrading/codemods#new-link).
 
-### `<Script>` Component
+### `<Script>` 组件
 
 The behavior of [`next/script`](/docs/app/api-reference/components/script) has been updated to support both `pages` and `app`, but some changes need to be made to ensure a smooth migration:
 
@@ -88,7 +91,7 @@ The behavior of [`next/script`](/docs/app/api-reference/components/script) has b
 - The experimental `worker` strategy does not yet work in `app` and scripts denoted with this strategy will either have to be removed or modified to use a different strategy (e.g. `lazyOnload`).
 - `onLoad`, `onReady`, and `onError` handlers will not work in Server Components so make sure to move them to a [Client Component](/docs/getting-started/react-essentials) or remove them altogether.
 
-### Font Optimization
+### 字体优化
 
 Previously, Next.js helped you optimize fonts by [inlining font CSS](/docs/app/building-your-application/optimizing/fonts). Version 13 introduces the new [`next/font`](/docs/app/building-your-application/optimizing/fonts) module which gives you the ability to customize your font loading experience while still ensuring great performance and privacy. `next/font` is supported in both the `pages` and `app` directories.
 
@@ -96,7 +99,7 @@ While [inlining CSS](/docs/app/building-your-application/optimizing/fonts) still
 
 See the [Font Optimization](/docs/app/building-your-application/optimizing/fonts) page to learn how to use `next/font`.
 
-## Migrating from `pages` to `app`
+## 从`pages`迁移到`app`
 
 > **🎥 Watch:** Learn how to incrementally adopt the App Router → [YouTube (16 minutes)](https://www.youtube.com/watch?v=YQMSietiFm0).
 
@@ -111,13 +114,13 @@ We recommend reducing the combined complexity of these updates by breaking down 
   - Use `layout.js` to define UI that is shared across multiple routes.
   - `.js`, `.jsx`, or `.tsx` file extensions can be used for special files.
 - You can colocate other files inside the `app` directory such as components, styles, tests, and more. [Learn more](/docs/app/building-your-application/routing).
-- Data fetching functions like `getServerSideProps` and `getStaticProps` have been replaced with [a new API](/docs/app/building-your-application/data-fetching) inside `app`. `getStaticPaths` has been replaced with [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params).
+- 像`getServerSideProps`和`getStaticProps`的数据抓取函数在`app`内已经被替换为[一个新的API](/docs/app/building-your-application/data-fetching)。`getStaticPaths`已被替换为[`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)。
 - `pages/_app.js` and `pages/_document.js` have been replaced with a single `app/layout.js` root layout. [Learn more](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required).
 - `pages/_error.js` has been replaced with more granular `error.js` special files. [Learn more](/docs/app/building-your-application/routing/error-handling).
 - `pages/404.js` has been replaced with the [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) file.
 - `pages/api/*` currently remain inside the `pages` directory.
 
-### Step 1: Creating the `app` directory
+### 步骤1:创建`app`目录
 
 Update to the latest Next.js version (requires 13.4 or greater):
 
@@ -127,7 +130,7 @@ npm install next@latest
 
 Then, create a new `app` directory at the root of your project (or `src/` directory).
 
-### Step 2: Creating a Root Layout
+### 步骤2:创建根布局
 
 Create a new `app/layout.tsx` file inside the `app` directory. This is a [root layout](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) that will apply to all routes inside `app`.
 
@@ -184,13 +187,13 @@ export const metadata = {
 }
 ```
 
-#### Migrating `_document.js` and `_app.js`
+#### 迁移 `_document.js` and `_app.js`
 
 If you have an existing `_app` or `_document` file, you can copy the contents (e.g. global styles) to the root layout (`app/layout.tsx`). Styles in `app/layout.tsx` will _not_ apply to `pages/*`. You should keep `_app`/`_document` while migrating to prevent your `pages/*` routes from breaking. Once fully migrated, you can then safely delete them.
 
 If you are using any React Context providers, they will need to be moved to a [Client Component](/docs/getting-started/react-essentials).
 
-#### Migrating the `getLayout()` pattern to Layouts (Optional)
+#### 迁移 the `getLayout()` pattern to Layouts (Optional)
 
 Next.js recommended adding a [property to Page components](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern#per-page-layouts) to achieve per-page layouts in the `pages` directory. This pattern can be replaced with native support for [nested layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts) in the `app` directory.
 
@@ -326,7 +329,7 @@ export default function Page() {
 ### Step 4: Migrating Pages
 
 - Pages in the [`app` directory](/docs/app/building-your-application/routing) are [Server Components](/docs/getting-started/react-essentials) by default. This is different from the `pages` directory where pages are [Client Components](/docs/getting-started/react-essentials).
-- [Data fetching](/docs/app/building-your-application/data-fetching) has changed in `app`. `getServerSideProps`, `getStaticProps` and `getInitialProps` have been replaced for a simpler API.
+- [数据抓取](/docs/app/building-your-application/data-fetching)在`app`中发生了变化. `getServerSideProps`, `getStaticProps` 和 `getInitialProps` 已经被更简单的API取代了.
 - The `app` directory uses nested folders to [define routes](/docs/app/building-your-application/routing/defining-routes) and a special `page.js` file to make a route segment publicly accessible.
 - | `pages` Directory | `app` Directory       | Route          |
   | ----------------- | --------------------- | -------------- |
@@ -339,7 +342,7 @@ We recommend breaking down the migration of a page into two main steps:
 - Step 1: Move the default exported Page Component into a new Client Component.
 - Step 2: Import the new Client Component into a new `page.js` file inside the `app` directory.
 
-> **Good to know**: This is the easiest migration path because it has the most comparable behavior to the `pages` directory.
+> **注意事项**: This is the easiest migration path because it has the most comparable behavior to the `pages` directory.
 
 **Step 1: Create a new Client Component**
 
@@ -476,9 +479,13 @@ In addition, the new `useRouter` hook has the following changes:
 
 [View the `useRouter()` API reference](/docs/app/api-reference/functions/use-router).
 
-### Step 6: Migrating Data Fetching Methods
+### 步骤6: 迁移数据获取方法
 
-The `pages` directory uses `getServerSideProps` and `getStaticProps` to fetch data for pages. Inside the `app` directory, these previous data fetching functions are replaced with a [simpler API](/docs/app/building-your-application/data-fetching) built on top of `fetch()` and `async` React Server Components.
+`pages`目录使用`getServerSideProps`和`getStaticProps`为页面获取数据.
+在`app`目录下, 这些以前的数据抓取功能被一个[更简单的API](/docs/app/building-your-application/data-fetching)取代，这个API建立在`fetch()`和`async` React服务器组件之上。
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
@@ -501,6 +508,9 @@ export default async function Page() {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
   // This request should be cached until manually invalidated.
@@ -521,6 +531,9 @@ export default async function Page() {
   return <div>...</div>
 }
 ```
+
+</TabItem>
+</Tabs>
 
 #### Server-side Rendering (`getServerSideProps`)
 
@@ -663,9 +676,10 @@ export default async function Page() {
 }
 ```
 
-#### Static Site Generation (`getStaticProps`)
+#### 静态站点生成 (`getStaticProps`)
 
-In the `pages` directory, the `getStaticProps` function is used to pre-render a page at build time. This function can be used to fetch data from an external API or directly from a database, and pass this data down to the entire page as it's being generated during the build.
+在`pages`目录中，`getStaticProps`函数用于在构建时预渲染页面。
+此函数可用于从外部API或直接从数据库获取数据，并在构建期间生成数据时将此数据传递给整个页面。
 
 ```jsx filename="pages/index.js"
 // `pages` directory
@@ -810,7 +824,7 @@ export default async function Post({ params }) {
 
 With [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) set to `true` (the default), when a route segment is requested that hasn't been generated, it will be server-rendered and cached as [static data](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching) on success.
 
-#### Incremental Static Regeneration (`getStaticProps` with `revalidate`)
+#### 增量静态再生 (`getStaticProps` with `revalidate`)
 
 In the `pages` directory, the `getStaticProps` function allows you to add a `revalidate` field to automatically regenerate a page after a certain amount of time. This is called [Incremental Static Regeneration (ISR)](/docs/app/building-your-application/data-fetching/fetching#static-data-fetching) and helps you update static content without redeploying.
 
@@ -869,7 +883,7 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-> **Good to know**: If you previously used API routes to call an external API from the client, you can now use [Server Components](/docs/getting-started/react-essentials#server-components) instead to securely fetch data. Learn more about [data fetching](/docs/app/building-your-application/data-fetching/fetching).
+> **注意事项**: If you previously used API routes to call an external API from the client, you can now use [Server Components](/docs/getting-started/react-essentials#server-components) instead to securely fetch data. Learn more about [data fetching](/docs/app/building-your-application/data-fetching/fetching).
 
 ### Step 7: Styling
 

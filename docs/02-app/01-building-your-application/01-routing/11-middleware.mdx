@@ -1,19 +1,21 @@
 ---
 title: 中间件
-description: Learn how to use Middleware to run code before a request is completed.
+description: 了解如何使用中间件在请求完成之前运行代码。
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 这个文档的内容在应用和pages路由器之间共享。 You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Middleware allows you to run code before a request is completed. Then, based on the incoming request, you can modify the response by rewriting, redirecting, modifying the request or response headers, or responding directly.
+中间件允许您在请求完成之前运行代码。然后，根据传入的请求，您可以通过重写、重定向、修改请求或响应头或直接响应来修改响应。
 
-Middleware runs before cached content and routes are matched. See [Matching Paths](#matching-paths) for more details.
+中间件在缓存内容和路由匹配之前运行。参见[匹配路径](#matching-paths)了解更多细节。
 
-## Convention
+## 公约
 
-Use the file `middleware.ts` (or `.js`) in the root of your project to define Middleware. For example, at the same level as `pages` or `app`, or inside `src` if applicable.
+在项目的根目录中使用文件 `middleware.ts` (or `.js`)定义中间件.
 
-## Example
+例如，在`pages`或`app`的同一级别，或者在`src`中(如果适用)。
+
+## 例子
 
 ```ts filename="middleware.ts"
 import { NextResponse } from 'next/server'
@@ -30,7 +32,7 @@ export const config = {
 }
 ```
 
-## Matching Paths
+## 匹配的路径
 
 Middleware will be invoked for **every route in your project**. The following is the execution order:
 
@@ -83,9 +85,9 @@ export const config = {
 }
 ```
 
-> **Good to know**: The `matcher` values need to be constants so they can be statically analyzed at build-time. Dynamic values such as variables will be ignored.
+> **注意事项**: The `matcher` values need to be constants so they can be statically analyzed at build-time. Dynamic values such as variables will be ignored.
 
-Configured matchers:
+匹配器配置:
 
 1. MUST start with `/`
 2. Can include named parameters: `/about/:path` matches `/about/a` and `/about/b` but not `/about/a/c`
@@ -94,9 +96,9 @@ Configured matchers:
 
 Read more details on [path-to-regexp](https://github.com/pillarjs/path-to-regexp#path-to-regexp-1) documentation.
 
-> **Good to know**: For backward compatibility, Next.js always considers `/public` as `/public/index`. Therefore, a matcher of `/public/:path` will match.
+> **注意事项**: For backward compatibility, Next.js always considers `/public` as `/public/index`. Therefore, a matcher of `/public/:path` will match.
 
-### Conditional Statements
+### 条件语句
 
 ```ts filename="middleware.ts"
 import { NextResponse } from 'next/server'
@@ -141,7 +143,7 @@ To produce a response from Middleware, you can:
 
 </PagesOnly>
 
-## Using Cookies
+## 使用cookie
 
 Cookies are regular headers. On a `Request`, they are stored in the `Cookie` header. On a `Response` they are in the `Set-Cookie` header. Next.js provides a convenient way to access and manipulate these cookies through the `cookies` extension on `NextRequest` and `NextResponse`.
 
@@ -180,7 +182,7 @@ export function middleware(request: NextRequest) {
 }
 ```
 
-## Setting Headers
+## 设置页眉
 
 You can set request and response headers using the `NextResponse` API (setting _request_ headers is available since Next.js v13.0.0).
 
@@ -229,9 +231,9 @@ export function middleware(request) {
 }
 ```
 
-> **Good to know**: Avoid setting large headers as it might cause [431 Request Header Fields Too Large](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/431) error depending on your backend web server configuration.
+> **注意事项**: Avoid setting large headers as it might cause [431 Request Header Fields Too Large](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/431) error depending on your backend web server configuration.
 
-## Producing a Response
+## 生成响应
 
 You can respond from Middleware directly by returning a `Response` or `NextResponse` instance. (This is available since [Next.js v13.1.0](https://nextjs.org/blog/next-13-1#nextjs-advanced-middleware))
 
@@ -277,7 +279,7 @@ export function middleware(request) {
 }
 ```
 
-## Advanced Middleware Flags
+## 高级中间件标志
 
 In `v13.1` of Next.js two additional flags were introduced for middleware, `skipMiddlewareUrlNormalize` and `skipTrailingSlashRedirect` to handle advanced use cases.
 
@@ -330,12 +332,12 @@ export default async function middleware(req) {
 }
 ```
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                                                                       |
-| --------- | --------------------------------------------------------------------------------------------- |
-| `v13.1.0` | Advanced Middleware flags added                                                               |
-| `v13.0.0` | Middleware can modify request headers, response headers, and send responses                   |
-| `v12.2.0` | Middleware is stable, please see the [upgrade guide](/docs/messages/middleware-upgrade-guide) |
-| `v12.0.9` | Enforce absolute URLs in Edge Runtime ([PR](https://github.com/vercel/next.js/pull/33410))    |
-| `v12.0.0` | Middleware (Beta) added                                                                       |
+| 版本      | 变化                                                                        |
+| --------- | --------------------------------------------------------------------------- |
+| `v13.1.0` | 添加高级中间件标志                                                          |
+| `v13.0.0` | 中间件可以修改请求头、响应头，并发送响应                                    |
+| `v12.2.0` | 中间件稳定，请参见[升级指南](/docs/messages/middleware-upgrade-guide)       |
+| `v12.0.9` | 在Edge运行时强制绝对url([PR](https://github.com/vercel/next.js/pull/33410)) |
+| `v12.0.0` | 中间件 (Beta) 添加                                                          |

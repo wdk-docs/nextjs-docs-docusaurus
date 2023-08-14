@@ -3,6 +3,9 @@ title: <Script>
 description: Optimize third-party scripts in your Next.js application using the built-in `next/script` Component.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 This API reference will help you understand how to use [props](#props) available for the Script Component. For features and usage, please see the [Optimizing Scripts](/docs/app/building-your-application/optimizing/scripts) page.
@@ -139,7 +142,7 @@ export default function Document() {
 
 </PagesOnly>
 
-> **Good to know**: Scripts with `beforeInteractive` will always be injected inside the `head` of the HTML document regardless of where it's placed in the component.
+> **注意事项**: Scripts with `beforeInteractive` will always be injected inside the `head` of the HTML document regardless of where it's placed in the component.
 
 Some examples of scripts that should be loaded as soon as possible with `beforeInteractive` include:
 

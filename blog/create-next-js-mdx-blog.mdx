@@ -1,0 +1,1225 @@
+---
+authors: [agbonze]
+tags: [markdown, mdx]
+description: markdown
+keywords: [markdown, mdx]
+date: 2022-04-02
+---
+
+# 创建一个Next.js和MDX博客
+
+> https://blog.logrocket.com/create-next-js-mdx-blog/#organizing-mdx-blog-file-structure
+
+Markdown是一种被开发人员广泛用于编写不同类型内容(如帖子、博客和文档)的语言。如果你没有使用过它，那么你很可能已经看到过它的实际应用。例如，README。GitHub和npm中的md文件是用Markdown编写的。
+
+<!--truncate-->
+
+与常规HTML或其他编写工具相比，Markdown为编写和构建内容提供了一种简单的语法。例如，在Markdown中我们可以说
+
+```md
+## Hello World!
+
+I am here to see [John Doe](https://johndoe.com)
+```
+
+但是在HTML中，同样的文本应该是:
+
+```html
+<h2>Hello World!</h2>
+<p>I am here to see <a href="https://johndoe.com">John Doe</a></p>
+```
+
+用Markdown编写感觉就像编写纯文本，只不过添加了一点额外的细节来构造内容。这就是为什么Markdown主要被开发人员用于编写文档和文章。
+
+但是，Markdown也有局限性，其中之一就是编写交互式内容。
+
+通常在我们的文章或文档中，我们可能想要添加一个交互式的一次性小部件来向读者演示一些东西，但在Markdown中我们不能这样做。
+
+这就是MDX的用武之地。MDX是一种使这成为可能的语言，因为它允许您在Markdown中使用JSX。
+
+因此，在本文中，我们将看看如何使用这个工具在Next.js中构建这个博客，而不需要Gatsby或Strapi——全部从零开始。我们将讨论:
+
+如果你想跟随，这里是[我的GitHub上的代码](https://github.com/Elijah-trillionz/pressblog-mdx-nextjs)。
+
+## MDX简介
+
+在我们开始构建这个博客之前，让我们先讨论一下MDX是什么以及我们可以用它做什么。
+
+在使用MDX之前，有必要熟悉Markdown和JSX，因为MDX只是它们的组合。
+
+### MDX语法
+
+[MDX没有新的或特殊的语法](https://blog.logrocket.com/getting-started-with-mdx-and-vue-js-nuxt-js/)，因为它只是Markdown和JSX在一个地方的组合。
+此外，还可以保存带有`.mdx`扩展名的MDX文件。
+
+你可以动态地、交互式地使用Markdown，比如在Markdown中导入组件或编写类似xml的语法:
+
+```mdx
+import Head from 'next/head'
+
+<Head>
+  <title>Hello World - My Blog</title>
+</Head>
+
+# Hello World
+```
+
+在上面的例子中，我们从Next.js中导入了一个组件Head，并用它来指定文章的标题。
+您还可以注意到带有#的`Hello World`消息(这是markdown中的h1)。
+这是Markdown和JSX的合作。
+
+### 用MDX编写表达式
+
+MDX的v2版本使得在MDX中编写表达式成为可能，就像在JSX中一样。下面是一个简单的例子:
+
+```md
+# Hello world
+
+I think 2 + 2 is {2+2}
+```
+
+当你想要引用一个JavaScript变量、函数表达式、对象、数组时，这在文档或文章中是很有用的。
+
+### 用MDX写ESM
+
+MDX还支持导入和导出。例如，下面的`BlogTitle`组件可以作为任何其他JSX组件使用:
+
+```js
+import Head from 'next/head'
+
+export const BlogTitle = () => <h3>Hello World</h3>
+
+<Head>
+  <title>Hello World - My Blog</title>
+</Head>
+
+# Hello World
+
+<BlogTitle />
+```
+
+除了组件，对象、变量和函数等非组件也可以导出和导入:
+
+```js
+import { year } from '../utils/date.js'
+
+# Top Ten Languages To Learn In {year}
+```
+
+因为我们可以在MDX中使用表达式，所以我们可以很容易地将年份传入头文件中。
+想想你传递的任何数据作为JSX中的表达式;现在你也可以在Markdown中这样做:
+
+```js
+import { posts } from '../posts/node.js'
+
+# A List of My NodeJS Posts
+
+<ul>
+  {posts.map((post) => (
+    <li>{post.title}</li>
+  ))}
+</ul>
+```
+
+也可以在MDX中创建一个变量，就像我们在功能组件(`BlogTitle`)中看到的那样，但我们需要用`export`关键字作为前缀:
+
+```js
+export const languages = ['Java', 'JavaScript', 'Python']
+export const year = new Date().getFullYear()
+
+# Top Ten Languages in {year}
+
+<ul>
+  {languages.map((language) => (
+    <li>{language}</li>
+  ))}
+</ul>
+```
+
+在每个声明前加上`export`可能会很奇怪，但好消息是你不必这样做——你可以简单地在其他地方声明一次并导入它。
+
+### 使用元数据前缀
+
+有一个例外，您可能需要在`Markdown`中声明和使用对象。这就是你使用元数据的时候:
+
+```js
+export const meta = {
+  title: "Your article doesn't beat this",
+  publishedOn: 'January, 6th. 2022',
+  slug: 'your-article-doesnt-beat-this',
+}
+
+# {meta.title}
+```
+
+虽然这不是强制性的，但它有助于组织您的内容。您也可以简单地使用Front Matter(我们将在稍后的博客中使用)。
+
+关于MDX的一个有趣的事情是，它的文件被编译成JSX组件。
+它们的编译器(来自MDX的集成)将MDX文件(`.mdx`中的文件)和Markdown文件(`.md`中的文件)编译成可以用作任何其他组件的JSX组件。
+
+假设我们将下面的例子保存为`article.mdx`:
+
+```js
+import Head from 'next/head'
+
+export const BlogTitle = () => <h3>Hello World</h3>
+
+<Head>
+  <title>Hello World - My Blog</title>
+</Head>
+
+# Hello World
+```
+
+我们可以这样导入它:
+
+```js
+import Article, { BlogTitle } from 'article.mdx'
+
+const MyBlog = () => {
+  {
+    ;(' ')
+  }
+
+  ;<Article />
+  ;<BlogTitle />
+}
+
+export default MyBlog
+```
+
+`article.mdx` 文件被编译成JSX组件并在默认情况下导出，因此我们可以将其默认导入到`.js/.jsx/.mdx`文件中。
+
+另外，回想一下，BlogTitle组件也是从`article.mdx`导出的。
+
+### 在MDX中传递参数
+
+“如果他们可以像使用其他任何JSX组件一样使用它，那么他们也应该能够传递`props`，对吧?” 我猜MDX的开发者是这么想的。
+
+当然，它们必须这样做，因为可以通过props将数据传递给任何组件，包括您创建的组件和默认情况下编译为组件的组件。
+
+我们可以重构最后一个代码块，如下所示:
+
+```jsx
+import Article, { BlogTitle } from 'article.mdx'
+import { year } from '../utils/date.js'
+
+const MyBlog = () => {
+  {
+    ;(' ')
+  }
+
+  ;<Article year={year} />
+  ;<BlogTitle />
+}
+
+export default MyBlog
+```
+
+我们的`article.mdx`现在看起来如下所示:
+
+```mdx
+import Head from 'next/head'
+
+export const BlogTitle = () => <h3>Hello World</h3>
+
+<Head>
+  <title>Hello World - My Blog</title>
+</Head>
+
+# Hello World
+
+This year is {props.year}
+```
+
+注意，MDX中不允许所有JSX语法。它们之间也有例外，你可以在GitHub上找到它们。
+
+还有一些扩展为MDX提供语言支持，比如针对不同的文本编辑器和ide的语法高亮显示。
+如果你正在使用`VS Code`，只需安装`MDX`，就可以了。
+
+介绍的内容已经够多了，让我们进入代码，看看MDX的实际应用。
+
+## 使用MDX创建博客
+
+在创建这个博客时，我们将做以下工作:
+
+- 在其中一篇文章中使用小部件
+- 使用Next.js `getStaticProps`和`api`在主页上显示文章
+- 将每篇文章开发为MDX文件
+- 使用`FrontMatter`为我们的文章元数据
+- 仅使用CSS将样式应用于我们的文章内容
+- 使用`highlight.js`进行语法高亮显示
+- 对主页应用分页
+
+如果你以前从未使用过`Next.js`，只要你知道`React`, `Markdown`和`JSX`，你仍然可以跟随。
+
+### 创建并配置Next.js应用
+
+如果这对你来说是显而易见的，请原谅，但我想试着带着大家一起去。
+
+要创建Next.js应用，运行下面的命令:
+
+```sh
+npx create-next-app@latest
+```
+
+你会被提示为你的应用命名;你可以给你的项目起任何名字，但在本教程中，我将项目命名为PressBlog。
+
+### 安装依赖关系
+
+让我们现在就安装所有的依赖项。首先，运行下面的命令:
+
+```shell
+npm install @mdx-js/loader@next @mdx-js/react@next gray-matter remark-frontmatter rehype-highlight @reach/tooltip @reach/disclosure
+```
+
+您必须使用`@next`来确保使用的是当前版本的`mdx-js`。在撰写本文时，当前版本是2.0.0。现在，让我们回顾一下这些依赖项的作用。
+
+1. `@mdx-js/loader@next`: 是MDX为webpack打包器提供的集成，用于将Markdown和MDX编译成JavaScript。我们将在`next.config.js`文件中配置它
+2. `@mdx-js/react@next` 为我们的应用提供上下文，我们可以用它来包装我们的组件，并轻松地为我们的标记内容设置样式
+3. `gray-matter`: 我们将在本博客中使用Front Matter，而gray-matter将把它解析为元数据对象
+4. `remark-frontmatter`: MDX不支持Front Matter，所以当我们在浏览器中将MDX文件视为页面时，我们需要使用这个包来忽略Front Matter
+5. `rehype-highlight`: 允许我们使用highlight.js对任何代码块应用语法高亮显示
+6. `@reach/tooltip`: 提供一个组件，我们将使用它在博客文章中创建工具提示
+7. `@reach/disclosure`: 提供一个组件，我们将在博客文章中使用它来编写披露。
+
+### 配置 Next.js
+
+要配置Next.js应用，请将以下代码复制到`next.config.js`中:
+
+```js
+import remarkFrontmatter from 'remark-frontmatter'
+import rehypeHighlight from 'rehype-highlight'
+
+export default {
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.mdx?$/,
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: '@mdx-js/loader',
+          options: {
+            providerImportSource: '@mdx-js/react',
+            remarkPlugins: [remarkFrontmatter],
+            rehypePlugins: [rehypeHighlight],
+          },
+        },
+      ],
+    })
+
+    return config
+  },
+  reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+}
+```
+
+注意，我们之所以使用ES2015的import和export语句，是因为我们只能导入`remark-frontmatter`，而不能使用require语句。
+因此，你可以将`next.config.js`重命名为`next.config.mjs`。
+
+上面的代码只是简单地配置了Next.js，这样我们就可以在Next.js中使用.mdx文件作为页面。
+`options`参数是我们可以输入插件(`remark`和`rehype`)的地方。它们是不同的，并且是分开工作的:`remark`插件解析`Markdown`，而`rehype`插件解析`HTML`。
+
+同样，在`options`参数中，我们有`providerImportSource`来解析我们之前安装的`@mdx-js/react`的React上下文提供程序。
+
+就在`webpack`方法的末尾，我们传入了一些其他的`Next.js`配置。但是，让我们为我们的`Next.js`图像加载器添加一个配置:
+
+```js
+export default {
+  //..
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  images: {
+    loader: 'imgix',
+    path: 'https://images.unsplash.com/',
+  },
+  //...
+}
+```
+
+### 在MDX中创建第一个Next.js页面
+
+在`pages`目录下，创建一个名为`about.mdx`的新文件。现在，您可以编写任何`Markdown`或/和`JSX`内容，或者简单地复制粘贴以下内容:
+
+```js
+import Head from 'next/head'
+
+<Head>
+  <title>Hello World - PressBlog</title>
+</Head>
+
+# Hello World
+```
+
+用`npm run dev`启动你的Next.js服务器，并在浏览器中访问你的`new/about`页面。你应该收到一个标题为`Hello World - PressBlog`的`Hello World`消息。
+
+这通常会抛出`404`错误，但由于我们在`next.config`中添加了配置。现在，我们可以用MDX创建页面了。
+
+既然一切都准备好了，让我们开始组织我们的博客，好吗?
+
+## 组织我们的MDX博客文件结构
+
+你会如何组织和组织你的文件?我们刚刚在MDX中创建了一个页面，对吧?那么，我们是否应该在MDX中创建所有页面，然后在JavaScript中创建自定义组件(也可以说是小部件)呢?但是，如果我们也可以在MDX中创建自定义组件，那么是什么阻止我们在MDX中创建所有东西呢?
+
+好吧，事实是，用MDX组织你的博客一开始可能会令人困惑。现在你有了两个几乎可以做同样事情的工具，你应该问的问题是，你应该用哪个，什么时候用?
+
+要回答这个问题，我们需要首先理解MDX的目的不是在所有用例中取代JSX。MDX的目的是帮助我们轻松地在Markdown中生成交互式和动态丰富的内容。
+
+因此，虽然MDX可以用来制作一个头组件，例如，它只包含博客的名称和徽标以及一些链接，但我们不应该使用它，因为这只是浪费工具。
+
+当需要编写大量内容时，应该使用MDX而不是JSX。在这样的博客中，我们的文章中只有大量的内容。这就是为什么，在大多数MDX用例中，您很难在组件文件夹中找到`.mdx`文件—这是因为它们不需要它。
+
+既然我们决定在文章中只使用MDX，那么现在必须决定文章的结构。我们在前面已经看到可以在MDX中创建页面。在MDX中将我们所有的帖子/文章作为一个页面不是更简单吗?
+
+这意味着我们可以在Next.js应用程序的pages目录下有一个posts目录，我们可以简单地将所有的MDX帖子写入该目录。
+
+例如，我们的文章看起来像这样:
+
+```
+pages/posts/what-is-react-native.mdx
+pages/posts/where-to-learn-react-native.mdx
+```
+
+传统上，或者在Next.js中，在`pages`目录之外有一个`posts`目录(包含Markdown中的文章)，在pages目录内有另一个`posts`目录，其中只有一个动态文件(路由)。
+
+也就是说，例如，`pages/posts/[slug].js`并根据`slug.js`在`[slug].js`中获取所需的帖子。
+
+这仍然是可能的，但它有点破坏MDX的有用性。在本文中，我们将只使用第一种方法，但我还将向您展示如何从目录中获取和解析MDX文件，这基本上就是第二种方法的工作方式。
+
+在本教程结束时，我们的项目结构将是这样的(不包括默认情况下Next.js附带的未更改的目录和文件):
+
+```
+PressBlog
+|
+|___ next.config.mjs
+|
+|___ components
+|     |___ Header.js
+|     |___ MDXComponents.js
+|     |___ MeetMe.js
+|     |___ Meta.js
+|     |___ PostItem.js
+|
+|___ layouts
+|     |___ Layout.js
+|
+|___ api
+|     |___ posts.js
+|
+|___ pages
+|     |___ index.js
+|     |___ about.mdx
+|     |___ _app.js
+|     |___ _document.js
+|     |___ posts
+|           |___ learn-react-navigation.mdx
+|           |___ what-is-react-native.mdx
+|
+|___ scripts
+|     |___ utils.js
+|
+|___ styles
+|     |___ globals.css
+|     |___ Header.module.css
+|     |___ Home.module.css
+|     |___ Markdown.module.css
+```
+
+## 使用CSS样式
+
+在本教程中，我们将只使用Next.js的样式方法;没有顺风，没有引导。但是，可以使用样式化组件或任何实用程序优先的框架。
+
+现在，让我们把所有使用过的样式都应用到这个博客中。
+
+首先，让我们添加`header.module.css`，它只适用于我们的header。因此，复制并粘贴以下样式到它:
+
+```css
+.header {
+  padding: 10px 0;
+  background-color: rgb(164, 233, 228);
+}
+
+.header > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+}
+```
+
+接下来，我们将更新已经存在的`global.css`，所以你不需要创建它，只需要添加以下样式:
+
+```css
+a {
+  color: inherit;
+  text-decoration: underline transparent;
+  transition: 0.25s ease-in-out;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+.max-width-container {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+.max-width-container.main {
+  padding: 50px 30px;
+}
+
+p {
+  line-height: 1.6;
+}
+```
+
+然后，应用`home.module.css`样式(替换所有可用的样式)，它将只应用于主页:
+
+```css
+.mainContainer {
+  padding: 15px 30px;
+  padding-top: 45px;
+}
+
+.articleList {
+  margin-top: 55px;
+}
+
+.desc {
+  color: #3b3b3b;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.postItem {
+  margin-bottom: 40px;
+}
+
+.img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.button {
+  display: block;
+  max-width: 300px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 10px;
+  border: none;
+  background-color: #3b3b3b;
+  color: #fff;
+}
+```
+
+最后，使用`Markdown.module.css`，它将只应用于我们文章的内容:
+
+```css
+.postTitle {
+  border-bottom: 2px solid rgb(164, 233, 228);
+  padding-bottom: 13px;
+}
+
+.link {
+  color: rgb(0, 110, 255);
+}
+
+.tooltipText {
+  background: hsla(0, 0%, 0%, 0.75);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+}
+```
+
+## 创建关于页面
+
+现在，让我们来处理`About`页面。回想一下，我们已经创建了一个`about.mdx`页面;现在，我们可以将`Lorem ipsum`文本插入其中。
+但在此之前，让我们先创建一个名为`MeetMe.js`的组件。
+该组件将包含一个图像和作者的简短描述。
+
+通过将其创建为组件，我们也可以在主页上使用它。
+所以，继续，在应用的根目录下创建一个组件目录。
+然后，创建一个名为`MeetMe.js`的文件，复制并粘贴以下内容:
+
+```js
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
+
+const MeetMe = () => {
+  return (
+    <div>
+      <Image
+        src="photo-1618077360395-f3068be8e001?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWFufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+        alt="john doe avatar"
+        width={150}
+        height={150}
+        className={styles.img}
+      />
+      <p className={styles.p}>
+        Hey, I am <strong>John Doe</strong>. I love coding. Lorem ipsum dolor
+        sit, amet consectetur adipisicing elit. Reiciendis commodi numquam
+        incidunt blanditiis quibusdam atque natus inventore sunt autem iusto.
+      </p>
+    </div>
+  )
+}
+
+export default MeetMe
+```
+
+这里发生的事情并不多;我们只是从`next/Image`中导入`Image`组件，并使用我们已经创建的`Home.module.css`样式为段落和图像应用样式。
+
+现在我们已经设置了`MeetMe`组件，让我们在`about.mdx`中使用它:
+
+```js
+import MeetMe from '../components/MeetMe.js'
+
+<MeetMe />
+
+#### Let's dive into more of me
+
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea deserunt ab maiores eligendi nemo, ipsa, pariatur blanditiis, ullam exercitationem beatae incidunt deleniti ut sit est accusantium dolorum temporibus ipsam quae.
+
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea deserunt ab maiores eligendi nemo, ipsa, pariatur blanditiis, ullam exercitationem beatae incidunt deleniti ut sit est accusantium dolorum temporibus ipsam quae.
+
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea deserunt ab maiores eligendi nemo, ipsa, pariatur blanditiis, ullam exercitationem beatae incidunt deleniti ut sit est accusantium dolorum temporibus ipsam quae.
+```
+
+最后，在我们结束这个页面之前，让我们创建一个包含动态元标签和标题的Meta组件。因此，进入组件目录，创建一个名为`Meta.js`的新文件，复制并粘贴以下内容:
+
+```js
+import Head from 'next/head'
+
+const Meta = ({ title }) => {
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta
+        name="keywords"
+        content="react native, blog, John Doe, tutorial, react navigation"
+      />
+    </Head>
+  )
+}
+
+export default Meta
+
+// let's set a default title
+Meta.defaultProps = {
+  title: 'PressBlog - Your one stop blog for everything React Native',
+}
+```
+
+为了简单起见，我们将只使用静态元关键字和动态标题。在真正的博客中，您需要针对搜索引擎进行优化。Next-seo就是一个很好的工具。
+
+让我们将新组件`Meta.js`导入`about.mdx`，并以此使用
+
+```js
+{
+  /* .. */
+}
+import Meta from '../components/Meta.js'
+;<Meta title="About John Doe - PressBlog" />
+
+{
+  /* .. */
+}
+```
+
+这样，我们就可以保存文件并测试about页面。
+
+## 创建布局
+
+接下来我们要做的是博客的布局。在继续之前，我们需要一个`header`组件，因此让我们创建它。转到组件目录，创建一个名为`Header.js`的新文件，复制并粘贴以下内容:
+
+```js
+import Link from 'next/link'
+import styles from '../styles/Header.module.css'
+
+const Header = () => {
+  return (
+    <header className={styles.header}>
+      <div className="max-width-container">
+        <h2>
+          <Link href="/">PressBlog</Link>
+        </h2>
+        <ul>
+          <li>
+            <Link href="/about">About</Link>
+          </li>
+        </ul>
+      </div>
+    </header>
+  )
+}
+
+export default Header
+```
+
+这里，我们使用了`next/Link`中的`Link`组件。此外，我们还使用前面创建的`Header.module.css`样式。
+
+不过，款式上有一点小小的变化。注意，我们使用的类名是`max-width-container`，而不是来自`Header.module.css`。这不是打字错误;类名以前在`global.css`中使用，这是因为我们需要全局地使用它。
+
+接下来，让我们在根目录下创建一个名为`layouts`的目录，并在其中创建一个名为`Layout.js`的文件:
+
+```js
+import Header from '../components/Header'
+
+const Layout = ({ children }) => {
+  return (
+    <div>
+      <Header />
+      <main className="max-width-container main">{children}</main>
+    </div>
+  )
+}
+
+export default Layout
+```
+
+在这里，我们导入刚刚创建的`Header`组件，并将其作为博客布局的标题传递。你也可以用页脚做同样的事情，但是我们在这个博客中不使用页脚。
+
+现在，要将布局组件应用到我们的应用程序中，打开`pages/_app.js`，将布局组件包裹在`component`组件周围:
+
+```js
+//..
+return (
+
+{' '}
+
+<Layout>
+  <Component {...pageProps} />
+</Layout>
+);
+
+//..
+```
+
+### 添加文章
+
+在本节中，我们将创建两篇文章。我们稍后将在主页上使用这些文章。，但现在，我们只是将它们作为单个页面创建和测试。
+
+让我们在`pages`目录下创建一个名为`posts`的新目录。在这个新目录,创建以下MDX文件。
+
+我们将从`learn-react-navigation.mdx`开始:
+
+```mdx
+---
+title: React Navigation Tutorial
+publishedOn: January, 6th. 2022
+excerpt: React Navigation is a number one tool to learn in React Native. You would always use them; these are some of the best practices in using React Navigation
+---
+
+import Meta from '../../components/Meta'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@reach/disclosure'
+
+<Meta title="React Navigation Tutorial - PressBlog" />
+
+# React Navigation Tutorial
+
+React导航是发生在[**React Native**](https://reactnative.org)的最好的事情之一。
+
+## Benefits of using React Navigation
+
+1. It is cool to use
+2. It is simple to learn
+3. It has an extensive community
+4. And more and more
+
+<Disclosure>
+  <DisclosureButton as="div">
+    React Navigation won't be here forever. Click to find why
+  </DisclosureButton>
+  <DisclosurePanel>
+    Nothing lasts forever, yeah! That's all I got to say
+  </DisclosurePanel>
+</Disclosure>
+```
+
+Disclosure组件及其对应的组件只演示了在MDX中使用组件和小部件，以及它们对您的文章有多有用。我们的下一篇文章将使用工具提示，所以让我们通过使用`what-is-react-native.mdx`来检查它:
+
+```mdx
+---
+title: What is React Native?
+publishedOn: January, 7th. 2022
+excerpt: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea deserunt ab maiores eligendi nemo, ipsa, pariatur
+---
+
+import Meta from '../../components/Meta.js'
+import Tooltip from '@reach/tooltip'
+import '@reach/tooltip/styles.css'
+
+<Meta title="What is React Native - PressBlog" />
+
+# What is React Native?
+
+React Native is a lovely language
+
+<Tooltip label="It's not actually a language though">
+  <button>Fact about React native</button>
+</Tooltip>
+
+### React Native App Example:
+
+···js
+const App = () => {
+return (
+
+<View>
+  <Text>Hello World Example</Text>
+</View>
+) }
+
+export default App
+
+···
+```
+
+您可以在浏览器中测试您的每篇文章，看看它是否有效。要进行测试，请使用URL `/posts/what-is-react-native`或`/posts/learn-react-navigation`。注意，包含元数据的部分没有显示在浏览器中，这是一件好事，因为我们不希望读者看到这一点。
+
+这可以通过我们在`next.config.js`中安装和配置的`remark-frontmatter`实现。我们编写的JavaScript代码没有样式化，尽管我们已经配置了`rehyper-highlight`——这是因为我们需要一个`highlight.js`主题。我们也可以使用`cdnjs`上提供的`GitHub`暗主题，通过HTML链接标签将其添加到我们的应用程序中。
+
+通过更新`_document.js`文件，我们可以在Next.js应用中添加全局和静态HTML链接标签。还没有，所以我们创建一个。转到pages目录并创建一个新文件`_document.js`，然后粘贴以下内容:
+
+```js
+import { Html, Head, Main, NextScript } from 'next/document'
+
+const MyDocument = () => {
+  return (
+    <Html lang="en">
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css"
+        />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  )
+}
+
+export default MyDocument
+```
+
+我们已经创建了一个自定义文档来呈现Next.js中的每个页面。现在，当您在URL上检查文章时，应该突出显示代码并设置样式。
+
+### 添加特定于文章的样式
+
+让我们添加只针对博客文章的样式。使用我们将要使用的方法，我们将能够为MDX中的任何元素设置样式。
+
+注意，当我说元素时，我的意思是当它编译到JSX时，例如，MDX中的`# Hello world`在JSX中编译为h1。因此，通过这种方法，我们可以为MDX中的所有h1元素设置样式。
+
+实现的方法是用来自`@mdx-js/react`的`MDXProvider`包装我们的应用组件，并提供一个组件对象来映射尽可能多的元素。
+
+所以，找到components目录，创建一个名为`MDXComponents.js`的新文件，并将下面的代码复制并粘贴到其中:
+
+```js
+import styles from '../styles/Markdown.module.css'
+
+const MDXComponents = {
+  p: (props) => <p {...props} className={styles.p} />,
+  a: (props) => <a {...props} className={styles.link} />,
+  h1: (props) => <h1 {...props} className={styles.postTitle} />,
+}
+
+export default MDXComponents
+```
+
+这里，我们只导入之前为Markdown内容创建的样式。`MDXComponents`对象的每个键都是一个组件，对应于MDX编译到的任何内容。
+
+现在你可以为任何JSX元素创建自定义组件:
+
+```js
+import { Sparky } from 'sparky-text' // a dummy module - does not exist
+import Link from 'next/link'
+import styles from '../styles/Markdown.module.css'
+
+const MDXComponents = {
+  strong: ({ children }) => <Sparky color="gold">{children}</Sparky>,
+  p: (props) => <p {...props} className={styles.p} />,
+  a: (props) => <Link {...props} className={styles.link} />,
+  h1: (props) => <h2 {...props} className={styles.postTitle} />, // for some reasons I want h1 to be mapped, styled and displayed as h2
+}
+
+// please do not use this example, this is only a demonstration
+```
+
+现在，我们的`MDXComponents.js`没有效果。因此，为了解决这个问题，转到`pages/_app.js`并从`@mdx-js/react`中导入`MDXProvider`，以及我们刚刚创建的MDXComponents组件。
+
+将`MDXProvider`封装在布局组件周围，并将`MDXComponents`作为`MDXProvider`的组件道具传递。总之，你的`_app.js`应该是这样的:
+
+```js
+import '../styles/globals.css'
+import { MDXProvider } from '@mdx-js/react'
+import MDXComponents from '../components/MDXComponents'
+import Layout from '../layouts/Layout'
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <MDXProvider components={MDXComponents}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </MDXProvider>
+  )
+}
+
+export default MyApp
+```
+
+## 创建主页
+
+主页上有我们所有的文章。我们将有10篇文章，每篇增加5篇。这对于演示分页非常有用。
+
+让我们首先使用`Node.js`文件系统和path模块获取两篇可用的文章。让我们转到`pages/api`目录并创建一个新文件`posts.js`。
+
+api目录是我们可以为我们的应用程序构建api路由的地方。我们只需要一条路由来获取MDX中的所有帖子(在`pages/posts`目录中可用)。
+
+我们不会在Next.js的`getStaticProps`函数中对这个路由发出任何请求，原因是它所使用的页面不会在生产构建中`prerender.js`建议在api路由中编写的服务器端代码应该在`getStaticProp`函数中编写。我们最终将需要`post api`路由进行分页。
+
+这一切很快就会明朗起来。现在，只需知道获取文章将在api路由和`getStaticProps`函数中完成。
+
+在根目录中创建一个scripts目录，并在其中创建一个`utils.js`文件。该文件将包含一个获取文章的`getPosts`函数(以及其他一些函数)。
+
+这就是我们如何在getPosts函数中获取所有帖子:
+
+使用Node.js系统模块的`readdirSync`和`readFileSync`方法在页面/帖子中获取.mdx文件，使用灰质将每个文件的`Front Matter`解析为元数据对象，使用文件名为每个文件生成一个段。在`scripts/utils.js`中，复制并粘贴下面的代码:
+
+```js
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+
+export const getPosts = (pageIndex) => {
+  const dirFiles = fs.readdirSync(path.join(process.cwd(), 'pages', 'posts'), {
+    withFileTypes: true,
+  })
+
+  const posts = dirFiles
+    .map((file) => {
+      if (!file.name.endsWith('.mdx')) return
+
+      const fileContent = fs.readFileSync(
+        path.join(process.cwd(), 'pages', 'posts', file.name),
+        'utf-8',
+      )
+      const { data, content } = matter(fileContent)
+
+      const slug = file.name.replace(/.mdx$/, '')
+      return { data, content, slug }
+    })
+    .filter((post) => post)
+
+  return posts
+}
+```
+
+这是相当多的，但让我们来看看每一行。
+
+我们要做的第一件事是导入模块，它们是fs(来自Node.js)、path(来自Node.js)和matter(来自gray-matter)。
+
+`readdirSync`获取`pages/posts`目录中的所有文件及其文件扩展名，并将其分配给`dirFiles`变量。
+
+然后循环遍历dirFiles以过滤掉所有不是MDX的文件。在循环中，我们可以使用`readFileSync`方法读取每个文件的内容，并将内容作为参数传递给matter函数。
+
+matter函数返回一个对象，在这个对象中我们只需要数据和内容。data是我们在每篇文章中使用`Front Matter`编写的元数据，content是文章的剩余内容。
+
+最后，在循环中，我们从文件名(不带扩展名)生成一个slug，并从循环函数返回一个包含数据、内容和slug的对象。
+
+您希望确保不是异步获取所有的帖子，这就是使用`readdirSync`和`readFileSync`的原因，因为它们都是同步的。
+
+现在，让我们回到`api/posts.js`并创建一个函数来处理对该路由的请求。复制并粘贴到`api/posts.js`中:
+
+```js
+import { getPosts } from '../../scripts/utils'
+
+export default function handler(req, res) {
+  const posts = getPosts(2) // argument will change
+
+  res.status(200).json(posts)
+}
+```
+
+`handler`函数就像`Express.js`中的函数一样——`req`和`res`参数分别用于查看请求参数和处理响应。保存这个文件，我们以后会用到它。
+
+现在，我们可以打开`pages/index.js`并清除所有标签(在返回语句中)和导入语句(默认情况下每个Next.js应用都有)。在Home函数之外创建一个新函数getStaticProps，并将下面的代码复制粘贴到其中:
+
+```js
+export const getStaticProps = () => {
+  const posts = getPosts(1) // the argument has no effect yet
+
+  return {
+    props: {
+      posts,
+    },
+  }
+}
+```
+
+如果您使用过Next.js，这是非常简单的。但如果你没有，它是Next.js中用于数据获取的函数。js使用从导出的`getStaticProps`函数返回的props在构建时呈现index.js页面。这个过程被称为静态站点生成。
+
+您可以在这里执行许多筛选和排序。例如，如果您想获得最近10篇已发布的文章—而不是任意10篇—您可以使用从每篇文章返回的`publisheddon`元数据对其进行排序。
+
+但是，请注意必须导出`getStaticProps`函数，否则它的行为就会像其他函数一样。在这个函数中，您可以从CMS数据库中获取数据，因为从技术上讲，它运行在服务器中，而不是在客户机中。
+
+Next.js为我们提供了在`Home`函数中使用`getStaticProps`返回的道具的便利。这意味着我们在这个页面上的Home函数(`pages/index.js`)将有`post`作为传递给它的道具:
+
+```js
+const Home = ({ posts }) => {
+  return (
+    <>
+      <Meta />
+      <MeetMe />
+      <Link href="/about">More about me</Link>
+
+      <div className={styles.articleList}>
+        <p className={styles.desc}>Newly Published</p>
+        {posts.map((post) => (
+          <p key={post.slug}>{post.data.title}</p>
+        ))}
+      </div>
+    </>
+  )
+}
+export default Home
+```
+
+我们正在使用Meta组件向我们的页面添加Meta标签。MeetMe组件显示作者的简短描述，其中有一个到About页面上完整描述的链接。
+
+最后，我们循环post数组作为来自Home函数的道具。你应该导入Home函数中使用的组件和函数，包括Home.module.css中的样式。
+
+目前，我们只是在一个段落中显示每篇文章的标题，这远远不是我们想要的。让我们继续创建一个名为PostItem的新组件。
+
+为此，在组件目录中创建一个名为PostItem.js的文件，然后复制并粘贴下面的代码:
+
+```js
+import Link from 'next/link'
+import styles from '../styles/Home.module.css'
+
+const PostItem = ({ post }) => {
+  return (
+    <div className={styles.postItem}>
+      <h3>
+        <Link href={`/posts/${post.slug}`}>{post.data.title}</Link>
+      </h3>
+      <p>{post.data.excerpt}</p>
+      <Link href={`/posts/${post.slug}`}>Read more</Link>
+    </div>
+  )
+}
+
+export default PostItem
+```
+
+现在，回到`pages/index.js`并导入我们刚刚创建的`posttem`组件。然后，将显示每个帖子标题的段落替换为`<PostItem key={post.slug} post={post} />`:
+
+```js
+//..
+
+<div className={styles.articleList}>
+  <p className={styles.desc}>Newly Published</p>
+  {posts.map((post) => (
+    <PostItem key={post.slug} post={post} />
+  ))}
+</div>
+//.. Finally, save the files and test the home page in your browser. This is the
+same principle we will apply to the blog page.
+```
+
+### 为我们的主页添加分页
+
+对于大型数据集来说，一次加载所有文章确实不是一个好的做法。页面上有大量的数据会影响应用程序的性能，所以我们最好将它们分成块加载。例如，如果我们有10篇文章，我们可以每页加载5篇。
+
+让我们在博客中演示一下。通过在scripts/utils.js中创建一个函数来复制我们现有的文章，从而创建10篇文章。将下面的代码粘贴在getPosts函数之前或之后。
+
+```js
+const createMultiplePosts = (posts) => {
+  const multiplePosts = []
+
+  posts.forEach((post) => {
+    for (let i = 0; i < 5; i++) {
+      multiplePosts.push(post)
+    }
+  })
+
+  return multiplePosts
+}
+```
+
+我们循环遍历任何可用的文章，并为每种文章生成5个条目。
+
+我们需要处理分页的函数也会出现在`utils.js`中，因此在`createMultiplePosts`函数之前或之后粘贴下面的代码。
+
+```js
+const filterPostsByPageIndex = (posts, pageIndex) => {
+  const postPerPage = 5
+  // get the total posts from page 1 to current page
+  const totalPagePosts = +pageIndex * postPerPage
+
+  // get the total posts from page 1 to previous page
+  const prevPagePosts = totalPagePosts - postPerPage
+
+  return posts.filter(
+    (post, index) => index < totalPagePosts && index >= prevPagePosts,
+  )
+}
+```
+
+每当向页面发出请求时，该函数将帮助我们增量地向页面添加五篇文章。
+
+现在，让我们更新`getPosts`函数，以返回一个重复的、经过过滤的帖子。回想一下，我们已经将`pageIndex`参数传递给了函数，所以我们可以用下面的语句替换return语句:
+
+返回`filterPostsByPageIndex(createmulpleposts (posts)， pageIndex)`;
+我们还必须更新`posts API`路由，以便在向页面索引发出请求时将其作为查询请求。获取页面查询并将其添加到`api/posts.js`处理函数的开头:
+
+```js
+const { page } = req.query
+```
+
+所以你会得到:
+
+```js
+export default function handler(req, res) {
+  const { page } = req.query;
+
+//...
+```
+
+最后，将getPosts参数从2更改为page，即:
+
+```js
+//..
+const posts = getPosts(page)
+//..
+```
+
+以下是上述的工作原理:
+
+在`getStaticProps`函数和预呈现器中加载前五篇文章
+根据用户的请求，增量加载并在页面上显示另外五篇文章。对于这个博客，用户可以通过“加载更多”按钮提出这样的请求。
+也就是说，`pages/index.js`中的`Home`函数将会有大量的变化。粘贴下面的代码来替换`Home`函数:
+
+```js
+const Home = ({ posts }) => {
+  const [filteredPosts, setFilteredPosts] = useState(posts)
+  const [currentPageIndex, setCurrentPageIndex] = useState(1)
+
+  const loadMorePosts = async () => {
+    const res = await fetch(`/api/posts?page=${currentPageIndex + 1}`) // absolute url is supported here
+    const posts = await res.json()
+
+    setFilteredPosts((_posts) => [..._posts, ...posts])
+    setCurrentPageIndex((_pageIndex) => _pageIndex + 1)
+  }
+
+  return (
+    <>
+      <Meta title="PressBlog - Your one stop blog for anything React Native" />
+      <MeetMe />
+      <Link href="/about">More about me</Link>
+
+      <div className={styles.articleList}>
+        <p className={styles.desc}>Newly Published</p>
+        {filteredPosts.map((post, index) => (
+          <PostItem key={index} post={post} />
+        ))}
+        <button onClick={loadMorePosts} className={styles.button}>
+          Load more
+        </button>
+      </div>
+    </>
+  )
+}
+
+export default Home
+```
+
+当单击`loadMorePosts`函数时，它将向我们的API posts路由发出get请求并获取接下来的五篇文章。总而言之，这是`pages/index.js`页面:
+
+```js
+import MeetMe from '../components/MeetMe.js'
+import Link from 'next/link'
+import PostItem from '../components/PostItem'
+import styles from '../styles/Home.module.css'
+import Meta from '../components/Meta'
+import { useState } from 'react'
+
+const index = ({ posts }) => {
+  const [filteredPosts, setFilteredPosts] = useState(posts)
+  const [currentPageIndex, setCurrentPageIndex] = useState(1)
+
+  const loadMorePosts = async () => {
+    const res = await fetch(`/api/posts?page=${currentPageIndex + 1}`) // absolute url is supported here
+    const posts = await res.json()
+
+    setFilteredPosts((_posts) => [..._posts, ...posts])
+    setCurrentPageIndex((_pageIndex) => _pageIndex + 1)
+  }
+
+  return (
+    <>
+      <Meta title="PressBlog - Your one stop blog for anything React Native" />
+      <MeetMe />
+      <Link href="/about">More about me</Link>
+
+      <div className={styles.articleList}>
+        <p className={styles.desc}>Newly Published</p>
+        {filteredPosts.map((post, index) => (
+          <PostItem key={index} post={post} />
+        ))}
+        <button onClick={loadMorePosts} className={styles.button}>
+          Load more
+        </button>
+      </div>
+    </>
+  )
+}
+
+export default index
+
+export const getStaticProps = () => {
+  const posts = getPosts(1)
+
+  return {
+    props: {
+      posts,
+    },
+  }
+}
+```
+
+现在，保存文件并测试新的博客页面(在浏览器中访问/)。这样，我们就成功地用Next.js和MDX构建了一个简单的博客。
+
+您可能想知道为什么我们在`loadMorePosts`函数中使用`getPosts`函数，而不是创建API路由。这是因为`getPosts`函数是服务器端代码，如果在客户端使用它将导致错误。当然，在生产环境中你不能在`getStaticProps`中使用任何内部API路由。
+因此，这是通过静态站点生成实现分页的唯一简单方法。
+
+## 结论
+
+使用Markdown创建交互式博客或文档从来没有这么容易过。如果你照着做，你离拥有自己的博客就只有一步之遥了。您可以在部署之前决定是否添加更多特性。
+
+如果您希望构建文档，本教程也可以帮助您，或者您可以简单地使用`Nextra`。`Nextra`使用Next.js和`MDX`为您的文档创建一个网站，当然，您可以在MDX中编写所有内容。
+
+最后，在本文中，我们学习了一个有趣的工具MDX，我们可以用它做什么，比如编写表达式和传递道具，以及使用`MDX`和`Next.js`创建博客。
+
+在构建这个博客的过程中，我们看到了如何配置`MDX`在`Next.js`中工作，我们应该如何构建我们的应用程序，以及我们如何将`MDX`文件获取和解析为元数据对象(来自`Front Matter`)和内容。
+
+就是这样。谢谢你的阅读。

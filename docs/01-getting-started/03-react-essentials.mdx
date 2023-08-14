@@ -3,14 +3,19 @@ title: React 概要
 description: 概述构建Next.js应用程序(包括服务器组件)所需的基本React特性。
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import ThemedImage from '@theme/ThemedImage'
+import useBaseUrl from '@docusaurus/useBaseUrl'
+
 要使用Next.js构建应用程序，熟悉React的新特性(如服务器组件)会有所帮助。
 本页将介绍服务器和客户端组件之间的区别、何时使用它们以及推荐的模式。
 
 如果你是React新手，我们还建议你参考[React文档](https://react.dev/learn)。这里有一些很棒的学习资源:
 
-- [React 教程](https://react.dev/learn/tutorial-tic-tac-toe)
-- [思考 React](https://react.dev/learn/thinking-in-react)
-- [学习 React](https://react.dev/learn/describing-the-ui)
+- [React教程](https://react.dev/learn/tutorial-tic-tac-toe)
+- [思考React](https://react.dev/learn/thinking-in-react)
+- [学习React](https://react.dev/learn/describing-the-ui)
 
 ## 服务器组件
 
@@ -24,34 +29,34 @@ React不再呈现整个应用程序的客户端(比如单页应用程序)，而�
 
 例如，在你的应用程序中考虑一个[页面](/docs/app/building-your-application/routing/pages-and-layouts#pages):
 
-<Image
+<ThemedImage
   alt="Thinking in Server Components"
-  srcLight="/docs/light/thinking-in-server-components.png"
-  srcDark="/docs/dark/thinking-in-server-components.png"
-  width="1600"
-  height="652"
+  sources={{
+    light: useBaseUrl('/img/light/thinking-in-server-components.png'),
+    dark: useBaseUrl('/img/dark/thinking-in-server-components.png'),
+  }}
 />
 
 如果我们将页面拆分为更小的组件，您将注意到大多数组件是非交互式的，并且可以作为服务器组件在服务器上呈现。
-对于 _较小_ 的交互式UI，我们可以使用客户端组件。
+对于*较小*的交互式UI，我们可以使用客户端组件。
 这与Next.js服务器优先的方法是一致的。
 
 ### 为什么是服务器组件?
 
-因此，您可能会想，为什么要使用服务器组件?与客户端组件相比，使用它们的优势是什么?
+您可能会想，为什么要使用服务器组件?与客户端组件相比，使用它们的优势是什么?
 
 服务器组件允许开发人员更好地利用服务器基础设施。
 例如，您可以将数据获取移到离数据库更近的服务器上，并保留以前会影响服务器上客户端JavaScript包大小的大型依赖项，从而提高性能。
 服务器组件使编写React应用程序感觉类似于PHP或Ruby on Rails，但具有React的功能和灵活性以及用于模板UI的组件模型。
 
 使用服务器组件，初始页面加载速度更快，并且减少了客户端JavaScript包的大小。
-基本客户端运行时的大小是 **可缓存的** 和 **可预测的**，并且不会随着应用程序的增长而增加。
+基本客户端运行时的大小是**可缓存的**和**可预测的**，并且不会随着应用程序的增长而增加。
 附加的JavaScript只在客户端交互通过[客户端组件](#client-components)在你的应用中使用时才会被添加。
 
 当用Next.js加载路由时，初始HTML就会在服务器端呈现。
 然后这个HTML在浏览器中被逐步增强，允许客户端通过异步加载Next.js和React客户端运行时来接管应用程序并添加交互性。
 
-为了更容易过渡到服务器组件，默认情况下，[应用路由器](/docs/app/building-your-application/routing#the-app-router)中的所有组件都是服务器组件，包括[特殊文件](/docs/app/building-your-application/routing#file-conventions)和[colocation组件](/docs/app/building-your-application/routing#colocation)。
+为了更容易过渡到服务器组件，默认情况下，[应用路由器](/docs/app/building-your-application/routing#the-app-router)中的所有组件都是服务器组件，包括[特殊文件](/docs/app/building-your-application/routing#file-conventions)和[主机托管组件](/docs/app/building-your-application/routing#colocation)。
 这允许您自动采用它们，而不需要额外的工作，并获得开箱即用的出色性能。
 你也可以通过['use client' 指令](#the-use-client-directive)选择加入客户端组件。
 
@@ -63,9 +68,12 @@ React不再呈现整个应用程序的客户端(比如单页应用程序)，而�
 
 ### "use client" 指令
 
-[`"use client"` 指令](https://github.com/reactjs/rfcs/pull/227)是一个约定，用于声明服务器和客户端组件模块图之间的边界。
+[`"use client"`指令](https://github.com/reactjs/rfcs/pull/227)是一个约定，用于声明服务器和客户端组件模块图之间的边界。
 
-```tsx filename="app/counter.tsx" highlight={1} switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/counter.tsx" highlight={1} switcher
 'use client'
 
 import { useState } from 'react'
@@ -82,7 +90,10 @@ export default function Counter() {
 }
 ```
 
-```jsx filename="app/counter.js" highlight={1} switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/counter.js" highlight={1} switcher
 'use client'
 
 import { useState } from 'react'
@@ -99,44 +110,47 @@ export default function Counter() {
 }
 ```
 
-<Image
+</TabItem>
+</Tabs>
+
+<ThemedImage
   alt="Use Client Directive and Network Boundary"
-  srcLight="/docs/light/use-client-directive.png"
-  srcDark="/docs/dark/use-client-directive.png"
-  width="1600"
-  height="1320"
+  sources={{
+    light: useBaseUrl('/img/light/use-client-directive.png'),
+    dark: useBaseUrl('/img/dark/use-client-directive.png'),
+  }}
 />
 
-`"use client"` _位于_ 仅服务器代码和客户机代码之间。
-它被放置在文件的顶部，在导入的上方，以定义从仅服务器部分到客户机部分的边界的 _分界点_。
+`"use client"`*位于*仅服务器代码和客户机代码之间。
+它被放置在文件的顶部，在导入的上方，以定义从仅服务器部分到客户机部分的边界的*分界点*。
 一旦在文件中定义了`"use client"`， 导入其中的所有其他模块，包括子组件，都被视为客户端包的一部分。
 
 由于服务器组件是默认的，所以所有组件都是服务器组件模块图的一部分，除非在以“use client”指令开头的模块中定义或导入。
 
-> **Good to know**:
+> **注意事项:**:
 >
 > - 服务器组件模块图中的组件保证只在服务器上呈现。
 > - 客户端组件模块图中的组件主要在客户端上呈现，但是使用Next.js，它们也可以在服务器上预呈现，并在客户端上进行渲染。
-> - The `"use client"` 指令必须在导入之前定义在文件的 **顶部**。
-> - `"use client"`**不** 需要在每个文件中定义。 客户端模块边界只需要在“入口点”定义一次，所有导入的模块都可以被视为客户端组件。
+> - `"use client"` 指令必须在导入之前定义在文件的**顶部**。
+> - `"use client"` **不**需要在每个文件中定义。 客户端模块边界只需要在`入口点`定义一次，所有导入的模块都可以被视为客户端组件。
 
 ## 何时使用服务器和客户端组件?
 
-为了简化服务器组件和客户端组件之间的选择，我们建议使用服务器组件(默认在“app”目录中)，直到你有了客户端组件的用例。
+为了简化服务器组件和客户端组件之间的选择，我们建议使用服务器组件(默认在`app`目录中)，直到你有了客户端组件的用例。
 
 下表总结了服务器和客户端组件的不同用例:
 
-| 你需要做什么?                                                             | 服务器组件          | 客户端组件          |
-| ------------------------------------------------------------------------- | ------------------- | ------------------- |
-| 获取数据。                                                                | <Check size={18} /> | <Cross size={18} /> |
-| 访问后端资源(直接)                                                        | <Check size={18} /> | <Cross size={18} /> |
-| 将敏感信息保存在服务器上(访问令牌、API密钥等)                             | <Check size={18} /> | <Cross size={18} /> |
-| 保持对服务器的大量依赖/减少客户端JavaScript                               | <Check size={18} /> | <Cross size={18} /> |
-| 添加交互性和事件侦听器 (`onClick()`, `onChange()`, etc)                   | <Cross size={18} /> | <Check size={18} /> |
-| 使用状态和生命周期效果 (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
-| 使用仅针对浏览器的APIs                                                    | <Cross size={18} /> | <Check size={18} /> |
-| 使用依赖于状态、效果或仅浏览器APIs的自定义钩子                            | <Cross size={18} /> | <Check size={18} /> |
-| 使用[React类组件](https://react.dev/reference/react/Component)            | <Cross size={18} /> | <Check size={18} /> |
+| 你需要做什么?                                                          | 服务器组件 | 客户端组件 |
+| ---------------------------------------------------------------------- | ---------- | ---------- |
+| 获取数据                                                               | ✔️         | ❌         |
+| 访问后端资源(直接)                                                     | ✔️         | ❌         |
+| 将敏感信息保存在服务器上(访问令牌、API密钥等)                          | ✔️         | ❌         |
+| 保持对服务器的大量依赖/减少客户端JavaScript                            | ✔️         | ❌         |
+| 添加交互性和事件侦听器 (`onClick()`, `onChange()`等)                   | ❌         | ✔️         |
+| 使用状态和生命周期效果 (`useState()`, `useReducer()`, `useEffect()`等) | ❌         | ✔️         |
+| 使用仅针对浏览器的APIs                                                 | ❌         | ✔️         |
+| 使用依赖于状态、效果或仅浏览器APIs的自定义钩子                         | ❌         | ✔️         |
+| 使用[React类组件](https://react.dev/reference/react/Component)         | ❌         | ✔️         |
 
 ## 模式
 
@@ -148,7 +162,10 @@ export default function Counter() {
 
 不要把整个布局做成一个客户端组件，而是把交互逻辑移到一个客户端组件(例如:`<SearchBar />`)，并保持你的布局作为一个服务器组件。这意味着您不必将布局的所有Javascript组件发送到客户端。
 
-```tsx filename="app/layout.tsx" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/layout.tsx" switcher
 // SearchBar is a Client Component
 import SearchBar from './searchbar'
 // Logo is a Server Component
@@ -168,7 +185,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/layout.js" switcher
 // SearchBar is a Client Component
 import SearchBar from './searchbar'
 // Logo is a Server Component
@@ -188,6 +208,9 @@ export default function Layout({ children }) {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ### 组合客户端和服务器组件
 
 服务器组件和客户端组件可以组合在同一个组件树中。
@@ -200,7 +223,7 @@ export default function Layout({ children }) {
 - 在客户端，React渲染客户端组件和服务器组件的渲染结果，合并服务器和客户端上完成的工作。
   - 如果任何服务器组件嵌套在客户端组件中，它们呈现的内容将被正确地放置在客户端组件中。
 
-> **Good to know**: 在Next.js中，在初始页面加载期间，上述步骤中服务器组件和客户端组件的渲染结果都[在服务器上预渲染为HTML](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server)，以产生更快的初始页面加载。
+> **注意事项**: 在Next.js中，在初始页面加载期间，上述步骤中服务器组件和客户端组件的渲染结果都[在服务器上预渲染为HTML](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server)，以产生更快的初始页面加载。
 
 ### 在客户端组件中嵌套服务器组件
 
@@ -210,7 +233,10 @@ export default function Layout({ children }) {
 
 不支持以下模式。你不能将服务器组件导入到客户端组件中:
 
-```tsx filename="app/example-client-component.tsx" switcher highlight={5,18}
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/example-client-component.tsx" switcher highlight={5,18}
 'use client'
 
 // This pattern will **not** work!
@@ -234,7 +260,10 @@ export default function ExampleClientComponent({
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher highlight={5,14}
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/example-client-component.js" switcher highlight={5,14}
 'use client'
 
 // This pattern will **not** work!
@@ -254,15 +283,21 @@ export default function ExampleClientComponent({ children }) {
 }
 ```
 
-#### 推荐模式:将服务器组件作为道具传递给客户端组件
+</TabItem>
+</Tabs>
 
-相反，在设计客户端组件时，你可以使用React props为服务器组件标记 _“slots”_。
+#### 推荐模式:将服务器组件作为props传递给客户端组件
+
+相反，在设计客户端组件时，你可以使用React props为服务器组件标记 _"slot"_。
 
 服务器组件将在服务器上呈现，当客户端组件在客户端上呈现时， _"slot"_ 将被服务器组件的呈现结果填充。
 
 一个常见的模式是使用React的`children`属性来创建 _"slot"_ 。我们可以重构`<ExampleClientComponent>`，让它接受一个通用的`children`属性，并把`<ExampleClientComponent>`的导入和显式嵌套移到父组件中。
 
-```tsx filename="app/example-client-component.tsx" switcher highlight={6,16}
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/example-client-component.tsx" switcher highlight={6,16}
 'use client'
 
 import { useState } from 'react'
@@ -284,7 +319,10 @@ export default function ExampleClientComponent({
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher highlight={5,12}
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/example-client-component.js" switcher highlight={5,12}
 'use client'
 
 import { useState } from 'react'
@@ -302,13 +340,19 @@ export default function ExampleClientComponent({ children }) {
 }
 ```
 
-Now, `<ExampleClientComponent>` has no knowledge of what `children` is. It doesn't know that `children` will eventually be filled in by the result of a Server Component.
+</TabItem>
+</Tabs>
 
-The only responsibility `ExampleClientComponent` has is to decide where whatever `children` will eventually be placed.
+现在，`<ExampleClientComponent>`不知道`children`是什么。它不知道`children`最终会被服务器组件的结果填充。
 
-In a parent Server Component, you can import both the `<ExampleClientComponent>` and `<ExampleServerComponent>` and pass `<ExampleServerComponent>` as a child of `<ExampleClientComponent>`:
+`ExampleClientComponent`的唯一职责是决定`children`最终将被放置在哪里。
 
-```tsx filename="app/page.tsx"  highlight={11} switcher
+在父Server组件中，你可以同时导入`<ExampleClientComponent>`和`<ExampleServerComponent>`，并将`<ExampleClientComponent>`作为`<ExampleServerComponent>`的子组件传递:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/page.tsx"  highlight={11} switcher
 // This pattern works:
 // You can pass a Server Component as a child or prop of a
 // Client Component.
@@ -325,7 +369,10 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" highlight={11} switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/page.js" highlight={11} switcher
 // This pattern works:
 // You can pass a Server Component as a child or prop of a
 // Client Component.
@@ -342,32 +389,42 @@ export default function Page() {
 }
 ```
 
-With this approach, the rendering of `<ExampleClientComponent>` and `<ExampleServerComponent>` are decoupled and can be rendered independently - aligning with Server Components, which are rendered on the server before Client Components.
+</TabItem>
+</Tabs>
 
-> **Good to know**
+通过这种方法，`<ExampleClientComponent>`和`<ExampleServerComponent>`的呈现是解耦的，可以独立呈现——与服务器组件对齐，服务器组件在客户端组件之前呈现在服务器上。
+
+> **注意事项:**
 >
-> - This pattern is **already applied** in [layouts and pages](/docs/app/building-your-application/routing/pages-and-layouts) with the `children` prop so you don't have to create an additional wrapper component.
-> - Passing React components (JSX) to other components is not a new concept and has always been part of the React composition model.
-> - This composition strategy works across Server and Client Components because the component that receives the prop has no knowledge of **what** the prop is. It is only responsible for where the thing that it is passed should be placed.
->   - This allows the passed prop to be rendered independently, in this case, on the server, well before the Client Component is rendered on the client.
->   - The very same strategy of "lifting content up" has been used to avoid state changes in a parent component re-rendering an imported nested child component.
-> - You're not limited to the `children` prop. You can use any prop to pass JSX.
+> - 这个模式已经在[布局和页面](/docs/app/building-your-application/routing/pages-and-layouts)中使用了`children`属性，所以你不需要创建额外的包装器组件。
+> - 将React组件(JSX)传递给其他组件并不是一个新概念，并且一直是React组合模型的一部分。
+> - 这种组合策略可以跨服务器和客户端组件工作，因为接收prop的组件不知道该prop是什么。它只负责它所传递的东西应该放在哪里。
+>   - 这允许在客户端渲染客户端组件之前，在服务器上独立渲染传递的prop。
+>   - 同样的“提升内容”策略也被用来避免父组件中的状态改变，从而重新呈现导入的嵌套子组件。
+> - 你并不局限于`children` prop。您可以使用任何prop来传递JSX。
 
-### 将道具从服务器传递到客户端组件(序列化)
+### 将prop从服务器传递到客户端组件(序列化)
 
-Props passed from the Server to Client Components need to be [serializable](https://developer.mozilla.org/en-US/docs/Glossary/Serialization). This means that values such as functions, Dates, etc, cannot be passed directly to Client Components.
+从服务器传递到客户端组件的prop需要是[可序列化](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)的。
+这意味着函数、日期等值不能直接传递给客户端组件。
 
-> **Where is the Network Boundary?**
+> **网络边界在哪里?**
 >
-> In the App Router, the network boundary is between Server Components and Client Components. This is different from the Pages where the boundary is between `getStaticProps`/`getServerSideProps` and Page Components. Data fetched inside Server Components do not need to be serialized as it doesn't cross the network boundary unless it is passed to a Client Component. Learn more about [data fetching](/docs/app/building-your-application/data-fetching#fetching-data-on-the-server) with Server Components.
+> 在应用路由器中，网络边界在服务器组件和客户端组件之间。
+> 这与`getStaticProps`/`getServerSideProps`和页面组件之间的边界的页面不同。
+> 在服务器组件中获取的数据不需要序列化，因为它不会跨越网络边界，除非它被传递给客户端组件。
+> 通过服务器组件了解更多关于[数据抓取](/docs/app/building-your-application/data-fetching#fetching-data-on-the-server)的信息。
 
 ### 将服务器代码排除在客户端组件之外(中毒)
 
-Since JavaScript modules can be shared between both Server and Client Components, it's possible for code that was only ever intended to be run on the server to sneak its way into the client.
+由于JavaScript模块可以在服务器和客户端组件之间共享，因此原本只打算在服务器上运行的代码可能会偷偷溜进客户端。
 
-For example, take the following data-fetching function:
+例如，获取数据的函数如下:
 
-```ts filename="lib/data.ts" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```ts title="lib/data.ts" switcher
 export async function getData() {
   const res = await fetch('https://external-service.com/data', {
     headers: {
@@ -379,7 +436,10 @@ export async function getData() {
 }
 ```
 
-```js filename="lib/data.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```js title="lib/data.js" switcher
 export async function getData() {
   const res = await fetch('https://external-service.com/data', {
     headers: {
@@ -391,25 +451,31 @@ export async function getData() {
 }
 ```
 
-At first glance, it appears that `getData` works on both the server and the client. But because the environment variable `API_KEY` is not prefixed with `NEXT_PUBLIC`, it's a private variable that can only be accessed on the server. Next.js replaces private environment variables with the empty string in client code to prevent leaking secure information.
+</TabItem>
+</Tabs>
 
-As a result, even though `getData()` can be imported and executed on the client, it won't work as expected. And while making the variable public would make the function work on the client, it would leak sensitive information.
+乍一看，`getData`似乎在服务器和客户端都能工作。
+但是，由于环境变量`API_KEY`没有前缀`NEXT_PUBLIC`，因此它是一个只能在服务器上访问的私有变量。
+Next.js用客户端代码中的空字符串替换私有环境变量，以防止泄露安全信息。
 
-So, this function was written with the intention that it would only ever be executed on the server.
+因此，即使可以导入`getData()`并在客户机上执行，它也不会像预期的那样工作。
+虽然将变量设为公共将使该函数在客户机上工作，但它会泄露敏感信息。
 
-### The "server only" package
+因此，编写这个函数的目的是让它只在服务器上执行。
 
-To prevent this sort of unintended client usage of server code, we can use the `server-only` package to give other developers a build-time error if they ever accidentally import one of these modules into a Client Component.
+### "server only" 包
 
-To use `server-only`, first install the package:
+为了防止这种意想不到的客户端使用服务器代码，我们可以使用`server-only`包，如果其他开发人员不小心将这些模块中的一个导入到客户端组件中，就会给他们一个构建时错误。
 
-```bash filename="Terminal"
+要使用`server-only`，首先安装包:
+
+```bash title="Terminal"
 npm install server-only
 ```
 
-Then import the package into any module that contains server-only code:
+然后将包导入到任何包含服务器专用代码的模块中:
 
-```js filename="lib/data.js"
+```js title="lib/data.js"
 import 'server-only'
 
 export async function getData() {
@@ -423,27 +489,33 @@ export async function getData() {
 }
 ```
 
-Now, any Client Component that imports `getData()` will receive a build-time error explaining that this module can only be used on the server.
+现在，任何导入`getData()`的客户端组件都会收到一个构建时错误，解释该模块只能在服务器上使用。
 
-The corresponding package `client-only` can be used to mark modules that contain client-only code – for example, code that accesses the `window` object.
+相应的包`client-only`可以用来标记包含客户端专用代码的模块——例如，访问`window`对象的代码。
 
 ### 数据抓取
 
-Although it's possible to fetch data in Client Components, we recommend fetching data in Server Components unless you have a specific reason for fetching data on the client. Moving data fetching to the server leads to better performance and user experience.
+虽然可以在客户端组件中获取数据，但我们建议在服务器组件中获取数据，除非您有在客户端获取数据的特定原因。
+将数据获取移到服务器上会带来更好的性能和用户体验。
 
-[Learn more about data fetching](/docs/app/building-your-application/data-fetching).
+[了解有关数据获取的更多信息](/docs/app/building-your-application/data-fetching).
 
 ### 第三方软件包
 
-Since Server Components are new, third-party packages in the ecosystem are just beginning to add the `"use client"` directive to components that use client-only features like `useState`, `useEffect`, and `createContext`.
+由于服务器组件是新的，生态系统中的第三方软件包才刚刚开始为使用客户端专用功能的组件添加`"use client"`指令，如`useState`, `useEffect`, 和 `createContext`。
 
-Today, many components from `npm` packages that use client-only features do not yet have the directive. These third-party components will work as expected within your own [Client Components](#the-use-client-directive) since they have the `"use client"` directive, but they won't work within Server Components.
+今天，许多来自npm包的组件使用了客户端专用的特性，但还没有这个指令。
+这些第三方组件将在你自己的[客户端组件](#the-use-client-directive)中工作，因为它们有`"use client"`指令，但它们不会在服务器组件中工作。
 
-For example, let's say you've installed the hypothetical `acme-carousel` package which has a `<Carousel />` component. This component uses `useState`, but it doesn't yet have the `"use client"` directive.
+例如，假设您已经安装了假设的`acme-carousel`包，其中包含`<Carousel />`组件。
+这个组件使用了`useState`，但它还没有`"use client"`指令。
 
-If you use `<Carousel />` within a Client Component, it will work as expected:
+如果你在客户端组件中使用`<Carousel />`，它将按预期工作:
 
-```tsx filename="app/gallery.tsx" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/gallery.tsx" switcher
 'use client'
 
 import { useState } from 'react'
@@ -463,7 +535,10 @@ export default function Gallery() {
 }
 ```
 
-```jsx filename="app/gallery.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/gallery.js" switcher
 'use client'
 
 import { useState } from 'react'
@@ -483,9 +558,15 @@ export default function Gallery() {
 }
 ```
 
-However, if you try to use it directly within a Server Component, you'll see an error:
+</TabItem>
+</Tabs>
 
-```tsx filename="app/page.tsx" switcher
+然而，如果你试图在服务器组件中直接使用它，你会看到一个错误:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/page.tsx" switcher
 import { Carousel } from 'acme-carousel'
 
 export default function Page() {
@@ -500,7 +581,10 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/page.js" switcher
 import { Carousel } from 'acme-carousel'
 
 export default function Page() {
@@ -515,11 +599,17 @@ export default function Page() {
 }
 ```
 
-This is because Next.js doesn't know `<Carousel />` is using client-only features.
+</TabItem>
+</Tabs>
 
-To fix this, you can wrap third-party components that rely on client-only features in your own Client Components:
+这是因为Next.js不知道`<Carousel />`使用的是客户端专用功能。
 
-```tsx filename="app/carousel.tsx" switcher
+为了解决这个问题，你可以在你自己的客户端组件中包装依赖于客户端特性的第三方组件:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/carousel.tsx" switcher
 'use client'
 
 import { Carousel } from 'acme-carousel'
@@ -527,7 +617,10 @@ import { Carousel } from 'acme-carousel'
 export default Carousel
 ```
 
-```jsx filename="app/carousel.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/carousel.js" switcher
 'use client'
 
 import { Carousel } from 'acme-carousel'
@@ -535,9 +628,15 @@ import { Carousel } from 'acme-carousel'
 export default Carousel
 ```
 
-Now, you can use `<Carousel />` directly within a Server Component:
+</TabItem>
+</Tabs>
 
-```tsx filename="app/page.tsx" switcher
+现在，你可以在服务器组件中直接使用`<Carousel />`:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/page.tsx" switcher
 import Carousel from './carousel'
 
 export default function Page() {
@@ -552,7 +651,10 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/page.js" switcher
 import Carousel from './carousel'
 
 export default function Page() {
@@ -567,27 +669,35 @@ export default function Page() {
 }
 ```
 
-We don't expect you to need to wrap most third-party components since it's likely you'll be using them within Client Components. However, one exception is provider components, since they rely on React state and context, and are typically needed at the root of an application. [Learn more about third-party context providers below](#rendering-third-party-context-providers-in-server-components).
+</TabItem>
+</Tabs>
+
+我们不希望您需要包装大多数第三方组件，因为您很可能会在客户端组件中使用它们。
+然而，一个例外是提供程序组件，因为它们依赖于React状态和上下文，并且通常需要在应用程序的根。
+[下面了解有关第三方上下文提供程序的更多信息](#rendering-third-party-context-providers-in-server-components).
 
 #### 库的作者
 
-- In a similar fashion, library authors creating packages to be consumed by other developers can use the `"use client"` directive to mark client entry points of their package. This allows users of the package to import package components directly into their Server Components without having to create a wrapping boundary.
-- You can optimize your package by using ['use client' deeper in the tree](#moving-client-components-to-the-leaves), allowing the imported modules to be part of the Server Component module graph.
-- It's worth noting some bundlers might strip out `"use client"` directives. You can find an example of how to configure esbuild to include the `"use client"` directive in the [React Wrap Balancer](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13) and [Vercel Analytics](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30) repositories.
+- 以类似的方式，创建供其他开发人员使用的包的库作者可以使用`"use client"`指令来标记其包的客户端入口点。这允许包的用户将包组件直接导入到他们的服务器组件中，而不必创建包装边界。
+- 你可以通过在树的更深处使用['use client'](#moving-client-components-to-the-leaves)来优化你的包，允许导入的模块成为服务器组件模块图的一部分。
+- 值得注意的是，一些打包器可能会去掉`"use client"`指令。你可以在[反应包裹平衡器](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13)和[韦塞尔分析](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30)存储库中找到一个如何配置esbuild以包含“use client”指令的示例。
 
 ## 上下文
 
-Most React applications rely on [context](https://react.dev/reference/react/useContext) to share data between components, either directly via [`createContext`](https://react.dev/reference/react/useContext), or indirectly via provider components imported from third-party libraries.
+大多数React应用依赖于[context](https://react.dev/reference/react/useContext)在组件之间共享数据，要么直接通过[`createContext`](https://react.dev/reference/react/useContext)，要么间接通过从第三方库导入的提供商组件。
 
-In Next.js 13, context is fully supported within Client Components, but it **cannot** be created or consumed directly within Server Components. This is because Server Components have no React state (since they're not interactive), and context is primarily used for rerendering interactive components deep in the tree after some React state has been updated.
+在Next.js 13中，上下文在客户端组件中是完全支持的，但它不能在服务器组件中直接创建或使用。这是因为服务器组件没有React状态(因为它们不是交互式的)，上下文主要用于在一些React状态更新后重新呈现树深处的交互式组件。
 
-We'll discuss alternatives for sharing data between Server Components, but first, let's take a look at how to use context within Client Components.
+我们将讨论在服务器组件之间共享数据的替代方案，但首先，让我们看一下如何在客户端组件中使用上下文。
 
 ### 在客户端组件中使用上下文
 
-All of the context APIs are fully supported within Client Components:
+所有的上下文api都在客户端组件中得到完全支持:
 
-```tsx filename="app/sidebar.tsx" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/sidebar.tsx" switcher
 'use client'
 
 import { createContext, useContext, useState } from 'react'
@@ -617,7 +727,10 @@ function SidebarNav() {
 }
 ```
 
-```jsx filename="app/sidebar.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/sidebar.js" switcher
 'use client'
 
 import { createContext, useContext, useState } from 'react'
@@ -647,9 +760,15 @@ function SidebarNav() {
 }
 ```
 
-However, context providers are typically rendered near the root of an application to share global concerns, like the current theme. Because context is not supported in Server Components, trying to create a context at the root of your application will cause an error:
+</TabItem>
+</Tabs>
 
-```tsx filename="app/layout.tsx" switcher
+但是，上下文提供程序通常呈现在应用程序的根附近，以共享全局关注点，就像当前主题一样。由于服务器组件中不支持上下文，因此尝试在应用程序的根目录创建上下文将导致错误:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/layout.tsx" switcher
 import { createContext } from 'react'
 
 //  createContext is not supported in Server Components
@@ -666,7 +785,10 @@ export default function RootLayout({ children }) {
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/layout.js" switcher
 import { createContext } from 'react'
 
 //  createContext is not supported in Server Components
@@ -683,9 +805,15 @@ export default function RootLayout({ children }) {
 }
 ```
 
-To fix this, create your context and render its provider inside of a Client Component:
+</TabItem>
+</Tabs>
 
-```tsx filename="app/theme-provider.tsx" switcher
+要解决这个问题，创建你的上下文，并在客户端组件中渲染它的提供者:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/theme-provider.tsx" switcher
 'use client'
 
 import { createContext } from 'react'
@@ -697,7 +825,10 @@ export default function ThemeProvider({ children }) {
 }
 ```
 
-```jsx filename="app/theme-provider.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/theme-provider.js" switcher
 'use client'
 
 import { createContext } from 'react'
@@ -709,9 +840,15 @@ export default function ThemeProvider({ children }) {
 }
 ```
 
-Your Server Component will now be able to directly render your provider since it's been marked as a Client Component:
+</TabItem>
+</Tabs>
 
-```tsx filename="app/layout.tsx" switcher
+你的服务器组件现在可以直接渲染你的提供商了，因为它被标记为客户端组件:
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/layout.tsx" switcher
 import ThemeProvider from './theme-provider'
 
 export default function RootLayout({
@@ -729,7 +866,10 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/layout.js" switcher
 import ThemeProvider from './theme-provider'
 
 export default function RootLayout({ children }) {
@@ -743,17 +883,25 @@ export default function RootLayout({ children }) {
 }
 ```
 
-With the provider rendered at the root, all other Client Components throughout your app will be able to consume this context.
+</TabItem>
+</Tabs>
 
-> **Good to know**: You should render providers as deep as possible in the tree – notice how `ThemeProvider` only wraps `{children}` instead of the entire `<html>` document. This makes it easier for Next.js to optimize the static parts of your Server Components.
+通过在根节点呈现该提供商，应用中的所有其他客户端组件都可以使用该上下文。
+
+> **注意事项**: 你应该在树中尽可能深地呈现提供商——注意`ThemeProvider`只包装了`{children}`，而不是整个`<html>`文档。这使得Next.js更容易优化服务器组件的静态部分。
 
 ### 在服务器组件中呈现第三方上下文提供程序
 
-Third-party npm packages often include Providers that need to be rendered near the root of your application. If these providers include the `"use client"` directive, they can be rendered directly inside of your Server Components. However, since Server Components are so new, many third-party providers won't have added the directive yet.
+第三方npm包通常包含需要在应用根目录附近呈现的Providers。
+如果这些提供商包含了`"use client"`指令，它们就可以直接在你的服务器组件中呈现。
+然而，由于服务器组件是如此的新，许多第三方提供商还没有添加这个指令。
 
-If you try to render a third-party provider that doesn't have `"use client"`, it will cause an error:
+如果你试图渲染一个没有`"use client"`的第三方提供商，它会导致一个错误:
 
-```tsx filename="app/layout.tsx" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/layout.tsx" switcher
 import { ThemeProvider } from 'acme-theme'
 
 export default function RootLayout({ children }) {
@@ -768,7 +916,10 @@ export default function RootLayout({ children }) {
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/layout.js" switcher
 import { ThemeProvider } from 'acme-theme'
 
 export default function RootLayout({ children }) {
@@ -783,9 +934,12 @@ export default function RootLayout({ children }) {
 }
 ```
 
-To fix this, wrap third-party providers in your own Client Component:
+</TabItem>
+</Tabs>
 
-```jsx filename="app/providers.js"
+要解决这个问题，可以在你自己的客户端组件中包装第三方提供商:
+
+```jsx title="app/providers.js"
 'use client'
 
 import { ThemeProvider } from 'acme-theme'
@@ -800,9 +954,9 @@ export function Providers({ children }) {
 }
 ```
 
-Now, you can import and render `<Providers />` directly within your root layout.
+现在，你可以在根布局中直接导入和渲染`<Providers />`了。
 
-```jsx filename="app/layout.js"
+```jsx title="app/layout.js"
 import { Providers } from './providers'
 
 export default function RootLayout({ children }) {
@@ -816,23 +970,37 @@ export default function RootLayout({ children }) {
 }
 ```
 
-With the providers rendered at the root, all the components and hooks from these libraries will work as expected within your own Client Components.
+通过在根节点呈现提供程序，这些库中的所有组件和钩子将在您自己的客户端组件中按预期工作。
 
-Once a third-party library has added `"use client"` to its client code, you'll be able to remove the wrapper Client Component.
+一旦第三方库在其客户端代码中添加了`"use client"`，你就可以删除包装器客户端组件。
 
 ### 在服务器组件之间共享数据
 
-Since Server Components are not interactive and therefore do not read from React state, you don't need React context to share data. Instead, you can use native JavaScript patterns for common data that multiple Server Components need to access. For example, a module can be used to share a database connection across multiple components:
+由于服务器组件不是交互式的，因此不会从React状态中读取数据，因此不需要React上下文来共享数据。
+相反，您可以使用本地JavaScript模式来处理多个服务器组件需要访问的公共数据。
+例如，一个模块可以用来在多个组件之间共享一个数据库连接:
 
-```ts filename="utils/database.ts" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```ts title="utils/database.ts" switcher
 export const db = new DatabaseConnection()
 ```
 
-```js filename="utils/database.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```js title="utils/database.js" switcher
 export const db = new DatabaseConnection()
 ```
 
-```tsx filename="app/users/layout.tsx" switcher
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/users/layout.tsx" switcher
 import { db } from '@utils/database'
 
 export async function UsersLayout() {
@@ -841,7 +1009,10 @@ export async function UsersLayout() {
 }
 ```
 
-```jsx filename="app/users/layout.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/users/layout.js" switcher
 import { db } from '@utils/database'
 
 export async function UsersLayout() {
@@ -850,7 +1021,13 @@ export async function UsersLayout() {
 }
 ```
 
-```tsx filename="app/users/[id]/page.tsx" switcher
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/users/[id]/page.tsx" switcher
 import { db } from '@utils/database'
 
 export async function DashboardPage() {
@@ -859,7 +1036,10 @@ export async function DashboardPage() {
 }
 ```
 
-```jsx filename="app/users/[id]/page.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/users/[id]/page.js" switcher
 import { db } from '@utils/database'
 
 export async function DashboardPage() {
@@ -868,10 +1048,15 @@ export async function DashboardPage() {
 }
 ```
 
-In the above example, both the layout and page need to make database queries. Each of these components shares access to the database by importing the `@utils/database` module. This JavaScript pattern is called global singletons.
+</TabItem>
+</Tabs>
+
+在上面的示例中，布局和页面都需要进行数据库查询。这些组件通过导入`@utils/database`模块共享对数据库的访问。这种JavaScript模式被称为全局单例。
 
 ### 在服务器组件之间共享获取请求
 
-When fetching data, you may want to share the result of a `fetch` between a `page` or `layout` and some of its children components. This is an unnecessary coupling between the components and can lead to passing `props` back and forth between components.
+在获取数据时，您可能希望在`page`或`layout`及其子组件之间共享`fetch`的结果。这是组件之间不必要的耦合，可能导致组件之间来回传递“prop”。
 
-Instead, we recommend colocating data fetching alongside the component that consumes the data. [`fetch` requests are automatically deduped](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) in Server Components, so each route segment can request exactly the data it needs without worrying about duplicate requests. Next.js will read the same value from the `fetch` cache.
+相反，我们建议将数据获取与使用数据的组件放在一起。
+在服务器组件中[`fetch`请求被自动删除]，所以每个路由段都可以请求它所需要的数据，而不用担心重复的请求。
+Next.js将从`fetch`缓存中读取相同的值。

@@ -60,7 +60,7 @@ The TypeScript plugin can help with:
 - Ensuring the `use client` directive is used correctly.
 - Ensuring client hooks (like `useState`) are only used in Client Components.
 
-> **Good to know**: More features will be added in the future.
+> **注意事项**: More features will be added in the future.
 
 </AppOnly>
 
@@ -211,7 +211,7 @@ type Data = {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data>,
 ) {
   res.status(200).json({ name: 'John Doe' })
 }

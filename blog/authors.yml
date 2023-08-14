@@ -1,17 +1,29 @@
 endi:
   name: Endilie Yacop Sucipto
-  title: Maintainer of Docusaurus
+  title: 刀叉龙的维护者
   url: https://github.com/endiliey
   image_url: https://github.com/endiliey.png
 
 yangshun:
   name: Yangshun Tay
-  title: Front End Engineer @ Facebook
+  title: Facebook前端工程师
   url: https://github.com/yangshun
   image_url: https://github.com/yangshun.png
 
 slorber:
   name: Sébastien Lorber
-  title: Docusaurus maintainer
+  title: Docusaurus维护者
   url: https://sebastienlorber.com
   image_url: https://github.com/slorber.png
+
+robinson:
+  name: Lee Robinson
+  title: 开发者体验副总裁▲@Vercel
+  url: https://twitter.com/leeerob
+  image_url: https://nextjs.org/_next/image?url=%2Fstatic%2Fteam%2Flee.jpg&w=64&q=75&dpl=dpl_GKHgzBASiw1q9Cy1zBGjfY3npw8h
+
+agbonze:
+  name: Elijah Agbonze
+  title: 我是一名来自尼日利亚的全栈软件开发人员。我喜欢编程，也喜欢写关于编程的文章。
+  url: https://blog.logrocket.com/author/elijahtrillionz/
+  image_url: https://blog.logrocket.com/wp-content/uploads/2022/02/elijahtrillionz.png?w=128&h=128&crop=1

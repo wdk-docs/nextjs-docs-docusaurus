@@ -1,3 +1,5 @@
+> 学习next.js是为了做个学习ai站点,模仿大咖 https://learn.deeplearning.ai/chatgpt-building-system/lesson/2/language-models,-the-chat-format-and-tokens
+
 # Website
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.

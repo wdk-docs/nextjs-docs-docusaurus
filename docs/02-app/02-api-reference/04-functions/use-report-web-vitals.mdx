@@ -3,6 +3,9 @@ title: useReportWebVitals
 description: API Reference for the useReportWebVitals function.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 The `useReportWebVitals` hook allows you to report [Core Web Vitals](https://web.dev/vitals/), and can be used in combination with your analytics service.
@@ -209,7 +212,7 @@ useReportWebVitals((metric) => {
 })
 ```
 
-> **Good to know**: If you use [Google Analytics](https://analytics.google.com/analytics/web/), using the
+> **注意事项**: If you use [Google Analytics](https://analytics.google.com/analytics/web/), using the
 > `id` value can allow you to construct metric distributions manually (to calculate percentiles,
 > etc.)
 

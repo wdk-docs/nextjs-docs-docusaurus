@@ -1,25 +1,28 @@
 ---
-title: Static Exports
-description: Next.js enables starting as a static site or Single-Page Application (SPA), then later optionally upgrading to use features that require a server.
+title: 静态的出口
+description: Next.js支持从静态站点或单页面应用程序(SPA)开始，然后可以选择升级以使用需要服务器的功能。
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Next.js enables starting as a static site or Single-Page Application (SPA), then later optionally upgrading to use features that require a server.
+Next.js支持从静态站点或单页面应用程序(SPA)开始，然后可以选择升级以使用需要服务器的功能。
 
-When running `next build`, Next.js generates an HTML file per route. By breaking a strict SPA into individual HTML files, Next.js can avoid loading unnecessary JavaScript code on the client-side, reducing the bundle size and enabling faster page loads.
+当运行`next build`时，Next.js会为每个路由生成一个HTML文件。通过将严格的SPA分解为单独的HTML文件，Next.js可以避免在客户端加载不必要的JavaScript代码，减少包的大小并实现更快的页面加载。
 
-Since Next.js supports this static export, it can be deployed and hosted on any web server that can serve HTML/CSS/JS static assets.
+因为Next.js支持这种静态导出，所以它可以部署和托管在任何可以提供HTML/CSS/JS静态资产的web服务器上。
 
 <PagesOnly>
 
-> **Good to know**: We recommend using the App Router for enhanced static export support.
+> **注意事项**: We recommend using the App Router for enhanced static export support.
 
 </PagesOnly>
 
-## Configuration
+## 配置
 
-To enable a static export, change the output mode inside `next.config.js`:
+要启用静态导出，请更改`next.config.js`中的输出模式:
 
 ```js filename="next.config.js" highlight={5}
 /**
@@ -46,11 +49,11 @@ You can utilize [`getStaticProps`](/docs/pages/building-your-application/data-fe
 
 <AppOnly>
 
-## Supported Features
+## 支持的功能
 
 The core of Next.js has been designed to support static exports.
 
-### Server Components
+### 服务器组件
 
 When you run `next build` to generate a static export, Server Components consumed inside the `app` directory will run during the build, similar to traditional static-site generation.
 
@@ -66,7 +69,7 @@ export default async function Page() {
 }
 ```
 
-### Client Components
+### 客户端组件
 
 If you want to perform data fetching on the client, you can use a Client Component with [SWR](https://github.com/vercel/swr) to deduplicate requests.
 
@@ -80,7 +83,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 export default function Page() {
   const { data, error } = useSWR(
     `https://jsonplaceholder.typicode.com/posts/1`,
-    fetcher
+    fetcher,
   )
   if (error) return 'Failed to load'
   if (!data) return 'Loading...'
@@ -99,7 +102,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function Page() {
   const { data, error } = useSWR(
     `https://jsonplaceholder.typicode.com/posts/1`,
-    fetcher
+    fetcher,
   )
   if (error) return 'Failed to load'
   if (!data) return 'Loading...'
@@ -150,9 +153,9 @@ export default function Page() {
 
 <PagesOnly>
 
-## Supported Features
+## 支持的功能
 
-The majority of core Next.js features needed to build a static site are supported, including:
+支持构建静态站点所需的大部分核心Next.js功能，包括:
 
 - [Dynamic Routes when using `getStaticPaths`](/docs/app/building-your-application/routing/dynamic-routes)
 - Prefetching with `next/link`
@@ -165,7 +168,7 @@ The majority of core Next.js features needed to build a static site are supporte
 
 </PagesOnly>
 
-### Image Optimization
+### 图像优化
 
 [Image Optimization](/docs/app/building-your-application/optimizing/images) through `next/image` can be used with a static export by defining a custom image loader in `next.config.js`. For example, you can optimize images with a service like Cloudinary:
 
@@ -196,7 +199,7 @@ export default function cloudinaryLoader({
 }) {
   const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/demo/image/upload/${params.join(
-    ','
+    ',',
   )}${src}`
 }
 ```
@@ -205,7 +208,7 @@ export default function cloudinaryLoader({
 export default function cloudinaryLoader({ src, width, quality }) {
   const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/demo/image/upload/${params.join(
-    ','
+    ',',
   )}${src}`
 }
 ```
@@ -230,7 +233,7 @@ export default function Page() {
 
 <AppOnly>
 
-### Route Handlers
+### 路由处理程序
 
 Route Handlers will render a static response when running `next build`. Only the `GET` HTTP verb is supported. This can be used to generate static HTML, JSON, TXT, or other files from dynamic or static data. For example:
 
@@ -254,7 +257,7 @@ The above file `app/data.json/route.ts` will render to a static file during `nex
 
 If you need to read dynamic values from the incoming request, you cannot use a static export.
 
-### Browser APIs
+### 浏览器api
 
 Client Components are pre-rendered to HTML during `next build`. Because [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) like `window`, `localStorage`, and `navigator` are not available on the server, you need to safely access these APIs only when running in the browser. For example:
 
@@ -275,7 +278,7 @@ export default function ClientComponent() {
 
 </AppOnly>
 
-## Unsupported Features
+## 不支持的功能
 
 <AppOnly>
 
@@ -315,7 +318,7 @@ Features that require a Node.js server, or dynamic logic that cannot be computed
 
 </PagesOnly>
 
-## Deploying
+## 部署
 
 With a static export, Next.js can be deployed and hosted on any web server that can serve HTML/CSS/JS static assets.
 
@@ -355,7 +358,7 @@ server {
 }
 ```
 
-## Version History
+## 版本历史
 
 | Version   | Changes                                                                                                              |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |

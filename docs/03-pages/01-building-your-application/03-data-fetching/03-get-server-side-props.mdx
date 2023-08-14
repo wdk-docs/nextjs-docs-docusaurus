@@ -3,6 +3,9 @@ title: getServerSideProps
 description: Fetch data on each request with `getServerSideProps`.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 If you export a function called `getServerSideProps` (Server-Side Rendering) from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
 
 ```tsx filename="pages/index.tsx" switcher
@@ -131,7 +134,7 @@ You can use caching headers (`Cache-Control`) inside `getServerSideProps` to cac
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
+    'public, s-maxage=10, stale-while-revalidate=59',
   )
 
   return {

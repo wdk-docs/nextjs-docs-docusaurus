@@ -3,6 +3,9 @@ title: favicon, icon, and apple-icon
 description: API Reference for the Favicon, Icon and Apple Icon file conventions.
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 The `favicon`, `icon`, or `apple-icon` file conventions allow you to set icons for your application.
 
 They are useful for adding app icons that appear in places like web browser tabs, phone home screens, and search engine results.
@@ -59,7 +62,7 @@ Add an `apple-icon.(jpg|jpeg|png)` image file.
 />
 ```
 
-> **Good to know**
+> **注意事项**
 >
 > - You can set multiple icons by adding a number suffix to the file name. For example, `icon1.png`, `icon2.png`, etc. Numbered files will sort lexically.
 > - Favicons can only be set in the root `/app` segment. If you need more granularity, you can use [`icon`](#icon).
@@ -118,7 +121,7 @@ export default function Icon() {
       // For convenience, we can re-use the exported icons size metadata
       // config to also set the ImageResponse's width and height.
       ...size,
-    }
+    },
   )
 }
 ```
@@ -161,7 +164,7 @@ export default function Icon() {
       // For convenience, we can re-use the exported icons size metadata
       // config to also set the ImageResponse's width and height.
       ...size,
-    }
+    },
   )
 }
 ```
@@ -170,7 +173,7 @@ export default function Icon() {
 <link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
 ```
 
-> **Good to know**
+> **注意事项**
 >
 > - By default, generated icons are [**statically optimized**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default) (generated at build time and cached) unless they use [dynamic functions](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions) or [dynamic data fetching](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-data-fetching).
 > - You can generate multiple icons in the same file using [`generateImageMetadata`](/docs/app/api-reference/functions/generate-image-metadata).
@@ -207,7 +210,7 @@ export default function Icon({ params }) {
 
 The default export function should return a `Blob` | `ArrayBuffer` | `TypedArray` | `DataView` | `ReadableStream` | `Response`.
 
-> **Good to know**: `ImageResponse` satisfies this return type.
+> **注意事项**: `ImageResponse` satisfies this return type.
 
 ### Config exports
 

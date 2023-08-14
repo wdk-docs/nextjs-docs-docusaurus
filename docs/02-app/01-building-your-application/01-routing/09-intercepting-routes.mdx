@@ -1,16 +1,16 @@
 ---
-title: 拦截路线
-description: Use intercepting routes to load a new route within the current layout while masking the browser URL, useful for advanced routing patterns such as modals.
+title: 拦截路由
+description: 使用拦截路由在当前布局中加载新路由，同时屏蔽浏览器URL，这对于高级路由模式(如模态)很有用。
 related:
-  title: Next Steps
-  description: Learn how to use modals with Intercepted and Parallel Routes.
+  title: 下一个步骤
+  description: 学习如何使用情态动词拦截和平行路由。
   links:
     - app/building-your-application/routing/parallel-routes
 ---
 
-Intercepting routes allows you to load a route within the current layout while keeping the context for the current page. This routing paradigm can be useful when you want to "intercept" a certain route to show a different route.
+拦截路由允许你在当前布局中加载路由，同时保持当前页面的上下文。当你想要“拦截”某条路由以显示另一条路由时，这种路由范例非常有用。
 
-For example, when clicking on a photo from within a feed, a modal overlaying the feed should show up with the photo. In this case, Next.js intercepts the `/feed` route and "masks" this URL to show `/photo/123` instead.
+例如，当点击提要中的照片时，覆盖提要的模态应该与照片一起显示。在这种情况下，Next.js拦截了`/feed`路由，并将该URL“掩码”为`/photo/123`。
 
 <Image
   alt="Intercepting routes soft navigation"
@@ -20,7 +20,7 @@ For example, when clicking on a photo from within a feed, a modal overlaying the
   height="617"
 />
 
-However, when navigating to the photo directly by for example when clicking a shareable URL or by refreshing the page, the entire photo page should render instead of the modal. No route interception should occur.
+然而，当直接导航到照片时，例如当点击一个可共享的URL或刷新页面时，应该呈现整个照片页面，而不是模态。不应发生路由拦截。
 
 <Image
   alt="Intercepting routes hard navigation"
@@ -30,7 +30,7 @@ However, when navigating to the photo directly by for example when clicking a sh
   height="604"
 />
 
-## Convention
+## 公约
 
 Intercepting routes can be defined with the `(..)` convention, which is similar to relative path convention `../` but for segments.
 
@@ -53,7 +53,7 @@ For example, you can intercept the `photo` segment from within the `feed` segmen
 
 > Note that the `(..)` convention is based on _route segments_, not the file-system.
 
-## Examples
+## 例子
 
 ### Modals
 

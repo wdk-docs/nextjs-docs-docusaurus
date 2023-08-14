@@ -1,14 +1,14 @@
 ---
 title: 优化
 nav_title: Optimizing
-description: Optimize your Next.js application for best performance and user experience.
+description: 优化您的Next.js应用程序以获得最佳性能和用户体验。
 ---
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Next.js comes with a variety of built-in optimizations designed to improve your application's speed and [Core Web Vitals](https://web.dev/vitals/). This guide will cover the optimizations you can leverage to enhance your user experience.
+Next.js提供了各种内置优化，旨在提高应用程序的速度和[核心Web生命](https://web.dev/vitals/)。本指南将介绍可以用来增强用户体验的优化。
 
-## Built-in Components
+## 内置组件
 
 Built-in components abstract away the complexity of implementing common UI optimizations. These components are:
 
@@ -16,7 +16,7 @@ Built-in components abstract away the complexity of implementing common UI optim
 - **Link**: Built on the native `<a>` tags. The Link Component prefetches pages in the background, for faster and smoother page transitions.
 - **Scripts**: Built on the native `<script>` tags. The Script Component gives you control over loading and execution of third-party scripts.
 
-## Metadata
+## 元数据
 
 Metadata helps search engines understand your content better (which can result in better SEO), and allows you to customize how your content is presented on social media, helping you create a more engaging and consistent user experience across various platforms.
 
@@ -37,10 +37,10 @@ The Head Component in Next.js allows you to modify the `<head>` of a page. Learn
 
 </PagesOnly>
 
-## Static Assets
+## 静态的资产
 
 Next.js `/public` folder can be used to serve static assets like images, fonts, and other files. Files inside `/public` can also be cached by CDN providers so that they are delivered efficiently.
 
-## Analytics and Monitoring
+## 分析和监控
 
 For large applications, Next.js integrates with popular analytics and monitoring tools to help you understand how your application is performing. Learn more in the <PagesOnly>[Analytics](/docs/app/building-your-application/optimizing/analytics), </PagesOnly> [OpenTelemetry](/docs/pages/building-your-application/optimizing/open-telemetry)<PagesOnly>,</PagesOnly> and [Instrumentation](/docs/pages/building-your-application/optimizing/instrumentation) guides.

@@ -1,10 +1,13 @@
 ---
-title: Caching Data
-nav_title: Caching
-description: Learn about caching routes in Next.js.
+title: 缓存数据
+nav_title: 缓存
+description: 在Next.js中学习缓存路由。
 ---
 
-Next.js has built-in support for caching data, both on a per-request basis (recommended) or for an entire route segment.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+Next.js内置了对缓存数据的支持，既可以基于每个请求(推荐)，也可以针对整个路由段。
 
 <Image
   alt="Fetch Request Deduplication"
@@ -14,7 +17,7 @@ Next.js has built-in support for caching data, both on a per-request basis (reco
   height="857"
 />
 
-## Per-request Caching
+## 每个请求缓存
 
 ### `fetch()`
 
@@ -136,7 +139,7 @@ export default async function Page({ params: { id } }) {
 
 Although the `getUser()` function is called twice in the example above, only one query will be made to the database. This is because `getUser()` is wrapped in `cache()`, so the second request can reuse the result from the first request.
 
-> **Good to know**:
+> **注意事项**:
 >
 > - `fetch()` caches requests automatically, so you don't need to wrap functions that use `fetch()` with `cache()`. See [automatic request deduping](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) for more information.
 > - In this new model, we recommend **fetching data directly in the component that needs it**, even if you're requesting the same data in multiple components, rather than passing the data between components as props.
@@ -222,7 +225,7 @@ export default async function Page({ params: { id } }) {
 }
 ```
 
-> **Good to know**:
+> **注意事项**:
 >
 > - The `preload()` function can have any name. It's a pattern, not an API.
 > - This pattern is completely optional and something you can use to optimize on a case-by-case basis.
@@ -264,7 +267,7 @@ The `getUser.ts` exports can be used by layouts, pages, or components to give th
 
 ## Segment-level Caching
 
-> **Good to know**: We recommend using per-request caching for improved granularity and control over caching.
+> **注意事项**: We recommend using per-request caching for improved granularity and control over caching.
 
 Segment-level caching allows you to cache and revalidate data used in route segments.
 
@@ -278,7 +281,7 @@ export const revalidate = 60 // revalidate this segment every 60 seconds
 export const revalidate = 60 // revalidate this segment every 60 seconds
 ```
 
-> **Good to know**:
+> **注意事项**:
 >
 > - If a page, layout, and fetch request inside components all specify a [`revalidate`](/docs/app/api-reference/file-conventions/route-segment-config#revalidate) frequency, the lowest value of the three will be used.
 > - Advanced: You can set `fetchCache` to `'only-cache'` or `'force-cache'` to ensure that all `fetch` requests opt into caching but the revalidation frequency might still be lowered by individual `fetch` requests. See [`fetchCache`](/docs/app/api-reference/file-conventions/route-segment-config) for more information.

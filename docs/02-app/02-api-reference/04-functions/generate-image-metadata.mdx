@@ -9,6 +9,9 @@ related:
     - app/building-your-application/optimizing/metadata
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 You can use `generateImageMetadata` to generate different versions of one image or return multiple images for one route segment. This is useful for when you want to avoid hard-coding metadata values, such as for icons.
 
 ## Parameters
@@ -88,7 +91,7 @@ export default function Icon({ id }: { id: string }) {
       >
         Icon {id}
       </div>
-    )
+    ),
   )
 }
 ```
@@ -128,7 +131,7 @@ export default function Icon({ id }) {
       >
         Icon {id}
       </div>
-    )
+    ),
   )
 }
 ```
@@ -180,7 +183,7 @@ export default async function Image({
       >
         {text}
       </div>
-    )
+    ),
   )
 }
 ```
@@ -216,7 +219,7 @@ export default async function Image({ params, id }) {
       >
         {text}
       </div>
-    )
+    ),
   )
 }
 ```

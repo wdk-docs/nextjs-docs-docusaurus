@@ -1,18 +1,18 @@
 ---
 title: 数据抓取
-description: Learn the fundamentals of data fetching with React and Next.js.
+description: 学习使用React和Next.js获取数据的基础知识。
 ---
 
-The Next.js App Router introduces a new, simplified data fetching system built on React and the Web platform. This page will go through the fundamental concepts and patterns to help you manage your data's lifecycle.
+Next.js应用路由器引入了一个新的、简化的基于React和Web平台的数据获取系统。本页将介绍基本概念和模式，以帮助您管理数据的生命周期。
 
-Here's a quick overview of the recommendations on this page:
+以下是本页建议的快速概述:
 
-1. [Fetch data on the server](#fetching-data-on-the-server) using Server Components.
-2. [Fetch data in parallel](#parallel-and-sequential-data-fetching) to minimize waterfalls and reduce loading times.
-3. For Layouts and Pages, [fetch data where it's used](#automatic-fetch-request-deduping). Next.js will automatically dedupe requests in a tree.
-4. Use [Loading UI, Streaming and Suspense](#streaming-and-suspense) to progressively render a page and show a result to the user while the rest of the content loads.
+1. 使用服务器组件[在服务器上获取数据](#fetching-data-on-the-server) 。
+2. [并行获取数据](#parallel-and-sequential-data-fetching) 减少瀑布和减少装载时间。
+3. 对于布局和页面, [在使用数据的地方获取数据](#automatic-fetch-request-deduping). Next.js 会自动删除树中的请求。
+4. 使用 [加载 UI, 流媒体和悬念](#streaming-and-suspense)在加载其余内容的同时，逐步呈现页面并向用户显示结果。
 
-## The `fetch()` API
+## `fetch()` API
 
 The new data fetching system is built on top of the native [`fetch()` Web API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and makes use of `async` and `await` in Server Components.
 
@@ -21,7 +21,7 @@ The new data fetching system is built on top of the native [`fetch()` Web API](h
 
 [Learn how to use `fetch` in Next.js](/docs/app/building-your-application/data-fetching/fetching).
 
-## Fetching Data on the Server
+## 在服务器上获取数据
 
 Whenever possible, we recommend fetching data in [Server Components](/docs/getting-started/react-essentials#server-components). Server Components **always fetch data on the server**. This allows you to:
 
@@ -32,15 +32,15 @@ Whenever possible, we recommend fetching data in [Server Components](/docs/getti
 - Reduce client-server [waterfalls](#parallel-and-sequential-data-fetching).
 - Depending on your region, data fetching can also happen closer to your data source, reducing latency and improving performance.
 
-> **Good to know**: It's still possible to fetch data client-side. We recommend using a third-party library such as [SWR](https://swr.vercel.app/) or [React Query](https://tanstack.com/query/v4/) with Client Components. In the future, it'll also be possible to fetch data in Client Components using React's [`use()` hook](/docs/app/building-your-application/data-fetching/fetching#use-in-client-components).
+> **注意事项**: It's still possible to fetch data client-side. We recommend using a third-party library such as [SWR](https://swr.vercel.app/) or [React Query](https://tanstack.com/query/v4/) with Client Components. In the future, it'll also be possible to fetch data in Client Components using React's [`use()` hook](/docs/app/building-your-application/data-fetching/fetching#use-in-client-components).
 
-## Fetching Data at the Component Level
+## 在组件级获取数据
 
 In the App Router, you can fetch data inside [layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts), [pages](/docs/app/building-your-application/routing/pages-and-layouts#pages), and components. Data fetching is also compatible with [Streaming and Suspense](#streaming-and-suspense).
 
-> **Good to know**: For layouts, it's not possible to pass data between a parent layout and its `children` components. We recommend **fetching data directly inside the layout that needs it**, even if you're requesting the same data multiple times in a route. Behind the scenes, React and Next.js will [cache and dedupe](#automatic-fetch-request-deduping) requests to avoid the same data being fetched more than once.
+> **注意事项**: For layouts, it's not possible to pass data between a parent layout and its `children` components. We recommend **fetching data directly inside the layout that needs it**, even if you're requesting the same data multiple times in a route. Behind the scenes, React and Next.js will [cache and dedupe](#automatic-fetch-request-deduping) requests to avoid the same data being fetched more than once.
 
-## Parallel and Sequential Data Fetching
+## 并行和顺序数据获取
 
 When fetching data inside components, you need to be aware of two data fetching patterns: Parallel and Sequential.
 
@@ -57,9 +57,10 @@ When fetching data inside components, you need to be aware of two data fetching 
 
 [Learn how to implement parallel and sequential data fetching](/docs/app/building-your-application/data-fetching/fetching#data-fetching-patterns).
 
-## Automatic `fetch()` Request Deduping
+## 自动 `fetch()` 请求 重复数据删除
 
-If you need to fetch the same data (e.g. current user) in multiple components in a tree, Next.js will automatically cache `fetch` requests (`GET`) that have the same input in a temporary cache. This optimization prevents the same data from being fetched more than once during a rendering pass.
+如果你需要在树中的多个组件中获取相同的数据(例如当前用户)，Next.js将自动在临时缓存中缓存具有相同输入的`fetch`请求(`GET`)。
+这种优化可以防止在渲染过程中多次获取相同的数据。
 
 <Image
   alt="Fetch Request Deduplication"
@@ -69,22 +70,22 @@ If you need to fetch the same data (e.g. current user) in multiple components in
   height="857"
 />
 
-- On the server, the cache lasts the lifetime of a server request until the rendering process completes.
-  - This optimization applies to `fetch` requests made in Layouts, Pages, Server Components, `generateMetadata` and `generateStaticParams`.
-  - This optimization also applies during [static generation](/docs/app/building-your-application/rendering#static-rendering).
-- On the client, the cache lasts the duration of a session (which could include multiple client-side re-renders) before a full page reload.
+- 在服务器上，缓存将持续服务器请求的整个生命周期，直到呈现过程完成。
+  - 这种优化适用于Layouts,Pages, Server Components, `generateMetadata` 和 `generateStaticParams`中的`fetch`请求.
+  - 此优化也适用于[静态生成](/docs/app/building-your-application/rendering#static-rendering).
+- 在客户端上，在重新加载整个页面之前，缓存将持续会话期间(可能包括多次客户端重新呈现)。
 
-> **Good to know**:
+> **注意事项:**:
 >
-> - `fetch` requests are automatically deduplicated [under the following conditions](/docs/app/building-your-application/data-fetching/caching).
-> - If you're unable to use `fetch`, React provides a [`cache` function](/docs/app/building-your-application/data-fetching/caching#react-cache) to allow you to manually cache data for the duration of the request.
+> - `fetch`请求会自动删除重复数据[在以下条件下](/docs/app/building-your-application/data-fetching/caching).
+> - 如果你不能使用`fetch`， React提供了一个[`cache` 函数](/docs/app/building-your-application/data-fetching/caching#react-cache)来允许你在请求期间手动缓存数据。
 
-## Static and Dynamic Data Fetching
+## 静态和动态数据获取
 
-There are two types of data: **Static** and **Dynamic**.
+数据有两种类型:**静态**和**动态**。
 
-- **Static Data** is data that doesn't change often. For example, a blog post.
-- **Dynamic Data** is data that changes often or can be specific to users. For example, a shopping cart list.
+- **静态数据**是不经常变化的数据。例如，一篇博客文章。
+- **动态数据**是经常变化或特定于用户的数据。例如，购物车列表。
 
 <Image
   alt="Dynamic and Static Data Fetching"
@@ -94,20 +95,21 @@ There are two types of data: **Static** and **Dynamic**.
   height="685"
 />
 
-By default, Next.js automatically does static fetches. This means that the data will be fetched at build time, cached, and reused on each request. As a developer, you have control over how the static data is [cached](#caching-data) and [revalidated](#revalidating-data).
+默认情况下，Next.js自动执行静态获取。这意味着数据将在构建时获取、缓存并在每个请求时重用。
+作为开发人员，您可以控制静态数据如何被[缓存](#caching-data)和[重新验证](#revalidating-data)。
 
-There are two benefits to using static data:
+使用静态数据有两个好处:
 
-1. It reduces the load on your database by minimizing the number of requests made.
-2. The data is automatically cached for improved loading performance.
+1. 它通过最小化请求的数量来减少数据库的负载。
+2. 自动缓存数据以提高加载性能。
 
-However, if your data is personalized to the user or you want to always fetch the latest data, you can mark requests as _dynamic_ and fetch data on each request without caching.
+但是，如果您的数据是针对用户个性化的，或者您希望始终获取最新的数据，则可以将请求标记为*dynamic*，并在每个请求上获取数据，而不需要缓存。
 
-[Learn how to do Static and Dynamic data fetching](/docs/app/building-your-application/data-fetching/fetching#static-data-fetching).
+[了解如何进行静态和动态数据获取](/docs/app/building-your-application/data-fetching/fetching#static-data-fetching).
 
-## Caching Data
+## 缓存数据
 
-Caching is the process of storing data in a location (e.g. [Content Delivery Network](https://vercel.com/docs/concepts/edge-network/overview)) so it doesn't need to be re-fetched from the original source on each request.
+缓存是将数据存储在一个位置(例如[内容分发网络](https://vercel.com/docs/concepts/edge-network/overview))的过程，这样就不需要在每次请求时从原始源重新获取数据。
 
 <Image
   alt="Static Site Generation"
@@ -123,11 +125,11 @@ Next.js extends the [options object](https://developer.mozilla.org/en-US/docs/We
 
 During server rendering, when Next.js comes across a fetch, it will check the cache to see if the data is already available. If it is, it will return the cached data. If not, it will fetch and store data for future requests.
 
-> **Good to know**: If you're unable to use `fetch`, React provides a [`cache` function](/docs/app/building-your-application/data-fetching/caching#react-cache) to allow you to manually cache data for the duration of the request.
+> **注意事项**: If you're unable to use `fetch`, React provides a [`cache` function](/docs/app/building-your-application/data-fetching/caching#react-cache) to allow you to manually cache data for the duration of the request.
 
 [Learn more about caching in Next.js](/docs/app/building-your-application/data-fetching/caching).
 
-### Revalidating Data
+### 重新验证数据
 
 Revalidation is the process of purging the cache and re-fetching the latest data. This is useful when your data changes and you want to ensure your application shows the latest version without having to rebuild your entire application.
 
@@ -138,11 +140,12 @@ Next.js provides two types of revalidation:
 
 [Learn how to revalidate data](/docs/app/building-your-application/data-fetching/revalidating).
 
-### Streaming and Suspense
+### 流媒体和悬念
 
-Streaming and [Suspense](https://react.dev/reference/react/Suspense) are new React features that allow you to progressively render and incrementally stream rendered units of the UI to the client.
+流媒体和[悬念](https://react.dev/reference/react/Suspense)是React的新特性，允许你逐步渲染和增量流渲染UI单元到客户端。
 
-With Server Components and [nested layouts](/docs/app/building-your-application/routing/pages-and-layouts), you're able to instantly render parts of the page that do not specifically require data, and show a [loading state](/docs/app/building-your-application/routing/loading-ui-and-streaming) for parts of the page that are fetching data. This means the user does not have to wait for the entire page to load before they can start interacting with it.
+使用服务器组件和[嵌套布局](/docs/app/building-your-application/routing/pages-and-layouts)，你可以立即渲染页面中不需要数据的部分，并显示页面中正在获取数据的部分的[加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming)。
+这意味着用户不必等到整个页面加载完毕才开始与之交互。
 
 <Image
   alt="Server Rendering with Streaming"
@@ -152,12 +155,17 @@ With Server Components and [nested layouts](/docs/app/building-your-application/
   height="785"
 />
 
-To learn more about Streaming and Suspense, see the [Loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) and [Streaming and Suspense](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense) pages.
+要了解更多关于流媒体和悬念，请参阅[加载 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)和[流媒体和悬念](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense)页面。
 
-## Old Methods
+## 老方法
 
-Previous Next.js data fetching methods such as [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props), [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props), and [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props) are **not** supported in the new App Router. However, you can still use them in the [Pages Router](/docs/pages/building-your-application/data-fetching).
+以前的Next.js数据获取方法，
+如
+[`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)，
+[`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props)和
+[`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)在新的**应用路由器**中不支持。然而，
+你仍然可以在[页面的路由器](/docs/pages/building-your-application/data-fetching)中使用它们。
 
-## Next Steps
+## 下一个步骤
 
-Now that you understand the fundamentals of data fetching in Next.js, you can learn more about managing data in your application:
+现在你已经了解了Next.js中数据获取的基本原理，你可以学习更多关于在应用程序中管理数据的知识:
