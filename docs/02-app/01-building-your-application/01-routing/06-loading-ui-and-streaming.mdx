@@ -1,12 +1,12 @@
 ---
 title: 加载UI和流
-description: 建立在悬念之上，加载UI允许你为特定的路由段创建一个回退，并自动流内容，因为它准备好了。
+description: 建立在悬停之上，加载UI允许你为特定的路由段创建一个回退，并自动流内容，因为它准备好了。
 ---
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-特殊文件`loading.js`可以帮助你用[React悬念](https://react.dev/reference/react/Suspense)创建有意义的加载UI。
+特殊文件`loading.js`可以帮助你用[React悬停](https://react.dev/reference/react/Suspense)创建有意义的加载UI。
 有了这个约定，当路由段的内容加载时，你可以从服务器显示一个[即时加载状态](#instant-loading-states)。
 一旦渲染完成，新内容将自动交换进来。
 
@@ -20,9 +20,11 @@ import TabItem from '@theme/TabItem'
 
 ## 瞬时加载状态
 
-An instant loading state is fallback UI that is shown immediately upon navigation. You can pre-render loading indicators such as skeletons and spinners, or a small but meaningful part of future screens such as a cover photo, title, etc. This helps users understand the app is responding and provides a better user experience.
+即时加载状态是在导航时立即显示的回退UI。
+你可以预渲染加载指示器，如骨架和旋转器，或未来屏幕的一小部分但有意义的部分，如封面照片，标题等。
+这有助于用户了解应用程序正在响应，并提供更好的用户体验。
 
-Create a loading state by adding a `loading.js` file inside a folder.
+通过在文件夹中添加一个`loading.js`文件来创建一个加载状态。
 
 <Image
   alt="loading.js special file"
@@ -32,12 +34,18 @@ Create a loading state by adding a `loading.js` file inside a folder.
   height="606"
 />
 
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
 ```tsx filename="app/dashboard/loading.tsx" switcher
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return <LoadingSkeleton />
 }
 ```
+
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
 
 ```jsx filename="app/dashboard/loading.js" switcher
 export default function Loading() {
@@ -46,7 +54,11 @@ export default function Loading() {
 }
 ```
 
-In the same folder, `loading.js` will be nested inside `layout.js`. It will automatically wrap the `page.js` file and any children below in a `<Suspense>` boundary.
+</TabItem>
+</Tabs>
+
+在同一个文件夹中，`loading.js`将嵌套在`layout.js`中。
+它会自动将`page.js`文件和下面的任何子文件包装在`<Suspense>`边界中。
 
 <Image
   alt="loading.js overview"
@@ -56,17 +68,18 @@ In the same folder, `loading.js` will be nested inside `layout.js`. It will auto
   height="768"
 />
 
-> **注意事项:**:
+> **注意事项**:
 >
-> - Navigation is immediate, even with [server-centric routing](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation).
-> - Navigation is interruptible, meaning changing routes does not need to wait for the content of the route to fully load before navigating to another route.
-> - Shared layouts remain interactive while new route segments load.
+> - 导航是即时的，即使有[服务器为中心的路由](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation).
+> - 导航是可中断的，这意味着改变路由不需要等待路由的内容完全加载后再导航到另一条路由。
+> - 当新的路由段加载时，共享布局仍然保持交互。
 
-> **Recommendation:** Use the `loading.js` convention for route segments (layouts and pages) as Next.js optimizes this functionality.
+> **建议:** 对路由段(布局和页面)使用`loading.js`约定，因为Next.js优化了这个功能。
 
-## 带有悬念的流媒体
+## 带有悬停的流媒体
 
-In addition to `loading.js`, you can also manually create Suspense Boundaries for your own UI components. The App Router supports streaming with [Suspense](https://react.dev/reference/react/Suspense) for both [Node.js and Edge runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes).
+除了`loading.js`，你还可以为你自己的UI组件手动创建悬停边界。
+应用路由器在[Node.js和Edge运行时](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)中支持[悬停](https://react.dev/reference/react/Suspense)流式传输。
 
 ### 什么是流媒体?
 
@@ -74,11 +87,11 @@ In addition to `loading.js`, you can also manually create Suspense Boundaries fo
 
 使用SSR，在用户可以看到页面并与之交互之前，需要完成一系列步骤:
 
-1. First, all data for a given page is fetched on the server.
-2. The server then renders the HTML for the page.
-3. The HTML, CSS, and JavaScript for the page are sent to the client.
-4. A non-interactive user interface is shown using the generated HTML, and CSS.
-5. Finally, React [hydrates](https://react.dev/reference/react-dom/client/hydrateRoot#hydrating-server-rendered-html) the user interface to make it interactive.
+1. 首先，在服务器上获取给定页面的所有数据。
+2. 然后服务器呈现页面的HTML。
+3. 页面的HTML、CSS和JavaScript被发送到客户端。
+4. 使用生成的HTML和CSS显示非交互式用户界面。
+5. 最后，React[水合物](https://react.dev/reference/react-dom/client/hydrateRoot#hydrating-server-rendered-html)的用户界面，使其具有交互性。
 
 <Image
   alt="Chart showing Server Rendering without Streaming"
@@ -88,9 +101,9 @@ In addition to `loading.js`, you can also manually create Suspense Boundaries fo
   height="612"
 />
 
-These steps are sequential and blocking, meaning the server can only render the HTML for a page once all the data has been fetched. And, on the client, React can only hydrate the UI once the code for all components in the page has been downloaded.
+这些步骤是顺序的和阻塞的，这意味着服务器只能在获取所有数据后才呈现页面的HTML。而且，在客户端上，React只能在页面中所有组件的代码都下载完之后才能生成UI。
 
-SSR with React and Next.js helps improve the perceived loading performance by showing a non-interactive page to the user as soon as possible.
+使用React和Next.js的SSR通过尽快向用户显示非交互式页面来帮助提高感知加载性能。
 
 <Image
   alt="Server Rendering without Streaming"
@@ -100,9 +113,9 @@ SSR with React and Next.js helps improve the perceived loading performance by sh
   height="748"
 />
 
-However, it can still be slow as all data fetching on server needs to be completed before the page can be shown to the user.
+但是，它仍然可能很慢，因为在将页面显示给用户之前，需要完成服务器上的所有数据获取。
 
-**Streaming** allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
+**流**允许您将页面的HTML分解成更小的块，并逐步将这些块从服务器发送到客户端。
 
 <Image
   alt="How Server Rendering with Streaming Works"
@@ -112,9 +125,9 @@ However, it can still be slow as all data fetching on server needs to be complet
   height="785"
 />
 
-This enables parts of the page to be displayed sooner, without waiting for all the data to load before any UI can be rendered.
+这样可以更快地显示页面的某些部分，而不必等待所有数据加载后才能呈现任何UI。
 
-Streaming works well with React's component model because each component can be considered a chunk. Components that have higher priority (e.g. product information) or that don't rely on data can be sent first (e.g. layout), and React can start hydration earlier. Components that have lower priority (e.g. reviews, related products) can be sent in the same server request after their data has been fetched.
+流与React的组件模型配合得很好，因为每个组件都可以被视为一个块。优先级高的组件(如产品信息)或不依赖于数据的组件可以先发送(如布局)，React可以更早开始水合。具有较低优先级的组件(例如评论，相关产品)可以在获取数据后在相同的服务器请求中发送。
 
 <Image
   alt="Chart showing Server Rendering with Streaming"
@@ -124,11 +137,15 @@ Streaming works well with React's component model because each component can be 
   height="730"
 />
 
-Streaming is particularly beneficial when you want to prevent long data requests from blocking the page from rendering as it can reduce the [Time To First Byte (TTFB)](https://web.dev/ttfb/) and [First Contentful Paint (FCP)](https://web.dev/first-contentful-paint/). It also helps improve [Time to Interactive (TTI)](https://developer.chrome.com/en/docs/lighthouse/performance/interactive/), especially on slower devices.
+当你想要防止长数据请求阻塞页面渲染时，流是特别有益的，因为它可以减少[时间到第一个字节(TTFB)](https://web.dev/ttfb/)和[第一次内容绘制(FCP)](https://web.dev/first-contentful-paint/)。
+它还有助于提高[TTI](https://developer.chrome.com/en/docs/lighthouse/performance/interactive/)，特别是在较慢的设备上。
 
-### Example
+### 例子
 
-`<Suspense>` works by wrapping a component that performs an asynchronous action (e.g. fetch data), showing fallback UI (e.g. skeleton, spinner) while it's happening, and then swapping in your component once the action completes.
+`<Suspense>` 工作原理是包装一个执行异步操作的组件(例如获取数据)，在它发生时显示回退UI(例如skeleton, spinner)，然后在动作完成后交换组件。
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/dashboard/page.tsx" switcher
 import { Suspense } from 'react'
@@ -148,6 +165,9 @@ export default function Posts() {
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/dashboard/page.js" switcher
 import { Suspense } from 'react'
 import { PostFeed, Weather } from './Components'
@@ -166,14 +186,17 @@ export default function Posts() {
 }
 ```
 
-By using Suspense, you get the benefits of:
+</TabItem>
+</Tabs>
 
-1. **Streaming Server Rendering** - Progressively rendering HTML from the server to the client.
-2. **Selective Hydration** - React prioritizes what components to make interactive first based on user interaction.
+通过使用悬停，你可以获得以下好处:
 
-For more Suspense examples and use cases, please see the [React Documentation](https://react.dev/reference/react/Suspense).
+1. **流服务器渲染** -逐步渲染HTML从服务器到客户端。
+2. **选择性水合作用** - React根据用户交互优先考虑哪些组件首先具有交互性。
+
+更多的悬停示例和用例，请参阅[React 文档](https://react.dev/reference/react/Suspense).
 
 ### SEO
 
-- Next.js will wait for data fetching inside [`generateMetadata`](/docs/app/api-reference/functions/generate-metadata) to complete before streaming UI to the client. This guarantees the first part of a streamed response includes `<head>` tags.
-- Since streaming is server-rendered, it does not impact SEO. You can use the [Mobile Friendly Test](https://search.google.com/test/mobile-friendly) tool from Google to see how your page appears to Google's web crawlers and view the serialized HTML ([source](https://web.dev/rendering-on-the-web/#seo-considerations)).
+- Next.js将等待[`generateMetadata`](/docs/app/api-reference/functions/generate-metadata)中的数据获取完成，然后将UI流式传输到客户端。这保证了流响应的第一部分包含`<head>`标签。
+- 由于流媒体是服务器呈现的，所以它不会影响SEO。您可以使用Google的[移动友好测试](https://search.google.com/test/mobile-friendly)工具来查看您的页面对Google的网络爬虫的显示情况，并查看序列化的HTML([源代码](https://web.dev/rendering-on-the-web/#seo-considerations))。

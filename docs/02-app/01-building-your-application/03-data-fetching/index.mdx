@@ -10,7 +10,7 @@ Next.js应用路由器引入了一个新的、简化的基于React和Web平台�
 1. 使用服务器组件[在服务器上获取数据](#fetching-data-on-the-server) 。
 2. [并行获取数据](#parallel-and-sequential-data-fetching) 减少瀑布和减少装载时间。
 3. 对于布局和页面, [在使用数据的地方获取数据](#automatic-fetch-request-deduping). Next.js 会自动删除树中的请求。
-4. 使用 [加载 UI, 流媒体和悬念](#streaming-and-suspense)在加载其余内容的同时，逐步呈现页面并向用户显示结果。
+4. 使用 [加载 UI, 流媒体和悬停](#streaming-and-suspense)在加载其余内容的同时，逐步呈现页面并向用户显示结果。
 
 ## `fetch()` API
 
@@ -75,7 +75,7 @@ When fetching data inside components, you need to be aware of two data fetching 
   - 此优化也适用于[静态生成](/docs/app/building-your-application/rendering#static-rendering).
 - 在客户端上，在重新加载整个页面之前，缓存将持续会话期间(可能包括多次客户端重新呈现)。
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - `fetch`请求会自动删除重复数据[在以下条件下](/docs/app/building-your-application/data-fetching/caching).
 > - 如果你不能使用`fetch`， React提供了一个[`cache` 函数](/docs/app/building-your-application/data-fetching/caching#react-cache)来允许你在请求期间手动缓存数据。
@@ -140,9 +140,9 @@ Next.js provides two types of revalidation:
 
 [Learn how to revalidate data](/docs/app/building-your-application/data-fetching/revalidating).
 
-### 流媒体和悬念
+### 流媒体和悬停
 
-流媒体和[悬念](https://react.dev/reference/react/Suspense)是React的新特性，允许你逐步渲染和增量流渲染UI单元到客户端。
+流媒体和[悬停](https://react.dev/reference/react/Suspense)是React的新特性，允许你逐步渲染和增量流渲染UI单元到客户端。
 
 使用服务器组件和[嵌套布局](/docs/app/building-your-application/routing/pages-and-layouts)，你可以立即渲染页面中不需要数据的部分，并显示页面中正在获取数据的部分的[加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming)。
 这意味着用户不必等到整个页面加载完毕才开始与之交互。
@@ -155,7 +155,7 @@ Next.js provides two types of revalidation:
   height="785"
 />
 
-要了解更多关于流媒体和悬念，请参阅[加载 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)和[流媒体和悬念](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense)页面。
+要了解更多关于流媒体和悬停，请参阅[加载 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)和[流媒体和悬停](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense)页面。
 
 ## 老方法
 

@@ -6,14 +6,27 @@ description: 学习导航在Next.js中是如何工作的，以及如何使用连
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-Next.js路由器使用[以服务器为中心的路由](/docs/app/build -your-application/routing#server-centric-routing-with-client-side-navigation)和[客户端导航](#how-navigation-works)。
+Next.js路由器使用[以服务器为中心的路由](/docs/app/build-your-application/routing#server-centric-routing-with-client-side-navigation)和[客户端导航](#how-navigation-works)。
 它支持[即时加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming)和[并发渲染](https://react.dev/reference/react/startTransition)。
 这意味着导航维护客户端状态，避免昂贵的重新呈现，是可中断的，并且不会导致竞争条件。
 
 有两种方法可以在路由之间导航:
 
-- [`<Link>` 组件](#link-component)
-- [`useRouter` 钩子](#userouter-hook)
+- [`<Link>` 组件](#link-组件)
+- [例子](#例子)
+  - [链接到动态段](#链接到动态段)
+  - [检查活动链路](#检查活动链路)
+  - [滚动到 `id`](#滚动到-id)
+- [`useRouter()` 钩](#userouter-钩)
+- [导航是如何工作的](#导航是如何工作的)
+  - [渲染服务器组件的客户端缓存](#渲染服务器组件的客户端缓存)
+  - [使缓存失效](#使缓存失效)
+  - [预取](#预取)
+  - [软导航](#软导航)
+    - [软航条件](#软航条件)
+  - [硬导航](#硬导航)
+  - [后退/前进导航](#后退前进导航)
+  - [焦点和滚动管理](#焦点和滚动管理)
 
 本页面将介绍如何使用`<Link>`， `useRouter()`，并深入了解导航的工作原理。
 
@@ -137,7 +150,7 @@ useRouter提供了`push()`, `refresh()`等方法。查看[API参考](/docs/app/a
 
 ### 渲染服务器组件的客户端缓存
 
-> **注意事项:**: 客户端缓存不同于服务器端[Next.js HTTP缓存](/docs/app/building-your-application/data-fetching#caching-data).
+> **注意事项**: 客户端缓存不同于服务器端[Next.js HTTP缓存](/docs/app/building-your-application/data-fetching#caching-data).
 
 新的路由器有一个内存中的客户端缓存，用来存储服务器组件(payload)的渲染结果。缓存按路由段分割，允许在任何级别失效，并确保并发渲染的一致性。
 
@@ -161,7 +174,7 @@ useRouter提供了`push()`, `refresh()`等方法。查看[API参考](/docs/app/a
 - 如果路由是静态的，那么路由段的所有服务器组件有效负载都将被预取。
 - 如果路由是动态的，那么从第一个共享布局开始，直到第一个`loading.js`文件被预取。这减少了动态预取整个路由的成本，并允许动态路由使用[瞬时加载状态](/docs/app/building-your-application/routing/loading-ui-and-streaming#instant-loading-states)。
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - 预取只在生产环境中启用。
 > - 可以通过将`prefetch={false}`传递给`<Link>`来禁用预取。

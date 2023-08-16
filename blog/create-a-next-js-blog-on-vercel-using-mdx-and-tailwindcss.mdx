@@ -1,0 +1,418 @@
+---
+authors: [chege]
+tags: [markdown, mdx]
+description: markdown
+keywords: [markdown, mdx]
+date: 2023-08-08
+---
+
+# 使用MDX和TailwindCSS在Vercel上创建一个Next.js博客
+
+> https://mattermost.com/blog/create-a-next-js-blog-on-vercel-using-mdx-and-tailwindcss/
+
+Next.js是一个服务器渲染的React框架。
+它允许您轻松地创建可伸缩和生产就绪的应用程序。
+Next.js提供了许多特性，使构建大规模生产就绪的React应用程序更加简单。
+使用Next.js的一些好处包括:
+
+- 自动代码分割，更快的页面加载
+- 用于改进SEO和性能的服务器端呈现
+- 图像和资产优化
+- 易于部署到各种托管平台
+
+在本指南中，您将学习如何构建Next.js博客。
+您将使用MDX创建基于markdown的内容，
+使用顺风CSS设置样式，并使用Next.js显示内容。
+最终应用程序将部署在Vercel上。
+
+## What is MDX?
+
+To understand what MDX is, let’s first discuss Markdown. Markdown is a syntax that allows us to format text for a web page. It enables you to write easy-to-read content using easy-to-write text formatting. Markdown is popularly used to natively edit messages via services like WhatsApp and Mattermost. It’s also commonly used to format content on Reddit, GitHub, and Stack Overflow.
+
+Markdown uses a simple syntax to format text. This includes headings, lists, links, and more. It’s often used to format readme files, documentation, and other types of content on the web.
+
+If you’re new to Markdown, check out this brief primer.
+
+To display Markdown content on a webpage, you need a parser to create HTML that the web can understand. This is where Next.js helps by collecting the Markdown files and transforming them into HTML. The plugin we will use is a more feature-full version of Markdown called MDX.
+
+MDX is a format that allows you to embed JSX in Markdown. This allows you to include React components in your Markdown content and makes it possible to create interactive and dynamic content with both the standardized formatting of Markdown and the extensibility of React.
+
+Let’s dive in and create a Next.js app that uses Markdown syntax then render the content to HTML.
+
+## Prerequisites
+
+To continue in this article, you will need:
+
+The latest Node.js LTS
+Prior experience working with JavaScript
+A GitHub account
+Creating the Next.js app
+You can clone a copy of the finished project from this GitHub Repository, or you can create your own local app by following the next steps.
+
+First, open a terminal that points to the directory where you want to create a new Next.js app. Run the following command to create the app:
+
+```js
+npx create-next-app mdx-app
+```
+
+This will bootstrap the application, create a new directory with the name of your app as mdx-app, and install all the necessary dependencies. When prompted, answer the following questions:
+
+✔ Would you like to use TypeScript with this project? … No / Yes
+✔ Would you like to use ESLint with this project? … No / Yes
+✔ Would you like to use `src/` directory with this project? … No / Yes
+✔ Would you like to use experimental `app/` directory with this project? … No / Yes
+✔ What import alias would you like configured? … @/\*
+Proceed to the newly created directory:
+
+```js
+cd mdx-app
+```
+
+Start the development server:
+
+```js
+npm run dev
+```
+
+This will start the development server and open the app in your default browser. If not, you can access the application using the URL http://localhost:3000/.
+
+The development server will automatically reload the app whenever you make changes to the code. This way, you can see your changes in real-time on the browser via hotreloading.
+
+You now have a basic Next.js app running on your machine. Let’s start configuring the application for Markdown.
+
+## Installing MDX dependencies
+
+To use MDX with Next.js, you need the following libraries.
+
+path: For getting the directories from the file system.
+fs: For reading directories and files. You will create files that contain Markdown content. FS will be used to read these files from your file system.
+gray-matter:or extracting front matter from files. Front matter is a block of metadata placed at the beginning of a Markdown file. This helps you to define metadata such as its title, author, and date for static site generators such as Next.js. For example:
+
+```js
+// Your file front matter
+---
+title: My Blog Post
+author: John Doe
+date: 2021-01-01
+---
+// Your Content
+# This is My Heading 1
+## This is My Heading 2
+
+- List item 1
+- List item 2
+
+[This is Link text Example](http://example.com)
+```
+
+Next-mdx-remote: For rendering MDX content. In this case, next-mdx-remote will parse the MDX content to generate it as a React component.
+To install the above packages, run the following command:
+
+Npm install gray-matter next-mdx-remote
+
+## Configuring TailwindCSS
+
+TailwindCSS is a CSS utility framework that allows you to style your elements by applying classes to them. Instead of writing custom CSS styles, you can use the predefined classes provided by TailwindCSS to style your elements. To use TailwindCSS in your project, run the following command:
+
+Npm install tailwindcss postcss autoprefixer
+Run the following command to set up TailwindCSS in the project:
+
+```js
+npx tailwind init -p
+```
+
+This will create a tailwind.config.js file. Edit the newly created tailwind.config.js as follows to map the files to be styled:
+
+```js
+module.exports = {
+  content: [
+    './pages/**/*.{js,ts,tsx,jsx}',
+    './components/**/*.{js,ts,tsx,jsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Import the Tailwind files at the top of the styles/globals.css file:
+
+```js
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## Adding posts with MDX
+
+Now, let’s create MDX content that Next.js will use. In your project root folder, create a posts directory. Create a making-beef-stew.mdx file in the posts directory. The name needs to be in hyphens since it will be part of the link to access the post.
+
+Edit the file as follows using gray-matter and Markdown syntax:
+
+```js
+---
+date: '2021-03-28'
+thumbnail: /assets/how-to-make-beef-stew.jpeg
+title: How to make Beef stew
+description: The soup stock from sea kelp and dried bonito flakes can be used in many Japanese foods such as miso soup, soba, udon, and stew.
+readTime: 4
+---
+
+### Ingredients
+
+- 1000 ml water.
+
+- 10 grams dried kelp.
+
+- 40 grams bonito flakes.
+
+<br />
+
+### Directions
+
+- Lightly wipe the surface of the kelp with a tightly wrung cloth.
+
+- Put water and kelp in a pot.
+
+- Heat on low heat, and when small bubbles come out from the bottom of the pot (about 7 minutes), remove the kelp.
+
+- When the kelp soup stock boils, add bonito flakes and simmer on low heat for 1 minute.
+
+- Set a colander on a bowl, spread a paper towel on it, and strain the soup stock.
+```
+
+You can check it out on [YouTube](https://youtu.be/6Lxdp1R40EY).
+
+```js
+<br />
+
+<h1> Preservation Method </h1>
+```
+
+Transfer the stock to a food storage container and store in the fridge. It can be used for 2-3 days.
+
+```js
+<h1> Tips </h1>
+
+- The white powder on the surface of dried kelp is "umami", so do not remove it.
+Ensure you add the thumbnails to the public/assets directory. The thumbnails should be named based on the path added above. For example, how-to-make-beef-stew.jpeg.
+```
+
+Feel free to add more data and create more files.
+
+## Building components
+
+A component is reusable code used to build a page’s user interface. Next.js uses the React library to define and create components. They are then rendered to the browser as HTML. Let’s create a React component that Next.js will use to generate all the .md that you create in your posts directory.
+
+In the project’s root folder, create a components folder. Inside the folder, create a PostCard.js file and edit it as follows:
+
+```js
+import React from 'react'
+
+export default function PostCard({ post }) {
+  return (
+    // A card to wrap all elements
+    <div>
+      // post thumbnail image
+      <img src="{post.frontMatter.thumbnail}" alt="postCardImage" />
+      <div>
+        // post content
+        <h2>{post.frontMatter.title}</h2>
+        // post description
+        <p>{post.frontMatter.description}</p>
+      </div>
+      <div>
+        // post date
+        <h2> 📅{post.frontMatter.date}</h2>
+        // post readTime
+        <p>⏰{post.frontMatter.readTime} min read</p>
+      </div>
+    </div>
+  )
+}
+```
+
+The PostCard component will be the posts object. For every post, the thumbnail, title, and description will be rendered.
+
+## Creating a Next.js page with MDX
+
+To display the posts, navigate to pages/index.js.
+
+```js
+Import the necessary files:
+
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Link from 'next/link';
+import Head from 'next/head';
+import Postcard from '../components/PostCard';
+
+Define getStaticProps for fetching the posts:
+export async function getStaticProps(){
+    let files = fs.readdirSync(path.join("posts")); // get the files
+    files = files.filter(file => file.split('.')[1] == "mdx"); // filter only the mdx files
+    const posts = files.map(file => { // for each file extract the front matter and the slug
+        const fileData = fs.readFileSync(path.join("posts",file),'utf-8');
+        const {data} = matter(fileData);
+        return {
+        frontMatter:data,
+        slug:file.split('.')[0]
+        }
+    });
+    return{ // export the posts
+        props:{
+        posts
+        }
+    }
+}
+```
+
+Refine the render function as follows:
+
+```js
+export default function Home(props) {
+    return (
+        <div>
+
+            <title>Cooking Blog</title>
+
+        <h1>Cooking Blog</h1>
+        {
+            props.posts.length &gt; 0 ? (
+            <div>
+                {
+                props.posts.map((post,index) =&gt; (
+
+
+
+                ))
+                }
+            </div>
+            ) : (
+            <h2>No posts yet</h2>
+            )
+        }
+        </div>
+    )
+}
+```
+
+Ensure that the development is up and running:
+
+```js
+yarn run dev
+```
+
+Open http://localhost:3000/, and all the posts you added will be rendered as follows:
+
+## next.js blog posts example
+
+Displaying a single post
+The above component card displays the list of posts. However, a user also needs to access a single post’s content. To do that, navigate to the pages folder, and create a posts/[slug].js. This will allow the user to access each post based on each post slug/name.
+
+Inside the created pages/posts/[slug].js, import the necessary packages:
+
+```js
+import React from 'react'
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import Head from 'next/head'
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
+```
+
+Define getStaticPaths to define a route for all posts:
+
+```js
+export async function getStaticPaths() {
+  const files = fs.readdirSync(path.join('posts')) // get all posts
+  const paths = files.map((file) => {
+    // for all files extract the slug
+    return {
+      params: {
+        slug: file.replace('.mdx', ''),
+      },
+    }
+  })
+  return {
+    // export the paths
+    paths,
+    fallback: false,
+  }
+}
+```
+
+Define getStaticProps to get data of the current post:
+
+```js
+export async function getStaticProps({ params: { slug } }) {
+  const fileData = fs.readFileSync(path.join('posts', slug + '.mdx'), 'utf-8') // get the file data
+  const { data, content } = matter(fileData) // extract the front matter and the content
+  const mdxSource = await serialize(content) // serialize the content
+  return {
+    // export the data
+    props: {
+      frontMatter: data,
+      slug,
+      mdxSource,
+    },
+  }
+}
+```
+
+Use the render function:
+
+```js
+export default function Post(props) {
+return (
+    <div>
+        {
+            props.frontMatter &amp;&amp; props.mdxSource &amp;&amp; (
+                <div>
+
+                        <title>{props.frontMatter.title}</title>
+
+                <h1>{props.frontMatter.title}</h1>
+
+                </div>
+            )
+        }
+    </div>
+)
+}
+```
+
+When you click on a single post, you should be able to access its content as such.
+
+## Deploying your Next.js blog to Vercel
+
+Vercel is a cloud platform for hosting web applications, and it’s a popular choice for deploying Next.js applications. Let’s deploy the Next.js we have created in the following steps.
+
+Vercel allows for automatic deployments on every branch push and merges onto the production branch of your GitHub, GitLab, and Bitbucket projects. This way, Vercel ensures CI/CD. Every time a pull/merge request is made to deployed code, Vercel creates a unique deployment and ensures automatic deployments.
+
+Here, we will use GitHub to push the application code. Vercel will then get the changes from the GitHub repository that hosts the application code.
+
+You will need to use git to push your code to GitHub. So, at this point, you need to ensure that the code is hosted in a GitHub repository. On your Vercel account, navigate to Vercel Dashboard and click the “Add new project” button:
+
+## adding new project to Vercel
+
+Import the git repository and select the GitHub repository you have just created. You can also click the import a third-party git repository button to make and use a copy of my repository: https://github.com/kimkimani/Nextjs_mdx_blog_app
+
+Import GitHub repository to your Next.js blog
+Proceed and hit Deploy to allow Vercel to pull code from the selected repository. Vercel will build, run checks, and assign a domain to your deployment.
+
+deploy blog to Vercel
+Click Continue to Dashboard and you should be able to access your deployment app on the listed domain.
+
+Access your Next.js blog from Vercel dashboard
+To update your production deployment, push changes to the GitHub repository main branch as such.
+
+## Conclusion
+
+There you have it — your blog is up and running. If you’d like to learn more about some of the technologies covered in this tutorial, here are some additional articles you might want to check out:
+
+Dynamic routing in Next.js using REST and GraphQL APIs
+How to set up and customize Tailwind in Nuxt.js

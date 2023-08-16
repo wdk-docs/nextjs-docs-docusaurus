@@ -19,7 +19,7 @@ import TabItem from '@theme/TabItem'
   height="952"
 />
 
-Parallel Routing allows you to define independent error and loading states for each route as they're being streamed in independently.
+并行路由允许您为每个路由定义独立的错误和加载状态，因为它们是独立地流进来的。
 
 <Image
   alt="Parallel routes enable custom error and loading states"
@@ -29,7 +29,7 @@ Parallel Routing allows you to define independent error and loading states for e
   height="1218"
 />
 
-Parallel Routing also allows you to conditionally render a slot based on certain conditions, such as authentication state. This enables fully separated code on the same URL.
+并行路由还允许您根据某些条件(如身份验证状态)有条件地呈现插槽。这使得同一URL上的代码完全分离。
 
 <Image
   alt="Conditional routes diagram"
@@ -39,7 +39,7 @@ Parallel Routing also allows you to conditionally render a slot based on certain
   height="898"
 />
 
-## Convention
+## 公约
 
 Parallel routes are created using named **slots**. Slots are defined with the `@folder` convention, and are passed to the same-level layout as props.
 
@@ -87,7 +87,7 @@ export default function Layout(props) {
 
 > **注意事项**: The `children` prop is an implicit slot that does not need to be mapped to a folder. This means `app/page.js` is equivalent to `app/@children/page.js`.
 
-## Unmatched Routes
+## 无与伦比的路由
 
 By default, the content rendered within a slot will match the current URL.
 
@@ -114,11 +114,11 @@ If you were to navigate from the root `/` to `/settings`, the content that gets 
 | Soft Navigation | `@team/settings/page.js` and `@analytics/page.js`    | `@team/settings/page.js` and `@analytics/page.js` |
 | Hard Navigation | `@team/settings/page.js` and `@analytics/default.js` | 404                                               |
 
-#### Soft Navigation
+#### 软导航
 
 On a [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation) - Next.js will render the slot's previously active state, even if it doesn't match the current URL.
 
-#### Hard Navigation
+#### 硬导航
 
 On a [hard navigation](/docs/app/building-your-application/routing/linking-and-navigating#hard-navigation) - a navigation that requires a full page reload - Next.js will first try to render the unmatched slot's `default.js` file. If that's not available, a 404 gets rendered.
 
@@ -155,11 +155,11 @@ export default async function Layout(props) {
 
 When a user navigates to `@authModal/login`, or `/login` in the URL bar, `loginSegments` will be equal to the string `"login"`.
 
-## Examples
+## 例子
 
-### Modals
+### 模态
 
-Parallel Routing can be used to render modals.
+并行路由可以用来呈现模态。
 
 <Image
   alt="Parallel Routes Diagram"
@@ -236,7 +236,7 @@ export default function Default() {
 }
 ```
 
-#### Dismissing a modal
+#### 排除模态
 
 If a modal was initiated through client navigation, e.g. by using `<Link href="/login">`, you can dismiss the modal by calling `router.back()` or by using a `Link` component.
 
@@ -300,7 +300,7 @@ export default function CatchAll() {
 
 > Catch-all routes take precedence over `default.js`.
 
-### Conditional Routes
+### 有条件的路线
 
 Parallel Routes can be used to implement conditional routing. For example, you can render a `@dashboard` or `@login` route depending on the authentication state.
 

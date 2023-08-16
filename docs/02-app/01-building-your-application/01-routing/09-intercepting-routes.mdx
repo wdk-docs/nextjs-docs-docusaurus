@@ -55,16 +55,16 @@ For example, you can intercept the `photo` segment from within the `feed` segmen
 
 ## 例子
 
-### Modals
+### 模态
 
-Intercepting Routes can be used together with [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes) to create modals.
+拦截路由可以和[平行路线](/docs/app/building-your-application/routing/parallel-routes)一起使用来创建模态。
 
-Using this pattern to create modals overcomes some common challenges when working with modals, by allowing you to:
+使用这个模式创建情态动词克服了使用情态动词时的一些常见挑战，它允许你:
 
-- Make the modal content **shareable through a URL**
-- **Preserve context** when the page is refreshed, instead of closing the modal
-- **Close the modal on backwards navigation** rather than going to the previous route
-- **Reopen the modal on forwards navigation**
+- 使模态内容**可通过URL**共享
+- **保存上下文**当页面刷新，而不是关闭模式
+- **关闭模式的向后导航**，而不是去到前面的路线
+- **重新打开前向导航的模式**
 
 <Image
   alt="Intercepting routes modal example"
@@ -76,6 +76,6 @@ Using this pattern to create modals overcomes some common challenges when workin
 
 > In the above example, the path to the `photo` segment can use the `(..)` matcher since `@modal` is a _slot_ and not a _segment_. This means that the `photo` route is only one _segment_ level higher, despite being two _file-system_ levels higher.
 
-Other examples could include opening a login modal in a top navbar while also having a dedicated `/login` page, or opening a shopping cart in a side modal.
+其他例子包括在顶部导航栏中打开登录模式，同时也有一个专用的“/login”页面，或者在侧面模式中打开购物车。
 
-[View an example](https://github.com/vercel-labs/nextgram) of modals with Intercepted and Parallel Routes.
+[查看示例](https://github.com/vercel-labs/nextgram)的情态动词拦截和平行路由。

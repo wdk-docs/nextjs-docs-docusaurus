@@ -206,7 +206,7 @@ export default async function Page({ params: { username } }) {
 
 我们可以通过并行启动两个请求来节省时间，但是，在两个承诺都解决之前，用户不会看到呈现的结果。
 
-为了改善用户体验，你可以添加一个[悬念边界](/docs/app/building-your-application/routing/loading-ui-and-streaming)来分解渲染工作，并尽快显示部分结果:
+为了改善用户体验，你可以添加一个[悬停边界](/docs/app/building-your-application/routing/loading-ui-and-streaming)来分解渲染工作，并尽快显示部分结果:
 
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
@@ -381,7 +381,8 @@ export default async function Page({ params: { username } }) {
 
 ### 阻塞路由渲染
 
-通过在[layout](/docs/app/build-your-application/routing/pages-and-layouts)中获取数据，它下面所有路由段的渲染只能在数据加载完成后才会开始。
+通过在[布局](/docs/app/build-your-application/routing/pages-and-layouts)中获取数据，
+它下面所有路由段的渲染只能在数据加载完成后才会开始。
 
 在`pages`目录中，使用服务器呈现的页面会显示浏览器加载转轮，直到`getServerSideProps`完成，然后呈现该页面的React组件。
 这可以被描述为“全有或全无”的数据获取。

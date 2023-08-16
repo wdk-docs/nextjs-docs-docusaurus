@@ -26,6 +26,9 @@ import TabItem from '@theme/TabItem'
   height="606"
 />
 
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
 ```tsx filename="app/dashboard/error.tsx" switcher
 'use client' // Error components must be Client Components
 
@@ -59,6 +62,9 @@ export default function Error({
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/dashboard/error.js" switcher
 'use client' // Error components must be Client Components
 
@@ -85,6 +91,9 @@ export default function Error({ error, reset }) {
   )
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ### `error.js`是如何工作的
 
@@ -96,16 +105,19 @@ export default function Error({ error, reset }) {
   height="903"
 />
 
-- `error.js` automatically creates an [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) that **wraps** a nested child segment or `page.js` component.
-- The React component exported from the `error.js` file is used as the **fallback** component.
-- If an error is thrown within the error boundary, the error is **contained**, and the fallback component is **rendered**.
-- When the fallback error component is active, layouts **above** the error boundary **maintain** their state and **remain** interactive, and the error component can display functionality to recover from the error.
+- `error.js` 自动创建一个[React错误边界](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)， **包装**嵌套的子段或`page.js`组件。
+- 从`error.js`文件导出的React组件被用作回退组件。
+- 如果在错误边界内抛出错误，则会**包含**该错误，**并**呈现回退组件。
+- 当回退错误组件激活时，错误边界以上的布局保持其状态并保持交互，并且错误组件可以显示从错误中恢复的功能。
 
 ### 从错误中恢复
 
-The cause of an error can sometimes be temporary. In these cases, simply trying again might resolve the issue.
+错误的原因有时可能是暂时的。在这些情况下，只需再试一次就可以解决问题。
 
-An error component can use the `reset()` function to prompt the user to attempt to recover from the error. When executed, the function will try to re-render the Error boundary's contents. If successful, the fallback error component is replaced with the result of the re-render.
+错误组件可以使用`reset()`函数提示用户尝试从错误中恢复。当执行时，该函数将尝试重新呈现Error边界的内容。如果成功，则回退错误组件将替换为重新呈现的结果。
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/dashboard/error.tsx" switcher
 'use client'
@@ -126,6 +138,9 @@ export default function Error({
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/dashboard/error.js" switcher
 'use client'
 
@@ -139,11 +154,14 @@ export default function Error({ error, reset }) {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ### 嵌套的路由
 
-React components created through [special files](/docs/app/building-your-application/routing#file-conventions) are rendered in a [specific nested hierarchy](/docs/app/building-your-application/routing#component-hierarchy).
+通过[特殊文件](/docs/app/building-your-application/routing#file-conventions)创建的React组件呈现在[特定嵌套层次结构](/docs/app/building-your-application/routing#component-hierarchy)中。
 
-For example, a nested route with two segments that both include `layout.js` and `error.js` files are rendered in the following _simplified_ component hierarchy:
+例如，一个嵌套的路由有两个段，都包含`layout.js` 和 `error.js`文件，它会在下面的*simplified*组件层次结构中呈现:
 
 <Image
   alt="Nested Error Component Hierarchy"
@@ -153,30 +171,33 @@ For example, a nested route with two segments that both include `layout.js` and 
   height="687"
 />
 
-The nested component hierarchy has implications for the behavior of `error.js` files across a nested route:
+嵌套组件层次结构对跨嵌套路由的`error.js`文件的行为有影响:
 
-- Errors bubble up to the nearest parent error boundary. This means an `error.js` file will handle errors for all its nested child segments. More or less granular error UI can be achieved by placing `error.js` files at different levels in the nested folders of a route.
-- An `error.js` boundary will **not** handle errors thrown in a `layout.js` component in the **same** segment because the error boundary is nested **inside** that layouts component.
+- 错误冒泡到最近的父错误边界。这意味着`error.js`文件将处理其所有嵌套子段的错误。通过将`error.js`文件放在路由的嵌套文件夹的不同级别，可以实现或多或少的粒度错误UI。
+- 一个`error.js`边界将**不**处理在**相同**段的`layout.js`组件中抛出的错误，因为错误边界**嵌套在**布局组件中。
 
 ### 处理布局错误
 
-`error.js` boundaries do **not** catch errors thrown in `layout.js` or `template.js` components of the **same segment**. This [intentional hierarchy](#nested-routes) keeps important UI that is shared between sibling routes (such as navigation) visible and functional when an error occurs.
+`error.js`的边界**不会**捕捉**同一段**的`layout.js`或`template.js`组件中抛出的错误。这种[有意的层次结构](#nested-routes)使得在兄弟路由(比如导航)之间共享的重要UI在错误发生时保持可见和功能。
 
-To handle errors within a specific layout or template, place an `error.js` file in the layouts parent segment.
+要处理特定布局或模板中的错误，请在layouts父段中放置一个`error.js`文件。
 
-To handle errors within the root layout or template, use a variation of `error.js` called `global-error.js`.
+要处理根布局或模板中的错误，可以使用`error.js`的一个变体`global-error.js`。
 
 ### 处理根布局中的错误
 
-The root `app/error.js` boundary does **not** catch errors thrown in the root `app/layout.js` or `app/template.js` component.
+根目录下的`app/error.js`边界**不会**捕获根目录下的 `app/layout.js`或`app/template.js` 组件抛出的错误。
 
-To specifically handle errors in these root components, use a variation of `error.js` called `app/global-error.js` located in the root `app` directory.
+要专门处理这些根组件中的错误，可以使用`error.js`的一个变体`app/global-error.js`，它位于根目录`app`中。
 
-Unlike the root `error.js`, the `global-error.js` error boundary wraps the **entire** application, and its fallback component replaces the root layout when active. Because of this, it is important to note that `global-error.js` **must** define its own `<html>` and `<body>` tags.
+与根目录`error.js`不同的是，`global-error.js`的错误边界包裹了整个\*\*应用，它的回退组件在激活时替换了根目录布局。因此，重要的是要注意`global-error.js`必须定义自己的`<html>` 和 `<body>`标签。
 
-`global-error.js` is the least granular error UI and can be considered "catch-all" error handling for the whole application. It is unlikely to be triggered often as root components are typically less dynamic, and other `error.js` boundaries will catch most errors.
+`global-error.js`是粒度最小的错误UI，可以被认为是整个应用程序的“包罗万象”错误处理。它不太可能经常被触发，因为根组件通常不太动态，而其他的`error.js`边界将捕获大多数错误。
 
-Even if a `global-error.js` is defined, it is still recommended to define a root `error.js` whose fallback component will be rendered **within** the root layout, which includes globally shared UI and branding.
+即使定义了`global-error.js`，仍然建议定义一个根`error.js`，它的回退组件将在根布局中呈现，其中包括全局共享的UI和品牌。
+
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
 
 ```tsx filename="app/global-error.tsx" switcher
 'use client'
@@ -199,6 +220,9 @@ export default function GlobalError({
 }
 ```
 
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
 ```jsx filename="app/global-error.js" switcher
 'use client'
 
@@ -214,16 +238,19 @@ export default function GlobalError({ error, reset }) {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ### 处理服务器错误
 
-If an error is thrown inside a Server Component, Next.js will forward an `Error` object (stripped of sensitive error information in production) to the nearest `error.js` file as the `error` prop.
+如果在服务器组件中抛出了一个错误，Next.js会将一个`error`对象(在生产中剥离敏感的错误信息)转发到最近的`error.js`文件中作为`error` prop。
 
 #### 保护敏感错误信息
 
-During production, the `Error` object forwarded to the client only includes a generic `message` and `digest` property.
+在生产过程中，转发给客户端的`Error`对象只包含一个通用的`message`和`digest`属性。
 
-This is a security precaution to avoid leaking potentially sensitive details included in the error to the client.
+这是一种安全预防措施，可避免将错误中包含的潜在敏感细节泄露给客户端。
 
-The `message` property contains a generic message about the error and the `digest` property contains an automatically generated hash of the error that can be used to match the corresponding error in server-side logs.
+`message`属性包含关于错误的通用消息，`digest`属性包含错误的自动生成散列，可用于匹配服务器端日志中的相应错误。
 
-During development, the `Error` object forwarded to the client will be serialized and include the `message` of the original error for easier debugging.
+在开发过程中，转发给客户端的`Error`对象将被序列化，并包含原始错误的`message`，以便于调试。

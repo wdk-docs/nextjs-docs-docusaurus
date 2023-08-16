@@ -5,6 +5,8 @@ description: 用应用路由器创建你的第一个页面和共享布局。
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
+import ThemedImage from '@theme/ThemedImage'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
 > 我们建议在继续之前先阅读[路由基础](/docs/app/building-your-application/routing)和[定义路由](/docs/app/building-your-application/routing/defining-routes)两页。
 
@@ -56,7 +58,7 @@ export default function Page() {
 }
 ```
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - 页面总是[路由子树](/docs/app/building-your-application/routing#terminology)的[叶子](/docs/app/building-your-application/routing#terminology)。
 > - `.js`, `.jsx`, or `.tsx` 文件扩展名可用于Pages。
@@ -113,10 +115,10 @@ export default function DashboardLayout({
 }
 ```
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - 最上面的布局被称为[根布局](#root-layout-required)。这个**必需的**布局在应用程序的所有页面上共享。根布局必须包含`html`和`body`标签。
-> - 任何路由段都可以选择定义自己的[Layout](# nested -layouts)。这些布局将在该段的所有页面上共享。
+> - 任何路由段都可以选择定义自己的[布局](#nested-layouts)。这些布局将在该段的所有页面上共享。
 > - 默认情况下，路由中的布局是嵌套的。每个父布局使用React的“children”属性将子布局封装在它下面。
 > - 你可以使用[路由组](/docs/app/building-your-application/routing/route-groups)来选择共享布局中的特定路由段。
 > - 布局默认为[服务器组件](/docs/getting-started/react-essentials)，但可以设置为[客户端组件](/docs/getting-started/react-essentials#client-components)。
@@ -154,7 +156,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - `app`目录**必须**包含根目录。
 > - 根布局必须定义`<html>`和`<body>`标签，因为Next.js不会自动创建它们。
@@ -192,7 +194,7 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-> **注意事项:**:
+> **注意事项**:
 >
 > - 只有根布局可以包含`<html>`和`<body>`标签。
 
@@ -200,12 +202,12 @@ export default function DashboardLayout({ children }) {
 
 这两个布局将像这样嵌套:
 
-<Image
+<ThemedImage
   alt="Nested Layouts"
-  srcLight="/docs/light/nested-layouts-ui.png"
-  srcDark="/docs/dark/nested-layouts-ui.png"
-  width="1600"
-  height="1026"
+  sources={{
+    light: useBaseUrl('/img/light/nested-layouts-ui.png'),
+    dark: useBaseUrl('/img/dark/nested-layouts-ui.png'),
+  }}
 />
 
 你可以使用[路由组](/docs/app/building-your-application/routing/route-groups)来选择共享布局中的特定路由段。
@@ -219,7 +221,7 @@ export default function DashboardLayout({ children }) {
 
 - 使用CSS或动画库进入/退出动画。
 - 依赖于“useEffect”(例如记录页面浏览量)和`useState`(例如每页反馈表单)的功能。
-- 更改默认的框架行为。例如，布局中的悬念边界仅在布局第一次加载时显示回退，而在切换页面时则不显示。对于模板，回退显示在每个导航栏上。
+- 更改默认的框架行为。例如，布局中的悬停边界仅在布局第一次加载时显示回退，而在切换页面时则不显示。对于模板，回退显示在每个导航栏上。
 
 > **建议:**我们建议使用布局，除非你有一个特定的理由使用模板。
 
@@ -282,6 +284,6 @@ export default function Page() {
 }
 ```
 
-> **注意事项:**: 你 **不应该** 手动添加`<head>`标签，如`<title>`和`<meta>`到根布局。相反，你应该使用[元数据API](/docs/app/API-reference/functions/generate-metadata)，它会自动处理高级需求，比如流式传输和重复删除`<head>`元素。
+> **注意事项**: 你 **不应该** 手动添加`<head>`标签，如`<title>`和`<meta>`到根布局。相反，你应该使用[元数据API](/docs/app/API-reference/functions/generate-metadata)，它会自动处理高级需求，比如流式传输和重复删除`<head>`元素。
 
 [在API参考中了解有关可用元数据选项的更多信息。](/docs/app/api-reference/functions/generate-metadata)
