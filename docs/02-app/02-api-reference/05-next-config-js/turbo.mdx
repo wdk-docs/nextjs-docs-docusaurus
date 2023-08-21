@@ -14,7 +14,7 @@ Currently, Turbopack supports a subset of webpack's loader API, allowing you to 
 
 To configure loaders, add the names of the loaders you've installed and any options in `next.config.js`, mapping file extensions to a list of loaders:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   experimental: {
     turbo: {
@@ -52,7 +52,7 @@ Through `next.config.js`, Turbopack can be configured to modify module resolutio
 
 To configure resolve aliases, map imported patterns to their new destination in `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   experimental: {
     turbo: {

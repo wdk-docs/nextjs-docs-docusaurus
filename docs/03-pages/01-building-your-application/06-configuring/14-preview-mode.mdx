@@ -55,7 +55,7 @@ export default function handler(req, res) {
 
 You can test this manually by creating an API route like below and accessing it from your browser manually:
 
-```js filename="pages/api/preview.js"
+```js title="pages/api/preview.js"
 // simple example for testing it manually from your browser.
 export default function handler(req, res) {
   res.setPreviewData({})
@@ -75,7 +75,7 @@ These steps assume that the headless CMS you’re using supports setting **custo
 
 **Second**, if your headless CMS supports setting custom preview URLs, specify the following as the preview URL. This assumes that your preview API route is located at `pages/api/preview.js`.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
@@ -165,7 +165,7 @@ That’s it! If you access the preview API route (with `secret` and `slug`) from
 
 Set this as the preview URL on your headless CMS or access manually, and you should be able to see the preview.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
@@ -193,7 +193,7 @@ By default, no expiration date is set for Preview Mode cookies, so the preview s
 
 To clear the Preview Mode cookies manually, create an API route that calls `clearPreviewData()`:
 
-```js filename="pages/api/clear-preview-mode-cookies.js"
+```js title="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
   res.clearPreviewData({})
 }
@@ -203,7 +203,7 @@ Then, send a request to `/api/clear-preview-mode-cookies` to invoke the API Rout
 
 If a path was specified in the `setPreviewData` call, you must pass the same path to `clearPreviewData`:
 
-```js filename="pages/api/clear-preview-mode-cookies.js"
+```js title="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
   const { path } = req.query
 

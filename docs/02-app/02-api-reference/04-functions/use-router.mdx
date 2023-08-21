@@ -10,7 +10,7 @@ The `useRouter` hook allows you to programmatically change routes inside [Client
 
 > **Recommendation:** Use the [`<Link>` component](/docs/app/building-your-application/routing/linking-and-navigating#link-component) for navigation unless you have a specific requirement for using `useRouter`.
 
-```tsx filename="app/example-client-component.tsx" switcher
+```tsx title="app/example-client-component.tsx" switcher
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -26,7 +26,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher
+```jsxtitle="app/example-client-component.js" switcher
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -72,7 +72,7 @@ export default function Page() {
 
 You can listen for page changes by composing other Client Component hooks like `usePathname` and `useSearchParams`.
 
-```jsx filename="app/components/navigation-events.js"
+```jsxtitle="app/components/navigation-events.js"
 'use client'
 
 import { useEffect } from 'react'
@@ -95,7 +95,7 @@ export function NavigationEvents() {
 
 Which can be imported into a layout.
 
-```jsx filename="app/layout.js" highlight={2,10-12}
+```jsxtitle="app/layout.js" highlight={2,10-12}
 import { Suspense } from 'react'
 import { NavigationEvents } from './components/navigation-events'
 

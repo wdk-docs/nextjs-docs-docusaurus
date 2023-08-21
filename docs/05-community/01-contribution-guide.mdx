@@ -41,7 +41,7 @@ Open the command palette (`⌘ + ⇧ + P` on Mac or `Ctrl + Shift + P` on Window
 
 Then, add the following line to your `settings.json` file:
 
-```json filename="settings.json"
+```json title="settings.json"
 {
   "files.associations": {
     "*.mdx": "markdown"
@@ -112,7 +112,7 @@ The following fields are **required**:
 | `title`       | The page's `<h1>` title, used for SEO and OG Images.                         |
 | `description` | The page's description, used in the `<meta name="description">` tag for SEO. |
 
-```yaml filename="required-fields.mdx"
+```yamltitle="required-fields.mdx"
 ---
 tile: Page Title
 description: Page Description
@@ -131,7 +131,7 @@ The following fields are **optional**:
 | `source`    | Pulls content into a shared page. See [Shared Pages](#shared-pages).                                                                               |
 | `related`   | A list of related pages at the bottom of the document. These will automatically be turned into cards. See [Related Links](#related-links).         |
 
-```yaml filename="optional-fields.mdx"
+```yamltitle="optional-fields.mdx"
 ---
 nav_title: Nav Item Title
 source: app/building-your-application/optimizing/images
@@ -150,7 +150,7 @@ Since most of the features in the **App Router** and **Pages Router** are comple
 
 To avoid content duplication and risk the content becoming out of sync, we use the `source` field to pull content from one page into another. For example, the `<Link>` component behaves _mostly_ the same in **App** and **Pages**. Instead of duplicating the content, we can pull the content from `app/.../link.mdx` into `pages/.../link.mdx`:
 
-```mdx filename="app/.../link.mdx"
+```mdx title="app/.../link.mdx"
 ---
 title: <Link>
 description: API reference for the <Link> component.
@@ -160,7 +160,7 @@ This API reference will help you understand how to use the props
 and configuration options available for the Link Component.
 ```
 
-```mdx filename="pages/.../link.mdx"
+```mdx title="pages/.../link.mdx"
 ---
 title: <Link>
 description: API reference for the <Link> component.
@@ -179,7 +179,7 @@ In shared pages, sometimes there might be content that is **App Router** or **Pa
 
 To make sure the content only shows in the correct router, we can wrap content blocks in an `<AppOnly>` or `<PagesOnly>` components:
 
-```mdx filename="app/.../link.mdx"
+```mdx title="app/.../link.mdx"
 This content is shared between App and Pages.
 
 <PagesOnly>
@@ -199,7 +199,7 @@ Code blocks should contain a minimum working example that can be copied and past
 
 For example, if you're showing how to use the `<Link>` component, you should include the `import` statement and the `<Link>` component itself.
 
-```tsx filename="app/page.tsx"
+```tsx title="app/page.tsx"
 import Link from 'next/link'
 
 export default function Page() {
@@ -213,8 +213,8 @@ Always run examples locally before committing them. This will ensure that the co
 
 Code blocks should have a header that includes the language and the `filename`. Add a `filename` prop to render a special Terminal icon that helps orientate users where to input the command. For example:
 
-````mdx filename="code-example.mdx"
-```bash filename="Terminal"
+````mdx title="code-example.mdx"
+```bash title="Terminal"
 npx create-next-app
 ```
 ````
@@ -236,12 +236,12 @@ Add a language switcher to toggle between TypeScript and JavaScript. Code blocks
 
 Currently, we write TS and JS examples one after the other, and link them with `switcher` prop:
 
-````mdx filename="code-example.mdx"
-```tsx filename="app/page.tsx" switcher
+````mdx title="code-example.mdx"
+```tsx title="app/page.tsx" switcher
 
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 
 ```
 ````
@@ -254,7 +254,7 @@ Code lines can be highlighted. This is useful when you want to draw attention to
 
 **Single Line:** `highlight={1}`
 
-```tsx filename="app/page.tsx" {1}
+```tsx title="app/page.tsx" {1}
 import Link from 'next/link'
 
 export default function Page() {
@@ -264,7 +264,7 @@ export default function Page() {
 
 **Multiple Lines:** `highlight={1,3}`
 
-```tsx filename="app/page.tsx" highlight={1,3}
+```tsx title="app/page.tsx" highlight={1,3}
 import Link from 'next/link'
 
 export default function Page() {
@@ -274,7 +274,7 @@ export default function Page() {
 
 **Range of Lines:** `highlight={1-5}`
 
-```tsx filename="app/page.tsx" highlight={1-5}
+```tsx title="app/page.tsx" highlight={1-5}
 import Link from 'next/link'
 
 export default function Page() {
@@ -286,7 +286,7 @@ export default function Page() {
 
 The following icons are available for use in the docs:
 
-```mdx filename="mdx-icon.mdx"
+```mdx title="mdx-icon.mdx"
 <Check size={18} />
 <Cross size={18} />
 ```
@@ -302,7 +302,7 @@ We do not use emojis in the docs.
 
 For information that is important but not critical, use notes. Notes are a good way to add information without distracting the user from the main content.
 
-```mdx filename="notes.mdx"
+```mdx title="notes.mdx"
 > **注意事项**: This is a single line note.
 
 > **注意事项**:
@@ -329,7 +329,7 @@ Related Links guide the user's learning journey by adding links to logical next 
 
 Create related links using the `related` field in the page's metadata.
 
-```yaml filename="example.mdx"
+```yamltitle="example.mdx"
 ---
 related:
   description: Learn how to quickly get started with your first application.

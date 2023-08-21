@@ -5,11 +5,11 @@ description: Next.js allows you to serve static files, like images, in the publi
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Next.js can serve static files, like images, under a folder called `public` in the root directory. Files inside `public` can then be referenced by your code starting from the base URL (`/`).
+Next.js可以提供静态文件，比如图片，放在根目录下一个名为`public`的文件夹下。`public`中的文件可以由你的代码从基础URL`/`)开始引用。
 
-For example, if you add `me.png` inside `public`, the following code will access the image:
+例如，如果你在`public`中添加`me.png`，下面的代码将访问图像:
 
-```jsx filename="Avatar.js"
+```jsx title="Avatar.js"
 import Image from 'next/image'
 
 export function Avatar() {
@@ -17,19 +17,21 @@ export function Avatar() {
 }
 ```
 
-<PagesOnly>
+### PagesOnly
 
-This folder is also useful for `robots.txt`, `favicon.ico`, Google Site Verification, and any other static files (including `.html`). But make sure to not have a static file with the same name as a file in the `pages/` directory, as this will result in an error. [Read more](/docs/messages/conflicting-public-file-page).
+此文件夹也适用于`robots.txt`, `favicon.ico`， Google Site Verification和任何其他静态文件(包括`.html`)。
+但是请确保没有一个静态文件与`pages/`目录中的文件同名，因为这会导致错误。
+[阅读更多](/docs/messages/conflicting-public-file-page).
 
-</PagesOnly>
+### AppOnly
 
-<AppOnly>
+对于静态元数据文件，如`robots.txt`, `favicon.ico`等，你应该使用`app`文件夹中的[特殊元数据文件](/docs/app/api-reference/file-conventions/metadata)。
 
-For static metadata files, such as `robots.txt`, `favicon.ico`, etc, you should use [special metadata files](/docs/app/api-reference/file-conventions/metadata) inside the `app` folder.
+:::tip
 
-</AppOnly>
+- 目录必须命名为`public`。名称不能更改，它是用于提供静态资产的唯一目录。
+- 只有在[构建时](/docs/app/api-reference/next-cli#build)的`public`目录下的资产才会被Next.js提供服务。
+  在运行时添加的文件将不可用。
+  我们建议使用第三方服务，如[AWS S3](https://aws.amazon.com/s3/)进行持久文件存储。
 
-> Good to know:
->
-> - The directory must be named `public`. The name cannot be changed and it's the only directory used to serve static assets.
-> - Only assets that are in the `public` directory at [build time](/docs/app/api-reference/next-cli#build) will be served by Next.js. Files added at runtime won't be available. We recommend using a third-party service like [AWS S3](https://aws.amazon.com/s3/) for persistent file storage.
+:::

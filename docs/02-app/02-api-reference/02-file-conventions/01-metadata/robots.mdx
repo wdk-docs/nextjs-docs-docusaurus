@@ -7,7 +7,7 @@ Add or generate a `robots.txt` file that matches the [Robots Exclusion Standard]
 
 ## Static `robots.txt`
 
-```txt filename="app/robots.txt"
+```txttitle="app/robots.txt"
 User-Agent: *
 Allow: /
 Disallow: /private/
@@ -19,7 +19,7 @@ Sitemap: https://acme.com/sitemap.xml
 
 Add a `robots.js` or `robots.ts` file that returns a [`Robots` object](#robots-object).
 
-```ts filename="app/robots.ts" switcher
+```ts title="app/robots.ts" switcher
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
@@ -34,7 +34,7 @@ export default function robots(): MetadataRoute.Robots {
 }
 ```
 
-```js filename="app/robots.js" switcher
+```js title="app/robots.js" switcher
 export default function robots() {
   return {
     rules: {

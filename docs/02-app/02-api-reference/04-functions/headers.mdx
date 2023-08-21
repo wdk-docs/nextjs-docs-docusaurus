@@ -12,7 +12,7 @@ The `headers` function allows you to read the HTTP incoming request headers from
 
 This API extends the [Web Headers API](https://developer.mozilla.org/en-US/docs/Web/API/Headers). It is **read-only**, meaning you cannot `set` / `delete` the outgoing request headers.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import { headers } from 'next/headers'
 
 export default function Page() {
@@ -23,7 +23,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import { headers } from 'next/headers'
 
 export default function Page() {
@@ -65,7 +65,7 @@ const headersList = headers()
 
 `headers()` can be used in combination with [Suspense for Data Fetching](/docs/app/building-your-application/data-fetching/fetching).
 
-```jsx filename="app/page.js"
+```jsxtitle="app/page.js"
 import { headers } from 'next/headers'
 
 async function getUser() {

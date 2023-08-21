@@ -5,9 +5,9 @@ description: Edge运行时的API参考。
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-The Next.js Edge Runtime is based on standard Web APIs, it supports the following APIs:
+Next.js Edge运行时基于标准的Web api，它支持以下api:
 
-## Network APIs
+## 网络APIs
 
 | API                                                                                   | Description                       |
 | ------------------------------------------------------------------------------------- | --------------------------------- |
@@ -22,7 +22,7 @@ The Next.js Edge Runtime is based on standard Web APIs, it supports the followin
 | [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) | Represents URL search parameters  |
 | [`WebSocket`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)             | Represents a websocket connection |
 
-## Encoding APIs
+## 编码APIs
 
 | API                                                                                       | Description                        |
 | ----------------------------------------------------------------------------------------- | ---------------------------------- |
@@ -33,7 +33,7 @@ The Next.js Edge Runtime is based on standard Web APIs, it supports the followin
 | [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder)             | Encodes a string into a Uint8Array |
 | [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) | Chainable encoder for streams      |
 
-## Stream APIs
+## 流APIs
 
 | API                                                                                                           | Description                             |
 | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
@@ -44,7 +44,7 @@ The Next.js Edge Runtime is based on standard Web APIs, it supports the followin
 | [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream)                           | Represents a writable stream            |
 | [`WritableStreamDefaultWriter`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter) | Represents a writer of a WritableStream |
 
-## Crypto APIs
+## 加密APIs
 
 | API                                                                             | Description                                                                                         |
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -52,7 +52,7 @@ The Next.js Edge Runtime is based on standard Web APIs, it supports the followin
 | [`CryptoKey`](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey)       | Represents a cryptographic key                                                                      |
 | [`SubtleCrypto`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) | Provides access to common cryptographic primitives, like hashing, signing, encryption or decryption |
 
-## Web Standard APIs
+## Web标准APIs
 
 | API                                                                                                                         | Description                                                                                                                                                                                          |
 | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,15 +120,15 @@ The Next.js Edge Runtime is based on standard Web APIs, it supports the followin
 | [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)                       | Represents a collection of objects in which each object may occur only once                                                                                                                          |
 | [`WebAssembly`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly)               | Provides access to WebAssembly                                                                                                                                                                       |
 
-## Next.js Specific Polyfills
+## Next.js特定的Polyfills
 
 - [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage)
 
-## Environment Variables
+## 环境变量
 
 You can use `process.env` to access [Environment Variables](/docs/app/building-your-application/configuring/environment-variables) for both `next dev` and `next build`.
 
-## Unsupported APIs
+## 不受支持的APIs
 
 The Edge Runtime has some restrictions including:
 

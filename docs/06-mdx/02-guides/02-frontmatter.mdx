@@ -1,0 +1,83 @@
+# 页眉
+
+本指南探讨了如何在MDX中支持YAML前端内容。
+MDX支持标准标记语法([CommonMark][])。
+这意味着默认情况下不支持frontmatter。
+
+MDX附带了一个强大的和动态的替代frontmatter，即ESM(`import`/`export`).
+这些出口:
+
+```mdx title="post.mdx"
+export const name = 'World'
+export const title = 'Hi, ' + name + '!'
+
+# {title}
+```
+
+可以这样使用:
+
+```js title="example.js"
+import * as Post from './post.mdx' // Assumes an integration is used to compile MDX -> JS.
+
+console.log(Post.title) // Prints 'Hi, World!'
+```
+
+不过，您可能更喜欢frontmatter，因为它允许您定义可以在编译*之前*从文件系统中提取的数据。
+假设我们的MDX与前体是这样的:
+
+```mdx title="post.mdx"
+---
+title: Hi, World!
+---
+
+# Hi, World!
+```
+
+然后，无需编译或评估元数据，可以像这样访问:
+
+```js title="example.js"
+import fs from 'node:fs/promises'
+import yaml from 'js-yaml'
+
+console.log(yaml.loadAll(await fs.readFile('post.mdx'))[0])
+// Prints `{title: 'Hi, World!'}`
+```
+
+我们的编译器`@mdx-js/mdx`默认不理解YAML frontmatter，但它可以通过使用remark插件[`remark-frontmatter`][remark-frontmatter]来启用:
+
+```js title="example.js"
+import fs from 'node:fs/promises'
+import remarkFrontmatter from 'remark-frontmatter'
+import { compile } from '@mdx-js/mdx'
+
+console.log(
+  await compile(await fs.readFile('post.mdx'), {
+    remarkPlugins: [remarkFrontmatter],
+  }),
+)
+```
+
+现在它“起作用了”。
+正面内容被忽略了。
+但是嵌入在前端的数据无法从MDX内部获取。
+如果我们也想要那样呢?
+像这样:
+
+```mdx title="post.mdx"
+---
+title: Hi, World!
+---
+
+# {title}
+```
+
+这正是remark插件[`remark-mdx-frontmatter`][remark-mdx-frontmatter]所做的。
+
+remark插件可以通过[`options.remarkPlugins`][options-remark-plugins]传递。
+有关插件的更多信息，请参见[§扩展MDX][extend]。
+
+[commonmark]: https://spec.commonmark.org/current/
+[remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
+[remark-mdx-frontmatter]: https://github.com/remcohaszing/remark-mdx-frontmatter
+[options-remark-plugins]: /packages/mdx/#optionsremarkplugins
+[extend]: /docs/extending-mdx/

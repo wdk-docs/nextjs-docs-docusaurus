@@ -24,7 +24,7 @@ Next.js支持从静态站点或单页面应用程序(SPA)开始，然后可以�
 
 要启用静态导出，请更改`next.config.js`中的输出模式:
 
-```js filename="next.config.js" highlight={5}
+```js title="next.config.js" highlight={5}
 /**
  * @type {import('next').NextConfig}
  */
@@ -59,7 +59,7 @@ When you run `next build` to generate a static export, Server Components consume
 
 The resulting component will be rendered into static HTML for the initial page load and a static payload for client navigation between routes. No changes are required for your Server Components when using the static export, unless they consume [dynamic server functions](#unsupported-features).
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export default async function Page() {
   // This fetch will run on the server during `next build`
   const res = await fetch('https://api.example.com/...')
@@ -73,7 +73,7 @@ export default async function Page() {
 
 If you want to perform data fetching on the client, you can use a Client Component with [SWR](https://github.com/vercel/swr) to deduplicate requests.
 
-```tsx filename="app/other/page.tsx" switcher
+```tsx title="app/other/page.tsx" switcher
 'use client'
 
 import useSWR from 'swr'
@@ -92,7 +92,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/other/page.js" switcher
+```jsxtitle="app/other/page.js" switcher
 'use client'
 
 import useSWR from 'swr'
@@ -113,7 +113,7 @@ export default function Page() {
 
 Since route transitions happen client-side, this behaves like a traditional SPA. For example, the following index route allows you to navigate to different posts on the client:
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -134,7 +134,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -172,7 +172,7 @@ export default function Page() {
 
 [Image Optimization](/docs/app/building-your-application/optimizing/images) through `next/image` can be used with a static export by defining a custom image loader in `next.config.js`. For example, you can optimize images with a service like Cloudinary:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
@@ -187,7 +187,7 @@ module.exports = nextConfig
 
 This custom loader will define how to fetch images from a remote source. For example, the following loader will construct the URL for Cloudinary:
 
-```ts filename="app/image.ts" switcher
+```ts title="app/image.ts" switcher
 export default function cloudinaryLoader({
   src,
   width,
@@ -204,7 +204,7 @@ export default function cloudinaryLoader({
 }
 ```
 
-```js filename="app/image.js" switcher
+```js title="app/image.js" switcher
 export default function cloudinaryLoader({ src, width, quality }) {
   const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/demo/image/upload/${params.join(
@@ -215,7 +215,7 @@ export default function cloudinaryLoader({ src, width, quality }) {
 
 You can then use `next/image` in your application, defining relative paths to the image in Cloudinary:
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Image from 'next/image'
 
 export default function Page() {
@@ -223,7 +223,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import Image from 'next/image'
 
 export default function Page() {
@@ -237,7 +237,7 @@ export default function Page() {
 
 Route Handlers will render a static response when running `next build`. Only the `GET` HTTP verb is supported. This can be used to generate static HTML, JSON, TXT, or other files from dynamic or static data. For example:
 
-```ts filename="app/data.json/route.ts" switcher
+```ts title="app/data.json/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -245,7 +245,7 @@ export async function GET() {
 }
 ```
 
-```js filename="app/data.json/route.js" switcher
+```js title="app/data.json/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -336,7 +336,7 @@ After running `next build`, Next.js will generate the following files:
 
 If you are using a static host like Nginx, you can configure rewrites from incoming requests to the correct files:
 
-```nginx filename="nginx.conf"
+```nginxtitle="nginx.conf"
 server {
   listen 80;
   server_name acme.com;

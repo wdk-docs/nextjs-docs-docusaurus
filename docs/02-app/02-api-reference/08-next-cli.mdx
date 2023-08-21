@@ -7,17 +7,17 @@ description: The Next.js CLI allows you to start, build, and export your applica
 
 Next.js CLI允许您启动、构建和导出应用程序。
 
-To get a list of the available CLI commands, run the following command inside your project directory:
+要获取可用的CLI命令列表，在项目目录下运行以下命令:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx next -h
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher)_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) 自带NPM 5.2+及更高版本)_
 
-The output should look like this:
+输出应该是这样的:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 Usage
   $ next <command>
 
@@ -32,19 +32,19 @@ For more information run a command with the --help flag
   $ next build --help
 ```
 
-You can pass any [node arguments](https://nodejs.org/api/cli.html#cli_node_options_options) to `next` commands:
+你可以将任意[node arguments](https://nodejs.org/api/cli.html#cli_node_options_options)传递给`next`命令:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 NODE_OPTIONS='--throw-deprecation' next
 NODE_OPTIONS='-r esm' next
 NODE_OPTIONS='--inspect' next
 ```
 
-> **注意事项**: Running `next` without a command is the same as running `next dev`
+> **注意事项**: 不带命令运行`next`和运行`next dev`是一样的
 
 ## Build
 
-`next build` creates an optimized production build of your application. The output displays information about each route.
+`next build` 创建应用程序的优化生产构建。输出显示每条路由的信息。
 
 - **Size** – The number of assets downloaded when navigating to the page client-side. The size for each route only includes its dependencies.
 - **First Load JS** – The number of assets downloaded when visiting the page from the server. The amount of JS shared by all is shown as a separate metric.
@@ -53,7 +53,7 @@ Both of these values are **compressed with gzip**. The first load is indicated b
 
 You can enable production profiling for React with the `--profile` flag in `next build`. This requires [Next.js 9.5](https://nextjs.org/blog/next-9-5):
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next build --profile
 ```
 
@@ -61,25 +61,25 @@ After that, you can use the profiler in the same way as you would in development
 
 You can enable more verbose build output with the `--debug` flag in `next build`. This requires Next.js 9.5.3:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next build --debug
 ```
 
 With this flag enabled additional build output like rewrites, redirects, and headers will be shown.
 
-## Development
+## 开发模式
 
-`next dev` starts the application in development mode with hot-code reloading, error reporting, and more:
+`next dev` 在开发模式下启动应用程序，并提供热代码重载、错误报告等功能:
 
 The application will start at `http://localhost:3000` by default. The default port can be changed with `-p`, like so:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx next dev -p 4000
 ```
 
 Or using the `PORT` environment variable:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 PORT=4000 npx next dev
 ```
 
@@ -87,23 +87,23 @@ PORT=4000 npx next dev
 
 You can also set the hostname to be different from the default of `0.0.0.0`, this can be useful for making the application available for other devices on the network. The default hostname can be changed with `-H`, like so:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx next dev -H 192.168.1.2
 ```
 
-## Production
+## 生产模式
 
-`next start` starts the application in production mode. The application should be compiled with [`next build`](#build) first.
+`next start` 在生产模式下启动应用程序。应用程序应该先用[`next build`](#build)编译。
 
 The application will start at `http://localhost:3000` by default. The default port can be changed with `-p`, like so:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx next start -p 4000
 ```
 
 Or using the `PORT` environment variable:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 PORT=4000 npx next start
 ```
 
@@ -113,13 +113,14 @@ PORT=4000 npx next start
 >
 > - `next start` cannot be used with `output: 'standalone'` or `output: 'export'`.
 
-### Keep Alive Timeout
+### 保持存活超时
 
-When deploying Next.js behind a downstream proxy (e.g. a load-balancer like AWS ELB/ALB) it's important to configure Next's underlying HTTP server with [keep-alive timeouts](https://nodejs.org/api/http.html#http_server_keepalivetimeout) that are _larger_ than the downstream proxy's timeouts. Otherwise, once a keep-alive timeout is reached for a given TCP connection, Node.js will immediately terminate that connection without notifying the downstream proxy. This results in a proxy error whenever it attempts to reuse a connection that Node.js has already terminated.
+当将Next.js部署在下游代理(例如，像AWS ELB/ALB这样的负载平衡器)之后时，重要的是要将Next的底层HTTP服务器配置为[keep-alive超时](https://nodejs.org/api/http.html#http_server_keepalivetimeout)，该超时大于下游代理的超时。否则，一旦达到给定TCP连接的keep-alive超时，Node.js将立即终止该连接，而不通知下游代理。
+每当它试图重用Node.js已经终止的连接时，就会导致代理错误。
 
-To configure the timeout values for the production Next.js server, pass `--keepAliveTimeout` (in milliseconds) to `next start`, like so:
+要为生产版Next.js服务器配置超时值，将`--keepAliveTimeout`(以毫秒为单位)传递给`next start`，如下所示:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx next start --keepAliveTimeout 70000
 ```
 
@@ -132,31 +133,31 @@ your application.
 If you have other directories that you would like to lint, you can specify them using the `--dir`
 flag:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next lint --dir utils
 ```
 
-## Telemetry
+## 遥测
 
 Next.js collects **completely anonymous** telemetry data about general usage.
 Participation in this anonymous program is optional, and you may opt-out if you'd not like to share any information.
 
 To learn more about Telemetry, [please read this document](https://nextjs.org/telemetry/).
 
-## Next Info
+## Next 信息
 
 `next info` prints relevant details about the current system which can be used to report Next.js bugs.
 This information includes Operating System platform/arch/version, Binaries (Node.js, npm, Yarn, pnpm) and npm package versions (`next`, `react`, `react-dom`).
 
 Running the following in your project's root directory:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next info
 ```
 
 will give you information like this example:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 
     Operating System:
       Platform: linux
@@ -174,4 +175,4 @@ will give you information like this example:
 
 ```
 
-This information should then be pasted into GitHub Issues.
+然后将这些信息粘贴到GitHub问题中。

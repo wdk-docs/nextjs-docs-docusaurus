@@ -11,7 +11,7 @@ Any debugger that can attach to Node.js can also be used to debug a Next.js appl
 
 Create a file named `.vscode/launch.json` at the root of your project with the following content:
 
-```json filename="launch.json"
+```json title="launch.json"
 {
   "version": "0.2.0",
   "configurations": [
@@ -62,13 +62,13 @@ Now, any time your client-side code reaches a [`debugger`](https://developer.moz
 
 To debug server-side Next.js code with Chrome DevTools, you need to pass the [`--inspect`](https://nodejs.org/api/cli.html#cli_inspect_host_port) flag to the underlying Node.js process:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 NODE_OPTIONS='--inspect' next dev
 ```
 
 If you're using `npm run dev` or `yarn dev` then you should update the `dev` script on your `package.json`:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev"
@@ -78,7 +78,7 @@ If you're using `npm run dev` or `yarn dev` then you should update the `dev` scr
 
 Launching the Next.js dev server with the `--inspect` flag will look something like this:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 Debugger listening on ws://127.0.0.1:9229/0cf90313-350d-4466-a748-cd60f4e47c95
 For help, see: https://nodejs.org/en/docs/inspector
 ready - started server on 0.0.0.0:3000, url: http://localhost:3000
@@ -94,7 +94,7 @@ Debugging server-side code here works much like debugging client-side code with 
 
 Windows users may run into an issue when using `NODE_OPTIONS='--inspect'` as that syntax is not supported on Windows platforms. To get around this, install the [`cross-env`](https://www.npmjs.com/package/cross-env) package as a development dependency (`-D` with `npm` and `yarn`) and replace the `dev` script with the following.
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev"

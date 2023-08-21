@@ -1,0 +1,96 @@
+# 按需提供
+
+本指南展示了如何使用 `@mdx-js/mdx` 在服务器上编译mdx并在客户端上运行结果。
+一些框架，如Next.js和Remix，可以很容易地在服务器和客户端之间分割工作。
+例如，使用它可以在服务器上按需完成大部分工作，而不是在构建时，然后将结果数据传递给客户端，客户端最终使用它。
+
+这与[`mdx-bundler`][mdx-bundler]和[`next-mdx-remote`][next-mdx-remote]所做的类似，但它们添加了更多的功能。
+
+## 简单的例子
+
+在服务器上:
+
+```js title="server.js"
+import { compile } from '@mdx-js/mdx'
+
+const code = String(
+  await compile('# hi', {
+    outputFormat: 'function-body',
+    development: false,
+    // ^-- Generate code for production.
+    // `false` if you use `/jsx-runtime` on client, `true` if you use
+    // `/jsx-dev-runtime`.
+    /* …otherOptions */
+  }),
+)
+// To do: send `code` to the client somehow.
+```
+
+在客户端:
+
+```js title="client.js"
+import { run } from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime' // Production.
+// import * as runtime from 'react/jsx-dev-runtime' // Development.
+
+const code = '' // To do: get `code` from server somehow.
+
+const { default: Content } = await run(code, runtime)
+```
+
+`Content`现在是一个`MDXContent`组件，你可以像在框架中一样正常使用(参见[§使用MDX][use])。
+
+更多信息可以在API文档`@mdx-js/mdx`中找到[`compile`][compile]和[`run`][run]。
+对于其他用例，你也可以使用[`evaluate`][eval]，它可以同时编译和运行。
+
+:::note
+
+MDX不是一个捆绑器(esbuild、webpack和Rollup是捆绑器):
+您不能在MDX字符串中从服务器导入其他代码，然后得到一个非常小的包。
+
+:::
+
+## Next.js 例子
+
+一些框架允许您在一个文件中编写服务器和客户机代码，例如Next。
+
+```js title="pages/hello.js"
+import { useState, useEffect, Fragment } from 'react'
+import * as runtime from 'react/jsx-runtime' // Production.
+// import * as runtime from 'react/jsx-dev-runtime' // Development.
+import { compile, run } from '@mdx-js/mdx'
+
+export default function Page({ code }) {
+  const [mdxModule, setMdxModule] = useState()
+  const Content = mdxModule ? mdxModule.default : Fragment
+
+  useEffect(() => {
+    ;(async () => {
+      setMdxModule(await run(code, runtime))
+    })()
+  }, [code])
+
+  return <Content />
+}
+
+export async function getStaticProps() {
+  const code = String(
+    await compile('# hi', {
+      outputFormat: 'function-body',
+      development: false,
+      // ^-- Generate code for production.
+      // `false` if you use `/jsx-runtime` on client, `true` if you use
+      // `/jsx-dev-runtime`.
+      /* …otherOptions */
+    }),
+  )
+  return { props: { code } }
+}
+```
+
+[mdx-bundler]: https://github.com/kentcdodds/mdx-bundler
+[next-mdx-remote]: https://github.com/hashicorp/next-mdx-remote
+[use]: /docs/using-mdx/
+[compile]: /packages/mdx/#compilefile-options
+[run]: /packages/mdx/#runfunctionbody-options
+[eval]: /packages/mdx/#evaluatefile-options

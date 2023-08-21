@@ -1,0 +1,221 @@
+# 语法高亮
+
+本指南探讨如何将语法高亮显示应用于代码块。 {/* more */}
+MDX支持标准标记语法([CommonMark][])。
+默认情况下，它不会对代码块应用语法高亮显示。
+
+有两种方法可以实现语法高亮显示:在编译时或在运行时。
+在编译时进行这一操作意味着需要提前花费精力，这样读者就会有快速的体验，因为没有额外的代码发送给他们(语法高亮显示需要大量的代码才能工作)。
+在运行时将工作转移到客户端，从而提供了更大的灵活性。
+这可能会导致读者体验缓慢。
+这也取决于你使用什么框架(比如它是特定于React、Preact、Vue等的)。
+
+## 在编译时高亮显示语法
+
+使用[`rehype-highlight`][rehype-highlight] (`highlight.js`)或[`@mapbox/rehype-prism`][rehype-prism] (Prism)，执行如下操作:
+
+```js title="example.js"
+import rehypeHighlight from 'rehype-highlight'
+import { compile } from '@mdx-js/mdx'
+
+const code = `~~~js
+console.log(1)
+~~~`
+
+console.log(String(await compile(code, { rehypePlugins: [rehypeHighlight] })))
+```
+
+<details>
+  <summary>展开等效JSX</summary>
+
+```js title="output.jsx"
+<>
+  <pre>
+    <code className="hljs language-js">
+      <span className="hljs-built_in">console</span>.log(
+      <span className="hljs-number">1</span>)
+    </code>
+  </pre>
+</>
+```
+
+</details>
+
+:::tip
+
+如果你选择了`rehype-highlight`，那么你也应该在页面的某个地方使用highlight.js主题。
+例如，要从cdnjs获取GitHub Dark:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css"
+/>
+```
+
+如果你选择了`@mapbox/rehype-prism`，添加如下内容以获得Prism Dark:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-dark.min.css"
+/>
+```
+
+:::note
+
+## 在运行时高亮显示语法
+
+例如使用[`react-syntax-highlighter`][react-syntax-highlighter]，这样做:
+
+```jsx title="example.jsx"
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import Post from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+;<Post components={{ code }} />
+
+function code({ className, ...props }) {
+  const match = /language-(\w+)/.exec(className || '')
+  return match ? (
+    <SyntaxHighlighter language={match[1]} PreTag="div" {...props} />
+  ) : (
+    <code className={className} {...props} />
+  )
+}
+```
+
+<details>
+  <summary>展开等效JSX</summary>
+
+```jsx title="output.jsx"
+<>
+  <pre>
+    <div
+      className="language-js"
+      style={{
+        display: 'block',
+        overflowX: 'auto',
+        padding: '0.5em',
+        background: '#F0F0F0',
+        color: '#444',
+      }}
+    >
+      <code style={{ whiteSpace: 'pre' }}>
+        <span>console.</span>
+        <span style={{ color: '#397300' }}>log</span>
+        <span>(</span>
+        <span style={{ color: '#880000' }}>1</span>
+        <span>)</span>
+      </code>
+    </div>
+  </pre>
+</>
+```
+
+</details>
+
+## 使用`meta`字段高亮显示语法
+
+Markdown支持代码的元字符串:
+
+````md title="example.md"
+```js title="index.js"
+console.log(1)
+```
+````
+
+`meta`部分是语言之后的所有内容(在本例中是`js`)。
+这是Markdown的一个`隐藏`部分:它通常被忽略。
+但是正如上面的示例所示，它是放置一些额外字段的有用位置。
+
+`@mdx-js/mdx`不知道你是否将代码作为组件处理
+该元字符串的格式是，所以它默认是markdown处理它的方式:
+`meta`被忽略。
+
+但是如果你想访问`meta`呢?
+简单的回答是:使用[`remark-mdx-code-meta`][remark-mdx-code-meta]。
+它允许你在`meta`部分输入JSX属性，你可以通过一个`pre`组件来访问它。
+
+长答案是:自己做，但你想，通过编写一个自定义插件来解释`meta`字段。
+例如，可以通过rehype插件将该字符串作为prop传递:
+
+```js title="rehype-meta-as-attributes.js"
+import { visit } from 'unist-util-visit'
+
+/** @type {import('unified').Plugin<Array<void>, import('hast').Root>} */
+function rehypeMetaAsAttributes() {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'code' && node.data && node.data.meta) {
+        node.properties.meta = node.data.meta
+      }
+    })
+  }
+}
+```
+
+这将产生以下JSX:
+
+```jsx title="output.jsx"
+<>
+  <pre>
+    <code className="language-js" meta='filename="index.js"'>
+      console.log(1)
+    </code>
+  </pre>
+</>
+```
+
+:::tip
+
+`meta`属性对HTML中的`code`元素无效。
+请确保用`code`组件来处理它。
+
+:::
+
+这个例子中的元字符串看起来很像HTML属性。
+如果我们想要添加每个`attribute`作为prop呢?
+这可以通过与上面相同的rehype插件使用不同的`onelement`处理程序来实现:
+
+```js title="rehype-meta-as-attributes.js"
+// A regex that looks for a simplified attribute name, optionally followed
+// by a double, single, or unquoted attribute value
+const re = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
+
+// …
+visit(tree, 'element', (node) => {
+  let match
+
+  if (node.tagName === 'code' && node.data && node.data.meta) {
+    re.lastIndex = 0 // Reset regex.
+
+    while ((match = re.exec(node.data.meta))) {
+      node.properties[match[1]] = match[2] || match[3] || match[4] || ''
+    }
+  }
+})
+// …
+```
+
+这将产生以下JSX:
+
+```jsx title="output.jsx"
+<>
+  <pre>
+    <code className="language-js" title="index.js">
+      console.log(1)
+    </code>
+  </pre>
+</>
+```
+
+:::tip
+
+这些任意属性可能对HTML中的`code`元素无效。请用`code`组件处理它们。
+
+:::
+
+[commonmark]: https://spec.commonmark.org/current/
+[rehype-highlight]: https://github.com/rehypejs/rehype-highlight
+[rehype-prism]: https://github.com/mapbox/rehype-prism
+[react-syntax-highlighter]: https://github.com/react-syntax-highlighter/react-syntax-highlighter
+[remark-mdx-code-meta]: https://github.com/remcohaszing/remark-mdx-code-meta

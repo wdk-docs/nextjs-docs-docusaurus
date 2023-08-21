@@ -19,7 +19,7 @@ First, create a [Route Handler](/docs/app/building-your-application/routing/rout
 
 Then, import `draftMode` from `next/headers` and call the `enable()` method.
 
-```ts filename="app/api/draft/route.ts" switcher
+```ts title="app/api/draft/route.ts" switcher
 // route handler enabling draft mode
 import { draftMode } from 'next/headers'
 
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/draft/route.js" switcher
+```js title="app/api/draft/route.js" switcher
 // route handler enabling draft mode
 import { draftMode } from 'next/headers'
 
@@ -53,7 +53,7 @@ These steps assume that the headless CMS you’re using supports setting **custo
 
 **Second**, if your headless CMS supports setting custom draft URLs, specify the following as the draft URL. This assumes that your Route Handler is located at `app/api/draft/route.ts`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
@@ -69,7 +69,7 @@ Your headless CMS might allow you to include a variable in the draft URL so that
 - Call `draftMode.enable()` to set the cookie.
 - Then redirect the browser to the path specified by `slug`.
 
-```ts filename="app/api/draft/route.ts" switcher
+```ts title="app/api/draft/route.ts" switcher
 // route handler with secret and slug
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -104,7 +104,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/draft/route.js" switcher
+```js title="app/api/draft/route.js" switcher
 // route handler with secret and slug
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -149,7 +149,7 @@ If you request a page which has the cookie set, then data will be fetched at **r
 
 Furthermore, the value of `isEnabled` will be `true`.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 // page that fetches data
 import { draftMode } from 'next/headers'
 
@@ -177,7 +177,7 @@ export default async function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 // page that fetches data
 import { draftMode } from 'next/headers'
 
@@ -209,7 +209,7 @@ That's it! If you access the draft Route Handler (with `secret` and `slug`) from
 
 Set this as the draft URL on your headless CMS or access manually, and you should be able to see the draft.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
@@ -221,7 +221,7 @@ By default, the Draft Mode session ends when the browser is closed.
 
 To clear the Draft Mode cookie manually, create a Route Handler that calls `draftMode().disable()`:
 
-```ts filename="app/api/disable-draft/route.ts" switcher
+```ts title="app/api/disable-draft/route.ts" switcher
 import { draftMode } from 'next/headers'
 
 export async function GET(request: Request) {
@@ -230,7 +230,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/disable-draft/route.js" switcher
+```js title="app/api/disable-draft/route.js" switcher
 import { draftMode } from 'next/headers'
 
 export async function GET(request) {

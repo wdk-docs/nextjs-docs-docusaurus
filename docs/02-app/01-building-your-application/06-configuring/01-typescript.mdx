@@ -21,7 +21,7 @@ As well as a [TypeScript Plugin](#typescript-plugin) for your editor.
 
 `create-next-app` now ships with TypeScript by default.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx create-next-app@latest
 ```
 
@@ -76,7 +76,7 @@ Next.js can statically type links to prevent typos and other errors when using `
 
 To opt-into this feature, `experimental.typedRoutes` need to be enabled and the project needs to be using TypeScript.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -135,7 +135,7 @@ Next.js 13 has **enhanced type safety**. This includes:
 
 We're able to type the response data as you would expect with normal TypeScript. For example:
 
-```tsx filename="app/page.tsx"
+```tsx title="app/page.tsx"
 async function getData() {
   const res = await fetch('https://api.example.com/...')
   // The return value is *not* serialized
@@ -172,7 +172,7 @@ Further, there is less code to be serialized, as un-rendered data does not cross
 
 For [`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths), and [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props), you can use the `GetStaticProps`, `GetStaticPaths`, and `GetServerSideProps` types respectively:
 
-```tsx filename="pages/blog/[slug].tsx"
+```tsx title="pages/blog/[slug].tsx"
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -278,7 +278,7 @@ If disabled, be sure you are running type checks as part of your build or deploy
 
 Open `next.config.js` and enable the `ignoreBuildErrors` option in the `typescript` config:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   typescript: {
     // !! WARN !!

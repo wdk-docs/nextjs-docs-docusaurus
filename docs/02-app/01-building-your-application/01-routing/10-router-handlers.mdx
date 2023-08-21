@@ -26,11 +26,11 @@ related:
 
 路由处理程序定义在`app`目录下的[`route.js|ts` 文件](/docs/app/api-reference/file-conventions/route)中:
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 export async function GET(request: Request) {}
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 export async function GET(request) {}
 ```
 
@@ -53,7 +53,7 @@ In addition to supporting native [Request](https://developer.mozilla.org/en-US/d
 
 当对`Response`对象使用`GET`方法时，路由处理程序默认是[静态计算](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching)。
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -69,7 +69,7 @@ export async function GET() {
 }
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -98,7 +98,7 @@ Route handlers are evaluated dynamically when:
 
 For example:
 
-```ts filename="app/products/api/route.ts" switcher
+```ts title="app/products/api/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -116,7 +116,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/products/api/route.js" switcher
+```js title="app/products/api/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET(request) {
@@ -136,7 +136,7 @@ export async function GET(request) {
 
 Similarly, the `POST` method will cause the Route Handler to be evaluated dynamically.
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST() {
@@ -155,7 +155,7 @@ export async function POST() {
 }
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST() {
@@ -191,7 +191,7 @@ You can consider a `route` the lowest level routing primitive.
 
 Each `route.js` or `page.js` file takes over all HTTP verbs for that route.
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 export default function Page() {
   return <h1>Hello, Next.js!</h1>
 }
@@ -209,7 +209,7 @@ The following examples show how to combine Route Handlers with other Next.js API
 
 You can [revalidate static data](/docs/app/building-your-application/data-fetching/revalidating) fetches using the [`next.revalidate`](/docs/app/building-your-application/data-fetching/fetching#revalidating-data) option:
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -222,7 +222,7 @@ export async function GET() {
 }
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -251,7 +251,7 @@ You can read cookies with [`cookies`](/docs/app/api-reference/functions/cookies)
 
 This `cookies` instance is read-only. To set cookies, you need to return a new `Response` using the [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) header.
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
@@ -265,7 +265,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 import { cookies } from 'next/headers'
 
 export async function GET(request) {
@@ -281,7 +281,7 @@ export async function GET(request) {
 
 Alternatively, you can use abstractions on top of the underlying Web APIs to read cookies ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 import { type NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
@@ -289,7 +289,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 export async function GET(request) {
   const token = request.cookies.get('token')
 }
@@ -301,7 +301,7 @@ You can read headers with [`headers`](/docs/app/api-reference/functions/headers)
 
 This `headers` instance is read-only. To set headers, you need to return a new `Response` with new `headers`.
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 import { headers } from 'next/headers'
 
 export async function GET(request: Request) {
@@ -315,7 +315,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 import { headers } from 'next/headers'
 
 export async function GET(request) {
@@ -331,7 +331,7 @@ export async function GET(request) {
 
 Alternatively, you can use abstractions on top of the underlying Web APIs to read headers ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 import { type NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
@@ -339,7 +339,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 export async function GET(request) {
   const requestHeaders = new Headers(request.headers)
 }
@@ -347,7 +347,7 @@ export async function GET(request) {
 
 ### 重定向
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
@@ -355,7 +355,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 import { redirect } from 'next/navigation'
 
 export async function GET(request) {
@@ -369,7 +369,7 @@ export async function GET(request) {
 
 Route Handlers can use [Dynamic Segments](/docs/app/building-your-application/routing/dynamic-routes) to create request handlers from dynamic data.
 
-```ts filename="app/items/[slug]/route.ts" switcher
+```ts title="app/items/[slug]/route.ts" switcher
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } },
@@ -378,7 +378,7 @@ export async function GET(
 }
 ```
 
-```js filename="app/items/[slug]/route.js" switcher
+```js title="app/items/[slug]/route.js" switcher
 export async function GET(request, { params }) {
   const slug = params.slug // 'a', 'b', or 'c'
 }
@@ -394,7 +394,7 @@ export async function GET(request, { params }) {
 
 Streaming is commonly used in combination with Large Language Models (LLMs), such an OpenAI, for AI-generated content. Learn more about the [AI SDK](https://sdk.vercel.ai/docs).
 
-```ts filename="app/api/completion/route.ts" switcher
+```ts title="app/api/completion/route.ts" switcher
 import { Configuration, OpenAIApi } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 
@@ -419,7 +419,7 @@ export async function POST(req: Request) {
 }
 ```
 
-```js filename="app/api/completion/route.js" switcher
+```js title="app/api/completion/route.js" switcher
 import { Configuration, OpenAIApi } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 
@@ -446,7 +446,7 @@ export async function POST(req) {
 
 These abstractions use the Web APIs to create a stream. You can also use the underlying Web APIs directly.
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 // https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
 function iteratorToStream(iterator: any) {
   return new ReadableStream({
@@ -486,7 +486,7 @@ export async function GET() {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 // https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
 function iteratorToStream(iterator) {
   return new ReadableStream({
@@ -530,7 +530,7 @@ export async function GET() {
 
 You can read the `Request` body using the standard Web API methods:
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -539,7 +539,7 @@ export async function POST(request: Request) {
 }
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST(request) {
@@ -552,7 +552,7 @@ export async function POST(request) {
 
 You can read the `FormData` using the the `request.formData()` function:
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -561,7 +561,7 @@ export async function POST(request: Request) {
 }
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 import { NextResponse } from 'next/server'
 
 export async function POST(request) {
@@ -574,7 +574,7 @@ export async function POST(request) {
 
 You can set CORS headers on a `Response` using the standard Web API methods:
 
-```ts filename="app/api/route.ts" switcher
+```ts title="app/api/route.ts" switcher
 export async function GET(request: Request) {
   return new Response('Hello, Next.js!', {
     status: 200,
@@ -587,7 +587,7 @@ export async function GET(request: Request) {
 }
 ```
 
-```js filename="app/api/route.js" switcher
+```js title="app/api/route.js" switcher
 export async function GET(request) {
   return new Response('Hello, Next.js!', {
     status: 200,
@@ -615,7 +615,7 @@ export const runtime = 'edge' // 'nodejs' is the default
 
 你可以使用路由处理程序返回非ui内容。请注意,[`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), 和[开放图形图像](/docs/app/api-reference/file-conventions/metadata/opengraph-image)都有内置支持.
 
-```ts filename="app/rss.xml/route.ts" switcher
+```ts title="app/rss.xml/route.ts" switcher
 export async function GET() {
   return new Response(`<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -630,7 +630,7 @@ export async function GET() {
 }
 ```
 
-```js filename="app/rss.xml/route.js" switcher
+```js title="app/rss.xml/route.js" switcher
 export async function GET() {
   return new Response(`<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -649,7 +649,7 @@ export async function GET() {
 
 路由处理程序使用相同的[路由段配置](/docs/app/api-reference/file-conventions/route-segment-config)作为页面和布局。
 
-```ts filename="app/items/route.ts" switcher
+```ts title="app/items/route.ts" switcher
 export const dynamic = 'auto'
 export const dynamicParams = true
 export const revalidate = false
@@ -658,7 +658,7 @@ export const runtime = 'nodejs'
 export const preferredRegion = 'auto'
 ```
 
-```js filename="app/items/route.js" switcher
+```js title="app/items/route.js" switcher
 export const dynamic = 'auto'
 export const dynamicParams = true
 export const revalidate = false

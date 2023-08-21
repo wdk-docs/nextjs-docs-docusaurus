@@ -12,7 +12,7 @@ In the browser, the `cache` option indicates how a fetch request will interact w
 
 You can call `fetch` with `async` and `await` directly within Server Components.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export default async function Page() {
   // This request should be cached until manually invalidated.
   // Similar to `getStaticProps`.
@@ -33,7 +33,7 @@ export default async function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 export default async function Page() {
   // This request should be cached until manually invalidated.
   // Similar to `getStaticProps`.

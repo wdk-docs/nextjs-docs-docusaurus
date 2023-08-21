@@ -17,7 +17,7 @@ description: 了解如何使用中间件在请求完成之前运行代码。
 
 ## 例子
 
-```ts filename="middleware.ts"
+```ts title="middleware.ts"
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -54,7 +54,7 @@ There are two ways to define which paths Middleware will run on:
 
 `matcher` allows you to filter Middleware to run on specific paths.
 
-```js filename="middleware.js"
+```js title="middleware.js"
 export const config = {
   matcher: '/about/:path*',
 }
@@ -62,7 +62,7 @@ export const config = {
 
 You can match a single path or multiple paths with an array syntax:
 
-```js filename="middleware.js"
+```js title="middleware.js"
 export const config = {
   matcher: ['/about/:path*', '/dashboard/:path*'],
 }
@@ -70,7 +70,7 @@ export const config = {
 
 The `matcher` config allows full regex so matching like negative lookaheads or character matching is supported. An example of a negative lookahead to match all except specific paths can be seen here:
 
-```js filename="middleware.js"
+```js title="middleware.js"
 export const config = {
   matcher: [
     /*
@@ -100,7 +100,7 @@ Read more details on [path-to-regexp](https://github.com/pillarjs/path-to-regexp
 
 ### 条件语句
 
-```ts filename="middleware.ts"
+```ts title="middleware.ts"
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -150,7 +150,7 @@ Cookies are regular headers. On a `Request`, they are stored in the `Cookie` hea
 1. For incoming requests, `cookies` comes with the following methods: `get`, `getAll`, `set`, and `delete` cookies. You can check for the existence of a cookie with `has` or remove all cookies with `clear`.
 2. For outgoing responses, `cookies` have the following methods `get`, `getAll`, `set`, and `delete`.
 
-```ts filename="middleware.ts"
+```ts title="middleware.ts"
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -186,7 +186,7 @@ export function middleware(request: NextRequest) {
 
 You can set request and response headers using the `NextResponse` API (setting _request_ headers is available since Next.js v13.0.0).
 
-```ts filename="middleware.ts" switcher
+```ts title="middleware.ts" switcher
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -209,7 +209,7 @@ export function middleware(request: NextRequest) {
 }
 ```
 
-```js filename="middleware.js" switcher
+```js title="middleware.js" switcher
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {
@@ -237,7 +237,7 @@ export function middleware(request) {
 
 You can respond from Middleware directly by returning a `Response` or `NextResponse` instance. (This is available since [Next.js v13.1.0](https://nextjs.org/blog/next-13-1#nextjs-advanced-middleware))
 
-```ts filename="middleware.ts" switcher
+```ts title="middleware.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticated } from '@lib/auth'
 
@@ -258,7 +258,7 @@ export function middleware(request: NextRequest) {
 }
 ```
 
-```js filename="middleware.js" switcher
+```js title="middleware.js" switcher
 import { NextResponse } from 'next/server'
 import { isAuthenticated } from '@lib/auth'
 
@@ -285,13 +285,13 @@ In `v13.1` of Next.js two additional flags were introduced for middleware, `skip
 
 `skipTrailingSlashRedirect` allows disabling Next.js default redirects for adding or removing trailing slashes allowing custom handling inside middleware which can allow maintaining the trailing slash for some paths but not others allowing easier incremental migrations.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   skipTrailingSlashRedirect: true,
 }
 ```
 
-```js filename="middleware.js"
+```js title="middleware.js"
 const legacyPrefixes = ['/docs', '/blog']
 
 export default async function middleware(req) {
@@ -314,13 +314,13 @@ export default async function middleware(req) {
 
 `skipMiddlewareUrlNormalize` allows disabling the URL normalizing Next.js does to make handling direct visits and client-transitions the same. There are some advanced cases where you need full control using the original URL which this unlocks.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   skipMiddlewareUrlNormalize: true,
 }
 ```
 
-```js filename="middleware.js"
+```js title="middleware.js"
 export default async function middleware(req) {
   const { pathname } = req.nextUrl
 

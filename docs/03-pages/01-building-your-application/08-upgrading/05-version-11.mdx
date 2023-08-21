@@ -5,7 +5,7 @@ description: Upgrade your Next.js Application from Version 10 to Version 11.
 
 To upgrade to version 11, run the following command:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install next@11
 
 yarn add next@11
@@ -35,7 +35,7 @@ PORT=4000 next start
 
 Next.js 11 supports static image imports with `next/image`. This new feature relies on being able to process image imports. If you previously added the `next-images` or `next-optimized-images` packages you can either move to the new built-in support using `next/image` or disable the feature:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   images: {
     disableStaticImages: true,
@@ -102,7 +102,7 @@ useEffect(() => {
     console.log(
       `App is changing to ${url} ${
         shallow ? 'with' : 'without'
-      } shallow routing`
+      } shallow routing`,
     )
   }
 

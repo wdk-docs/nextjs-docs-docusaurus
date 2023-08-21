@@ -3,11 +3,11 @@ title: 可访问性
 description: The built-in accessibility features of Next.js.
 ---
 
-The Next.js team is committed to making Next.js accessible to all developers (and their end-users). By adding accessibility features to Next.js by default, we aim to make the Web more inclusive for everyone.
+Next.js团队致力于使所有开发人员(及其最终用户)都可以访问Next.js。通过默认为Next.js添加可访问性特性，我们的目标是使Web对每个人都更具包容性。
 
-## Route Announcements
+## 路线公告
 
-When transitioning between pages rendered on the server (e.g. using the `<a href>` tag) screen readers and other assistive technology announce the page title when the page loads so that users understand that the page has changed.
+当在服务器上呈现的页面之间转换时(例如使用`<a href>`标签)，屏幕阅读器和其他辅助技术在页面加载时宣布页面标题，以便用户了解页面已经更改。
 
 In addition to traditional page navigations, Next.js also supports client-side transitions for improved performance (using `next/link`). To ensure that client-side transitions are also announced to assistive technology, Next.js includes a route announcer by default.
 
@@ -15,7 +15,7 @@ The Next.js route announcer looks for the page name to announce by first inspect
 
 ## Linting
 
-Next.js provides an [integrated ESLint experience](/docs/pages/building-your-application/configuring/eslint) out of the box, including custom rules for Next.js. By default, Next.js includes `eslint-plugin-jsx-a11y` to help catch accessibility issues early, including warning on:
+Next.js提供了一个开箱即用的[集成ESLint体验](/docs/pages/building-your-application/configuring/eslint)，包括为Next.js定制的规则。默认情况下，Next.js包含`eslint-plugin-jsx-a11y`来帮助及早发现可访问性问题，包括警告:
 
 - [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 - [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-proptypes.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
@@ -23,9 +23,9 @@ Next.js provides an [integrated ESLint experience](/docs/pages/building-your-app
 - [role-has-required-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-has-required-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 - [role-supports-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-supports-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 
-For example, this plugin helps ensure you add alt text to `img` tags, use correct `aria-*` attributes, use correct `role` attributes, and more.
+例如，这个插件可以帮助确保您添加所有文本到`img`标签，使用正确的`aria-*`属性，使用正确的`role`属性，等等。
 
-## Accessibility Resources
+## 可访问性资源
 
 - [WebAIM WCAG checklist](https://webaim.org/standards/wcag/checklist)
 - [WCAG 2.1 Guidelines](https://www.w3.org/TR/WCAG21/)

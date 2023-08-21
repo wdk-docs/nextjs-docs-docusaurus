@@ -29,7 +29,7 @@ The Next.js Image component extends the HTML `<img>` element with features for a
 
 > **🎥 Watch:** Learn more about how to use `next/image` → [YouTube (9 minutes)](https://youtu.be/IU_qq_c_lKA).
 
-## Usage
+## 使用
 
 ```js
 import Image from 'next/image'
@@ -45,7 +45,7 @@ Next.js will [automatically determine](#image-sizing) the `width` and `height` o
 
 <AppOnly>
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import Image from 'next/image'
 import profilePic from './me.png'
 
@@ -67,7 +67,7 @@ export default function Page() {
 
 <PagesOnly>
 
-```jsx filename="pages/index.js"
+```jsx title="pages/index.js"
 import Image from 'next/image'
 import profilePic from '../public/me.png'
 
@@ -97,7 +97,7 @@ Since Next.js does not have access to remote files during the build process, you
 
 The `width` and `height` attributes are used to infer the correct aspect ratio of image and avoid layout shift from the image loading in. The `width` and `height` do _not_ determine the rendered size of the image file. Learn more about [Image Sizing](#image-sizing).
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import Image from 'next/image'
 
 export default function Page() {
@@ -114,7 +114,7 @@ export default function Page() {
 
 To safely allow optimizing images, define a list of supported URL patterns in `next.config.js`. Be as specific as possible to prevent malicious usage. For example, the following configuration will only allow images from a specific AWS S3 bucket:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   images: {
     remotePatterns: [
@@ -149,7 +149,7 @@ The default loader for Next.js applications uses the built-in Image Optimization
 
 You can define a loader per-image with the [`loader` prop](/docs/app/api-reference/components/image#loader), or at the application level with the [`loaderFile` configuration](/docs/app/api-reference/components/image#loaderfile).
 
-## Priority
+## 优先级
 
 You should add the `priority` property to the image that will be the [Largest Contentful Paint (LCP) element](https://web.dev/lcp/#what-elements-are-considered) for each page. Doing so allows Next.js to specially prioritize the image for loading (e.g. through preload tags or priority hints), leading to a meaningful boost in LCP.
 
@@ -159,7 +159,7 @@ Once you've identified the LCP image, you can add the property like this:
 
 <PagesOnly>
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import Image from 'next/image'
 
 export default function Home() {
@@ -183,7 +183,7 @@ export default function Home() {
 
 <AppOnly>
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import Image from 'next/image'
 import profilePic from '../public/me.png'
 
@@ -196,7 +196,7 @@ export default function Page() {
 
 See more about priority in the [`next/image` component documentation](/docs/app/api-reference/components/image#priority).
 
-## Image Sizing
+## 图像大小
 
 One of the ways that images most commonly hurt performance is through _layout shift_, where the image pushes other elements around on the page as it loads in. This performance problem is so annoying to users that it has its own Core Web Vital, called [Cumulative Layout Shift](https://web.dev/cls/). The way to avoid image-based layout shifts is to [always size your images](https://web.dev/optimize-cls/#images-without-dimensions). This allows the browser to reserve precisely enough space for the image before it loads.
 
@@ -224,7 +224,7 @@ Because `next/image` is designed to guarantee good performance results, it canno
 
 If none of the suggested methods works for sizing your images, the `next/image` component is designed to work well on a page alongside standard `<img>` elements.
 
-## Styling
+## 样式
 
 Styling the Image component is similar to styling a normal `<img>` element, but there are a few guidelines to keep in mind:
 
@@ -237,7 +237,7 @@ Styling the Image component is similar to styling a normal `<img>` element, but 
 - When using `fill`, the parent element must have `display: block`
   - This is the default for `<div>` elements but should be specified otherwise.
 
-## Examples
+## 例子
 
 ### Responsive
 
@@ -346,11 +346,11 @@ export default function Background() {
 
 For examples of the Image component used with the various styles, see the [Image Component Demo](https://image-component.nextjs.gallery).
 
-## Other Properties
+## 其他属性
 
 [**View all properties available to the `next/image` component.**](/docs/app/api-reference/components/image)
 
-## Configuration
+## 配置
 
 The `next/image` component and Next.js Image Optimization API can be configured in the [`next.config.js` file](/docs/app/api-reference/next-config-js). These configurations allow you to [enable remote images](/docs/app/api-reference/components/image#remotepatterns), [define custom image breakpoints](/docs/app/api-reference/components/image#devicesizes), [change caching behavior](/docs/app/api-reference/components/image#caching-behavior) and more.
 

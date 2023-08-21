@@ -21,7 +21,7 @@ Next.js 内置了对环境变量的支持，它允许你做以下事情:
 
 Next.js内置了将环境变量从`.env.local`加载到`.process.env`的支持。
 
-```txt filename=".env.local"
+```txttitle=".env.local"
 DB_HOST=localhost
 DB_USER=myuser
 DB_PASS=mypassword
@@ -33,7 +33,7 @@ This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PAS
 
 For example, using [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props):
 
-```js filename="pages/index.js"
+```js title="pages/index.js"
 export async function getStaticProps() {
   const db = await myDB.connect({
     host: process.env.DB_HOST,
@@ -52,7 +52,7 @@ This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PAS
 
 For example:
 
-```js filename="app/api/route.js"
+```js title="app/api/route.js"
 export async function GET() {
   const db = await myDB.connect({
     host: process.env.DB_HOST,
@@ -69,7 +69,7 @@ export async function GET() {
 
 Next.js will automatically expand variables that use `$` to reference other variables e.g. `$VARIABLE` inside of your `.env*` files. This allows you to reference other secrets. For example:
 
-```txt filename=".env"
+```txttitle=".env"
 TWITTER_USER=nextjs
 TWITTER_URL=https://twitter.com/$TWITTER_USER
 ```
@@ -84,7 +84,7 @@ Non-`NEXT_PUBLIC_` environment variables are only available in the Node.js envir
 
 In order to make the value of an environment variable accessible in the browser, Next.js can "inline" a value, at build time, into the js bundle that is delivered to the client, replacing all references to `process.env.[variable]` with a hard-coded value. To tell it to do this, you just have to prefix the variable with `NEXT_PUBLIC_`. For example:
 
-```txt filename="Terminal"
+```txttitle="Terminal"
 NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 ```
 
@@ -92,7 +92,7 @@ This will tell Next.js to replace all references to `process.env.NEXT_PUBLIC_ANA
 
 > **Note**: After being built, your app will no longer respond to changes to these environment variables. For instance, if you use a Heroku pipeline to promote slugs built in one environment to another environment, or if you build and deploy a single Docker image to multiple environments, all `NEXT_PUBLIC_` variables will be frozen with the value evaluated at build time, so these values need to be set appropriately when the project is built. If you need access to runtime environment values, you'll have to setup your own API to provide them to the client (either on demand or during initialization).
 
-```js filename="pages/index.js"
+```js title="pages/index.js"
 import setupAnalyticsService from '../lib/my-analytics-service'
 
 // 'NEXT_PUBLIC_ANALYTICS_ID' can be used here as it's prefixed by 'NEXT_PUBLIC_'.
@@ -136,7 +136,7 @@ All types of Environment Variables should be configured there. Even Environment 
 
 If you've configured [Development Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables#development-environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) you can pull them into a `.env.local` for usage on your local machine using the following command:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 vercel env pull .env.local
 ```
 

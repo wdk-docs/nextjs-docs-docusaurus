@@ -10,7 +10,7 @@ A custom `Document` can update the `<html>` and `<body>` tags used to render a [
 
 To override the default `Document`, create the file `pages/_document` as shown below:
 
-```tsx filename="pages/_document.tsx" switcher
+```tsx title="pages/_document.tsx" switcher
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
@@ -26,7 +26,7 @@ export default function Document() {
 }
 ```
 
-```jsx filename="pages/_document.jsx" switcher
+```jsxtitle="pages/_document.jsx" switcher
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
@@ -59,7 +59,7 @@ Customizing `renderPage` is advanced and only needed for libraries like CSS-in-J
 
 **We do not recommend using this pattern.** Instead, consider [incrementally adopting](/docs/app/building-your-application/upgrading/app-router-migration) the App Router, which allows you to more easily fetch data for [pages and layouts](/docs/app/building-your-application/routing/pages-and-layouts).
 
-```tsx filename="pages/_document.tsx" switcher
+```tsx title="pages/_document.tsx" switcher
 import Document, {
   Html,
   Head,
@@ -106,7 +106,7 @@ class MyDocument extends Document {
 export default MyDocument
 ```
 
-```jsx filename="pages/_document.jsx" switcher
+```jsxtitle="pages/_document.jsx" switcher
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 class MyDocument extends Document {

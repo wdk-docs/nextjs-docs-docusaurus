@@ -40,7 +40,7 @@ See ["Customizing Plugins"](#customizing-plugins) below for more information.
 <details>
   <summary>Click to view the configuration to enable CSS Grid Layout</summary>
 
-```json filename="postcss.config.json"
+```json title="postcss.config.json"
 {
   "plugins": [
     "postcss-flexbugs-fixes",
@@ -72,7 +72,7 @@ Next.js allows you to configure the target browsers (for [Autoprefixer](https://
 
 To customize browserslist, create a `browserslist` key in your `package.json` like so:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "browserslist": [">0.3%", "not dead", "not op_mini all"]
 }
@@ -96,7 +96,7 @@ To customize the PostCSS configuration, create a `postcss.config.json` file in t
 
 This is the default configuration used by Next.js:
 
-```json filename="postcss.config.json"
+```json title="postcss.config.json"
 {
   "plugins": [
     "postcss-flexbugs-fixes",
@@ -120,7 +120,7 @@ This is the default configuration used by Next.js:
 
 It is also possible to configure PostCSS with a `postcss.config.js` file, which is useful when you want to conditionally include plugins based on environment:
 
-```js filename="postcss.config.js"
+```js title="postcss.config.js"
 module.exports = {
   plugins:
     process.env.NODE_ENV === 'production'

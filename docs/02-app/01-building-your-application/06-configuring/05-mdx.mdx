@@ -37,11 +37,9 @@ Next.js插件负责将Markdown和React组件转换为HTML，包括支持在服�
 
 ### AppOnly
 
-<AppOnly>
-
 安装 `@next/mdx` 包:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 ```
 
@@ -50,7 +48,7 @@ npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="mdx-components.tsx" switcher
+```tsx title="mdx-components.tsx" switcher
 import type { MDXComponents } from 'mdx/types'
 
 // This file allows you to provide custom React components
@@ -71,7 +69,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```js filename="mdx-components.js" switcher
+```js title="mdx-components.js" switcher
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
 // React component you want, including components from
@@ -92,7 +90,7 @@ export function useMDXComponents(components) {
 
 使用 `mdxRs` 更新 `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -106,7 +104,7 @@ module.exports = withMDX(nextConfig)
 
 添加一个带有MDX内容的新文件到你的`app`目录:
 
-```md filename="app/hello.mdx"
+```mdtitle="app/hello.mdx"
 Hello, Next.js!
 
 You can import and use React components in MDX files.
@@ -117,7 +115,7 @@ You can import and use React components in MDX files.
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import HelloWorld from './hello.mdx'
 
 export default function Page() {
@@ -128,7 +126,7 @@ export default function Page() {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 import HelloWorld from './hello.mdx'
 
 export default function Page() {
@@ -139,15 +137,11 @@ export default function Page() {
 </TabItem>
 </Tabs>
 
-</AppOnly>
-
 ### PagesOnly
-
-<PagesOnly>
 
 安装所需的软件包:
 
-```bash filename="Terminal"
+```bash title="Terminal"
   npm install @next/mdx @mdx-js/loader @mdx-js/react
 ```
 
@@ -209,8 +203,6 @@ Checkout my React component:
 <MyComponent />
 ```
 
-</PagesOnly>
-
 ## 远程 MDX
 
 如果您的Markdown或MDX文件不在您的应用程序中，您可以在服务器上动态地获取它们。
@@ -221,7 +213,10 @@ Checkout my React component:
 
 > **注意事项**: 请小心行事。 MDX被编译成JavaScript，并在服务器上执行。 您应该只从可信源获取MDX内容，否则可能导致远程代码执行(RCE)。
 
-```tsx filename="app/page.tsx" switcher
+<Tabs>
+<TabItem value="tsx" label="TypeScript">
+
+```tsx title="app/page.tsx" switcher
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export default async function Home() {
@@ -231,7 +226,10 @@ export default async function Home() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+</TabItem>
+<TabItem value="jsx" label="JavaScript">
+
+```jsx title="app/page.js" switcher
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export default async function Home() {
@@ -240,21 +238,22 @@ export default async function Home() {
   return <MDXRemote source={markdown} />
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## 布局
 
-<AppOnly>
+### AppOnly
 
 为了围绕MDX内容共享布局，你可以使用应用路由器的[内置布局支持](/docs/app/building-your-application/routing/pages-and-layouts#layouts)。
 
-</AppOnly>
-
-<PagesOnly>
+### PagesOnly
 
 要向MDX页面添加布局，请创建一个新组件并将其导入MDX页面。
 然后你可以用你的布局组件包装MDX页面:
 
-```jsx filename="pages/index.js"
+```jsx title="pages/index.js"
 import { MyLayoutComponent } from 'my-components';
 import HelloWorld from './hello.mdx';
 
@@ -267,8 +266,6 @@ export default Page({ children }) => (
 );
 ```
 
-</PagesOnly>
-
 ## 备注和重新渲染插件
 
 您可以选择提供`remark` 和 `rehype`插件来转换MDX内容。
@@ -276,7 +273,7 @@ export default Page({ children }) => (
 
 因为`remark` 和 `rehype`生态系统只支持ESM，所以你需要使用 `next.config.mjs` 作为配置文件。
 
-```js filename="next.config.js"
+```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -341,7 +338,7 @@ This is a list in markdown:
 
 要启用，你需要在`next.config.js`中指定`providerImportSource: "@mdx-js/react"`。
 
-```js filename="next.config.js"
+```js title="next.config.js"
 const withMDX = require('@next/mdx')({
   // ...
   options: {
@@ -352,7 +349,7 @@ const withMDX = require('@next/mdx')({
 
 然后在页面中设置提供程序
 
-```jsx filename="pages/index.js"
+```jsx title="pages/index.js"
 import { MDXProvider } from '@mdx-js/react'
 import Image from 'next/image'
 import { Heading, InlineCode, Pre, Table, Text } from 'my-components'
@@ -425,7 +422,7 @@ Next.js支持用Rust编写的新的MDX编译器。
 该编译器仍处于实验阶段，不建议用于生产环境。
 要使用新的编译器，你需要在将`next.config.js`传递给`withMDX`时配置它:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = withMDX({
   experimental: {
     mdxRs: true,

@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem'
 
 `usePathname` is a **Client Component** hook that lets you read the current URL's **pathname**.
 
-```tsx filename="app/example-client-component.tsx" switcher
+```tsx title="app/example-client-component.tsx" switcher
 'use client'
 
 import { usePathname } from 'next/navigation'
@@ -19,7 +19,7 @@ export default function ExampleClientComponent() {
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher
+```jsxtitle="app/example-client-component.js" switcher
 'use client'
 
 import { usePathname } from 'next/navigation'
@@ -64,7 +64,7 @@ const pathname = usePathname()
 
 ### Do something in response to a route change
 
-```tsx filename="app/example-client-component.tsx" switcher
+```tsx title="app/example-client-component.tsx" switcher
 'use client'
 
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -78,7 +78,7 @@ function ExampleClientComponent() {
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher
+```jsxtitle="app/example-client-component.js" switcher
 'use client'
 
 import { usePathname, useSearchParams } from 'next/navigation'

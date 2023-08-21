@@ -7,7 +7,7 @@ Add or generate a `sitemap.xml` file that matches the [Sitemaps XML format](http
 
 ## Static `sitemap.xml`
 
-```xml filename="app/sitemap.xml"
+```xmltitle="app/sitemap.xml"
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://acme.com</loc>
@@ -28,7 +28,7 @@ Add or generate a `sitemap.xml` file that matches the [Sitemaps XML format](http
 
 Add a `sitemap.js` or `sitemap.ts` file that returns [`Sitemap`](#sitemap-return-type).
 
-```ts filename="app/sitemap.ts" switcher
+```ts title="app/sitemap.ts" switcher
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -49,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
-```js filename="app/sitemap.js" switcher
+```js title="app/sitemap.js" switcher
 export default function sitemap() {
   return [
     {
@@ -70,7 +70,7 @@ export default function sitemap() {
 
 Output:
 
-```xml filename="acme.com/sitemap.xml"
+```xmltitle="acme.com/sitemap.xml"
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://acme.com</loc>

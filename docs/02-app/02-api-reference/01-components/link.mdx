@@ -20,7 +20,7 @@ import TabItem from '@theme/TabItem'
 
 <AppOnly>
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -28,7 +28,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -110,7 +110,7 @@ The path or URL to navigate to.
 
 **Defaults to `false`.** When `true`, `next/link` will replace the current history state instead of adding a new URL into the [browser’s history](https://developer.mozilla.org/en-US/docs/Web/API/History_API) stack.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -122,7 +122,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -140,7 +140,7 @@ export default function Page() {
 
 Prefetch can be disabled by passing `prefetch={false}`. Prefetching is only enabled in production.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -152,7 +152,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -202,7 +202,7 @@ For dynamic routes, it can be handy to use template literals to create the link'
 
 For example, you can generate a list of links to the dynamic route `pages/blog/[slug].js`
 
-```jsx filename="pages/blog/index.js"
+```jsxtitle="pages/blog/index.js"
 import Link from 'next/link'
 
 function Posts({ posts }) {
@@ -226,7 +226,7 @@ export default Posts
 
 For example, you can generate a list of links to the dynamic route `app/blog/[slug]/page.js`:
 
-```jsx filename="app/blog/page.js"
+```jsxtitle="app/blog/page.js"
 import Link from 'next/link'
 
 function Page({ posts }) {
@@ -383,7 +383,7 @@ It's common to use [Middleware](/docs/app/building-your-application/routing/midd
 
 For example, if you want to serve a `/dashboard` route that has authenticated and visitor views, you may add something similar to the following in your Middleware to redirect the user to the correct page:
 
-```js filename="middleware.js"
+```js title="middleware.js"
 export function middleware(req) {
   const nextUrl = req.nextUrl
   if (nextUrl.pathname === '/dashboard') {

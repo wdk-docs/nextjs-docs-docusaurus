@@ -25,7 +25,7 @@ Let's start with an example, to create a custom `exportPathMap` for an app with 
 
 Open `next.config.js` and add the following `exportPathMap` config:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   exportPathMap: async function (
     defaultPathMap,
@@ -67,7 +67,7 @@ It is possible to configure Next.js to export pages as `index.html` files and re
 
 To switch back and add a trailing slash, open `next.config.js` and enable the `trailingSlash` config:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   trailingSlash: true,
 }
@@ -87,7 +87,7 @@ module.exports = {
 
 </PagesOnly>
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next export -o outdir
 ```
 

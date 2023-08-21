@@ -1,33 +1,46 @@
 ---
 title: assetPrefix
-description: Learn how to use the assetPrefix config option to configure your CDN.
+description: 了解如何使用assetPrefix配置选项来配置CDN。
 ---
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 <AppOnly>
 
-> **Attention**: [Deploying to Vercel](/docs/app/building-your-application/deploying) automatically configures a global CDN for your Next.js project.
-> You do not need to manually setup an Asset Prefix.
+:::caution
+
+[部署到Vercel](/docs/app/building-your-application/deploying)自动为你的Next.js项目配置一个全局CDN。
+
+您不需要手动设置资产前缀。
+
+:::
 
 </AppOnly>
 
 <PagesOnly>
 
-> **Attention**: [Deploying to Vercel](/docs/pages/building-your-application/deploying) automatically configures a global CDN for your Next.js project.
-> You do not need to manually setup an Asset Prefix.
+:::caution
+
+[Deploying to Vercel](/docs/pages/building-your-application/deploying) automatically configures a global CDN for your Next.js project.
+
+You do not need to manually setup an Asset Prefix.
+
+:::caution
 
 </PagesOnly>
 
-> **注意事项**: Next.js 9.5+ added support for a customizable [Base Path](/docs/app/api-reference/next-config-js/basePath), which is better
-> suited for hosting your application on a sub-path like `/docs`.
-> We do not suggest you use a custom Asset Prefix for this use case.
+:::caution
 
-To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network), you can set up an asset prefix and configure your CDN's origin to resolve to the domain that Next.js is hosted on.
+Next.js 9.5+增加了对可定制的[基本路径](/docs/app/api-reference/next-config-js/basePath)的支持，这更适合将应用程序托管在像`/docs`这样的子路径上。
+我们不建议您为这个用例使用自定义资产前缀。
 
-Open `next.config.js` and add the `assetPrefix` config:
+:::
 
-```js filename="next.config.js"
+要设置[CDN](https://en.wikipedia.org/wiki/Content_delivery_network)，您可以设置资产前缀并配置CDN的源以解析到托管Next.js的域。
+
+打开`next.config.js`并添加`assetPrefix`配置:
+
+```js title="next.config.js"
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -36,25 +49,28 @@ module.exports = {
 }
 ```
 
-Next.js will automatically use your asset prefix for the JavaScript and CSS files it loads from the `/_next/` path (`.next/static/` folder). For example, with the above configuration, the following request for a JS chunk:
+Next.js会自动使用你的资源前缀作为它从`/_next/`路径加载的JavaScript和CSS文件(`.next/static/` 文件夹)。
+例如，在上面的配置中，对JS块的以下请求:
 
 ```
 /_next/static/chunks/4b9b41aaa062cbbfeff4add70f256968c51ece5d.4d708494b3aed70c04f0.js
 ```
 
-Would instead become:
+会变成:
 
 ```
 https://cdn.mydomain.com/_next/static/chunks/4b9b41aaa062cbbfeff4add70f256968c51ece5d.4d708494b3aed70c04f0.js
 ```
 
-The exact configuration for uploading your files to a given CDN will depend on your CDN of choice. The only folder you need to host on your CDN is the contents of `.next/static/`, which should be uploaded as `_next/static/` as the above URL request indicates. **Do not upload the rest of your `.next/` folder**, as you should not expose your server code and other configuration to the public.
+上传文件到给定CDN的确切配置将取决于您选择的CDN。
+CDN上唯一需要托管的文件夹是`.next/static/`的内容, 应该上传为`_next/static/`，如上面的URL请求所示。
+**不要上传你的`.next/`文件夹**, 因为您不应该向公众公开服务器代码和其他配置。
 
-While `assetPrefix` covers requests to `_next/static`, it does not influence the following paths:
+虽然`assetPrefix`涵盖了对`_next/static`的请求，但它不影响以下路径:
 
 <AppOnly>
 
-- Files in the [public](/docs/app/building-your-application/optimizing/static-assets) folder; if you want to serve those assets over a CDN, you'll have to introduce the prefix yourself
+- [public](/docs/app/building-your-application/optimizing/static-assets)文件夹中的文件;如果您想通过CDN提供这些资产，则必须自己引入前缀
 
 </AppOnly>
 

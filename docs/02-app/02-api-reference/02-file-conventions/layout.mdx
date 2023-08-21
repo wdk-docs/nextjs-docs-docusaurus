@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem'
 
 A **layout** is UI that is shared between routes.
 
-```tsx filename="app/dashboard/layout.tsx" switcher
+```tsx title="app/dashboard/layout.tsx" switcher
 export default function DashboardLayout({
   children,
 }: {
@@ -18,7 +18,7 @@ export default function DashboardLayout({
 }
 ```
 
-```jsx filename="app/dashboard/layout.js" switcher
+```jsxtitle="app/dashboard/layout.js" switcher
 export default function DashboardLayout({ children }) {
   return <section>{children}</section>
 }
@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
 
 A **root layout** is the top-most layout in the root `app` directory. It is used to define the `<html>` and `<body>` tags and other globally shared UI.
 
-```tsx filename="app/layout.tsx" switcher
+```tsx title="app/layout.tsx" switcher
 export default function RootLayout({
   children,
 }: {
@@ -40,7 +40,7 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+```jsxtitle="app/layout.js" switcher
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -68,7 +68,7 @@ The [dynamic route parameters](/docs/app/building-your-application/routing/dynam
 
 For example:
 
-```tsx filename="app/shop/[tag]/[item]/layout.tsx" switcher
+```tsx title="app/shop/[tag]/[item]/layout.tsx" switcher
 export default function ShopLayout({
   children,
   params,
@@ -85,7 +85,7 @@ export default function ShopLayout({
 }
 ```
 
-```jsx filename="app/shop/[tag]/[item]/layout.js" switcher
+```jsxtitle="app/shop/[tag]/[item]/layout.js" switcher
 export default function ShopLayout({ children, params }) {
   // URL -> /shop/shoes/nike-air-max-97
   // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }

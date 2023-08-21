@@ -30,28 +30,28 @@ Next.js 13中的应用路由器引入了新的文件约定，
   height="444"
 />
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 // `app/page.tsx` is the UI for the `/` URL
 export default function Page() {
   return <h1>Hello, Home page!</h1>
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 // `app/page.js` is the UI for the `/` URL
 export default function Page() {
   return <h1>Hello, Home page!</h1>
 }
 ```
 
-```tsx filename="app/dashboard/page.tsx" switcher
+```tsx title="app/dashboard/page.tsx" switcher
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
   return <h1>Hello, Dashboard Page!</h1>
 }
 ```
 
-```jsx filename="app/dashboard/page.js" switcher
+```jsx title="app/dashboard/page.js" switcher
 // `app/dashboard/page.js` is the UI for the `/dashboard` URL
 export default function Page() {
   return <h1>Hello, Dashboard Page!</h1>
@@ -83,7 +83,7 @@ export default function Page() {
   height="606"
 />
 
-```tsx filename="app/dashboard/layout.tsx" switcher
+```tsx title="app/dashboard/layout.tsx" switcher
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }: {
@@ -100,7 +100,7 @@ export default function DashboardLayout({
 }
 ```
 
-```jsx filename="app/dashboard/layout.js" switcher
+```jsx title="app/dashboard/layout.js" switcher
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }) {
@@ -119,7 +119,7 @@ export default function DashboardLayout({
 >
 > - 最上面的布局被称为[根布局](#root-layout-required)。这个**必需的**布局在应用程序的所有页面上共享。根布局必须包含`html`和`body`标签。
 > - 任何路由段都可以选择定义自己的[布局](#nested-layouts)。这些布局将在该段的所有页面上共享。
-> - 默认情况下，路由中的布局是嵌套的。每个父布局使用React的“children”属性将子布局封装在它下面。
+> - 默认情况下，路由中的布局是嵌套的。每个父布局使用React的`children`属性将子布局封装在它下面。
 > - 你可以使用[路由组](/docs/app/building-your-application/routing/route-groups)来选择共享布局中的特定路由段。
 > - 布局默认为[服务器组件](/docs/getting-started/react-essentials)，但可以设置为[客户端组件](/docs/getting-started/react-essentials#client-components)。
 > - 布局可以获取数据。查看[Data抓取](/docs/app/ build-your-application / Data -抓取)小节了解更多信息。
@@ -132,7 +132,7 @@ export default function DashboardLayout({
 
 根布局定义在`app`目录的顶层，适用于所有路由。这种布局使您能够修改从服务器返回的初始HTML。
 
-```tsx filename="app/layout.tsx" switcher
+```tsx title="app/layout.tsx" switcher
 export default function RootLayout({
   children,
 }: {
@@ -146,7 +146,7 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+```jsx title="app/layout.js" switcher
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -178,7 +178,7 @@ export default function RootLayout({ children }) {
   height="606"
 />
 
-```tsx filename="app/dashboard/layout.tsx" switcher
+```tsx title="app/dashboard/layout.tsx" switcher
 export default function DashboardLayout({
   children,
 }: {
@@ -188,7 +188,7 @@ export default function DashboardLayout({
 }
 ```
 
-```jsx filename="app/dashboard/layout.js" switcher
+```jsx title="app/dashboard/layout.js" switcher
 export default function DashboardLayout({ children }) {
   return <section>{children}</section>
 }
@@ -220,12 +220,12 @@ export default function DashboardLayout({ children }) {
 在某些情况下，您可能需要这些特定的行为，而模板将是比布局更合适的选择。例如:
 
 - 使用CSS或动画库进入/退出动画。
-- 依赖于“useEffect”(例如记录页面浏览量)和`useState`(例如每页反馈表单)的功能。
+- 依赖于`useEffect`(例如记录页面浏览量)和`useState`(例如每页反馈表单)的功能。
 - 更改默认的框架行为。例如，布局中的悬停边界仅在布局第一次加载时显示回退，而在切换页面时则不显示。对于模板，回退显示在每个导航栏上。
 
 > **建议:**我们建议使用布局，除非你有一个特定的理由使用模板。
 
-模板可以通过从`template.js`文件中导出一个默认的React组件来定义。组件应该接受一个“children”属性，它将被嵌套成段。
+模板可以通过从`template.js`文件中导出一个默认的React组件来定义。组件应该接受一个`children`属性，它将被嵌套成段。
 
 <Image
   alt="template.js special file"
@@ -235,13 +235,13 @@ export default function DashboardLayout({ children }) {
   height="444"
 />
 
-```tsx filename="app/template.tsx" switcher
+```tsx title="app/template.tsx" switcher
 export default function Template({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>
 }
 ```
 
-```jsx filename="app/template.js" switcher
+```jsx title="app/template.js" switcher
 export default function Template({ children }) {
   return <div>{children}</div>
 }
@@ -249,7 +249,7 @@ export default function Template({ children }) {
 
 带有布局和模板的路由段的渲染输出如下所示:
 
-```jsx filename="Output"
+```jsx title="Output"
 <Layout>
   {/* Note that the template is given a unique key. */}
   <Template key={routeParam}>{children}</Template>
@@ -262,7 +262,7 @@ export default function Template({ children }) {
 
 元数据可以通过导出[`Metadata` object](/docs/app/api-reference/functions/generate-metadata#the-metadata-object)或[`generateMetadata` function](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)在[`layout.js`](/docs/app/api-reference/file-conventions/layout)或[`page.js`](/docs/app/api-reference/file-conventions/page)文件中定义。
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -274,7 +274,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 export const metadata = {
   title: 'Next.js',
 }

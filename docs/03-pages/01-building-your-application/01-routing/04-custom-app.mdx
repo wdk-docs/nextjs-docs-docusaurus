@@ -16,7 +16,7 @@ Next.js uses the `App` component to initialize pages. You can override it and co
 
 To override the default `App`, create the file `pages/_app` as shown below:
 
-```tsx filename="pages/_app.tsx" switcher
+```tsx title="pages/_app.tsx" switcher
 import type { AppProps } from 'next/app'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 }
 ```
 
-```jsx filename="pages/_app.jsx" switcher
+```jsxtitle="pages/_app.jsx" switcher
 export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
@@ -45,7 +45,7 @@ Using [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)
 
 **We do not recommend using this pattern.** Instead, consider [incrementally adopting](/docs/app/building-your-application/upgrading/app-router-migration) the App Router, which allows you to more easily fetch data for [pages and layouts](/docs/app/building-your-application/routing/pages-and-layouts).
 
-```tsx filename="pages/_app.tsx" switcher
+```tsx title="pages/_app.tsx" switcher
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app'
 
 type AppOwnProps = { example: string }
@@ -72,7 +72,7 @@ MyApp.getInitialProps = async (
 }
 ```
 
-```jsx filename="pages/_app.jsx" switcher
+```jsxtitle="pages/_app.jsx" switcher
 import App from 'next/app'
 
 export default function MyApp({ Component, pageProps, example }) {

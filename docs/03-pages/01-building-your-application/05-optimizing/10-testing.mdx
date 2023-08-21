@@ -23,7 +23,7 @@ Cypress is a test runner used for **End-to-End (E2E)** and **Component Testing**
 
 You can use `create-next-app` with the [with-cypress example](https://github.com/vercel/next.js/tree/canary/examples/with-cypress) to quickly get started.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx create-next-app@latest --example with-cypress with-cypress-app
 ```
 
@@ -31,13 +31,13 @@ npx create-next-app@latest --example with-cypress with-cypress-app
 
 To get started with Cypress, install the `cypress` package:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev cypress
 ```
 
 Add Cypress to the `package.json` scripts field:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "next dev",
@@ -50,7 +50,7 @@ Add Cypress to the `package.json` scripts field:
 
 Run Cypress for the first time to generate examples that use their recommended folder structure:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm run cypress
 ```
 
@@ -64,7 +64,7 @@ The [Cypress docs contain a guide](https://docs.cypress.io/guides/core-concepts/
 
 Assuming the following two Next.js pages:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 import Link from 'next/link'
 
 export default function Home() {
@@ -77,7 +77,7 @@ export default function Home() {
 }
 ```
 
-```jsx filename="pages/about.js"
+```jsxtitle="pages/about.js"
 export default function About() {
   return (
     <div>
@@ -90,7 +90,7 @@ export default function About() {
 
 Add a test to check your navigation is working correctly:
 
-```js filename="cypress/e2e/app.cy.js"
+```js title="cypress/e2e/app.cy.js"
 describe('Navigation', () => {
   it('should navigate to the about page', () => {
     // Start from the index page
@@ -118,7 +118,7 @@ Component tests build and mount a specific component without having to bundle yo
 
 Assuming the same components from the previous section, add a test to validate a component is rendering the expected output:
 
-```jsx filename="pages/about.cy.js"
+```jsxtitle="pages/about.cy.js"
 import AboutPage from './about.js'
 
 describe('<AboutPage />', () => {
@@ -154,7 +154,7 @@ Run `npm run cypress -- --component` to start Cypress and execute your component
 
 You will have noticed that running Cypress so far has opened an interactive browser which is not ideal for CI environments. You can also run Cypress headlessly using the `cypress run` command:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     //...
@@ -181,7 +181,7 @@ Playwright is a testing framework that lets you automate Chromium, Firefox, and 
 
 The fastest way to get started is to use `create-next-app` with the [with-playwright example](https://github.com/vercel/next.js/tree/canary/examples/with-playwright). This will create a Next.js project complete with Playwright all set up.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx create-next-app@latest --example with-playwright with-playwright-app
 ```
 
@@ -191,13 +191,13 @@ You can also use `npm init playwright` to add Playwright to an existing `NPM` pr
 
 To manually get started with Playwright, install the `@playwright/test` package:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev @playwright/test
 ```
 
 Add Playwright to the `package.json` scripts field:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "next dev",
@@ -212,7 +212,7 @@ Add Playwright to the `package.json` scripts field:
 
 Assuming the following two Next.js pages:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 import Link from 'next/link'
 
 export default function Home() {
@@ -224,7 +224,7 @@ export default function Home() {
 }
 ```
 
-```jsx filename="pages/about.js"
+```jsxtitle="pages/about.js"
 export default function About() {
   return (
     <div>
@@ -236,7 +236,7 @@ export default function About() {
 
 Add a test to verify that your navigation is working correctly:
 
-```ts filename="e2e/example.spec.ts" switcher
+```ts title="e2e/example.spec.ts" switcher
 import { test, expect } from '@playwright/test'
 
 test('should navigate to the about page', async ({ page }) => {
@@ -251,7 +251,7 @@ test('should navigate to the about page', async ({ page }) => {
 })
 ```
 
-```js filename="e2e/example.spec.js" switcher
+```js title="e2e/example.spec.js" switcher
 import { test, expect } from '@playwright/test'
 
 test('should navigate to the about page', async ({ page }) => {
@@ -301,7 +301,7 @@ The following sections will go through how you can set up Jest with each of thes
 
 You can use `create-next-app` with the [with-jest](https://github.com/vercel/next.js/tree/canary/examples/with-jest) example to quickly get started with Jest and React Testing Library:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx create-next-app@latest --example with-jest with-jest-app
 ```
 
@@ -311,13 +311,13 @@ Since the release of [Next.js 12](https://nextjs.org/blog/next-12), Next.js now 
 
 To set up Jest, install `jest`, `jest-environment-jsdom`, `@testing-library/react`, `@testing-library/jest-dom`:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
 ```
 
 Create a `jest.config.mjs` file in your project's root directory and add the following:
 
-```js filename="jest.config.mjs"
+```js title="jest.config.mjs"
 import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
@@ -355,7 +355,7 @@ If you opt out of the [Rust Compiler](/docs/architecture/nextjs-compiler), you w
 
 Here are the recommended options to configure Jest for Next.js:
 
-```js filename="jest.config.js"
+```js title="jest.config.js"
 module.exports = {
   collectCoverage: true,
   // on node 14.x coverage provider v8 offers good speed and more or less good report
@@ -406,7 +406,7 @@ You can learn more about each configuration option in the [Jest docs](https://je
 
 Stylesheets and images aren't used in the tests but importing them may cause errors, so they will need to be mocked. Create the mock files referenced in the configuration above - `fileMock.js` and `styleMock.js` - inside a `__mocks__` directory:
 
-```js filename="__mocks__/fileMock.js"
+```js title="__mocks__/fileMock.js"
 module.exports = {
   src: '/img.jpg',
   height: 24,
@@ -415,7 +415,7 @@ module.exports = {
 }
 ```
 
-```js filename="__mocks__/styleMock.js"
+```js title="__mocks__/styleMock.js"
 module.exports = {}
 ```
 
@@ -425,13 +425,13 @@ For more information on handling static assets, please refer to the [Jest Docs](
 
 `@testing-library/jest-dom` includes a set of convenient [custom matchers](https://github.com/testing-library/jest-dom#custom-matchers) such as `.toBeInTheDocument()` making it easier to write tests. You can import the custom matchers for every test by adding the following option to the Jest configuration file:
 
-```js filename="jest.config.js"
+```js title="jest.config.js"
 setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 ```
 
 Then, inside `jest.setup.js`, add the following import:
 
-```js filename="jest.setup.js"
+```js title="jest.setup.js"
 import '@testing-library/jest-dom/extend-expect'
 ```
 
@@ -441,7 +441,7 @@ If you need to add more setup options before each test, it's common to add them 
 
 If your project is using [Module Path Aliases](/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases), you will need to configure Jest to resolve the imports by matching the paths option in the `jsconfig.json` file with the `moduleNameMapper` option in the `jest.config.js` file. For example:
 
-```json filename="tsconfig.json or jsconfig.json"
+```json title="tsconfig.json or jsconfig.json"
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -452,7 +452,7 @@ If your project is using [Module Path Aliases](/docs/pages/building-your-applica
 }
 ```
 
-```js filename="jest.config.js"
+```js title="jest.config.js"
 moduleNameMapper: {
   '^@/components/(.*)$': '<rootDir>/components/$1',
 }
@@ -464,7 +464,7 @@ moduleNameMapper: {
 
 Add the Jest executable in watch mode to the `package.json` scripts:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "next dev",
@@ -483,7 +483,7 @@ Your project is now ready to run tests. Follow Jest's convention by adding tests
 
 For example, we can add a test to check if the `<Home />` component successfully renders a heading:
 
-```jsx filename="__tests__/index.test.js"
+```jsxtitle="__tests__/index.test.js"
 import { render, screen } from '@testing-library/react'
 import Home from '../pages/index'
 import '@testing-library/jest-dom'
@@ -503,7 +503,7 @@ describe('Home', () => {
 
 Optionally, add a [snapshot test](https://jestjs.io/docs/snapshot-testing) to keep track of any unexpected changes to your `<Home />` component:
 
-```jsx filename="__tests__/snapshot.js"
+```jsxtitle="__tests__/snapshot.js"
 import { render } from '@testing-library/react'
 import Home from '../pages/index'
 

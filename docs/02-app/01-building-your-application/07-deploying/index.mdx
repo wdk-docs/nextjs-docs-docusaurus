@@ -62,7 +62,7 @@ Next.js can be deployed to any hosting provider that supports Node.js. For examp
 
 First, ensure your `package.json` has the `"build"` and `"start"` scripts:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "next dev",
@@ -142,7 +142,7 @@ You can set the env variable `NEXT_MANUAL_SIG_HANDLE` to `true` and then registe
 
 > **注意事项**: Manual signal handling is not available in `next dev`.
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "dev": "next dev",
@@ -152,7 +152,7 @@ You can set the env variable `NEXT_MANUAL_SIG_HANDLE` to `true` and then registe
 }
 ```
 
-```js filename="pages/_document.js"
+```js title="pages/_document.js"
 if (process.env.NEXT_MANUAL_SIG_HANDLE) {
   // this should be added in your custom _document
   process.on('SIGTERM', () => {

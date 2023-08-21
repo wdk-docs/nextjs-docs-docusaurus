@@ -25,7 +25,7 @@ Next.js can automatically create a `standalone` folder that copies only the nece
 
 To leverage this automatic copying you can enable it in your `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   output: 'standalone',
 }
@@ -53,15 +53,15 @@ Additionally, a minimal `server.js` file is also output which can be used instea
 
 </PagesOnly>
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm i sharp
 ```
 
-```bash filename="Terminal"
+```bash title="Terminal"
 yarn add sharp
 ```
 
-```bash filename="Terminal"
+```bash title="Terminal"
 pnpm add sharp
 ```
 
@@ -69,7 +69,7 @@ pnpm add sharp
 
 - While tracing in monorepo setups, the project directory is used for tracing by default. For `next build packages/web-app`, `packages/web-app` would be the tracing root and any files outside of that folder will not be included. To include files outside of this folder you can set `experimental.outputFileTracingRoot` in your `next.config.js`.
 
-```js filename="packages/web-app/next.config.js"
+```js title="packages/web-app/next.config.js"
 module.exports = {
   experimental: {
     // this includes files from the monorepo base two directories up
@@ -80,7 +80,7 @@ module.exports = {
 
 - There are some cases in which Next.js might fail to include required files, or might incorrectly include unused files. In those cases, you can leverage `experimental.outputFileTracingExcludes` and `experimental.outputFileTracingIncludes` respectively in `next.config.js`. Each config accepts an object with [minimatch globs](https://www.npmjs.com/package/minimatch) for the key to match specific pages and a value of an array with globs relative to the project's root to either include or exclude in the trace.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   experimental: {
     outputFileTracingExcludes: {
@@ -101,7 +101,7 @@ Tracing dependencies can be slow because it requires very complex computations a
 
 To enable it, you can add the following configuration to your `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   experimental: {
     turbotrace: {

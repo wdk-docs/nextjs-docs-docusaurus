@@ -14,7 +14,7 @@ description: Enable AMP in a page, and control the way Next.js adds AMP to the p
 
 To enable AMP, add the following config to your page:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 export const config = { amp: true }
 ```
 
@@ -29,7 +29,7 @@ To learn more about the `amp` config, read the sections below.
 
 Take a look at the following example:
 
-```jsx filename="pages/about.js"
+```jsxtitle="pages/about.js"
 export const config = { amp: true }
 
 function About(props) {
@@ -49,7 +49,7 @@ The page above is an AMP-only page, which means:
 
 Take a look at the following example:
 
-```jsx filename="pages/about.js"
+```jsxtitle="pages/about.js"
 import { useAmp } from 'next/amp'
 
 export const config = { amp: 'hybrid' }

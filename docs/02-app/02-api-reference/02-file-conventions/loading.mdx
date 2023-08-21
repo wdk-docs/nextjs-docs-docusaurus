@@ -10,14 +10,14 @@ A **loading** file can create instant loading states built on [Suspense](/docs/a
 
 By default, this file is a [Server Component](/docs/getting-started/react-essentials#server-components) - but can also be used as a Client Component through the `"use client"` directive.
 
-```tsx filename="app/feed/loading.tsx" switcher
+```tsx title="app/feed/loading.tsx" switcher
 export default function Loading() {
   // Or a custom loading skeleton component
   return <p>'Loading...'</p>
 }
 ```
 
-```jsx filename="app/feed/loading.js" switcher
+```jsxtitle="app/feed/loading.js" switcher
 export default function Loading() {
   // Or a custom loading skeleton component
   return <p>'Loading...'</p>

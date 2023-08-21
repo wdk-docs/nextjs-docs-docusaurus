@@ -5,7 +5,7 @@ description: Upgrade your Next.js Application from Version 11 to Version 12.
 
 To upgrade to version 12, run the following command:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install next@12
 
 yarn add next@12
@@ -23,7 +23,7 @@ pnpm update next@12
 
 [Minimum React Version](https://reactjs.org/docs/add-react-to-a-website.html) - The minimum required React version is `17.0.2`. To upgrade you can run the following command in the terminal:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install react@latest react-dom@latest
 
 yarn add react@latest react-dom@latest
@@ -51,7 +51,7 @@ In order to prioritize transforms that will help you adopt SWC, please provide y
 
 You can opt-in to replacing Terser with SWC for minifying JavaScript up to 7x faster using a flag in `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   swcMinify: true,
 }

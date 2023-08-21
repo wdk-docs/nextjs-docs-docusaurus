@@ -9,7 +9,7 @@ description: Extend the default page extensions used by Next.js when resolving p
 
 By default, Next.js accepts files with the following extensions: `.tsx`, `.ts`, `.jsx`, `.js`. This can be modified to allow other extensions like markdown (`.md`, `.mdx`).
 
-```js filename="next.config.js"
+```js title="next.config.js"
 const withMDX = require('@next/mdx')()
 
 /** @type {import('next').NextConfig} */
@@ -29,7 +29,7 @@ For custom advanced configuration of Next.js, you can create a `next.config.js` 
 
 Take a look at the following `next.config.js` example:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 /**
  * @type {import('next').NextConfig}
  */
@@ -42,7 +42,7 @@ module.exports = nextConfig
 
 If you need [ECMAScript modules](https://nodejs.org/api/esm.html), you can use `next.config.mjs`:
 
-```js filename="next.config.mjs"
+```js title="next.config.mjs"
 /**
  * @type {import('next').NextConfig}
  */
@@ -55,7 +55,7 @@ export default nextConfig
 
 You can also use a function:
 
-```js filename="next.config.mjs"
+```js title="next.config.mjs"
 module.exports = (phase, { defaultConfig }) => {
   /**
    * @type {import('next').NextConfig}
@@ -69,7 +69,7 @@ module.exports = (phase, { defaultConfig }) => {
 
 Since Next.js 12.1.0, you can use an async function:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = async (phase, { defaultConfig }) => {
   /**
    * @type {import('next').NextConfig}
@@ -111,7 +111,7 @@ However, none of the configs are required, and it's not necessary to understand 
 
 You can extend the default Page extensions (`.tsx`, `.ts`, `.jsx`, `.js`) used by Next.js. Inside `next.config.js`, add the `pageExtensions` config:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
 }
@@ -131,7 +131,7 @@ For example, if you reconfigure `.ts` page extensions to `.page.ts`, you would n
 
 You can colocate test files or other files used by components in the `pages` directory. Inside `next.config.js`, add the `pageExtensions` config:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
 }

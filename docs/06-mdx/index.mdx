@@ -1,0 +1,90 @@
+# MDX
+
+**组件 era** 的 Markdown
+
+MDX允许在您的Markdown内容中使用JSX。
+您可以导入组件，如交互式图表或警报，并将它们嵌入到内容中。
+这使得编写带有组件的长篇内容成为一种冲击。
+🚀
+[继续阅读 »][what]
+
+## New: MDX 2!
+
+经过多年的努力，MDX的版本2发布了，并且有许多改进。
+以下是要点:
+
+- 📝 **改进的语法**使在JSX中更容易使用Markdown
+- 🧑‍💻 **JavaScript表达式** 转换`{2 * Math.PI}`为*6.283185307179586*
+- 🔌 新的**esbuild**、**Rollup**和**Node.js**集成
+- ⚛️ **任何JSX运行时**: React, Preact, Vue, Emotion, 你能想到的，它们都是支持的
+- 🌳 **改进的AST** 以更详细的方式显示更多信息
+- 🏃‍♀️ 编译速度至少**快25%**
+- 🚴 生成的代码运行速度提高一倍(**快100%**)
+- 🚄 `@mdx-js/mdx`的包大小是原来的三倍多 (**小250%**)
+- 🧵 …还有很多很多
+
+[继续阅读 »][v2]
+
+## MDX是做什么的?
+
+你可以通过JSX用嵌入的组件来写Markdown:
+
+```mdx title="example.mdx"
+import { Chart } from './snowfall.js'
+export const year = 2018
+
+# Last year’s snowfall
+
+In {year}, the snowfall was above average.
+It was followed by a warm spring which caused
+flood conditions in many of the nearby rivers.
+
+<Chart year={year} color="#fcb32c" />
+```
+
+它被编译成JavaScript，你可以在任何支持JSX的框架中使用:
+
+```md
+{/_ lint disable _/}
+
+<div className="home-preview">
+  # Last year’s snowfall
+
+In {year}, the snowfall was above average.
+It was followed by a warm spring which caused flood conditions in many of
+the nearby rivers.
+
+  <Chart year={year} color="#fcb32c" />
+</div>
+
+{/_ lint enable _/}
+```
+
+我们制作了一个互动的游乐场，在那里你可以尝试MDX，看看它变成了什么。
+[玩 »][playground]
+
+## 开始
+
+大多数打包器、框架和编辑器都有集成。
+无论你是用Next.js、Docusaurus还是Gatsby构建。
+您更喜欢esbuild、Rollup或webpack。
+你正在使用React、Preact或Vue。
+[开始 »][getting-started]
+
+## 简称MDX
+
+- ❤️ **强大的**: MDX混合了Markdown和JSX语法，非常适合基于JSX的项目
+- 💻 **一切都是组成部分**: 使用MDX中的现有组件，并导入其他MDX文件作为组件
+- 🔧 **可定制的**: 决定为每个标记减少构造呈现哪个组件 (`{h1: MyHeading}`)
+- 📚 **Markdown基础**: Markdown的简单性和优雅性仍然存在，您只在需要时才使用JSX
+- 🔥 **飞快地**: MDX没有运行时，所有编译都在构建阶段进行
+
+> 它对于使用设计系统组件来呈现Markdown和将交互组件与现有Markdown编织在一起非常有用。
+>
+> — [**@chrisbiscardi**][quote]
+
+[quote]: https://twitter.com/chrisbiscardi/status/1022304288326864896
+[what]: /docs/what-is-mdx/
+[v2]: /blog/v2/
+[playground]: /playground/
+[getting-started]: /docs/getting-started/

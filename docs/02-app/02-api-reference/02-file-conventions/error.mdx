@@ -14,7 +14,7 @@ An **error** file defines an error UI boundary for a route segment.
 
 It is useful for catching **unexpected** errors that occur in Server Components and Client Components and displaying a fallback UI.
 
-```tsx filename="app/dashboard/error.tsx" switcher
+```tsx title="app/dashboard/error.tsx" switcher
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
@@ -47,7 +47,7 @@ export default function Error({
 }
 ```
 
-```jsx filename="app/dashboard/error.js" switcher
+```jsxtitle="app/dashboard/error.js" switcher
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
@@ -109,7 +109,7 @@ Can be used to prompt the user to attempt to recover from the error.
 
 To specifically handle errors in root `layout.js`, use a variation of `error.js` called `app/global-error.js` located in the root `app` directory.
 
-```tsx filename="app/global-error.tsx" switcher
+```tsx title="app/global-error.tsx" switcher
 'use client'
 
 export default function GlobalError({
@@ -130,7 +130,7 @@ export default function GlobalError({
 }
 ```
 
-```jsx filename="app/global-error.js" switcher
+```jsxtitle="app/global-error.js" switcher
 'use client'
 
 export default function GlobalError({ error, reset }) {

@@ -7,7 +7,7 @@ description: 默认情况下，Next.js提供了集成的ESLint体验。这些一
 
 Next.js 提供了一个集成的[ESLint](https://eslint.org/)开箱即用的体验。将`next lint`作为脚本添加到`package.json`中:
 
-```json filename="package.json"
+```json title="package.json"
 {
   "scripts": {
     "lint": "next lint"
@@ -17,13 +17,13 @@ Next.js 提供了一个集成的[ESLint](https://eslint.org/)开箱即用的体�
 
 然后运行`npm run lint`或`yarn lint`:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 yarn lint
 ```
 
 如果你还没有在你的应用中配置ESLint，你将被引导完成安装和配置过程。
 
-```bash filename="Terminal"
+```bash title="Terminal"
 yarn lint
 ```
 
@@ -40,7 +40,7 @@ yarn lint
 - **Strict**: 包括Next.js的基本ESLint配置以及更严格的[Core Web vital规则集](#core-web-vital)。
   这是开发者第一次设置ESLint时的推荐配置。
 
-  ```json filename=".eslintrc.json"
+  ```json title=".eslintrc.json"
   {
     "extends": "next/core-web-vitals"
   }
@@ -48,7 +48,7 @@ yarn lint
 
 - **Base**: 包括Next.js的基本ESLint配置。
 
-  ```json filename=".eslintrc.json"
+  ```json title=".eslintrc.json"
   {
     "extends": "next"
   }
@@ -126,7 +126,7 @@ Next.js提供了一个ESLint插件，[`eslint-config-next`](https://www.npmjs.co
 
 如果你在一个项目中使用`eslint-plugin-next`，而Next.js没有安装在你的根目录下(比如monorepo)，你可以使用`.eslintrc`中的`settings`属性告诉`eslint-plugin-next`在哪里找到你的Next.js应用程序:
 
-```json filename=".eslintrc.json"
+```json title=".eslintrc.json"
 {
   "extends": "next",
   "settings": {
@@ -143,7 +143,7 @@ Next.js提供了一个ESLint插件，[`eslint-config-next`](https://www.npmjs.co
 
 默认情况下，Next.js会对`pages/`、`app/`、`components/`、`lib/`和`src/`目录下的所有文件运行ESLint。但是，你可以使用`next.config.js`中的`eslint`配置中的`dirs`选项指定用于生产构建的目录:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   eslint: {
     dirs: ['pages', 'utils'], // Only run ESLint on the 'pages`and 'utils`directories during production builds (next build)
@@ -153,7 +153,7 @@ module.exports = {
 
 类似地，`——dir`和`——file`标志可以用于`next lint`来检测特定的目录和文件:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next lint --dir pages --dir utils --file bar.js
 ```
 
@@ -178,7 +178,7 @@ next lint --dir pages --dir utils --file bar.js
 
 </PagesOnly>
 
-```bash filename="Terminal"
+```bash title="Terminal"
 next lint --no-cache
 ```
 
@@ -186,7 +186,7 @@ next lint --no-cache
 
 如果你想修改或禁用支持的插件(`react`，` react-hooks`，` next`)提供的任何规则，你可以直接使用`.eslintrc`中的`rules`属性来更改它们:
 
-```json filename=".eslintrc.json"
+```json title=".eslintrc.json"
 {
   "extends": "next",
   "rules": {
@@ -200,7 +200,7 @@ next lint --no-cache
 
 `next/core-web-vital`规则集在`next lint`第一次运行时启用，并选择了**strict**选项。
 
-```json filename=".eslintrc.json"
+```json title=".eslintrc.json"
 {
   "extends": "next/core-web-vitals"
 }
@@ -218,7 +218,7 @@ ESLint还包含代码格式化规则，这可能与您现有的[Prettier](https:
 
 首先，安装依赖项:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev eslint-config-prettier
 
 yarn add --dev eslint-config-prettier
@@ -226,7 +226,7 @@ yarn add --dev eslint-config-prettier
 
 然后，将`prettier`添加到现有的ESLint配置中:
 
-```json filename=".eslintrc.json"
+```json title=".eslintrc.json"
 {
   "extends": ["next", "prettier"]
 }
@@ -236,7 +236,7 @@ yarn add --dev eslint-config-prettier
 
 如果你想使用`next lint`和[lint-stage](https://github.com/okonet/lint-staged)在分级的git文件上运行linter，你必须在项目根目录下的`.lintstagedrc.js`文件中添加以下内容，以指定`——file`标志的使用。
 
-```js filename=".lintstagedrc.js"
+```js title=".lintstagedrc.js"
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
@@ -276,7 +276,7 @@ module.exports = {
 
 这个插件可以在你的项目中正常安装，而不需要运行`next lint`:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev @next/eslint-plugin-next
 
 yarn add --dev @next/eslint-plugin-next
@@ -288,7 +288,7 @@ yarn add --dev @next/eslint-plugin-next
 
 如果你已经使用了一个单独的ESLint配置，并且想要包含`eslint -config-next`，确保它是在其他配置之后最后扩展的。例如:
 
-```json filename=".eslintrc.json"
+```json title=".eslintrc.json"
 {
   "extends": ["eslint:recommended", "next"]
 }

@@ -1,0 +1,422 @@
+# 使用MDX
+
+本文解释了如何在项目中使用MDX文件。
+它展示了如何传递props以及如何导入、定义或传递组件。 {/* more */}
+关于如何将MDX集成到您的项目中，请参阅[§开始][start]。
+要了解MDX格式是如何工作的，我们建议您从[§什么是MDX][what]开始。
+
+## Contents
+
+- [使用MDX](#使用mdx)
+  - [Contents](#contents)
+  - [MDX是如何工作的](#mdx是如何工作的)
+  - [MDX内容](#mdx内容)
+    - [Props](#props)
+    - [components](#components)
+    - [布局](#布局)
+  - [MDXProvider](#mdxprovider)
+
+## MDX是如何工作的
+
+集成将MDX语法编译为JavaScript。
+假设我们有一个MDX文档， `example.mdx`:
+
+```mdx title="input.mdx"
+export const Thing = () => <>World</>
+
+# Hello <Thing />
+```
+
+这大致变成了下面的JavaScript。
+以下内容可能有助于形成一个心理模型:
+
+```js title="output-outline.jsx"
+/* @jsxRuntime automatic @jsxImportSource react */
+
+export const Thing = () => <>World</>
+
+export default function MDXContent() {
+  return (
+    <h1>
+      Hello <Thing />
+    </h1>
+  )
+}
+```
+
+一些观察:
+
+- 输出是仍然需要评估的序列化JavaScript
+- 注入注释来配置如何处理JSX
+- 它是一个具有导入/导出功能的完整文件
+- 导出一个组件(`MDXContent`)
+
+*实际*输出为:
+
+```js title="output-actual.js"
+/* @jsxRuntime automatic @jsxImportSource react */
+import {
+  Fragment as _Fragment,
+  jsx as _jsx,
+  jsxs as _jsxs,
+} from 'react/jsx-runtime'
+
+export const Thing = () => _jsx(_Fragment, { children: 'World' })
+
+function _createMdxContent(props) {
+  const _components = {
+    h1: 'h1',
+    ...props.components,
+  }
+  return _jsxs(_components.h1, {
+    children: ['Hello ', _jsx(Thing, {})],
+  })
+}
+
+export default function MDXContent(props = {}) {
+  const { wrapper: MDXLayout } = props.components || {}
+  return MDXLayout
+    ? _jsx(
+        MDXLayout,
+        Object.assign({}, props, { children: _jsx(_createMdxContent, props) }),
+      )
+    : _createMdxContent(props)
+}
+```
+
+更多的观察:
+
+- JSX被编译成函数调用和React†的导入
+- 可以给内容组件`{components: {wrapper: MyLayout}}`来包装所有内容
+- 内容组件可以指定为`{components: {h1: MyComponent}}`，以使用其他内容作为标题
+
+† MDX不耦合到React。
+你也可以使用[Preact][]，[Vue][]， [Emotion][]，[Theme UI][]等。
+支持经典的和自动的JSX运行时。
+
+## MDX内容
+
+我们刚刚看到MDX文件被编译成组件。
+您可以像使用所选框架中的任何其他组件一样使用这些组件。
+拿这个文件来说:
+
+```mdx title="example.mdx"
+# Hi!
+```
+
+它可以像这样导入并在React应用中使用:
+
+```js title="example.js"
+import React from 'react'
+import ReactDom from 'react-dom'
+import Example from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+
+const root = ReactDom.createRoot(document.getElementById('root'))
+root.render(<Example />)
+```
+
+导出的主要内容为默认导出。
+所有其他值也被导出。
+举个例子:
+
+```mdx title="example.mdx"
+export const Thing = () => <>World</>
+
+# Hello <Thing />
+```
+
+它可以通过以下方式导入:
+
+```js title="example.js"
+// A namespace import to get everything:
+import * as everything from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+console.log(everything) // {Thing: [Function: Thing], default: [Function: MDXContent]}
+
+// Default export shortcut and a named import specifier:
+import Content, { Thing } from './example.mdx'
+console.log(Content) // [Function: MDXContent]
+console.log(Thing) // [Function: Thing]
+
+// Import specifier with another local name:
+import { Thing as AnotherName } from './example.mdx'
+console.log(AnotherName) // [Function: Thing]
+```
+
+### Props
+
+在[§什么是MDX][what]中，我们展示了JavaScript表达式，在花括号内，可以在MDX中使用:
+
+```mdx title="example.mdx"
+import { year } from './data.js'
+export const name = 'world'
+
+# Hello {name.toUpperCase()}
+
+The current year is {year}
+```
+
+数据也可以传递给`MDXContent`，而不是在MDX中导入或定义数据。
+传递的数据称为`props`。
+举个例子:
+
+```mdx title="example.mdx"
+# Hello {props.name.toUpperCase()}
+
+The current year is {props.year}
+```
+
+这个文件可以用作:
+
+```js title="example.jsx"
+import Example from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+
+// Use a `createElement` call:
+React.createElement(Example, {name: 'Venus', year: 2021})
+
+// Use JSX:
+<Example name="Mars" year={2022} />
+```
+
+### components
+
+这里有一个特殊的道具:`components`。
+
+它接受一个将components名称映射到components的对象。
+举个例子:
+
+```mdx title="example.mdx"
+# Hello _<Planet />_
+```
+
+它可以从JavaScript中导入，并像这样传递components:
+
+```js title="example.jsx"
+import Example from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+;<Example
+  components={{ Planet: () => <span style={{ color: 'tomato' }}>Pluto</span> }}
+/>
+```
+
+你不需要传递components。
+您还可以在MDX中定义或导入它们:
+
+```jsx title="example.mdx" language="mdx"
+import {Box, Heading} from 'rebass'
+
+使用导入的MDX组件!
+
+<Box>
+  <Heading>Here’s a heading</Heading>
+</Box>
+```
+
+因为MDX文件*是*组件，所以它们也可以相互导入:
+
+```jsx title="example.mdx" language="mdx"
+import License from './license.md' // Assumes an integration is used to compile MDX -> JS.
+import Contributing from './docs/contributing.mdx'
+
+# Hello world
+
+<License />
+
+---
+
+<Contributing />
+```
+
+下面是其他一些传递components的例子:
+
+```js title="example.jsx"
+<Example
+  components={{
+    // Map `h1` (`# heading`) to use `h2`s.
+    h1: 'h2',
+    // Rewrite `em`s (`*like so*`) to `i` with a goldenrod foreground color.
+    em: (props) => <i style={{ color: 'goldenrod' }} {...props} />,
+    // Pass a layout (using the special `'wrapper'` key).
+    wrapper: ({ components, ...rest }) => <main {...rest} />,
+    // Pass a component.
+    Planet: () => 'Neptune',
+    // This nested component can be used as `<theme.text>hi</theme.text>`
+    theme: { text: (props) => <span style={{ color: 'grey' }} {...props} /> },
+  }}
+/>
+```
+
+以下键可以在`components`中传递:
+
+- 用markdown写的东西的HTML等价物 例如用`h1`代替`# heading` (查看[§部件表][toc]例子)
+- `wrapper`, 它定义了布局(但本地布局优先)
+- `*` 任何其他有效的JavaScript标识符(`foo`), `Quote`, `_`, `$x`, `a1`) 使用JSX编写的东西(就像 `<So />` 或 `<like.so />`, 注意，本地定义的组件优先)**‡**
+
+如果你曾经想知道JSX中的名称(所以`<x>`中的`x`)是否为文字标记名称(如`h1`)或不是(如`Component`)的规则是什么，它们如下:
+
+- 如果有一个点，它就是一个成员表达式 (`<a.b>` -> `h(a.b)`), 这意味着`b`组件取自对象`a`
+- 否则，如果名称不是有效标识符， 这是字面意思 (`<a-b>` -> `h('a-b')`)
+- 否则，如果它以小写字母开头，它就是字面量 (`<a>` -> `h('a')`)
+- 否则，它就是一个标识符 (`<A>` -> `h(A)`), 也就是一个分量 `A`
+
+### 布局
+
+有一个特殊的组件:布局。
+如果定义了它，它将用于包装所有内容。
+可以在MDX中使用默认导出来定义布局:
+
+```js language="mdx"
+export default function Layout({children}) {
+  return <main>{children}</main>;
+}
+
+All the things.
+```
+
+布局也可以导入，然后用`export … from`命令导出:
+
+```js language="mdx"
+export { Layout as default } from './components.js'
+```
+
+布局也可以作为`components.wrapper`传递(但优先使用本地布局)。
+
+## MDXProvider
+
+你可能不需要供应商。
+传递组件通常很好。
+供应商通常只会增加额外的重量。
+以这个文件为例:
+
+```mdx title="post.mdx"
+# Hello world
+```
+
+像这样使用:
+
+```js title="app.jsx"
+import React from 'react'
+import ReactDom from 'react-dom'
+import Post from './post.mdx' // Assumes an integration is used to compile MDX -> JS.
+import { Heading, /* … */ Table } from './components/index.js'
+
+const components = {
+  h1: Heading.H1,
+  // …
+  table: Table,
+}
+
+const root = ReactDom.createRoot(document.getElementById('root'))
+root.render(<Post components={components} />)
+```
+
+这是有效的，这些组件被使用了。
+
+但是，当您嵌套MDX文件(将它们相互导入)时，这可能会变得很麻烦。
+像这样:
+
+```mdx title="post.mdx"
+import License from './license.md' // Assumes an integration is used to compile MDX -> JS.
+import Contributing from './docs/contributing.mdx'
+
+# Hello world
+
+<License components={props.components} />
+
+---
+
+<Contributing components={props.components} />
+```
+
+为了解决这个问题，可以在React, Preact和Vue中使用*[context][]*。
+上下文提供了一种通过组件树传递数据的方法，而不必在每个级别手动传递props。
+设置如下:
+
+1.  要么安装[`@mdx-js/react`][mdx-react], [`@mdx-js/preact`][mdx-preact],或[`@mdx-js/vue`][mdx-vue], 这取决于您使用的框架
+2.  配置你的MDX集成，将[`options.providerImportSource`][options-provider-import-source]设置为那个包，所以要么是`'@mdx-js/react'`, `'@mdx-js/preact'`, 或 `'@mdx-js/vue'`
+3.  从该包中导入`MDXProvider`'。
+    使用它来包装最顶层的MDX内容组件，并将其传递给`components`:
+
+```diff
+ import React from 'react'
+ import ReactDom from 'react-dom'
+ import Post from './post.mdx' // Assumes an integration is used to compile MDX -> JS.
+ import {Heading, /* … */ Table} from './components/index.js'
++import {MDXProvider} from '@mdx-js/react'
+
+ const components = {
+   h1: Heading.H1,
+   // …
+   table: Table
+ }
+
+ const root = ReactDom.createRoot(document.getElementById('root'))
+-root.render(<Post components={components} />)
++root.render(
++  <MDXProvider components={components}>
++    <Post />
++  </MDXProvider>
++)
+```
+
+现在你可以删除显式的和详细的组件传递:
+
+```diff
+ import License from './license.md' // Assumes an integration is used to compile MDX -> JS.
+ import Contributing from './docs/contributing.mdx'
+
+ # Hello world
+
+-<License components={props.components} />
++<License />
+
+ ---
+
+-<Contributing components={props.components} />
++<Contributing />
+```
+
+当`MDXProvider`嵌套时，它们的组件将被合并。
+举个例子:
+
+```jsx
+<>
+  <MDXProvider components={{ h1: Component1, h2: Component2 }}>
+    <MDXProvider components={{ h2: Component3, h3: Component4 }}>
+      <Content />
+    </MDXProvider>
+  </MDXProvider>
+</>
+```
+
+…这导致`h1`使用`Component1`， `h2`使用`Component3`， `h3`使用`Component4`。
+
+要以不同的方式合并或根本不合并，请将函数传递给`components`。
+它被赋予当前上下文`components`，它返回的内容将被使用。
+在这个例子中，当前上下文组件被丢弃:
+
+```jsx
+<>
+  <MDXProvider components={{ h1: Component1, h2: Component2 }}>
+    <MDXProvider components={() => ({ h2: Component3, h3: Component4 })}>
+      <Content />
+    </MDXProvider>
+  </MDXProvider>
+</>
+```
+
+…这导致`h2`使用`Component3`和`h3`使用`Component4`。
+没有组件用于`h1`。
+
+如果你不嵌套MDX文件，或者不经常嵌套它们，不要使用提供器:显式地传递组件。
+
+[context]: https://reactjs.org/docs/context.html
+[start]: /docs/getting-started/
+[what]: /docs/what-is-mdx/
+[mdx-react]: /packages/react/
+[mdx-preact]: /packages/preact/
+[mdx-vue]: /packages/vue/
+[options-provider-import-source]: /packages/mdx/#optionsproviderimportsource
+[emotion]: /docs/getting-started/#emotion
+[preact]: /docs/getting-started/#preact
+[theme ui]: /docs/getting-started/#theme-ui
+[vue]: /docs/getting-started/#vue
+[toc]: /table-of-components/

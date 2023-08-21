@@ -2,5 +2,13 @@
   "[svg]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
-  "cSpell.words": ["agbonze", "chege", "Frontmatter", "rehype", "Vercel"]
+  "cSpell.words": [
+    "agbonze",
+    "chege",
+    "codepen",
+    "Frontmatter",
+    "Preact",
+    "rehype",
+    "Vercel"
+  ]
 }

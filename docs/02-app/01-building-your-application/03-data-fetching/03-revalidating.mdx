@@ -25,11 +25,11 @@ fetch('https://...', { next: { revalidate: 60 } })
 
 If you want to revalidate data that does not use `fetch` (i.e. using an external package or query builder), you can use the [route segment config](/docs/app/api-reference/file-conventions/route-segment-config#revalidate).
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export const revalidate = 60 // revalidate this page every 60 seconds
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 export const revalidate = 60 // revalidate this page every 60 seconds
 ```
 
@@ -62,7 +62,7 @@ Data can be revalidated on-demand by path ([`revalidatePath`](/docs/app/api-refe
 
 For example, the following `fetch` adds the cache tag `collection`:
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export default async function Page() {
   const res = await fetch('https://...', { next: { tags: ['collection'] } })
   const data = await res.json()
@@ -70,7 +70,7 @@ export default async function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 export default async function Page() {
   const res = await fetch('https://...', { next: { tags: ['collection'] } })
   const data = await res.json()
@@ -80,7 +80,7 @@ export default async function Page() {
 
 This cached data can then be revalidated on-demand by calling `revalidateTag` in a [Route Handler](/docs/app/building-your-application/routing/router-handlers).
 
-```ts filename="app/api/revalidate/route.ts" switcher
+```ts title="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidateTag } from 'next/cache'
 
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/revalidate/route.js" switcher
+```js title="app/api/revalidate/route.js" switcher
 import { NextResponse } from 'next/server'
 import { revalidateTag } from 'next/cache'
 

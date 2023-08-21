@@ -9,7 +9,7 @@ Next.js has built-in support for Sass using both the `.scss` and `.sass` extensi
 
 First, install [`sass`](https://github.com/sass/sass):
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install --save-dev sass
 ```
 
@@ -22,11 +22,11 @@ npm install --save-dev sass
 > If you're not sure which to choose, start with the `.scss` extension which is a superset of CSS, and doesn't require you learn the
 > Indented Syntax ("Sass").
 
-### Customizing Sass Options
+### 自定义Sass选项
 
 If you want to configure the Sass compiler, use `sassOptions` in `next.config.js`.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 const path = require('path')
 
 module.exports = {
@@ -42,7 +42,7 @@ Next.js supports Sass variables exported from CSS Module files.
 
 For example, using the exported `primaryColor` Sass variable:
 
-```scss filename="app/variables.module.scss"
+```scsstitle="app/variables.module.scss"
 $primary-color: #64ff00;
 
 :export {
@@ -52,7 +52,7 @@ $primary-color: #64ff00;
 
 <AppOnly>
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 // maps to root `/` URL
 
 import variables from './variables.module.scss'
@@ -66,7 +66,7 @@ export default function Page() {
 
 <PagesOnly>
 
-```jsx filename="pages/_app.js"
+```jsx title="pages/_app.js"
 import variables from '../styles/variables.module.scss'
 
 export default function MyApp({ Component, pageProps }) {

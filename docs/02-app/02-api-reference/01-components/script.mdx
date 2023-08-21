@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem'
 
 This API reference will help you understand how to use [props](#props) available for the Script Component. For features and usage, please see the [Optimizing Scripts](/docs/app/building-your-application/optimizing/scripts) page.
 
-```tsx filename="app/dashboard/page.tsx" switcher
+```tsx title="app/dashboard/page.tsx" switcher
 import Script from 'next/script'
 
 export default function Dashboard() {
@@ -22,7 +22,7 @@ export default function Dashboard() {
 }
 ```
 
-```jsx filename="app/dashboard/page.js" switcher
+```jsxtitle="app/dashboard/page.js" switcher
 import Script from 'next/script'
 
 export default function Dashboard() {
@@ -79,7 +79,7 @@ Scripts denoted with this strategy are preloaded and fetched before any first-pa
 
 <AppOnly>
 
-```tsx filename="app/layout.tsx" switcher
+```tsx title="app/layout.tsx" switcher
 import Script from 'next/script'
 
 export default function RootLayout({
@@ -99,7 +99,7 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+```jsxtitle="app/layout.js" switcher
 import Script from 'next/script'
 
 export default function RootLayout({ children }) {
@@ -155,7 +155,7 @@ Scripts that use the `afterInteractive` strategy are injected into the HTML clie
 
 `afterInteractive` scripts can be placed inside of any page or layout and will only load and execute when that page (or group of pages) is opened in the browser.
 
-```jsx filename="app/page.js"
+```jsxtitle="app/page.js"
 import Script from 'next/script'
 
 export default function Page() {
@@ -178,7 +178,7 @@ Scripts that use the `lazyOnload` strategy are injected into the HTML client-sid
 
 `lazyOnload` scripts can be placed inside of any page or layout and will only load and execute when that page (or group of pages) is opened in the browser.
 
-```jsx filename="app/page.js"
+```jsxtitle="app/page.js"
 import Script from 'next/script'
 
 export default function Page() {
@@ -203,7 +203,7 @@ Scripts that use the `worker` strategy are off-loaded to a web worker in order t
 
 To use `worker` as a strategy, the `nextScriptWorkers` flag must be enabled in `next.config.js`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   experimental: {
     nextScriptWorkers: true,
@@ -213,7 +213,7 @@ module.exports = {
 
 `worker` scripts can **only currently be used in the `pages/` directory**:
 
-```tsx filename="pages/home.tsx" switcher
+```tsx title="pages/home.tsx" switcher
 import Script from 'next/script'
 
 export default function Home() {
@@ -225,7 +225,7 @@ export default function Home() {
 }
 ```
 
-```jsx filename="pages/home.js" switcher
+```jsxtitle="pages/home.js" switcher
 import Script from 'next/script'
 
 export default function Home() {
@@ -245,7 +245,7 @@ Some third-party scripts require users to run JavaScript code once after the scr
 
 Here's an example of executing a lodash method only after the library has been loaded.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 'use client'
 
 import Script from 'next/script'
@@ -264,7 +264,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 'use client'
 
 import Script from 'next/script'
@@ -293,7 +293,7 @@ Here's an example of how to re-instantiate a Google Maps JS embed every time the
 
 <AppOnly>
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 'use client'
 
 import { useRef } from 'react'
@@ -320,7 +320,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 'use client'
 
 import { useRef } from 'react'
@@ -386,7 +386,7 @@ Sometimes it is helpful to catch when a script fails to load. These errors can b
 
 <AppOnly>
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 'use client'
 
 import Script from 'next/script'
@@ -405,7 +405,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 'use client'
 
 import Script from 'next/script'

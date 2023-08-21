@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem'
 
 If you export a function called `getServerSideProps` (Server-Side Rendering) from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
 
-```tsx filename="pages/index.tsx" switcher
+```tsx title="pages/index.tsx" switcher
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
 type Repo = {
@@ -31,7 +31,7 @@ export default function Page({
 }
 ```
 
-```jsx filename="pages/index.js" switcher
+```jsxtitle="pages/index.js" switcher
 export const getServerSideProps = async () => {
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
   const repo = await res.json()
@@ -80,7 +80,7 @@ Take the following example. An API route is used to fetch some data from a CMS. 
 
 You can explicitly set the runtime on a per-page basis by modifying the `config`, for example:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 export const config = {
   runtime: 'nodejs', // or "edge"
 }

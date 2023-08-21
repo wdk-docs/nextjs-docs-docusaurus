@@ -5,7 +5,7 @@ description: API Reference for the revalidatePath function.
 
 `revalidatePath` allows you to revalidate data associated with a specific path. This is useful for scenarios where you want to update your cached data without waiting for a revalidation period to expire.
 
-```ts filename="app/api/revalidate/route.ts" switcher
+```ts title="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/revalidate/route.js" switcher
+```js title="app/api/revalidate/route.js" switcher
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
@@ -63,7 +63,7 @@ revalidatePath(path: string): void;
 
 ### Node.js Runtime
 
-```ts filename="app/api/revalidate/route.ts" switcher
+```ts title="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/revalidate/route.js" switcher
+```js title="app/api/revalidate/route.js" switcher
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
@@ -87,7 +87,7 @@ export async function GET(request) {
 
 ### Edge Runtime
 
-```ts filename="app/api/revalidate/route.ts" switcher
+```ts title="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-```js filename="app/api/revalidate/route.js" switcher
+```js title="app/api/revalidate/route.js" switcher
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 

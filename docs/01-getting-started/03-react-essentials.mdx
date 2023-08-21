@@ -400,7 +400,7 @@ export default function Page() {
 > - 将React组件(JSX)传递给其他组件并不是一个新概念，并且一直是React组合模型的一部分。
 > - 这种组合策略可以跨服务器和客户端组件工作，因为接收prop的组件不知道该prop是什么。它只负责它所传递的东西应该放在哪里。
 >   - 这允许在客户端渲染客户端组件之前，在服务器上独立渲染传递的prop。
->   - 同样的“提升内容”策略也被用来避免父组件中的状态改变，从而重新呈现导入的嵌套子组件。
+>   - 同样的`提升内容`策略也被用来避免父组件中的状态改变，从而重新呈现导入的嵌套子组件。
 > - 你并不局限于`children` prop。您可以使用任何prop来传递JSX。
 
 ### 将prop从服务器传递到客户端组件(序列化)
@@ -680,7 +680,7 @@ export default function Page() {
 
 - 以类似的方式，创建供其他开发人员使用的包的库作者可以使用`"use client"`指令来标记其包的客户端入口点。这允许包的用户将包组件直接导入到他们的服务器组件中，而不必创建包装边界。
 - 你可以通过在树的更深处使用['use client'](#moving-client-components-to-the-leaves)来优化你的包，允许导入的模块成为服务器组件模块图的一部分。
-- 值得注意的是，一些打包器可能会去掉`"use client"`指令。你可以在[反应包裹平衡器](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13)和[韦塞尔分析](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30)存储库中找到一个如何配置esbuild以包含“use client”指令的示例。
+- 值得注意的是，一些打包器可能会去掉`"use client"`指令。你可以在[反应包裹平衡器](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13)和[韦塞尔分析](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30)存储库中找到一个如何配置esbuild以包含`use client`指令的示例。
 
 ## 上下文
 
@@ -1055,7 +1055,7 @@ export async function DashboardPage() {
 
 ### 在服务器组件之间共享获取请求
 
-在获取数据时，您可能希望在`page`或`layout`及其子组件之间共享`fetch`的结果。这是组件之间不必要的耦合，可能导致组件之间来回传递“prop”。
+在获取数据时，您可能希望在`page`或`layout`及其子组件之间共享`fetch`的结果。这是组件之间不必要的耦合，可能导致组件之间来回传递`prop`。
 
 相反，我们建议将数据获取与使用数据的组件放在一起。
 在服务器组件中[`fetch`请求被自动删除]，所以每个路由段都可以请求它所需要的数据，而不用担心重复的请求。

@@ -21,7 +21,7 @@ Next.js扩展了`fetch`选项对象，允许每个请求设置自己的[缓存�
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 async function getData() {
   const res = await fetch('https://api.example.com/...')
   // The return value is *not* serialized
@@ -46,7 +46,7 @@ export default async function Page() {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 async function getData() {
   const res = await fetch('https://api.example.com/...')
   // The return value is *not* serialized
@@ -132,7 +132,7 @@ fetch('https://...', { cache: 'no-store' })
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/artist/[username]/page.tsx" switcher
+```tsx title="app/artist/[username]/page.tsx" switcher
 import Albums from './albums'
 
 async function getArtist(username: string) {
@@ -169,7 +169,7 @@ export default async function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/artist/[username]/page.js" switcher
+```jsxtitle="app/artist/[username]/page.js" switcher
 import Albums from './albums'
 
 async function getArtist(username) {
@@ -211,7 +211,7 @@ export default async function Page({ params: { username } }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="artist/[username]/page.tsx" switcher
+```tsx title="artist/[username]/page.tsx" switcher
 import { getArtist, getArtistAlbums, type Album } from './api'
 
 export default async function Page({
@@ -256,7 +256,7 @@ async function Albums({ promise }: { promise: Promise<Album[]> }) {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="artist/[username]/page.js" switcher
+```jsxtitle="artist/[username]/page.js" switcher
 import { getArtist, getArtistAlbums } from './api'
 
 export default async function Page({ params: { username } }) {
@@ -306,7 +306,7 @@ async function Albums({ promise }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/artist/page.tsx" switcher
+```tsx title="app/artist/page.tsx" switcher
 // ...
 
 async function Playlists({ artistID }: { artistID: string }) {
@@ -344,7 +344,7 @@ export default async function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/artist/page.js" switcher
+```jsxtitle="app/artist/page.js" switcher
 // ...
 
 async function Playlists({ artistID }) {
@@ -417,7 +417,7 @@ export default async function Page({ params: { username } }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import prisma from './lib/prisma'
 
 export const revalidate = 3600 // revalidate every hour
@@ -436,7 +436,7 @@ export default async function Page() {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/page.js" switcher
+```jsxtitle="app/page.js" switcher
 import prisma from './lib/prisma'
 
 export const revalidate = 3600 // revalidate every hour

@@ -1,31 +1,30 @@
 ---
 title: 延迟加载
-description: Lazy load imported libraries and React Components to improve your application's loading performance.
+description: 惰性加载导入的库和React组件来提高应用程序的加载性能。
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+# 延迟加载
 
-[Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading) in Next.js helps improve the initial loading performance of an application by decreasing the amount of JavaScript needed to render a route.
+Next.js中的[延迟加载](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)通过减少渲染路由所需的JavaScript量来帮助提高应用程序的初始加载性能。
 
-It allows you to defer loading of **Client Components** and imported libraries, and only include them in the client bundle when they're needed. For example, you might want to defer loading a modal until a user clicks to open it.
+它允许你延迟加载客户端组件和导入的库，只在需要的时候才把它们包含在客户端包中。例如，您可能希望延迟加载一个模态，直到用户单击打开它。
 
-There are two ways you can implement lazy loading in Next.js:
+有两种方法可以在Next.js中实现延迟加载:
 
-1. Using [Dynamic Imports](#nextdynamic) with `next/dynamic`
-2. Using [`React.lazy()`](https://react.dev/reference/react/lazy) with [Suspense](https://react.dev/reference/react/Suspense)
+1. 使用 [Dynamic Imports](#nextdynamic) with `next/dynamic`
+2. 使用 [`React.lazy()`](https://react.dev/reference/react/lazy) with [Suspense](https://react.dev/reference/react/Suspense)
 
-By default, Server Components are automatically [code split](https://developer.mozilla.org/en-US/docs/Glossary/Code_splitting), and you can use [streaming](/docs/app/building-your-application/routing/loading-ui-and-streaming) to progressively send pieces of UI from the server to the client. Lazy loading applies to Client Components.
+默认情况下，服务器组件是自动的[代码分割](https://developer.mozilla.org/en-US/docs/Glossary/Code_splitting)，你可以使用[streaming](/docs/app/building-your-application/routing/loading-ui-and-streaming)来逐步将UI从服务器发送到客户端。延迟加载适用于客户端组件。
 
 ## `next/dynamic`
 
-`next/dynamic` is a composite of [`React.lazy()`](https://react.dev/reference/react/lazy) and [Suspense](https://react.dev/reference/react/Suspense). It behaves the same way in the `app` and `pages` directories to allow for incremental migration.
+`next/dynamic`是一个复合的[`React.lazy()`](https://react.dev/reference/react/lazy)和[Suspense](https://react.dev/reference/react/Suspense)。它在`app` 和 `pages`目录中的行为方式相同，以允许增量迁移。
 
-## Examples
+## AppOnly
 
-<AppOnly>
-### Importing Client Components
+### 导入客户端组件
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 'use client'
 
 import { useState } from 'react'
@@ -55,21 +54,21 @@ export default function ClientComponentExample() {
 }
 ```
 
-### Skipping SSR
+### 跳过 SSR
 
-When using `React.lazy()` and Suspense, Client Components will be pre-rendered (SSR) by default.
+当使用`React.lazy()`和`Suspense`时，客户端组件将默认预渲染(SSR)。
 
-If you want to disable pre-rendering for a Client Component, you can use the `ssr` option set to `false`:
+如果你想禁用客户端组件的预渲染，你可以使用`ssr`选项设置为`false`:
 
 ```jsx
 const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
 ```
 
-### Importing Server Components
+### 导入服务器组件
 
-If you dynamically import a Server Component, only the Client Components that are children of the Server Component will be lazy-loaded - not the Server Component itself.
+如果你动态导入一个服务器组件，那么只有作为服务器组件的子组件的客户端组件才会被惰性加载——而不是服务器组件本身。
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import dynamic from 'next/dynamic'
 
 // Server Component:
@@ -84,11 +83,13 @@ export default function ServerComponentExample() {
 }
 ```
 
-### Loading External Libraries
+### 加载外部库
 
-External libraries can be loaded on demand using the [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) function. This example uses the external library `fuse.js` for fuzzy search. The module is only loaded on the client after the user types in the search input.
+外部库可以使用[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)函数按需加载。
+这个例子使用外部库`fuse.js`进行模糊搜索。
+只有在用户输入搜索输入后，才会在客户机上加载该模块。
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 'use client'
 
 import { useState } from 'react'
@@ -118,9 +119,9 @@ export default function Page() {
 }
 ```
 
-### Adding a custom loading component
+### 添加自定义加载组件
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import dynamic from 'next/dynamic'
 
 const WithCustomLoading = dynamic(
@@ -140,11 +141,11 @@ export default function Page() {
 }
 ```
 
-### Importing Named Exports
+### 导入命名导出
 
-To dynamically import a named export, you can return it from the Promise returned by [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) function:
+要动态导入一个命名的导出，你可以从[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)函数返回的Promise中返回它:
 
-```jsx filename="components/hello.js"
+```jsx title="components/hello.js"
 'use client'
 
 export function Hello() {
@@ -152,7 +153,7 @@ export function Hello() {
 }
 ```
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 import dynamic from 'next/dynamic'
 
 const ClientComponent = dynamic(() =>
@@ -160,9 +161,7 @@ const ClientComponent = dynamic(() =>
 )
 ```
 
-</AppOnly>
-
-<PagesOnly>
+## PagesOnly
 
 By using `next/dynamic`, the header component will not be included in the page's initial JavaScript bundle. The page will render the Suspense `fallback` first, followed by the `Header` component when the `Suspense` boundary is resolved.
 
@@ -178,13 +177,17 @@ export default function Home() {
 }
 ```
 
-> **注意事项**: In `import('path/to/component')`, the path must be explicitly written. It can't be a template string nor a variable. Furthermore the `import()` has to be inside the `dynamic()` call for Next.js to be able to match webpack bundles / module ids to the specific `dynamic()` call and preload them before rendering. `dynamic()` can't be used inside of React rendering as it needs to be marked in the top level of the module for preloading to work, similar to `React.lazy`.
+:::note **注意事项**
 
-## With named exports
+In `import('path/to/component')`, the path must be explicitly written. It can't be a template string nor a variable. Furthermore the `import()` has to be inside the `dynamic()` call for Next.js to be able to match webpack bundles / module ids to the specific `dynamic()` call and preload them before rendering. `dynamic()` can't be used inside of React rendering as it needs to be marked in the top level of the module for preloading to work, similar to `React.lazy`.
+
+:::
+
+### 使用命名的导出
 
 To dynamically import a named export, you can return it from the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned by [`import()`](https://github.com/tc39/proposal-dynamic-import#example):
 
-```jsx filename="components/hello.js"
+```jsx title="components/hello.js"
 export function Hello() {
   return <p>Hello!</p>
 }
@@ -197,7 +200,7 @@ const DynamicComponent = dynamic(() =>
 )
 ```
 
-## With no SSR
+### 没有SSR
 
 To dynamically load a component on the client side, you can use the `ssr` option to disable server-rendering. This is useful if an external dependency or component relies on browser APIs like `window`.
 
@@ -209,7 +212,7 @@ const DynamicHeader = dynamic(() => import('../components/header'), {
 })
 ```
 
-## With external libraries
+### 使用外部库
 
 This example uses the external library `fuse.js` for fuzzy search. The module is only loaded in the browser after the user types in the search input.
 
@@ -240,5 +243,3 @@ export default function Page() {
   )
 }
 ```
-
-</PagesOnly>

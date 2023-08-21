@@ -6,7 +6,7 @@ description: Upgrade your Next.js Application from Version 8 to Version 9.
 
 To upgrade to version 9, run the following command:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npm install next@9
 
 yarn add next@9
@@ -97,7 +97,7 @@ const DynamicComponentWithCustomLoading = dynamic(
   () => import('../components/hello2'),
   {
     loading: () => <p>Loading</p>,
-  }
+  },
 )
 ```
 
@@ -107,7 +107,7 @@ Next.js now has the concept of page-level configuration, so the `withAmp` higher
 
 This change can be **automatically migrated by running the following commands in the root of your Next.js project:**
 
-```bash filename="Terminal"
+```bash title="Terminal"
 curl -L https://github.com/vercel/next-codemod/archive/master.tar.gz | tar -xz --strip=2 next-codemod-master/transforms/withamp-to-config.js npx jscodeshift -t ./withamp-to-config.js pages/**/*.js
 ```
 
@@ -147,7 +147,7 @@ Previously, exporting `pages/about.js` would result in `out/about/index.html`. T
 
 You can revert to the previous behavior by creating a `next.config.js` with the following content:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   trailingSlash: true,
 }

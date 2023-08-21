@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem'
 
 `generateStaticParams`函数可以与[动态路由段](/docs/app/building-your-application/routing/dynamic-routes)结合使用，以在构建时[**静态生成**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)路由，而不是在请求时按需生成。
 
-```jsx filename="app/blog/[slug]/page.js"
+```jsxtitle="app/blog/[slug]/page.js"
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const posts = await fetch('https://.../posts').then((res) => res.json())
@@ -60,7 +60,7 @@ export default function Page({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/product/[id]/page.tsx" switcher
+```tsx title="app/product/[id]/page.tsx" switcher
 export function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
@@ -79,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/product/[id]/page.js" switcher
+```jsxtitle="app/product/[id]/page.js" switcher
 export function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
@@ -103,7 +103,7 @@ export default function Page({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+```tsx title="app/products/[category]/[product]/page.tsx" switcher
 export function generateStaticParams() {
   return [
     { category: 'a', product: '1' },
@@ -130,7 +130,7 @@ export default function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/products/[category]/[product]/page.js" switcher
+```jsxtitle="app/products/[category]/[product]/page.js" switcher
 export function generateStaticParams() {
   return [
     { category: 'a', product: '1' },
@@ -158,7 +158,7 @@ export default function Page({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/product/[...slug]/page.tsx" switcher
+```tsx title="app/product/[...slug]/page.tsx" switcher
 export function generateStaticParams() {
   return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
@@ -177,7 +177,7 @@ export default function Page({ params }: { params: { slug: string[] } }) {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/product/[...slug]/page.js" switcher
+```jsxtitle="app/product/[...slug]/page.js" switcher
 export function generateStaticParams() {
   return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
@@ -214,7 +214,7 @@ export default function Page({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+```tsx title="app/products/[category]/[product]/page.tsx" switcher
 // Generate segments for both [category] and [product]
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
@@ -237,7 +237,7 @@ export default function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/products/[category]/[product]/page.js" switcher
+```jsxtitle="app/products/[category]/[product]/page.js" switcher
 // Generate segments for both [category] and [product]
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
@@ -263,7 +263,7 @@ export default function Page({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/products/[category]/layout.tsx" switcher
+```tsx title="app/products/[category]/layout.tsx" switcher
 // Generate segments for [category]
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
@@ -281,7 +281,7 @@ export default function Layout({ params }: { params: { category: string } }) {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/products/[category]/layout.js" switcher
+```jsxtitle="app/products/[category]/layout.js" switcher
 // Generate segments for [category]
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
@@ -306,7 +306,7 @@ export default function Layout({ params }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+```tsx title="app/products/[category]/[product]/page.tsx" switcher
 // Generate segments for [product] using the `params` passed from
 // the parent segment's `generateStaticParams` function
 export async function generateStaticParams({
@@ -335,7 +335,7 @@ export default function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/products/[category]/[product]/page.js" switcher
+```jsxtitle="app/products/[category]/[product]/page.js" switcher
 // Generate segments for [product] using the `params` passed from
 // the parent segment's `generateStaticParams` function
 export async function generateStaticParams({ params: { category } }) {

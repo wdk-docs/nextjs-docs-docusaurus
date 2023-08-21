@@ -1,0 +1,151 @@
+# 扩展MDX
+
+本文解释了如何扩展MDX内容，特别是如何使用插件进行内容转换。 {/* more */}
+参见[§使用MDX][use]了解如何传递组件、道具和布局。
+关于如何将MDX集成到您的项目中，请参阅[§入门][start]。
+
+## Contents
+
+- [扩展MDX](#扩展mdx)
+  - [Contents](#contents)
+  - [组件和插件](#组件和插件)
+    - [部件清单](#部件清单)
+    - [插件列表](#插件列表)
+  - [使用插件](#使用插件)
+  - [创建插件](#创建插件)
+
+## 组件和插件
+
+当使用`@mdx-js/mdx`或其集成之一时，有三个扩展点:
+
+- 传递给编译器的选项(参见[¶API in `@mdx-js/mdx`][api])
+- 挂钩到几个编译阶段的插件(参见[remark plugins][remark-plugins], [rehype plugins][rehype-plugins]，以及新的recma插件)
+- 在运行时传递、定义或导入组件(参见[§Using MDX][use])
+
+大多数情况下，这些组件和插件不耦合到MDX。
+例如，如果你正在使用React，那么你可以在MDX中使用[`<ReactConfetti />`][react-confetti]。
+或者，您可以使用插件[`remark-gfm`][remark-gfm]来打开MDX中的GFM功能。
+有时，我们需要特定的组件或特定的插件来使用MDX。
+我们在这一页汇总了这些信息。
+
+### 部件清单
+
+- [`PaulieScanlon/mdx-embed`](https://github.com/PaulieScanlon/mdx-embed)
+  — 用于嵌入第三方内容的React组件，集成 w/ MDX provider
+- [`system-ui/theme-ui`](https://github.com/system-ui/theme-ui)
+  — React组件用于构建一致的应用程序，集成 w/ MDX provider
+
+{/\*
+请对**项目**名称使用alpha排序!
+你可以使用这个模板:
+
+- [`user/project`](https://github.com/user/project)
+  — A somewhat short description of the project
+  \*/}
+
+:::note
+
+有另一个与MDX一起工作的组件吗?请发PR添加到这里!
+
+:::
+
+### 插件列表
+
+参见[remark插件列表][remark-plugins]和[rehype插件列表][rehype-plugins]。
+
+- [`domdomegg/recma-mdx-displayname`](https://github.com/domdomegg/recma-mdx-displayname)
+  — 添加一个`displayName`到`MDXContent`组件，以便在生产中打开它们
+- [`remcohaszing/recma-nextjs-static-props`](https://github.com/remcohaszing/recma-nextjs-static-props)
+  — generate [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching/get-static-props)
+  在Next.js中暴露顶级标识符
+- [`remcohaszing/rehype-mdx-title`](https://github.com/remcohaszing/rehype-mdx-title)
+  — 将页面标题公开为字符串
+- [`remcohaszing/remark-mdx-code-meta`](https://github.com/remcohaszing/remark-mdx-code-meta)
+  — 将代码 `meta`字段解释为JSXprops
+- [`remcohaszing/remark-mdx-images`](https://github.com/remcohaszing/remark-mdx-images)
+  — 将图像源更改为JavaScript导入
+- [`remcohaszing/remark-mdx-frontmatter`](https://github.com/remcohaszing/remark-mdx-frontmatter)
+  — 将标题(YAML)元数据更改为导出
+- [`goodproblems/remark-mdx-math-enhanced`](https://github.com/goodproblems/remark-mdx-math-enhanced)
+  — 增强数学与JavaScript里面
+- [`pangelani/remark-mdx-chartjs`](https://github.com/pangelani/remark-mdx-chartjs)
+  — 使用[`react-chartjs-2`](https://react-chartjs-2.js.org/)将隔离的代码块替换为图表.
+
+{/\*
+请对**项目**名称使用alpha排序!
+你可以使用这个模板:
+
+- [`user/project`](https://github.com/user/project)
+  — 对项目的简短描述
+  \*/}
+
+:::note
+
+有另一个统一的插件，*具体*与MDX工作?
+请发PR添加到这里!
+
+:::
+
+## 使用插件
+
+在哪里传递插件是编码在他们的名字中:remark插件进入[`options.remarkPlugins`][options-remark-plugins]， rehype插件进入[`options.rehypePlugins`][options-rehype-plugins]。
+这些字段需要插件列表和/或`[plugin, options]`:
+
+```js
+import { compile } from '@mdx-js/mdx'
+import rehypeKatex from 'rehype-katex' // Render math with KaTeX.
+import remarkFrontmatter from 'remark-frontmatter' // YAML and such.
+import remarkGfm from 'remark-gfm' // Tables, footnotes, strikethrough, task lists, literal URLs.
+import remarkMath from 'remark-math' // Support math like `$so$`.
+
+const file = '# hi'
+
+// One plugin:
+await compile(file, { remarkPlugins: [remarkGfm] })
+
+// A plugin with options:
+await compile(file, { remarkPlugins: [[remarkFrontmatter, 'toml']] })
+
+// Two plugins:
+await compile(file, { remarkPlugins: [remarkGfm, remarkFrontmatter] })
+
+// Two plugins, first w/ options:
+await compile(file, {
+  remarkPlugins: [[remarkGfm, { singleTilde: false }], remarkFrontmatter],
+})
+
+// remark and rehype plugins:
+await compile(file, {
+  remarkPlugins: [remarkMath],
+  rehypePlugins: [rehypeKatex],
+})
+
+// remark and rehype plugins, last w/ options:
+await compile(file, {
+  remarkPlugins: [remarkMath],
+  // A plugin with options:
+  rehypePlugins: [[rehypeKatex, { throwOnError: true, strict: true }]],
+})
+```
+
+## 创建插件
+
+为MDX创建一个插件与为评论或重新宣传创建一个插件基本相同。
+在[§ Learn on `unifiedjs.com`][learn]上有一些指南和食谱。
+
+对于MDX特定的插件部分，建议阅读[¶Architecture][architecture]来了解`@mdx-js/mdx`是如何工作的。
+有关表示MDX特定功能的节点类型的信息，请参阅`remark-mdx`中的[¶语法树][syntax-tree]并使用我们的交互式[§Playground][Playground]。
+
+[remark-plugins]: https://github.com/remarkjs/remark/blob/main/doc/plugins.md#list-of-plugins
+[rehype-plugins]: https://github.com/rehypejs/rehype/blob/main/doc/plugins.md#list-of-plugins
+[use]: /docs/using-mdx/
+[api]: /packages/mdx/#api
+[react-confetti]: https://github.com/alampros/react-confetti
+[remark-gfm]: https://github.com/remarkjs/remark-gfm
+[learn]: https://unifiedjs.com/learn/
+[start]: /docs/getting-started/
+[options-remark-plugins]: /packages/mdx/#optionsremarkplugins
+[options-rehype-plugins]: /packages/mdx/#optionsrehypeplugins
+[architecture]: /packages/mdx/#architecture
+[syntax-tree]: /packages/remark-mdx/#syntax-tree
+[playground]: /playground/

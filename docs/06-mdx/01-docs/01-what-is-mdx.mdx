@@ -1,0 +1,298 @@
+# 什么是MDX?
+
+本文解释什么是MDX格式。
+它展示了如何在MDX中使用ESM中的markdown、JSX、JavaScript表达式以及`import` 和 `export`语句。{/* more */}
+有关如何将MDX集成到您的项目中的详细信息，请参阅[§开始][start]。
+
+## Contents
+
+- [什么是MDX?](#什么是mdx)
+  - [Contents](#contents)
+  - [先决条件](#先决条件)
+  - [组件时代的Markdown](#组件时代的markdown)
+  - [MDX 语法](#mdx-语法)
+    - [Markdown](#markdown)
+    - [JSX](#jsx)
+    - [表达式](#表达式)
+    - [ESM](#esm)
+    - [交叉](#交叉)
+  - [进一步的阅读](#进一步的阅读)
+
+## 先决条件
+
+要编写并享受MDX，您应该熟悉markdown(请参阅[小抄和教程][commonmark-help]获取帮助)和JavaScript(特别是[JSX][jsx-spec])。
+
+## 组件时代的Markdown
+
+MDX允许在您的markdown内容中使用JSX。
+您可以导入组件，如交互式图表或警报，并将它们嵌入到内容中。
+这使得编写带有组件的长篇内容成为一种冲击。
+🚀
+
+更实际地说，MDX可以解释为一种结合了markdown和JSX的格式，如下所示:
+
+```mdx
+# Hello, world!
+
+<div className="note">> Some notable things in a block quote!</div>
+```
+
+标题和块引号是markdown，而那些类似html的标签是JSX。
+Markdown通常感觉比HTML或JSX更自然地输入常见的内容，如强调或标题。
+JSX是JavaScript的扩展，它看起来像HTML，但使使用组件(可重用的东西)变得方便。
+
+这个例子在`<div>`上使用了`className`。
+这是因为它是为React编写的，而React期望这样的类。
+其他框架(如Vue和Preact)期望以不同的方式定义类，因此请注意，根据使用的工具不同，编写JSX的方式也有所不同。
+
+MDX也支持JavaScript的其他一些特性:大括号(`{1 + 1}`)中的表达式和ESM (`import` 和 `export`)。
+
+## MDX 语法
+
+:::note
+
+对于`@mdx-js/*`包，您不必使用此语法。或者一直使用它。
+如果您正在使用捆绑器集成，则可以通过文件扩展名(`.mdx` vs. `.md`)在MDX和markdown之间进行更改。
+也可以使用[`options.format`][format]。
+
+:::
+
+MDX语法结合了JSX和markdown。
+这给了我们一些文字编程的线索。
+它也给了我们一个奇怪的两种语言的混合:markdown是**空格敏感**和**原谅**(你输入的东西可能不正确，但它不会崩溃)，而JavaScript是**空格不敏感**和**不原谅**(它会崩溃的拼写错误)。
+
+奇怪的是，我们很喜欢它们的结合方式!
+
+### Markdown
+
+Markdown通常感觉比HTML或JSX更自然地输入常见的内容，如强调或标题。
+Markdown通常看起来更接近目标，也更简洁。
+而不是下面的HTML:
+
+```html
+<blockquote>
+  <p>A blockquote with <em>some</em> emphasis.</p>
+</blockquote>
+```
+
+你可以像这样在markdown(或MDX)中编写等效的代码:
+
+```md
+> A blockquote with _some_ emphasis.
+```
+
+MDX默认支持标准markdown ([CommonMark][]):
+
+````md
+# Heading (rank 1)
+
+## Heading 2
+
+### 3
+
+#### 4
+
+##### 5
+
+###### 6
+
+> Block quote
+
+- Unordered
+- List
+
+1. Ordered
+2. List
+
+A paragraph, introducing a thematic break:
+
+---
+
+```js
+some.code()
+```
+
+a [link](https://example.com), an ![image](./image.png), some _emphasis_,
+something **strong**, and finally a little `code()`.
+````
+
+非标准的标记功能(如GFM, frontmatter, math，语法高亮)可以通过插件启用(参见[¶使用插件][using-plugins])。
+
+一些Markdown功能在MDX中不起作用:
+
+- 缩进代码在MDX中不起作用:
+  ```md
+      console.log(1) // this is a paragraph in MDX!
+  ```
+  这样做的原因是你可以很好地缩进你的组件:
+  ```html language="mdx"
+  <main>
+    <article># Hello!</article>
+  </main>
+  ```
+- 自动链接在MDX中不起作用。
+  原因是它们与JSX无法区分 (例如: `<svg:rect>`) 我们更喜欢直白。
+  如果需要链接，请使用完整链接: `[descriptive text](https://and-the-link-here.com)`
+- HTML语法在MDX中不起作用，因为它被JSX取代了 (`<img>` 为 `<img />`).
+  你可以用大括号中的JavaScript注释代替HTML注释: `{/* comment! */}`
+- 未转义的左尖括号/小于(`<`)和左花括号(`{`)必须转义:`\<` 或 `\{`(或使用表达式): `{'<'}`, `{'{'}`)
+
+更多关于MDX和markdown的不同之处，请[参阅此处](https://github.com/micromark/mdx-state-machine#72-deviations-from-markdown)。
+
+### JSX
+
+[JSX][]是JavaScript的扩展，它看起来像HTML，但使使用组件(可重用的东西)更方便。
+JSX通常与前端框架(如React、Preact或Vue)结合使用。
+这些框架增加了对组件的支持，它可以让你改变重复的东西，比如下面的标记:
+
+```html
+<h2>Hello, Venus!</h2>
+<h2>Hello, Mars!</h2>
+```
+
+…to JSX (或 MDX) 像这样:
+
+```html language="mdx"
+<Welcome name="Venus" /> <Welcome name="Mars" />
+```
+
+JSX适用于**组件**。
+它使重复的事情更加清晰，并允许分离关注点。
+MDX支持JSX语法。
+下面的代码看起来很像HTML:
+
+```html language="mdx"
+<h1>Heading!</h1>
+
+<abbr title="HyperText Markup Language">HTML</abbr> is a lovely language.
+
+<section>And here is *markdown* in **JSX**!</section>
+```
+
+但是正如前面提到的，您也可以使用组件。
+注意，必须定义组件。
+你可以导入它们，在本地定义它们，或者稍后传入它们(参见[§使用MDX][use]):
+
+```html language="mdx"
+<MyComponent id="123" />
+
+你也可以把对象和组件一起使用，比如`myComponents`对象上的`thisOne`组件: <myComponents.thisOne />
+
+<Component
+  open
+  x={1}
+  label={'this is a string, *not* markdown!'}
+  icon={<Icon />}
+/>
+```
+
+有一些边缘情况[MDX不同于JSX](https://github.com/micromark/mdx-state-machine#73-deviations-from-jsx).
+
+### 表达式
+
+MDX还支持花括号内的JavaScript表达式:
+
+```jsx language="mdx"
+Two 🍰 is: {Math.PI * 2}
+```
+
+表达式可以包含整个JavaScript程序，只要它们被(包装在)一个表达式中，该表达式求值为可以呈现的内容。
+你可以像这样使用[IIFE][]:
+
+```jsx language="mdx"
+{
+  ;(function () {
+    const guess = Math.random()
+
+    if (guess > 0.66) {
+      return <span style={{ color: 'tomato' }}>Look at us.</span>
+    }
+
+    if (guess > 0.33) {
+      return <span style={{ color: 'violet' }}>Who would have guessed?!</span>
+    }
+
+    return <span style={{ color: 'goldenrod' }}>Not me.</span>
+  })()
+}
+```
+
+表达式可以为空或只包含注释:
+
+```mdx
+{/* A comment! */}
+```
+
+### ESM
+
+MDX也支持JavaScript中的`import` 和 `export` 语句。
+这些ESM特性可以在MDX中用于定义以下内容:
+
+```jsx language="mdx"
+import {External} from './some/place.js'
+
+export const Local = props => <span style={{color: 'red'}} {...props} />
+
+An <External>external</External> component and a <Local>local one</Local>.
+```
+
+ESM也可以用于非组件(数据):
+
+```jsx language="mdx"
+import {Chart} from './chart.js'
+import population from './population.js'
+export const pi = 3.14
+
+<Chart data={population} label={'Something with ' + pi} />
+```
+
+### 交叉
+
+如果文本和标签在同一行，你可以在JSX中使用`inline`而不是`blocks`标记:
+
+```html language="mdx"
+<div># this is not a heading but *this* is emphasis</div>
+```
+
+一行中的文本和标签不会产生块，因此它们也不会产生`<p>`。
+在不同的行上，它们会:
+
+```html language="mdx"
+<div>This is a `p`.</div>
+```
+
+我们用这个规则来区分(是不是同一行)。
+不基于HTML中元素的语义。
+所以你可以构建不正确的HTML(这是你不应该的):
+
+```html language="mdx"
+<h1 className="main">Don’t do this: it’s a `p` in an `h1`</h1>
+
+<h1 className="main">Do this: an `h1` with `code`</h1>
+```
+
+如果文本和标签在同一行，但相应的标签在不同的行上，则不可能换行`blocks`:
+
+```html language="mdx"
+Welcome! <a href="about.html"> This is home of... # The Falcons!</a>
+```
+
+这是因为要解析markdown，我们首先必须将其划分为`blocks`。
+在这种情况下，两个段落和一个标题。
+在第一段中留下一个开始的`a`标签，在标题中留下一个结束的`a`标签。
+
+## 进一步的阅读
+
+- 如果你想在你的项目中使用MDX，请参见[§开始][start]
+- 如果在使用该格式时出现错误，请参阅[§MDX故障排除][trouble]
+
+[commonmark]: https://commonmark.org
+[commonmark-help]: https://commonmark.org/help/
+[jsx]: https://reactjs.org/docs/introducing-jsx.html
+[jsx-spec]: https://facebook.github.io/jsx/
+[format]: /packages/mdx/#optionsformat
+[start]: /docs/getting-started/
+[trouble]: /docs/troubleshooting-mdx/
+[use]: /docs/using-mdx/
+[using-plugins]: /docs/extending-mdx/#using-plugins
+[iife]: https://developer.mozilla.org/en-US/docs/Glossary/IIFE

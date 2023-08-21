@@ -33,7 +33,7 @@ The following are currently working on support:
 
 If you want to style Server Components, we recommend using [CSS Modules](/docs/app/building-your-application/styling/css-modules) or other solutions that output CSS files, like PostCSS or [Tailwind CSS](/docs/app/building-your-application/styling/tailwind-css).
 
-## Configuring CSS-in-JS in `app`
+## 在`app`中配置CSS-in-JS
 
 Configuring CSS-in-JS is a three-step opt-in process that involves:
 
@@ -45,7 +45,7 @@ Configuring CSS-in-JS is a three-step opt-in process that involves:
 
 Using `styled-jsx` in Client Components requires using `v5.1.0`. First, create a new registry:
 
-```tsx filename="app/registry.tsx" switcher
+```tsx title="app/registry.tsx" switcher
 'use client'
 
 import React, { useState } from 'react'
@@ -71,7 +71,7 @@ export default function StyledJsxRegistry({
 }
 ```
 
-```jsx filename="app/registry.js" switcher
+```jsx title="app/registry.js" switcher
 'use client'
 
 import React, { useState } from 'react'
@@ -95,7 +95,7 @@ export default function StyledJsxRegistry({ children }) {
 
 Then, wrap your [root layout](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) with the registry:
 
-```tsx filename="app/layout.tsx" switcher
+```tsx title="app/layout.tsx" switcher
 import StyledJsxRegistry from './registry'
 
 export default function RootLayout({
@@ -113,7 +113,7 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+```jsx title="app/layout.js" switcher
 import StyledJsxRegistry from './registry'
 
 export default function RootLayout({ children }) {
@@ -135,7 +135,7 @@ Below is an example of how to configure `styled-components@v6.0.0-rc.1` or great
 
 First, use the `styled-components` API to create a global registry component to collect all CSS style rules generated during a render, and a function to return those rules. Then use the `useServerInsertedHTML` hook to inject the styles collected in the registry into the `<head>` HTML tag in the root layout.
 
-```tsx filename="lib/registry.tsx" switcher
+```tsx title="lib/registry.tsx" switcher
 'use client'
 
 import React, { useState } from 'react'
@@ -167,7 +167,7 @@ export default function StyledComponentsRegistry({
 }
 ```
 
-```jsx filename="lib/registry.js" switcher
+```jsx title="lib/registry.js" switcher
 'use client'
 
 import React, { useState } from 'react'
@@ -197,7 +197,7 @@ export default function StyledComponentsRegistry({ children }) {
 
 Wrap the `children` of the root layout with the style registry component:
 
-```tsx filename="app/layout.tsx" switcher
+```tsx title="app/layout.tsx" switcher
 import StyledComponentsRegistry from './lib/registry'
 
 export default function RootLayout({
@@ -215,7 +215,7 @@ export default function RootLayout({
 }
 ```
 
-```jsx filename="app/layout.js" switcher
+```jsx title="app/layout.js" switcher
 import StyledComponentsRegistry from './lib/registry'
 
 export default function RootLayout({ children }) {

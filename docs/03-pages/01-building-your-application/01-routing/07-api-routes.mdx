@@ -150,7 +150,7 @@ export const config = {
 
 For better type-safety, it is not recommended to extend the `req` and `res` objects. Instead, use functions to work with them:
 
-```ts filename="utils/cookies.ts" switcher
+```ts title="utils/cookies.ts" switcher
 import { serialize, CookieSerializeOptions } from 'cookie'
 import { NextApiResponse } from 'next'
 
@@ -174,7 +174,7 @@ export const setCookie = (
 }
 ```
 
-```js filename="utils/cookies.js" switcher
+```js title="utils/cookies.js" switcher
 import { serialize } from 'cookie'
 
 /**
@@ -192,7 +192,7 @@ export const setCookie = (res, name, value, options = {}) => {
 }
 ```
 
-```ts filename="pages/api/cookies.ts" switcher
+```ts title="pages/api/cookies.ts" switcher
 import { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '../../utils/cookies'
 
@@ -207,7 +207,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 export default handler
 ```
 
-```js filename="pages/api/cookies.js" switcher
+```js title="pages/api/cookies.js" switcher
 import { setCookie } from '../../utils/cookies'
 
 const handler = (req, res) => {
@@ -223,7 +223,7 @@ export default handler
 
 If you can't avoid these objects from being extended, you have to create your own type to include the extra properties:
 
-```ts filename="pages/api/foo.ts" switcher
+```ts title="pages/api/foo.ts" switcher
 import { NextApiRequest, NextApiResponse } from 'next'
 import { withFoo } from 'external-lib-foo'
 
@@ -239,7 +239,7 @@ const handler = (req: NextApiRequestWithFoo, res: NextApiResponse) => {
 export default withFoo(handler)
 ```
 
-```js filename="pages/api/foo.js" switcher
+```js title="pages/api/foo.js" switcher
 import { withFoo } from 'external-lib-foo'
 
 const handler = (req, res) => {

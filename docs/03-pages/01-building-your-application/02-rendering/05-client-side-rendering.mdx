@@ -21,7 +21,7 @@ In Next.js, there are two ways you can implement client-side rendering:
 
 Here's an example of using `useEffect()` inside a Next.js page:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 import React, { useState, useEffect } from 'react'
 
 export function Page() {
@@ -51,7 +51,7 @@ In the example above, the component starts by rendering `Loading...`. Then, once
 
 Although fetching data in a `useEffect` is a pattern you may see in older React Applications, we recommend using a data-fetching library for better performance, caching, optimistic updates, and more. Here's a minimum example using [SWR](https://swr.vercel.app/) to fetch data on the client:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 import useSWR from 'swr'
 
 export function Page() {

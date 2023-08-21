@@ -29,7 +29,7 @@ import TabItem from '@theme/TabItem'
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/dashboard/error.tsx" switcher
+```tsx title="app/dashboard/error.tsx" switcher
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
@@ -65,7 +65,7 @@ export default function Error({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/dashboard/error.js" switcher
+```jsx title="app/dashboard/error.js" switcher
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
@@ -119,7 +119,7 @@ export default function Error({ error, reset }) {
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/dashboard/error.tsx" switcher
+```tsx title="app/dashboard/error.tsx" switcher
 'use client'
 
 export default function Error({
@@ -141,7 +141,7 @@ export default function Error({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/dashboard/error.js" switcher
+```jsx title="app/dashboard/error.js" switcher
 'use client'
 
 export default function Error({ error, reset }) {
@@ -192,14 +192,14 @@ export default function Error({ error, reset }) {
 
 与根目录`error.js`不同的是，`global-error.js`的错误边界包裹了整个\*\*应用，它的回退组件在激活时替换了根目录布局。因此，重要的是要注意`global-error.js`必须定义自己的`<html>` 和 `<body>`标签。
 
-`global-error.js`是粒度最小的错误UI，可以被认为是整个应用程序的“包罗万象”错误处理。它不太可能经常被触发，因为根组件通常不太动态，而其他的`error.js`边界将捕获大多数错误。
+`global-error.js`是粒度最小的错误UI，可以被认为是整个应用程序的`包罗万象`错误处理。它不太可能经常被触发，因为根组件通常不太动态，而其他的`error.js`边界将捕获大多数错误。
 
 即使定义了`global-error.js`，仍然建议定义一个根`error.js`，它的回退组件将在根布局中呈现，其中包括全局共享的UI和品牌。
 
 <Tabs>
 <TabItem value="tsx" label="TypeScript">
 
-```tsx filename="app/global-error.tsx" switcher
+```tsx title="app/global-error.tsx" switcher
 'use client'
 
 export default function GlobalError({
@@ -223,7 +223,7 @@ export default function GlobalError({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsx filename="app/global-error.js" switcher
+```jsx title="app/global-error.js" switcher
 'use client'
 
 export default function GlobalError({ error, reset }) {

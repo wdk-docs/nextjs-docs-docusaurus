@@ -1,6 +1,6 @@
 ---
 title: 快速刷新
-description: Fast Refresh is a hot module reloading experience that gives you instantaneous feedback on edits made to your React components.
+description: 快速刷新是一种热门的模块重载体验，它能让你在对React组件进行编辑时获得即时反馈。
 ---
 
 <details open>
@@ -10,40 +10,33 @@ description: Fast Refresh is a hot module reloading experience that gives you in
 
 </details>
 
-Fast Refresh is a Next.js feature that gives you instantaneous feedback on
-edits made to your React components. Fast Refresh is enabled by default in all
-Next.js applications on **9.4 or newer**. With Next.js Fast Refresh enabled,
-most edits should be visible within a second, **without losing component
-state**.
+快速刷新是Next.js的一个特性，它可以在对React组件进行编辑时提供即时反馈。
+在**9.4或更新版本**的所有Next.js应用程序中默认启用快速刷新。
+启用Next.js快速刷新后，大多数编辑应该在一秒钟内可见，**而不会丢失组件状态**。
 
-## How It Works
+## 它是如何工作的
 
-- If you edit a file that **only exports React component(s)**, Fast Refresh will
-  update the code only for that file, and re-render your component. You can edit
-  anything in that file, including styles, rendering logic, event handlers, or
-  effects.
+- 如果你编辑了一个只导出React组件的文件，快速刷新将只更新该文件的代码，并重新渲染你的组件。
+  您可以编辑该文件中的任何内容，包括样式、呈现逻辑、事件处理程序或效果。
 - If you edit a file with exports that _aren't_ React components, Fast Refresh
   will re-run both that file, and the other files importing it. So if both
   `Button.js` and `Modal.js` import `theme.js`, editing `theme.js` will update
   both components.
-- Finally, if you **edit a file** that's **imported by files outside of the
-  React tree**, Fast Refresh **will fall back to doing a full reload**. You
-  might have a file which renders a React component but also exports a value
-  that is imported by a **non-React component**. For example, maybe your
-  component also exports a constant, and a non-React utility file imports it. In
-  that case, consider migrating the constant to a separate file and importing it
-  into both files. This will re-enable Fast Refresh to work. Other cases can
-  usually be solved in a similar way.
+- 最后，如果你编辑的文件**是由React树之外的文件**导入的，快速刷新**将会退回到完全重新加载**。
+  你可能有一个文件，它呈现了一个React组件，但也导出了一个由非React组件导入的值。
+  例如，也许你的组件也导出了一个常量，而一个非react实用程序文件导入了它。
+  在这种情况下，请考虑将常量迁移到单独的文件中，并将其导入两个文件。
+  这将重新启用快速刷新工作。其他情况通常可以用类似的方法解决。
 
-## Error Resilience
+## 错误的弹性
 
-### Syntax Errors
+### 语法错误
 
 If you make a syntax error during development, you can fix it and save the file
 again. The error will disappear automatically, so you won't need to reload the
 app. **You will not lose component state**.
 
-### Runtime Errors
+### 运行时错误
 
 If you make a mistake that leads to a runtime error inside your component,
 you'll be greeted with a contextual overlay. Fixing the error will automatically
@@ -61,7 +54,7 @@ state. However, keep in mind that error boundaries shouldn't be _too_ granular.
 They are used by React in production, and should always be designed
 intentionally.
 
-## Limitations
+## 限制
 
 Fast Refresh tries to preserve local React state in the component you're
 editing, but only if it's safe to do so. Here's a few reasons why you might see
@@ -79,10 +72,9 @@ local state being reset on every edit to a file:
 As more of your codebase moves to function components and Hooks, you can expect
 state to be preserved in more cases.
 
-## Tips
+## 提示
 
-- Fast Refresh preserves React local state in function components (and Hooks) by
-  default.
+- 默认情况下，快速刷新在函数组件(和Hooks)中保留React本地状态。
 - Sometimes you might want to _force_ the state to be reset, and a component to
   be remounted. For example, this can be handy if you're tweaking an animation
   that only happens on mount. To do this, you can add `// @refresh reset`
@@ -92,7 +84,7 @@ state to be preserved in more cases.
 - You can put `console.log` or `debugger;` into the components you edit during
   development.
 
-## Fast Refresh and Hooks
+## 快速刷新和挂钩
 
 When possible, Fast Refresh attempts to preserve the state of your component
 between edits. In particular, `useState` and `useRef` preserve their previous

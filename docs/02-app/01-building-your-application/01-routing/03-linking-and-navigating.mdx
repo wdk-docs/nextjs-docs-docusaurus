@@ -36,7 +36,7 @@ Next.js路由器使用[以服务器为中心的路由](/docs/app/build-your-appl
 
 要使用`<Link>`，请从`next/link`中导入它，并将'`href` prop传递给组件:
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -44,7 +44,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 import Link from 'next/link'
 
 export default function Page() {
@@ -60,7 +60,7 @@ export default function Page() {
 
 当链接到[动态段](/docs/app/building-your-application/routing/dynamic-routes)时，你可以使用[模板字面量和插值](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)来生成一个链接列表。例如，要生成一个博客文章列表:
 
-```jsx filename="app/blog/PostList.js"
+```jsx title="app/blog/PostList.js"
 import Link from 'next/link'
 
 export default function PostList({ posts }) {
@@ -80,7 +80,7 @@ export default function PostList({ posts }) {
 
 你可以使用[`usePathname()`](/docs/app/api-reference/functions/use-pathname)来确定链接是否处于活动状态。例如，要向活动链接添加一个类，你可以检查当前的`pathname`是否与链接的`href`匹配:
 
-```jsx filename="app/ui/Navigation.js"
+```jsx title="app/ui/Navigation.js"
 'use client'
 
 import { usePathname } from 'next/navigation'
@@ -119,7 +119,7 @@ export function Navigation({ navLinks }) {
 
 要使用`useRouter`，需要从`next/navigation`中导入它，并在客户端组件中调用该钩子:
 
-```jsx filename="app/page.js"
+```jsx title="app/page.js"
 'use client'
 
 import { useRouter } from 'next/navigation'

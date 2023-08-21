@@ -13,7 +13,7 @@ When you edit your code, and Next.js is compiling the application, a compilation
 
 In some cases this indicator can be misplaced on your page, for example, when conflicting with a chat launcher. To change its position, open `next.config.js` and set the `buildActivityPosition` in the `devIndicators` object to `bottom-right` (default), `bottom-left`, `top-right` or `top-left`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   devIndicators: {
     buildActivityPosition: 'bottom-right',
@@ -23,7 +23,7 @@ module.exports = {
 
 In some cases this indicator might not be useful for you. To remove it, open `next.config.js` and disable the `buildActivity` config in `devIndicators` object:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   devIndicators: {
     buildActivity: false,
@@ -43,7 +43,7 @@ This is helpful since automatic static optimization can be very beneficial and k
 
 In some cases this indicator might not be useful, like when working on electron applications. To remove it open `next.config.js` and disable the `autoPrerender` config in `devIndicators`:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   devIndicators: {
     autoPrerender: false,

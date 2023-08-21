@@ -1,36 +1,64 @@
-# NextJS 13 Blog Starter
+---
+authors: [garrett]
+tags: [markdown, mdx]
+description: markdown
+keywords: [markdown, mdx]
+date: 2022-11-11
+---
 
-NextJS 13在这里，你知道这意味着什么，是时候创建另一个动态降价博客了。
+# NextJS 13博客入门
+
+> https://dev.to/slanted_dev/nextjs-13-blog-starter-1b6p
+
+NextJS 13在这里，你知道这意味着什么，是时候创建另一个动态Markdown博客了。
 虽然NextJS blog starter是一个了不起的资源，但它还没有提供新的基于应用目录文件的路由。
 现在是时候把事情掌握在我们自己手中了，至少在新系统在NextJS 13上公开之前。
 
-## Overview
+## 概述
 
-In this project we will be taking a brief look at a handful of the changed features included in NextJS 13, however our main focus will be on NextJS's new file routing ecosystem.
+在这个项目中，我们将简要介绍一下NextJS 13中包含的一些变化特性，但我们主要关注的是NextJS的新文件路由生态系统。
 
-## Getting Started
+<!--truncate-->
 
-Let's get things started with good old create-next-app, don't forget to add the experimental tag.
+## 开始
+
+让我们从create-next-app开始，不要忘记添加`experimental-app`标签。
+
+```sh
 npx create-next-app@latest --experimental-app
-Note: this install gives you the option to choose between using Typescript or Javascript, and toggling ESLint. We will be using Typescript for this tutorial but feel free to choose Javascript if you like to live life dangerously.
+```
 
-## or manual installation
+:::note
 
+这个安装让你可以选择使用Typescript或Javascript，或者切换ESLint。
+我们将在本教程中使用Typescript，但如果你喜欢危险的生活，可以自由选择Javascript。
+
+:::
+
+或者手动安装
+
+```sh
 npm install next@latest react@latest react-dom@latest eslint-config-next@latest
-Here are the rest of the dependencies we will be using for the blog. You can install them now, or later on as we go.
+```
+
+下面是我们将在博客中使用的其他依赖项。您可以现在安装它们，也可以稍后安装。
+
+```sh
 npm install remark remark-html gray-matter date-fns
+```
 
-## remark and remark-html
+## remark 和 remark-html
 
-remark is a powerful and versatile library that will allow us to start working with our markdown .md blog posts. remark-html is a plugin for remark that allows us to serialize our markdown into HTML.
+Remark是一个功能强大的多功能库，它将允许我们开始使用`markdown.md`博客文章。
+remark-HTML是remark的一个插件，它允许我们将我们的markdown序列化为HTML。
 
 ## gray-matter
 
-In order to get post information (such as author, title, date, etc.) from our HTML without having them be apart of our rendered post we need a way to parse YAML front matter, this is where gray-matter comes in hand.
+为了从HTML中获取帖子信息(如作者、标题、日期等)，而不让它们成为呈现的帖子的一部分，我们需要一种方法来解析YAML前端内容，这就是[`gray-matter`](https://github.com/jonschlinkert/gray-matter)的关键所在。
 
-Example first-post.md:
+例子 `first-post.md`:
 
-```mdx
+```md
 ---
 postTitle: First Post!
 date: 11-11-2022
@@ -39,7 +67,7 @@ date: 11-11-2022
 <h1>This is my first post!</h1>
 ```
 
-using gray-matter we are able to extract:
+使用 `gray-matter` 我们可以提取:
 
 ```json
 {
@@ -51,57 +79,76 @@ using gray-matter we are able to extract:
 }
 ```
 
-## Say goodbye to pages
+## 跟pages说再见
 
-For our first step on getting the blog up and running, it's out with the old and in with the new. NextJS has generously left the pages directory to allow users to slowly integrate their routing to the new file routing system, but for the purposes of this new project starting from scratch, let's delete it.
+对于我们让博客启动和运行的第一步，它是旧的和新的。
+NextJS慷慨地留下了pages目录，以便用户可以慢慢地将他们的路由集成到新的文件路由系统中，但是为了让这个新项目从头开始，让我们删除它。
 
-Pages directory image
+![Pages directory image](https://res.cloudinary.com/practicaldev/image/fetch/s--tU3fyxfK--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6a8pdl6mw1fajsryzefz.png)
 
-## Introducing: app
+## 介绍: app
 
-Replacing the old pages directory in NextJS 13 is the new app directory. So what are the differences?
+在NextJS 13中，新的app目录取代了旧的pages目录。那么有什么不同呢?
 
-Inside the new app directory you will see 3 special files:
+在新的app目录中，你会看到3个特殊的文件:
 
-page.tsx
-head.tsx
-layout.tsx
-and 2 css files (you should be familiar with these):
+- page.tsx
+- head.tsx
+- layout.tsx
 
-global.css
-page.module.css
-page.tsx
-At first glance it's safe to assume that page has replaced index in NextJS 13. But it's also important to note that there is another major difference with this new system: page.tsx is what NextJS will be rendering NOT routing. Routing is now handled via the file path each page.tsx is located in.
+2个CSS文件(你应该很熟悉):
 
-Old page directory example:
-Page directory example image
+- global.css
+- page.module.css
 
-This would be routed by NextJS as 3 different pages /about , /blog , and /.
+### page.tsx
 
-New app directory:
-App directory example image
+乍一看，可以肯定的是，在NextJS 13中，page已经取代了index。
+但同样重要的是要注意，这个新系统还有另一个主要区别: `page.tsx`是NextJS将渲染而不是路由。路由现在通过每个`page.tsx`所在的文件路径进行处理。
 
-The app directory is a route, much like the old pages directory, this means it needs its own page.tsx to render as an index at example.com/. As for the other routes, the main difference is that these pages are no longer different files all under pages, instead each route is housed within its own directory, with the directory name being the route and the page.tsx being its index render at that route.
+**旧页面目录示例:**
 
-Tip: You can think of this new system like having multiple pages directories nested within each other, with each one making up its own route base.
+![页面目录示例图片](https://res.cloudinary.com/practicaldev/image/fetch/s--ZgqCIYQc--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qqebf90xvyeyogzry268.png)
 
-## layout.tsx
+这将由NextJS路由为3个不同的页面 `/about` , `/blog` , 和 `/.`
 
-I'm sure many people have created a Layout component at some point, one that stores components (such as a Header and Footer) and renders the page inside. Well the new layout.tsx is essentially a built in version of this. Simply open the file, create your layout, and return a ReactNode child component inside and you're done. Believe it or not it really is that simple.
+**新的应用目录:**
 
-Note: This is also much more powerful and efficient than a typical layout component, I will be making a separate post on this in the future.
+![应用目录示例图片](https://res.cloudinary.com/practicaldev/image/fetch/s--fyyziqw6--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/975ke9okcx14pzm5i85r.PNG)
 
-## Other Special files
+app目录是一个路由，就像旧的pages目录一样，这意味着它需要自己的`page.tsx`来作为example.com/的索引呈现。
+至于其他路由，主要区别在于这些页面不再是所有在页面下的不同文件，而是每个路由都位于自己的目录中，目录名是路由，`page.tsx`是在该路由上呈现的索引。
 
-You may also notice there is a head.tsx, for now we won't be worrying about this file. For this project we will only be dealing with page.tsx and layout.tsx. For more information check out the NextJS docs.
+:::tip
 
-## Styles
+你可以把这个新系统想象成有多个页面目录嵌套在一起，每个页面都有自己的路由库。
 
-NextJS 13 keeps the same CSS system of global.css along with module CSS files.
+:::
 
-I love pure CSS just as much as the next developer, but why not get things done quick and easy with some Tailwind?
+### layout.tsx
 
-## TailwindCSS Install
+我相信很多人都在某种程度上创建了一个布局组件，一个存储组件(如Header和Footer)并在其中呈现页面的组件。
+新的`layout.tsx`本质上是这个的内置版本。
+只需打开文件，创建布局，并在其中返回一个ReactNode子组件，就完成了。
+信不信由你，事情就是这么简单。
+
+:::note
+
+这也比一个典型的布局组件更强大和有效，我将在未来的一个单独的帖子。
+
+:::
+
+### 其他特殊文件
+
+您可能还注意到有一个`head.tsx`，现在我们不需要担心这个文件。对于这个项目，我们将只处理页面。TSX和`layout.tsx`。要了解更多信息，请查看NextJS文档。
+
+## 风格
+
+NextJS 13保留了相同的CSS系统`global.css`和模块CSS文件。
+
+我和其他开发人员一样喜欢纯CSS，但为什么不借助一些辅助工具快速轻松地完成工作呢?
+
+### TailwindCSS 安装
 
 ```
 npm install -D tailwindcss postcss autoprefixer
@@ -129,17 +176,15 @@ module.exports = {
 @tailwind utilities;
 ```
 
-## Let's make a blog!
+## 让我们做一个博客吧!
 
-Now that we have a better understanding of how routing works let's begin making a blog. We will be using the current NextJS blog starter as a reference.
+现在我们对路由的工作原理有了更好的理解，让我们开始创建一个博客。我们将使用当前的NextJS博客启动器作为参考。
 
-## Home page
+## 主页
 
-Create a simple home (index) page to start with. Later we will add a way to fetch our recent posts to display and allow users to navigate to them.
+首先创建一个简单的主页(索引)页面。稍后，我们将添加一种方法来获取我们最近的帖子以显示，并允许用户导航到它们。
 
-```tsx
-// app/page.tsx
-
+```tsx title="app/page.tsx"
 export default function Home() {
   return (
     <div className="container mx-auto">
@@ -156,23 +201,21 @@ export default function Home() {
 }
 ```
 
-## Navbar
+## 导航条
 
-For easy navigation create a nav header and add it to our new special file layout.tsx.
+为了方便导航，创建一个导航头，并将其添加到我们新的特殊文件`layout.tsx`。
 
-```tsx
-// components/Navbar.tsx
-
+```tsx title="components/Navbar.tsx"
 export default function Navbar() {
   return <div className="bg-neutral-800"></div>
 }
 ```
 
-We also want some pages to link to: Home , Blog , and Github. Create a NavLink item to display our NextJS links.
+我们还想要一些页面链接到: 主页，博客和Github。创建一个NavLink项来显示NextJS链接。
 
-Home: blog information and recent posts.
-Blog: directory of all posts.
-Github: link to the project files.
+- Home: 博客信息和最近的帖子。
+- Blog: 所有帖子的目录。
+- Github: 链接到项目文件。
 
 ```tsx
 type NavLink = {
@@ -189,10 +232,9 @@ const NavLink = ({ href, children }: NavLink) => {
 }
 ```
 
-Add our new link items to the Navbar and we have a nice looking header. //
-components/Navbar.tsx
+添加我们的新链接项目到导航栏，我们有一个漂亮的标题。
 
-```tsx
+```tsx title="components/Navbar.tsx"
 import Link from 'next/link'
 
 export default function Navbar() {
@@ -231,11 +273,9 @@ const NavLink = ({ href, children }: NavLink) => {
 }
 ```
 
-Layout Now let's import our new stylish Navbar into our layout:
+现在让我们导入新的导航栏到我们的布局中:
 
-```tsx
-// app/layout.tsx
-
+```tsx title="app/layout.tsx"
 import './globals.css'
 import Navbar from '../components/Navbar'
 
@@ -266,17 +306,21 @@ export default function RootLayout({
 }
 ```
 
-Fetching
-We will need a way to fetch our posts and their front matter data. Let's grab the example api functions from the NextJS blog starter.
+## 抓取
 
-Note: we will be using the same functions from here but their implementation will be a little different.
+我们需要一种方法来获取我们的帖子和他们的前端数据。让我们从[NextJS博客入门教程](https://github.com/vercel/next.js/tree/canary/examples/blog-starter/lib)中获取示例api函数。
 
-Lib
-Create a lib folder to store our post getter functions:
+:::note
 
-```tsx
-// lib/api.ts
+我们将在这里使用相同的函数，但它们的实现将略有不同。
 
+:::
+
+### Lib
+
+创建一个lib文件夹来存储post getter函数:
+
+```tsx title="lib/api.ts"
 import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
@@ -324,9 +368,11 @@ export function getAllPosts(fields: string[] = []) {
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
   return posts
 }
-and
-// lib/markdownToHtml.ts
+```
 
+和
+
+```tsx title="lib/markdownToHtml.ts"
 import { remark } from 'remark'
 import html from 'remark-html'
 
@@ -338,35 +384,39 @@ export default async function markdownToHtml(markdown: string) {
 
 ## Post cards
 
-Before we start grabbing our posts to display, there is one last step: stylish cards to display our post front matter as preview cards.
+在我们开始抓取要显示的帖子之前，还有最后一步:将帖子前面的内容显示为预览卡的时尚卡片。
 
-Create a formatter for the post dates using date-fns:
+使用`date-fns`为发布日期创建格式化程序:
 
-```tsx
-// components/DateFormatter.tsx
-
+```tsx title="components/DateFormatter.tsx"
 import { parseISO, format } from 'date-fns'
 
 type Props = {
-dateString: string
+  dateString: string
 }
 
 const DateFormatter = ({ dateString }: Props) => {
-const date = parseISO(dateString)
-return <time className="text-slate-400" dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>
+  const date = parseISO(dateString)
+  return (
+    <time className="text-slate-400" dateTime={dateString}>
+      {format(date, 'LLLL d, yyyy')}
+    </time>
+  )
 }
 
 export default DateFormatter
-Then create some preview cards to display the post information:
-// components/PostPreview
+```
 
+然后创建一些预览卡来显示帖子信息:
+
+```tsx title="components/PostPreview"
 import DateFormatter from './DateFormatter'
 import Image from 'next/image'
 import Link from 'next/link'
 
 type Items = {
-[key: string]: string;
-};
+  [key: string]: string
+}
 
 export default function PostPreview({ post }: { post: Items }) {
   return (
@@ -378,7 +428,7 @@ export default function PostPreview({ post }: { post: Items }) {
             src={post.coverImage}
             width={400}
             height={400}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
         )}
         <div className="mt-4 space-y-2">
@@ -390,39 +440,39 @@ export default function PostPreview({ post }: { post: Items }) {
         </div>
       </Link>
     </div>
-  );
+  )
 }
-// components/PostHero.tsx
+```
 
+```tsx title="components/PostHero.tsx"
 import DateFormatter from './DateFormatter'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPostBySlug } from '../lib/api'
 
 type Items = {
-[key: string]: string;
-};
+  [key: string]: string
+}
 
 export default function PostHero() {
-  const heroPost = getPostBySlug("hero-post", [
-    "title",
-    "excerpt",
-    "slug",
-    "date",
-    "coverImage",
-  ]);
+  const heroPost = getPostBySlug('hero-post', [
+    'title',
+    'excerpt',
+    'slug',
+    'date',
+    'coverImage',
+  ])
 
-return (
-
-<Link href={`/posts/${heroPost.slug}`}>
-<div className="w-full mx-auto group">
-<Image
-alt={`cover image for ${heroPost.title}`}
-src={heroPost.coverImage}
-width={400}
-height={400}
-style={{ width: "100%" }}
-/>
+  return (
+    <Link href={`/posts/${heroPost.slug}`}>
+      <div className="w-full mx-auto group">
+        <Image
+          alt={`cover image for ${heroPost.title}`}
+          src={heroPost.coverImage}
+          width={400}
+          height={400}
+          style={{ width: '100%' }}
+        />
 
         <div className="grid mt-4 md:grid-cols-2 grid-cols-1">
           <div className="mb-2">
@@ -435,18 +485,16 @@ style={{ width: "100%" }}
         </div>
       </div>
     </Link>
-
-);
+  )
 }
 ```
 
-## Dynamic posts
+## 动态的帖子
 
-Let's use our getter functions to start displaying some posts. In NextJS 13 page.tsx is a React server component by default, therefore we can say goodbye to getServerSideProps , getStaticProps , and getInitialProps.
+让我们使用getter函数开始显示一些帖子。
+在NextJS 13页。tsx默认情况下是一个React服务器组件，因此我们可以对`getServerSideProps`、`getStaticProps`和`getInitialProps`说再见了。
 
-```tsx
-// app/page.tsx
-
+```tsx title="app/page.tsx"
 import { getAllPosts } from '../lib/api'
 import PostPreview from '../components/PostPreview'
 import PostHero from '../components/PostHero'
@@ -493,21 +541,26 @@ export default function Home() {
 }
 ```
 
-As you can tell the main difference here from the original NextJS starter blog is that we no longer need to use NextJS data fetching api's, instead we can just grab our data and use it right out of the gate.
+正如你所看到的，这里与最初的NextJS入门博客的主要区别在于，我们不再需要使用NextJS数据获取api，相反，我们可以直接获取数据并使用它。
 
 ## Post Slugs
 
-Another change in NextJS 13 is dynamic routing. Now that folders are used for routing and page.tsx is used for rendering, there is no more [slug].tsx. Instead the folders themselves can be turned into the slugs.
+NextJS 13的另一个变化是动态路由。
+现在，文件夹用于路由和页面。
+TSX用于渲染，没有更多的`[slug].tsx`。
+相反，文件夹本身可以变成`slugs`。
 
-Inside our app directory create a posts folder, and inside it create a [slug] folder. This folder is now our search params for /posts/[slug].
+在我们的app目录中创建一个posts文件夹，并在其中创建一个`[slug]`文件夹。这个文件夹现在是我们搜索`/posts/[slug]`的参数。
 
-Now create a dynamic page.tsx inside our [slug] directory to render the individual post pages.
+现在，在我们的`[slug]`目录中创建一个动态page.tsx，以呈现各个帖子页面。
 
-Tip: you may also want to create a module.css to help style your HTML retrieved from the posts. Here are the styles I use.
+:::tip
 
-```tsx
-// app/posts/[slug]
+您可能还需要创建一个module.css来帮助样式化从帖子中检索到的HTML。这是我用的款式。
 
+:::
+
+```tsx title="app/posts/[slug]"
 import { getPostBySlug } from '../../../lib/api'
 import markdownToHtml from '../../../lib/markdownToHtml'
 import markdownStyles from './markdown-styles.module.css'
@@ -534,17 +587,14 @@ export default async function Post({ params }: { params: { slug: string } }) {
 }
 ```
 
-We now can access our individual posts as dynamically routed pages using search parameters.
+现在，我们可以使用搜索参数访问作为动态路由页面的各个帖子。
 
-## Blog page
+## 博客 page
 
-With a separate Home page used to display a hero post, a few recent posts, along with any additional information, the last step is to create a blog home page that contains all of our posts.
+有了一个单独的主页，用于显示一篇英雄文章、一些最近的文章以及任何其他信息，最后一步是创建一个包含我们所有文章的博客主页。
+在我们的应用程序下创建一个`blog`文件夹和`page.tsx`。
 
-Create a blog folder and page.tsx under our app.
-
-```tsx
-// app/blog/page.tsx
-
+```tsx title="app/blog/page.tsx"
 import { getAllPosts } from '../../lib/api'
 import PostPreview from '../../components/PostPreview'
 
@@ -571,4 +621,5 @@ export default function Blog() {
 }
 ```
 
-We now have our very own dynamic markdown blog, all in the new and improved NextJS 13. Help yourself to the project repo for reference, or I encourage you to clone it to mess around with.
+我们现在有了自己的动态MD博客，所有这些都在新的和改进的NextJS 13中。
+请自己参考项目的[repo](https://github.com/garrett-huggins/next13-blog-starter)，或者我鼓励您克隆它来胡闹。

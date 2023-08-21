@@ -18,7 +18,7 @@ To start, you only need to define a `.babelrc` file (or `babel.config.js`) in th
 
 Here's an example `.babelrc` file:
 
-```json filename=".babelrc"
+```json title=".babelrc"
 {
   "presets": ["next/babel"],
   "plugins": []
@@ -29,7 +29,7 @@ You can [take a look at this file](https://github.com/vercel/next.js/blob/canary
 
 To add presets/plugins **without configuring them**, you can do it this way:
 
-```json filename=".babelrc"
+```json title=".babelrc"
 {
   "presets": ["next/babel"],
   "plugins": ["@babel/plugin-proposal-do-expressions"]
@@ -40,7 +40,7 @@ To add presets/plugins **without configuring them**, you can do it this way:
 
 To add presets/plugins **with custom configuration**, do it on the `next/babel` preset like so:
 
-```json filename=".babelrc"
+```json title=".babelrc"
 {
   "presets": [
     [

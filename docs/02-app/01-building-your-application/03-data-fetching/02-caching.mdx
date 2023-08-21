@@ -23,7 +23,7 @@ Next.js内置了对缓存数据的支持，既可以基于每个请求(推荐)�
 
 By default, all `fetch()` requests are cached and deduplicated automatically. This means that if you make the same request twice, the second request will reuse the result from the first request.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 async function getComments() {
   const res = await fetch('https://...') // The result is cached
   return res.json()
@@ -36,7 +36,7 @@ const comments = await getComments() // cache MISS
 const comments = await getComments() // cache HIT
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 async function getComments() {
   const res = await fetch('https://...') // The result is cached
   return res.json()
@@ -57,7 +57,7 @@ Requests are **not** cached if:
 
 Requests made using `fetch` can specify a `revalidate` option to control the revalidation frequency of the request.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export default async function Page() {
   // revalidate this data every 10 seconds at most
   const res = await fetch('https://...', { next: { revalidate: 10 } })
@@ -66,7 +66,7 @@ export default async function Page() {
 }
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 export default async function Page() {
   // revalidate this data every 10 seconds at most
   const res = await fetch('https://...', { next: { revalidate: 10 } })
@@ -79,7 +79,7 @@ export default async function Page() {
 
 React allows you to [`cache()`](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md) and deduplicate requests, memoizing the result of the wrapped function call. The same function called with the same arguments will reuse a cached value instead of re-running the function.
 
-```ts filename="utils/getUser.ts" switcher
+```ts title="utils/getUser.ts" switcher
 import { cache } from 'react'
 
 export const getUser = cache(async (id: string) => {
@@ -88,7 +88,7 @@ export const getUser = cache(async (id: string) => {
 })
 ```
 
-```js filename="utils/getUser.js" switcher
+```js title="utils/getUser.js" switcher
 import { cache } from 'react'
 
 export const getUser = cache(async (id) => {
@@ -97,7 +97,7 @@ export const getUser = cache(async (id) => {
 })
 ```
 
-```tsx filename="app/user/[id]/layout.tsx" switcher
+```tsx title="app/user/[id]/layout.tsx" switcher
 import { getUser } from '@utils/getUser'
 
 export default async function UserLayout({ params: { id } }) {
@@ -106,7 +106,7 @@ export default async function UserLayout({ params: { id } }) {
 }
 ```
 
-```jsx filename="app/user/[id]/layout.js" switcher
+```jsx title="app/user/[id]/layout.js" switcher
 import { getUser } from '@utils/getUser'
 
 export default async function UserLayout({ params: { id } }) {
@@ -115,7 +115,7 @@ export default async function UserLayout({ params: { id } }) {
 }
 ```
 
-```tsx filename="app/user/[id]/page.tsx" switcher
+```tsx title="app/user/[id]/page.tsx" switcher
 import { getUser } from '@utils/getUser'
 
 export default async function Page({
@@ -128,7 +128,7 @@ export default async function Page({
 }
 ```
 
-```jsx filename="app/user/[id]/page.js" switcher
+```jsx title="app/user/[id]/page.js" switcher
 import { getUser } from '@utils/getUser'
 
 export default async function Page({ params: { id } }) {
@@ -149,7 +149,7 @@ Although the `getUser()` function is called twice in the example above, only one
 
 `POST` requests are automatically deduplicated when using `fetch` – unless they are inside of `POST` Route Handler or come after reading `headers()`/`cookies()`. For example, if you are using GraphQL and `POST` requests in the above cases, you can use `cache` to deduplicate requests. The `cache` arguments must be flat and only include primitives. Deep objects won't match for deduplication.
 
-```ts filename="utils/getUser.ts" switcher
+```ts title="utils/getUser.ts" switcher
 import { cache } from 'react'
 
 export const getUser = cache(async (id: string) => {
@@ -158,7 +158,7 @@ export const getUser = cache(async (id: string) => {
 })
 ```
 
-```js filename="utils/getUser.js" switcher
+```js title="utils/getUser.js" switcher
 import { cache } from 'react'
 
 export const getUser = cache(async (id) => {
@@ -171,7 +171,7 @@ export const getUser = cache(async (id) => {
 
 As a pattern, we suggest optionally exposing a `preload()` export in utilities or components that do data fetching.
 
-```tsx filename="components/User.tsx" switcher
+```tsx title="components/User.tsx" switcher
 import { getUser } from '@utils/getUser'
 
 export const preload = (id: string) => {
@@ -185,7 +185,7 @@ export default async function User({ id }: { id: string }) {
 }
 ```
 
-```jsx filename="components/User.js" switcher
+```jsx title="components/User.js" switcher
 import { getUser } from '@utils/getUser'
 
 export const preload = (id) => {
@@ -201,7 +201,7 @@ export default async function User({ id }) {
 
 By calling `preload`, you can eagerly start fetching data you're likely going to need.
 
-```tsx filename="app/user/[id]/page.tsx" switcher
+```tsx title="app/user/[id]/page.tsx" switcher
 import User, { preload } from '@components/User'
 
 export default async function Page({
@@ -215,7 +215,7 @@ export default async function Page({
 }
 ```
 
-```jsx filename="app/user/[id]/page.js" switcher
+```jsx title="app/user/[id]/page.js" switcher
 import User, { preload } from '@components/User'
 
 export default async function Page({ params: { id } }) {
@@ -235,7 +235,7 @@ export default async function Page({ params: { id } }) {
 
 You can combine the `cache` function, the `preload` pattern, and the `server-only` package to create a data fetching utility that can be used throughout your app.
 
-```ts filename="utils/getUser.ts" switcher
+```ts title="utils/getUser.ts" switcher
 import { cache } from 'react'
 import 'server-only'
 
@@ -248,7 +248,7 @@ export const getUser = cache(async (id: string) => {
 })
 ```
 
-```js filename="utils/getUser.js" switcher
+```js title="utils/getUser.js" switcher
 import { cache } from 'react'
 import 'server-only'
 
@@ -273,11 +273,11 @@ Segment-level caching allows you to cache and revalidate data used in route segm
 
 This mechanism allows different segments of a path to control the cache lifetime of the entire route. Each `page.tsx` and `layout.tsx` in the route hierarchy can export a `revalidate` value that sets the revalidation time for the route.
 
-```tsx filename="app/page.tsx" switcher
+```tsx title="app/page.tsx" switcher
 export const revalidate = 60 // revalidate this segment every 60 seconds
 ```
 
-```jsx filename="app/page.js" switcher
+```jsx title="app/page.js" switcher
 export const revalidate = 60 // revalidate this segment every 60 seconds
 ```
 

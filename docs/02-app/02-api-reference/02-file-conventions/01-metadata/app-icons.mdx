@@ -32,7 +32,7 @@ Next.js will evaluate the file and automatically add the appropriate tags to you
 
 Add a `favicon.ico` image file to the root `/app` route segment.
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link rel="icon" href="/favicon.ico" sizes="any" />
 ```
 
@@ -40,7 +40,7 @@ Add a `favicon.ico` image file to the root `/app` route segment.
 
 Add an `icon.(ico|jpg|jpeg|png|svg)` image file.
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link
   rel="icon"
   href="/icon?<generated>"
@@ -53,7 +53,7 @@ Add an `icon.(ico|jpg|jpeg|png|svg)` image file.
 
 Add an `apple-icon.(jpg|jpeg|png)` image file.
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link
   rel="apple-touch-icon"
   href="/apple-icon?<generated>"
@@ -83,7 +83,7 @@ Generate an app icon by creating an `icon` or `apple-icon` route that default ex
 
 The easiest way to generate an icon is to use the [`ImageResponse`](/docs/app/api-reference/functions/image-response) API from `next/server`.
 
-```tsx filename="app/icon.tsx" switcher
+```tsx title="app/icon.tsx" switcher
 import { ImageResponse } from 'next/server'
 
 // Route segment config
@@ -126,7 +126,7 @@ export default function Icon() {
 }
 ```
 
-```jsx filename="app/icon.js" switcher
+```jsxtitle="app/icon.js" switcher
 import { ImageResponse } from 'next/server'
 
 // Route segment config
@@ -169,7 +169,7 @@ export default function Icon() {
 }
 ```
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
 ```
 
@@ -187,13 +187,13 @@ The default export function receives the following props:
 
 An object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to the segment `icon` or `apple-icon` is colocated in.
 
-```tsx filename="app/shop/[slug]/icon.tsx" switcher
+```tsx title="app/shop/[slug]/icon.tsx" switcher
 export default function Icon({ params }: { params: { slug: string } }) {
   // ...
 }
 ```
 
-```jsx filename="app/shop/[slug]/icon.js" switcher
+```jsxtitle="app/shop/[slug]/icon.js" switcher
 export default function Icon({ params }) {
   // ...
 }
@@ -223,37 +223,37 @@ You can optionally configure the icon's metadata by exporting `size` and `conten
 
 #### `size`
 
-```tsx filename="icon.tsx / apple-icon.tsx" switcher
+```tsx title="icon.tsx / apple-icon.tsx" switcher
 export const size = { width: 32, height: 32 }
 
 export default function Icon() {}
 ```
 
-```jsx filename="icon.js / apple-icon.js" switcher
+```jsxtitle="icon.js / apple-icon.js" switcher
 export const size = { width: 32, height: 32 }
 
 export default function Icon() {}
 ```
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link rel="icon" sizes="32x32" />
 ```
 
 #### `contentType`
 
-```tsx filename="icon.tsx / apple-icon.tsx" switcher
+```tsx title="icon.tsx / apple-icon.tsx" switcher
 export const contentType = 'image/png'
 
 export default function Icon() {}
 ```
 
-```jsx filename="icon.js / apple-icon.js" switcher
+```jsxtitle="icon.js / apple-icon.js" switcher
 export const contentType = 'image/png'
 
 export default function Icon() {}
 ```
 
-```html filename="<head> output"
+```htmltitle="<head> output"
 <link rel="icon" type="image/png" />
 ```
 
@@ -268,13 +268,13 @@ export default function Icon() {}
 | [`runtime`](/docs/app/api-reference/file-conventions/route-segment-config#runtime)                 | `'nodejs' \| 'edge'`                                     | `'nodejs'` |
 | [`preferredRegion`](/docs/app/api-reference/file-conventions/route-segment-config#preferredregion) | `'auto' \| 'global' \| 'home' \| string \| string[]`     | `'auto'`   |
 
-```tsx filename="app/icon.tsx" switcher
+```tsx title="app/icon.tsx" switcher
 export const runtime = 'edge'
 
 export default function Icon() {}
 ```
 
-```jsx filename="app/icon.js" switcher
+```jsxtitle="app/icon.js" switcher
 export const runtime = 'edge'
 
 export default function Icon() {}

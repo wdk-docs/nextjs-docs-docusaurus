@@ -1,0 +1,115 @@
+# 嵌入
+
+本指南探讨了如何在markdown中嵌入tweets、gist或codependencies等内容。 {/* more */}
+MDX支持标准标记语法 ([CommonMark][]).
+默认情况下不支持嵌入。
+
+有两种方法可以完成嵌入:在编译时或在运行时。
+在编译时这样做意味着要提前花费精力，这样读者才会知道
+有一个快速的经验，因为没有请求必须在客户端。
+在运行时将工作转移到客户端，从而提供了更大的灵活性。
+这可能会导致读者体验缓慢。
+这也取决于你使用什么框架(比如它是特定于React、Preact、Vue等的)。
+
+## 在编译时嵌入
+
+你可以像这样使用[`@remark-embedder/core`][remark-embedder]:
+
+```js title="example.js"
+import { compile } from '@mdx-js/mdx'
+// Node currently can’t pick up on the default exports by `@remark-embedder`.
+import fauxRemarkEmbedder from '@remark-embedder/core'
+import fauxOembedTransformer from '@remark-embedder/transformer-oembed'
+const remarkEmbedder = fauxRemarkEmbedder.default
+const oembedTransformer = fauxOembedTransformer.default
+
+const code = `
+Check out this video:
+
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+`
+
+console.log(
+  String(
+    await compile(code, {
+      remarkPlugins: [[remarkEmbedder, { transformers: [oembedTransformer] }]],
+    }),
+  ),
+)
+```
+
+<details>
+  <summary>展开等效JSX</summary>
+
+```jsx title="output.jsx"
+<>
+  <p>Check out this video:</p>
+  <iframe
+    width="200"
+    height="113"
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</>
+```
+
+</details>
+
+## 在运行时嵌入
+
+你可以使用特定于react的[MDX嵌入][mdx-embed]来在MDX中嵌入东西。
+下面是一个MDX文件的例子，它使用了一个特定的嵌入，没有`@mdx-js/react`:
+
+```mdx title="example.mdx"
+import { CodePen } from 'mdx-embed'
+
+这是一个codepen，和一些其他的博客文章文本。
+
+<CodePen codePenId="PNaGbb" />
+```
+
+<details>
+  <summary>展开等效JSX</summary>
+
+```js title="output.jsx"
+<>
+  <p>Here’s a codepen, and some other blog post text.</p>
+  <CodePen codePenId="PNaGbb" />
+</>
+```
+
+</details>
+
+如果你不想在MDX文件中使用显式导入:
+
+```mdx title="example.mdx"
+Here’s a codepen, and some other blog post text.
+
+<CodePen codePenId="PNaGbb" />
+```
+
+然后你可以传递所有组件:
+
+```jsx title="example.jsx"
+import * as embeds from 'mdx-embed'
+import Example from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+
+<Example components={...embeds} />
+```
+
+或者，如果你已经安装并配置了[`@mdx-js/react`][mdx-react]，你也可以使用`MDXEmbedProvider`:
+
+```jsx title="example.jsx"
+import { MDXEmbedProvider } from 'mdx-embed'
+import Example from './example.mdx' // Assumes an integration is used to compile MDX -> JS.
+;<MDXEmbedProvider>
+  <Example />
+</MDXEmbedProvider>
+```
+
+[commonmark]: https://spec.commonmark.org/current/
+[remark-embedder]: https://github.com/remark-embedder/core
+[mdx-embed]: https://www.mdx-embed.com/
+[mdx-react]: /packages/react/

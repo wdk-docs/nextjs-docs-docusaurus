@@ -29,7 +29,7 @@ This will set a **cookie** to enable draft mode. Subsequent requests containing 
 
 You can test this manually by creating an API route like below and accessing it from your browser manually:
 
-```ts filename="pages/api/draft.ts"
+```ts title="pages/api/draft.ts"
 // simple example for testing it manually from your browser.
 export default function handler(req, res) {
   res.setDraftMode({ enable: true })
@@ -49,7 +49,7 @@ These steps assume that the headless CMS you’re using supports setting **custo
 
 **Second**, if your headless CMS supports setting custom draft URLs, specify the following as the draft URL. This assumes that your draft API route is located at `pages/api/draft.ts`.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
@@ -134,7 +134,7 @@ That’s it! If you access the draft API route (with `secret` and `slug`) from y
 
 Set this as the draft URL on your headless CMS or access manually, and you should be able to see the draft.
 
-```bash filename="Terminal"
+```bash title="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
@@ -146,7 +146,7 @@ By default, the Draft Mode session ends when the browser is closed.
 
 To clear the Draft Mode cookie manually, create an API route that calls `setDraftMode({ enable: false })`:
 
-```ts filename="pages/api/disable-draft.ts"
+```ts title="pages/api/disable-draft.ts"
 export default function handler(req, res) {
   res.setDraftMode({ enable: false })
 }

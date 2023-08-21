@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem'
 
 `useSearchParams` returns a **read-only** version of the [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) interface.
 
-```tsx filename="app/dashboard/search-bar.tsx" switcher
+```tsx title="app/dashboard/search-bar.tsx" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -26,7 +26,7 @@ export default function SearchBar() {
 }
 ```
 
-```jsx filename="app/dashboard/search-bar.js" switcher
+```jsxtitle="app/dashboard/search-bar.js" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -87,7 +87,7 @@ This allows a part of the page to be statically rendered while the dynamic part 
 
 You can reduce the portion of the route that is client-side rendered by wrapping the component that uses `useSearchParams` in a `Suspense` boundary. For example:
 
-```tsx filename="app/dashboard/search-bar.tsx" switcher
+```tsx title="app/dashboard/search-bar.tsx" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -104,7 +104,7 @@ export default function SearchBar() {
 }
 ```
 
-```jsx filename="app/dashboard/search-bar.js" switcher
+```jsxtitle="app/dashboard/search-bar.js" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -121,7 +121,7 @@ export default function SearchBar() {
 }
 ```
 
-```tsx filename="app/dashboard/page.tsx" switcher
+```tsx title="app/dashboard/page.tsx" switcher
 import { Suspense } from 'react'
 import SearchBar from './search-bar'
 
@@ -147,7 +147,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/dashboard/page.js" switcher
+```jsxtitle="app/dashboard/page.js" switcher
 import { Suspense } from 'react'
 import SearchBar from './search-bar'
 
@@ -181,7 +181,7 @@ If a route is [dynamically rendered](/docs/app/building-your-application/renderi
 
 For example:
 
-```tsx filename="app/dashboard/search-bar.tsx" switcher
+```tsx title="app/dashboard/search-bar.tsx" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -199,7 +199,7 @@ export default function SearchBar() {
 }
 ```
 
-```jsx filename="app/dashboard/search-bar.js" switcher
+```jsxtitle="app/dashboard/search-bar.js" switcher
 'use client'
 
 import { useSearchParams } from 'next/navigation'
@@ -217,7 +217,7 @@ export default function SearchBar() {
 }
 ```
 
-```tsx filename="app/dashboard/page.tsx" switcher
+```tsx title="app/dashboard/page.tsx" switcher
 import SearchBar from './search-bar'
 
 export const dynamic = 'force-dynamic'
@@ -234,7 +234,7 @@ export default function Page() {
 }
 ```
 
-```jsx filename="app/dashboard/page.js" switcher
+```jsxtitle="app/dashboard/page.js" switcher
 import SearchBar from './search-bar'
 
 export const dynamic = 'force-dynamic'
@@ -269,7 +269,7 @@ Instead, use the Page [`searchParams`](/docs/app/api-reference/file-conventions/
 
 You can use [`useRouter`](/docs/app/api-reference/functions/use-router) or [`Link`](/docs/app/api-reference/components/link) to set new `searchParams`. After a navigation is performed, the current [`page.js`](/docs/app/api-reference/file-conventions/page) will receive an updated [`searchParams` prop](/docs/app/api-reference/file-conventions/page#searchparams-optional).
 
-```tsx filename="app/example-client-component.tsx" switcher
+```tsx title="app/example-client-component.tsx" switcher
 export default function ExampleClientComponent() {
   const router = useRouter()
   const pathname = usePathname()
@@ -315,7 +315,7 @@ export default function ExampleClientComponent() {
 }
 ```
 
-```jsx filename="app/example-client-component.js" switcher
+```jsxtitle="app/example-client-component.js" switcher
 export default function ExampleClientComponent() {
   const router = useRouter()
   const pathname = usePathname()

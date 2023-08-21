@@ -11,7 +11,7 @@ description: 当新特性发布时，使用codemods来升级你的Next.js代码�
 
 在终端中，导航(`cd`)到你的项目文件夹，然后运行:
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod <transform> <path>
 ```
 
@@ -30,7 +30,7 @@ npx @next/codemod <transform> <path>
 
 ##### `built-in-next-font`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod@latest built-in-next-font .
 ```
 
@@ -54,7 +54,7 @@ import { Inter } from 'next/font/google'
 
 ##### `next-image-to-legacy-image`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod@latest next-image-to-legacy-image .
 ```
 
@@ -62,7 +62,7 @@ Safely renames `next/image` imports in existing Next.js 10, 11, or 12 applicatio
 
 For example:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 import Image1 from 'next/image'
 import Image2 from 'next/future/image'
 
@@ -78,7 +78,7 @@ export default function Home() {
 
 Transforms into:
 
-```jsx filename="pages/index.js"
+```jsxtitle="pages/index.js"
 // 'next/image' becomes 'next/legacy/image'
 import Image1 from 'next/legacy/image'
 // 'next/future/image' becomes 'next/image'
@@ -98,7 +98,7 @@ export default function Home() {
 
 ##### `next-image-experimental`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod@latest next-image-experimental .
 ```
 
@@ -114,7 +114,7 @@ Dangerously migrates from `next/legacy/image` to the new `next/image` by adding 
 
 ##### `new-link`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod@latest new-link .
 ```
 
@@ -170,7 +170,7 @@ const Component = () => <a>About</a>
 
 ##### `cra-to-next`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod cra-to-next
 ```
 
@@ -184,7 +184,7 @@ Please share any feedback related to this transform [in this discussion](https:/
 
 ##### `add-missing-react-import`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod add-missing-react-import
 ```
 
@@ -192,7 +192,7 @@ Transforms files that do not import `React` to include the import in order for t
 
 For example:
 
-```jsx filename="my-component.js"
+```jsxtitle="my-component.js"
 export default class Home extends React.Component {
   render() {
     return <div>Hello World</div>
@@ -202,7 +202,7 @@ export default class Home extends React.Component {
 
 Transforms into:
 
-```jsx filename="my-component.js"
+```jsxtitle="my-component.js"
 import React from 'react'
 export default class Home extends React.Component {
   render() {
@@ -217,7 +217,7 @@ export default class Home extends React.Component {
 
 ##### `name-default-component`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod name-default-component
 ```
 
@@ -227,7 +227,7 @@ Transforms anonymous components into named components to make sure they work wit
 
 For example:
 
-```jsx filename="my-component.js"
+```jsxtitle="my-component.js"
 export default function () {
   return <div>Hello World</div>
 }
@@ -235,7 +235,7 @@ export default function () {
 
 Transforms into:
 
-```jsx filename="my-component.js"
+```jsxtitle="my-component.js"
 export default function MyComponent() {
   return <div>Hello World</div>
 }
@@ -249,7 +249,7 @@ The component will have a camel-cased name based on the name of the file, and it
 
 ##### `withamp-to-config`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod withamp-to-config
 ```
 
@@ -285,7 +285,7 @@ export const config = {
 
 ##### `url-to-withrouter`
 
-```bash filename="Terminal"
+```bash title="Terminal"
 npx @next/codemod url-to-withrouter
 ```
 
@@ -293,7 +293,7 @@ Transforms the deprecated automatically injected `url` property on top level pag
 
 For example:
 
-```js filename="From"
+```js title="From"
 import React from 'react'
 export default class extends React.Component {
   render() {
@@ -303,7 +303,7 @@ export default class extends React.Component {
 }
 ```
 
-```js filename="To"
+```js title="To"
 import React from 'react'
 import { withRouter } from 'next/router'
 export default withRouter(

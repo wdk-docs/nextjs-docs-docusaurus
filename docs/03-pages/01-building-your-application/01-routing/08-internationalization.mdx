@@ -30,7 +30,7 @@ Generally a Locale Identifier is made up of a language, region, and script separ
 If user locale is `nl-BE` and it is not listed in your configuration, they will be redirected to `nl` if available, or to the default locale otherwise.
 If you don't plan to support all regions of a country, it is therefore a good practice to include country locales that will act as fallbacks.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   i18n: {
     // These are all the locales you want to support in
@@ -71,7 +71,7 @@ There are two locale handling strategies: Sub-path Routing and Domain Routing.
 
 Sub-path Routing puts the locale in the url path.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   i18n: {
     locales: ['en-US', 'fr', 'nl-NL'],
@@ -92,7 +92,7 @@ The default locale does not have a prefix.
 
 By using domain routing you can configure locales to be served from different domains:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   i18n: {
     locales: ['en-US', 'fr', 'nl-NL', 'nl-BE'],
@@ -148,7 +148,7 @@ With Next.js 12 and [Middleware](/docs/pages/building-your-application/routing/m
 
 For example, here's a `next.config.js` file with support for a few languages. Note the `"default"` locale has been added intentionally.
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   i18n: {
     locales: ['default', 'en', 'de', 'fr'],
@@ -161,7 +161,7 @@ module.exports = {
 
 Next, we can use [Middleware](/docs/pages/building-your-application/routing/middleware) to add custom routing rules:
 
-```ts filename="middleware.ts"
+```ts title="middleware.ts"
 import { NextRequest, NextResponse } from 'next/server'
 
 const PUBLIC_FILE = /\.(.*)$/
@@ -194,7 +194,7 @@ This [Middleware](/docs/pages/building-your-application/routing/middleware) skip
 
 The automatic locale detection can be disabled with:
 
-```js filename="next.config.js"
+```js title="next.config.js"
 module.exports = {
   i18n: {
     localeDetection: false,
@@ -300,7 +300,7 @@ Next.js doesn't know about variants of a page so it's up to you to add the `href
 
 For pages using `getStaticProps` with [Dynamic Routes](/docs/pages/building-your-application/routing/dynamic-routes), all locale variants of the page desired to be prerendered need to be returned from [`getStaticPaths`](/docs/pages/building-your-application/data-fetching/get-static-paths). Along with the `params` object returned for `paths`, you can also return a `locale` field specifying which locale you want to render. For example:
 
-```jsx filename="pages/blog/[slug].js"
+```jsxtitle="pages/blog/[slug].js"
 export const getStaticPaths = ({ locales }) => {
   return {
     paths: [
