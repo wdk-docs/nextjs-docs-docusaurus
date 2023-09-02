@@ -13,15 +13,17 @@ Rollup plugin for MDX.
 
 ## Contents
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Install](#install)
-- [Use](#use)
-- [API](#api)
-- [Types](#types)
-- [Security](#security)
-- [Contribute](#contribute)
-- [License](#license)
+- [`@mdx-js/rollup`](#mdx-jsrollup)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
+  - [Use](#use)
+  - [API](#api) - [`options`](#options) - [`options.include`](#optionsinclude) - [`options.exclude`](#optionsexclude) - [Note: Babel](#note-babel)
+  - [Types](#types)
+  - [Security](#security)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## 这是什么?
 
@@ -31,12 +33,9 @@ Rollup plugin for MDX.
 
 如果您正在使用Rollup(或其他使用Rollup的工具，如Vite)，则此集成非常有用。
 
-This integration can be combined with the Babel plugin to support nonstandard
-JSX runtimes (such as Vue) or compile modern JavaScript features to ones your
-users support.
+这种集成可以与Babel插件相结合，以支持非标准的JSX运行时(例如Vue)，或者将现代JavaScript功能编译为用户支持的功能。
 
-If you want to evaluate MDX code then the lower-level compiler (`@mdx-js/mdx`)
-can be used manually.
+如果要评估MDX代码，则可以手动使用较低级别的编译器(`@mdx-js/mdx`)。
 
 ## 安装
 

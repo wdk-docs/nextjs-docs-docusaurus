@@ -40,7 +40,10 @@ MDX 编译器.
 ## 我应该什么时候使用这个?
 
 这是将MDX转换为JavaScript的核心编译器，它为您提供了最大的控制权。
-如果你使用的是一个捆绑器(webpack, Rollup, esbuild)，或者一个站点构建器(Gatsby, Next.js)，或者一个带有捆绑器的构建系统(Vite, WMR)，你最好使用一个集成:参见[§集成][integration]。
+如果你使用的是一个捆绑器(webpack, Rollup, esbuild)，
+或者一个站点构建器(Gatsby, Next.js)，
+或者一个带有捆绑器的构建系统(Vite, WMR)，
+你最好使用一个集成:参见[§集成][integrations]。
 
 ## 安装
 
@@ -58,9 +61,9 @@ npm install @mdx-js/mdx
 yarn add @mdx-js/mdx
 ```
 
-## Use
+## 使用
 
-Say we have an MDX document, `example.mdx`:
+假设我们有一个MDX文档， `example.mdx`:
 
 ```mdx
 export const Thing = () => <>World!</>
@@ -68,7 +71,7 @@ export const Thing = () => <>World!</>
 # Hello, <Thing />
 ```
 
-Add some code in `example.js` to compile `example.mdx` to JavaScript:
+在 `example.js`中添加一些代码，将`example.mdx`编译为JavaScript:
 
 ```js
 import fs from 'node:fs/promises'
@@ -79,7 +82,7 @@ const compiled = await compile(await fs.readFile('example.mdx'))
 console.log(String(compiled))
 ```
 
-Yields roughly:
+大致收益率:
 
 ```js
 /* @jsxRuntime automatic @jsxImportSource react */
@@ -112,11 +115,11 @@ export default function MDXContent(props = {}) {
 }
 ```
 
-See [§ Using MDX][using-mdx] for more on how MDX work and how to use the result.
+有关MDX如何工作以及如何使用结果的更多信息，请参见[§使用MDX][using-mdx]。
 
 ## API
 
-This package exports the following identifiers:
+这个包导出以下标识符:
 [`compile`][compile],
 [`compileSync`][compile-sync],
 [`evaluate`][eval],
@@ -124,19 +127,18 @@ This package exports the following identifiers:
 [`run`][run],
 [`runSync`](#runsyncfunctionbody-options), and
 [`createProcessor`][create-processor].
-There is no default export.
+没有默认的导出。
 
 ### `compile(file, options?)`
 
-Compile MDX to JS.
+将MDX编译为JS。
 
 ###### `file`
 
-MDX document to parse (`string`, [`Buffer`][buffer] in UTF-8, [`vfile`][vfile],
-or anything that can be given to `vfile`).
+MDX文档解析(`string`， 在UTF-8中[`Buffer`][buffer]， [`vfile`][vfile]，或任何可以给`vfile`)。
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import { VFile } from 'vfile'
@@ -152,10 +154,10 @@ await compile(new VFile({ path: 'path/to/file.mdx', value: '🤭' }))
 
 ###### `options.remarkPlugins`
 
-List of [remark plugins][remark-plugins], presets, and pairs.
+[remark插件][remark-plugins]，预设和配对列表。
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import remarkFrontmatter from 'remark-frontmatter' // YAML and such.
@@ -176,7 +178,7 @@ await compile(file, {
 List of [rehype plugins][rehype-plugins], presets, and pairs.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import rehypeKatex from 'rehype-katex' // Render math with KaTeX.
@@ -204,14 +206,14 @@ This is a new ecosystem, currently in beta, to transform [esast][] trees
 
 ###### `options.remarkRehypeOptions`
 
-Options to pass through to [`remark-rehype`][remark-rehype].
+传递给[`remark-rehype`][remark-rehype]的选项。
 The option `allowDangerousHtml` will always be set to `true` and the MDX nodes
 are passed through.
 In particular, you might want to pass `clobberPrefix`, `footnoteLabel`, and
 `footnoteBackLabel`.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 compile({ value: '…' }, { remarkRehypeOptions: { clobberPrefix: 'comment-1' } })
@@ -244,7 +246,7 @@ The format cannot be detected if a file is passed without a path or extension:
 So pass a full vfile (with `path`) or an object with a path.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 compile({ value: '…' }) // Seen as MDX
@@ -286,7 +288,7 @@ statements, but you can support them by setting
 [`options.useDynamicImport`][usedynamicimport].
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 A module `example.js`:
 
@@ -341,7 +343,7 @@ JavaScript modules, whereas `import()` is available inside function bodies.
 When you turn `useDynamicImport` on, you should probably set [`options.baseUrl`][baseurl] too.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 Say we have a couple modules:
 
@@ -401,7 +403,7 @@ imports should run relative the path _b_.
 Another example is when evaluating code, whether in Node or a browser.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 Say we have a module `example.js`:
 
@@ -440,7 +442,7 @@ The default can be set to `true` in Node.js through environment variables: set
 `NODE_ENV=development`.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 Say we had some MDX that references a component that can be passed or provided
 at runtime:
@@ -510,7 +512,7 @@ When given, the resulting file will have a `map` field set to a source map (in
 object form).
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 Assuming `example.mdx` from [§ Use][use] exists, then:
 
@@ -549,7 +551,7 @@ The provider must export a `useMDXComponents`, which is called to access an
 object of components.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 If `file` is the contents of `example.mdx` from [§ Use][use], then:
 
@@ -596,7 +598,7 @@ The default is to compile JSX away so that the resulting file is immediately
 runnable.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 If `file` is the contents of `example.mdx` from [§ Use][use], then:
 
@@ -641,7 +643,7 @@ The classic runtime compiles to calls such as `h('p')`, the automatic runtime
 compiles to `import _jsx from '$importSource/jsx-runtime'\n_jsx('p')`.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 If `file` is the contents of `example.mdx` from [§ Use][use], then:
 
@@ -671,7 +673,7 @@ When in the `automatic` runtime, this is used to define an import for
 `Fragment`, `jsx`, `jsxs`, and `jsxDEV`.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 If `file` is the contents of `example.mdx` from [§ Use][use], then:
 
@@ -700,7 +702,7 @@ You should most probably define `pragmaFrag` and `pragmaImportSource` too when
 changing this.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 If `file` is the contents of `example.mdx` from [§ Use][use], then:
 
@@ -766,7 +768,7 @@ This casing is used for hast elements, not for embedded MDX JSX nodes
 `Promise<VFile>` — Promise that resolves to the compiled JS as a [vfile][].
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent' // Lint rules to check for consistent markdown.
@@ -839,7 +841,7 @@ then `jsx` and `jsxs`, when `development: false` then `jsxDEV`.
 They come from an automatic JSX runtime that you must import yourself.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import * as runtime from 'react/jsx-runtime'
@@ -858,7 +860,7 @@ const { default: Content } = await evaluate('# hi', {
 Needed if you want to support a provider.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 ```js
 import * as provider from '@mdx-js/react'
@@ -881,7 +883,7 @@ a module: an object with a `default` field set to the component and anything
 else that was exported from the MDX file available too.
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 Assuming the contents of `example.mdx` from [§ Use][use] was in `file`, then:
 
@@ -944,7 +946,7 @@ All other options have to be passed to `compile` instead.
 `Promise<MDXModule>` — See `evaluate`
 
 <details>
-<summary>Expand example</summary>
+<summary>展开例子</summary>
 
 On the server:
 
@@ -998,35 +1000,29 @@ allowed (and `'mdx'` is the default).
 
 ## Types
 
-This package is fully typed with [TypeScript][].
-See [§ Types][types] on our website for information.
+这个包是完全使用[TypeScript][]类型的。
+请参阅我们网站上的[§Types][Types]获取信息。
 
-Additional `CompileOptions`, `EvaluateOptions`, and `ProcessorOptions` types
-are exported, which represents acceptable configuration for their respective
-methods.
+额外的`CompileOptions`, `EvaluateOptions`, 和 `ProcessorOptions`类型被导出，它们代表了各自方法的可接受配置。
 
-## Architecture
+## 体系结构
 
-To understand what this project does, it’s very important to first understand
-what unified does: please read through the [`unifiedjs/unified`][unified] readme
-(the part until you hit the API section is required reading).
+要了解这个项目做什么，首先了解unified做什么是非常重要的:
+请阅读[`unifiedjs/unified`][unified]自述文件(部分直到你击中API部分是必须阅读的)。
 
-`@mdx-js/mdx` is a unified pipeline — wrapped so that most folks don’t need to
-know about unified: [`core.js#L65`][core].
-The processor goes through these steps:
+`@mdx-js/mdx`是一个unified的管道包装，所以大多数人不需要知道unified: [`core.js#L65`][core]。
+处理器执行以下步骤:
 
-1.  parse MDX (serialized markdown with embedded JSX, ESM, and expressions)
-    to mdast (markdown syntax tree)
-2.  transform through remark (markdown ecosystem)
-3.  transform mdast to hast (HTML syntax tree)
-4.  transform through rehype (HTML ecosystem)
-5.  transform hast to esast (JS syntax tree)
-6.  do the work needed to get a component
-7.  transform through recma (JS ecosystem)
-8.  serialize esast as JavaScript
+1.  将MDX(带有嵌入式JSX、ESM和表达式的序列化markdown)解析为mdast(markdown语法树)
+2.  通过remark进行转型(markdown生态系统)
+3.  转换mdast到hast(HTML语法树)
+4.  通过rehype进行转换(HTML生态系统)
+5.  转换hast到esast (JS语法树)
+6.  获得组件需要做哪些工作
+7.  通过recma (JS生态系统)进行转型
+8.  将esast序列化为JavaScript
 
-The _input_ is MDX (serialized markdown with embedded JSX, ESM, and
-expressions).
+*输入*是MDX(带有嵌入式JSX、ESM和表达式的序列化标记)。
 The markdown is parsed with [`micromark/micromark`][micromark] and the embedded
 JS with one of its extensions
 [`micromark/micromark-extension-mdxjs`][micromark-extension-mdxjs] (which in
@@ -1073,20 +1069,19 @@ Finally, The output is serialized JavaScript.
 That final step is done by [astring][], a
 small and fast JS generator.
 
-## Security
+## 安全
 
-See [§ Security][security] on our website for information.
+详见我们网站上的[§Security][Security]。
 
-## Contribute
+## 贡献
 
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
+请参阅我们网站上的[§Contribute][Contribute]了解开始的方法。
+参见[§Support][Support]获取帮助的方法。
 
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+这个项目有[行为准则][准则]。
+通过与此存储库、组织或社区进行交互，您同意遵守其条款。
 
-## License
+## 许可证
 
 [MIT][] © Compositor and [Vercel][]
 

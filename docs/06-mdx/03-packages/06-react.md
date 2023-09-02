@@ -14,30 +14,35 @@ React context for MDX.
 
 ## Contents
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Install](#install)
-- [Use](#use)
-- [API](#api)
-  - [`MDXProvider(props?)`](#mdxproviderprops)
-  - [`useMDXComponents(components?)`](#usemdxcomponentscomponents)
-  - [`MDXContext`](#mdxcontext)
-  - [`withMDXComponents(Component)`](#withmdxcomponentscomponent)
-- [Types](#types)
-- [Security](#security)
-- [Contribute](#contribute)
-- [License](#license)
+- [`@mdx-js/react`](#mdx-jsreact)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
+  - [Use](#use)
+  - [API](#api)
+    - [`MDXProvider(props?)`](#mdxproviderprops)
+      - [`props`](#props)
+        - [`props.components`](#propscomponents)
+        - [`props.disableParentContext`](#propsdisableparentcontext)
+        - [`props.children`](#propschildren)
+      - [返回](#返回)
+    - [`useMDXComponents(components?)`](#usemdxcomponentscomponents) - [`components`](#components) - [返回](#返回-1)
+    - [`MDXContext`](#mdxcontext)
+    - [`withMDXComponents(Component)`](#withmdxcomponentscomponent)
+  - [Types](#types)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [许可证](#许可证)
 
 ## 这是什么?
 
-This package is a context based components provider for combining React with
-MDX.
+这个包是一个基于上下文的组件提供程序，用于将React与MDX结合起来。
 
 ## 我应该什么时候使用这个?
 
-This package is not needed for MDX to work with React.
-See [¶ MDX provider in § Using MDX][use-provider] for when and how to use an MDX
-provider.
+这个包不需要MDX与React一起工作。
+关于何时以及如何使用MDX提供程序，请参阅§Using MDX中的[¶MDX提供程序][use-provider]。
 
 ## 安装
 
@@ -74,8 +79,7 @@ const components = {
 </MDXProvider>
 ```
 
-Note that you don’t have to use `MDXProvider` and can pass components
-directly:
+注意，你不必使用`MDXProvider`，可以直接传递组件:
 
 ```diff
 -<MDXProvider components={components}>
@@ -84,69 +88,61 @@ directly:
 +<Post components={components} />
 ```
 
-See [¶ React in § Getting started][start-react] for how to get started with MDX
-and React.
-See [¶ MDX provider in § Using MDX][use-provider] for how to use an MDX
-provider.
+关于如何开始使用MDX和React，请参见§开始中的[¶React][start-react]。
+有关如何使用MDX提供程序，请参阅§使用MDX中的[¶MDX提供程序][use-provider]。
 
 ## API
 
-This package exports the following identifiers: `MDXContext`, `MDXProvider`,
-`useMDXComponents`, and `withMDXComponents`.
-There is no default export.
+这个包导出以下标识符:`MDXContext`, `MDXProvider`,`useMDXComponents`, 和 `withMDXComponents`.
+没有默认的导出。
 
 ### `MDXProvider(props?)`
 
-Provider for MDX context.
+MDX上下文的提供程序。
 
 ##### `props`
 
-Configuration (`Object`, optional).
+配置 (`Object`, 可选).
 
 ###### `props.components`
 
-Mapping of names for JSX components to React components
-(`Record<string, string|Component|Components>`, optional).
+JSX组件到React组件的名称映射(`Record<string, string|Component|Components>`, 可选).
 
 ###### `props.disableParentContext`
 
-Turn off outer component context (`boolean`, default: `false`).
+关闭外部组件上下文 (`boolean`, 默认的: `false`).
 
 ###### `props.children`
 
-Children (JSX elements, optional).
+Children (JSX 元素,可选).
 
-##### Returns
+##### 返回
 
-JSX element.
+JSX 元素.
 
 ### `useMDXComponents(components?)`
 
-Get current components from the MDX Context.
+从MDX上下文中获取当前组件。
 
 ###### `components`
 
-Additional components (`Components`) to use or a function that takes the current
-components and filters/merges/changes them (`(currentComponents: Components) =>
-Components`).
+附加组件 (`Components`) 使用一个函数来获取当前组件并过滤/合并/更改它们 (`(currentComponents: Components) => Components`).
 
-###### Returns
+###### 返回
 
 `Components`.
 
 ### `MDXContext`
 
-> 🪦 **Deprecated**: This export is not recommended for use as it exposes
-> internals which should be hidden.
-> It might be removed in a future major release.
-> Please use `useMDXComponents` to get context based components and
-> `MDXProvider` to set context based components instead.
+> 🪦 **弃用**: 不建议使用此导出，因为它暴露了应该隐藏的内部内容。
+> 它可能会在未来的主要版本中被删除。
+> 请使用`useMDXComponents`来获取基于上下文的组件，使用`MDXProvider`来设置基于上下文的组件。
 
-The React Context for MDX (`React.Context`).
+MDX的React上下文 (`React.Context`).
 
 ### `withMDXComponents(Component)`
 
-> 🪦 **Deprecated**: This export is not recommended for use.
+> 🪦 **弃用**: This export is not recommended for use.
 > It might be removed in a future major release.
 > Please use `useMDXComponents` to get context based components instead.
 
@@ -165,20 +161,19 @@ Then you can install and use
 [`@types/mdx`](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/mdx),
 which adds types to import statements of supported files.
 
-## Security
+## 安全
 
-See [§ Security][security] on our website for information.
+详见我们网站上的[§Security][Security]。
 
-## Contribute
+## 贡献
 
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
+请参阅我们网站上的[§Contribute][Contribute]了解开始的方法。
+参见[§Support][Support]获取帮助的方法。
 
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+这个项目有[行为准则][coc]。
+通过与此存储库、组织或社区进行交互，您同意遵守其条款。
 
-## License
+## 许可证
 
 [MIT][] © Compositor and [Vercel][]
 

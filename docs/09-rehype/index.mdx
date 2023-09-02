@@ -1,0 +1,385 @@
+# rehype
+
+[![rehype][logo]][unified]
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
+
+**rehype**是一个用插件转换HTML的工具。
+这些插件可以检查和修改HTML。
+您可以在服务器、客户端、cli、deno等上使用rehype。
+
+## 介绍
+
+rehype是一个插件生态系统，它将HTML作为结构化数据，特别是ast(抽象语法树)来处理。
+ast使程序更容易处理HTML。
+我们称这些程序为插件。
+插件检查和更改树。
+您可以使用许多现有的插件，也可以自己制作插件。
+
+- 学习HTML，参见[MDN][]和[WHATWG HTML][html]
+- 有关我们的更多信息，请参见[`unifiedjs.com`][site]
+- 有关更新，请参阅[Twitter][]
+- 有关问题，请参见[support][]
+- 如需帮助，请参阅[contribute][] or [sponsor][] below
+
+## Contents
+
+- [rehype](#rehype)
+  - [介绍](#介绍)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [插件](#插件)
+  - [Types](#types)
+  - [兼容性](#兼容性)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [赞助商](#赞助商)
+  - [License](#license)
+
+## 这是什么?
+
+您可以使用插件来格式化或缩小HTML。
+
+**输入**：
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Saturn</title>
+  </head>
+  <body>
+    <h1>Saturn</h1>
+    <p>Saturn is a gas giant composed predominantly of hydrogen and helium.</p>
+  </body>
+</html>
+```
+
+**输出**：
+
+```html
+<!doctype html>
+<html lang="en">
+  <meta charset="utf8" /><title>Saturn</title>
+  <h1>Saturn</h1>
+  <p>Saturn is a gas giant composed predominantly of hydrogen and helium.</p>
+</html>
+```
+
+你可以使用插件来修改HTML。
+**输入**：
+
+```html
+<h1>Hi, Saturn!</h1>
+```
+
+**Plugin**:
+
+```js
+import { visit } from 'unist-util-visit'
+
+/** @type {import('unified').Plugin<[], import('hast').Root>} */
+function myRehypePluginToIncreaseHeadings() {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (['h1', 'h2', 'h3', 'h4', 'h5'].includes(node.tagName)) {
+        node.tagName = 'h' + (Number(node.tagName.charAt(1)) + 1)
+      }
+    })
+  }
+}
+```
+
+**输出**：
+
+```html
+<h2>Hi, Saturn!</h2>
+```
+
+你可以在很多不同的事情上使用rehype。
+**[unified][]** 是使用ASTs转换内容的核心项目。
+**rehype** 添加了对HTML的统一支持。
+**[hast][]** 是rehype使用的HTML AST。
+
+这个GitHub仓库是一个单仓库，包含以下包:
+
+- [`rehype-parse`][rehype-parse]
+  — 插件将HTML作为输入，并将其转换为语法树 (hast)
+- [`rehype-stringify`][rehype-stringify]
+  — 插件获取语法树(hast)并将其转换为HTML作为输出
+- [`rehype`][rehype-core]
+  — `unified`, `rehype-parse`, 和 `rehype-stringify`, 当输入和输出是HTML时非常有用
+- [`rehype-cli`][rehype-cli]
+  — CLI围绕`rehype`来检查和格式化脚本中的HTML
+
+## 我应该什么时候使用这个?
+
+根据您拥有的输入和您想要的输出，您可以使用不同的rehype部分。
+如果输入是HTML，则可以使用 `rehype-parse` 与 `unified`.
+如果输出是HTML，则可以使用 `rehype-stringify` 与 `unified`
+如果输入和输出都是HTML，则可以使用 `rehype` 就其本身而言.
+当您想要检查和格式化项目中的HTML文件时，可以使用`rehype-cli`.
+
+## 插件
+
+rehype插件处理HTML。
+您可以从已经存在的许多插件中进行选择。
+这里有三种寻找插件的好方法:
+
+- [`awesome-rehype`][awesome-rehype]
+  — 选择最令人敬畏的项目
+- [List of plugins][list-of-plugins]
+  — 所有插件的列表
+- [`rehype-plugin` 主题][topic]
+  — GitHub上任何标记的repo
+
+一些插件由我们在`@rehypejs`组织中维护，而其他插件由其他地方的人维护。
+任何人都可以制作rehype插件，所以在选择是否在你的项目中包含依赖项时，一定要仔细评估rehype插件的质量。
+
+## Types
+
+The rehype organization and the unified collective as a whole is fully typed
+with [TypeScript][].
+Types for hast are available in [`@types/hast`][types-hast].
+
+## 兼容性
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+## 安全
+
+As improper use of HTML can open you up to a [cross-site scripting (XSS)][xss]
+attacks, use of rehype can also be unsafe.
+Use [`rehype-sanitize`][rehype-sanitize] to make the tree safe.
+
+Use of rehype plugins could also open you up to other attacks.
+Carefully assess each plugin and the risks involved in using them.
+
+For info on how to submit a report, see our [security policy][security].
+
+## 贡献
+
+See [`contributing.md`][contributing] in [`rehypejs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Join us in [Discussions][chat] to chat with the community and contributors.
+
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
+abide by its terms.
+
+## 赞助商
+
+Support this effort and give back by sponsoring on [OpenCollective][collective]!
+
+<!--lint ignore no-html-->
+
+<table>
+  <tr valign="middle">
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://vercel.com">Vercel</a>
+      <br />
+      <br />
+      <a href="https://vercel.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/14985020?s=256&v=4"
+          width="128"
+        />
+      </a>
+    </td>
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://motif.land">Motif</a>
+      <br />
+      <br />
+      <a href="https://motif.land">
+        <img
+          src="https://avatars1.githubusercontent.com/u/74457950?s=256&v=4"
+          width="128"
+        />
+      </a>
+    </td>
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://www.hashicorp.com">HashiCorp</a>
+      <br />
+      <br />
+      <a href="https://www.hashicorp.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/761456?s=256&v=4"
+          width="128"
+        />
+      </a>
+    </td>
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://www.gitbook.com">GitBook</a>
+      <br />
+      <br />
+      <a href="https://www.gitbook.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/7111340?s=256&v=4"
+          width="128"
+        />
+      </a>
+    </td>
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://www.gatsbyjs.org">Gatsby</a>
+      <br />
+      <br />
+      <a href="https://www.gatsbyjs.org">
+        <img
+          src="https://avatars1.githubusercontent.com/u/12551863?s=256&v=4"
+          width="128"
+        />
+      </a>
+    </td>
+  </tr>
+  <tr valign="middle"></tr>
+  <tr valign="middle">
+    <td width="20%" align="center" rowspan="2" colspan="2">
+      <a href="https://www.netlify.com">Netlify</a>
+      <br />
+      <br />
+      <a href="https://www.netlify.com">
+        <img
+          src="https://images.opencollective.com/netlify/4087de2/logo/256.png"
+          width="128"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://www.coinbase.com">Coinbase</a>
+      <br />
+      <br />
+      <a href="https://www.coinbase.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/1885080?s=256&v=4"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://themeisle.com">ThemeIsle</a>
+      <br />
+      <br />
+      <a href="https://themeisle.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/58979018?s=128&v=4"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://expo.io">Expo</a>
+      <br />
+      <br />
+      <a href="https://expo.io">
+        <img
+          src="https://avatars1.githubusercontent.com/u/12504344?s=128&v=4"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://boostnote.io">Boost Note</a>
+      <br />
+      <br />
+      <a href="https://boostnote.io">
+        <img
+          src="https://images.opencollective.com/boosthub/6318083/logo/128.png"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://markdown.space">Markdown Space</a>
+      <br />
+      <br />
+      <a href="https://markdown.space">
+        <img
+          src="https://images.opencollective.com/markdown-space/e1038ed/logo/128.png"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%" align="center">
+      <a href="https://www.holloway.com">Holloway</a>
+      <br />
+      <br />
+      <a href="https://www.holloway.com">
+        <img
+          src="https://avatars1.githubusercontent.com/u/35904294?s=128&v=4"
+          width="64"
+        />
+      </a>
+    </td>
+    <td width="10%"></td>
+    <td width="10%"></td>
+  </tr>
+  <tr valign="middle">
+    <td width="100%" align="center" colspan="8">
+      <br />
+      <a href="https://opencollective.com/unified">
+        <strong>You?</strong>
+      </a>
+      <br />
+      <br />
+    </td>
+  </tr>
+</table>
+
+## License
+
+[MIT][license] © [Titus Wormer][author]
+
+<!-- Definitions -->
+
+[logo]: https://raw.githubusercontent.com/rehypejs/rehype/cb624bd/logo.svg?sanitize=true
+[build-badge]: https://github.com/rehypejs/rehype/workflows/main/badge.svg
+[build]: https://github.com/rehypejs/rehype/actions
+[coverage-badge]: https://img.shields.io/codecov/c/github/rehypejs/rehype.svg
+[coverage]: https://codecov.io/github/rehypejs/rehype
+[downloads-badge]: https://img.shields.io/npm/dm/rehype.svg
+[downloads]: https://www.npmjs.com/package/rehype
+[size-badge]: https://img.shields.io/bundlephobia/minzip/rehype.svg
+[size]: https://bundlephobia.com/result?p=rehype
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+[collective]: https://opencollective.com/unified
+[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
+[chat]: https://github.com/rehypejs/rehype/discussions
+[health]: https://github.com/rehypejs/.github
+[security]: https://github.com/rehypejs/.github/blob/main/security.md
+[contributing]: https://github.com/rehypejs/.github/blob/main/contributing.md
+[support]: https://github.com/rehypejs/.github/blob/main/support.md
+[coc]: https://github.com/rehypejs/.github/blob/main/code-of-conduct.md
+[license]: license
+[author]: https://wooorm.com
+[unified]: https://github.com/unifiedjs/unified
+[types-hast]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/hast
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+[typescript]: https://www.typescriptlang.org
+[mdn]: https://developer.mozilla.org/docs/Web/HTML
+[html]: https://html.spec.whatwg.org/multipage/
+[twitter]: https://twitter.com/unifiedjs
+[site]: https://unifiedjs.com
+[topic]: https://github.com/topics/rehype-plugin
+[hast]: https://github.com/syntax-tree/hast
+[awesome-rehype]: https://github.com/rehypejs/awesome-rehype
+[rehype-sanitize]: https://github.com/rehypejs/rehype-sanitize
+[rehype-parse]: packages/rehype-parse/
+[rehype-stringify]: packages/rehype-stringify/
+[rehype-core]: packages/rehype/
+[rehype-cli]: packages/rehype-cli/
+[list-of-plugins]: doc/plugins.md#list-of-plugins
+[contribute]: #contribute
+[sponsor]: #sponsor

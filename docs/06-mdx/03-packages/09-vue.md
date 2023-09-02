@@ -14,21 +14,26 @@ Vue context for MDX.
 
 ## Contents
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Install](#install)
-- [Use](#use)
-- [API](#api)
-  - [`MDXProvider(props?)`](#mdxproviderprops)
-  - [`useMDXComponents()`](#usemdxcomponents)
-- [Types](#types)
-- [Security](#security)
-- [Contribute](#contribute)
-- [License](#license)
+- [`@mdx-js/vue`](#mdx-jsvue)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
+  - [使用](#使用)
+  - [API](#api)
+    - [`MDXProvider(props?)`](#mdxproviderprops)
+      - [`props`](#props)
+        - [`props.components`](#propscomponents)
+      - [Returns](#returns)
+    - [`useMDXComponents()`](#usemdxcomponents) - [Returns](#returns-1)
+  - [Types](#types)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [License](#license)
 
 ## 这是什么?
 
-This package is a context based components provider for combining Vue with MDX.
+这个包是一个基于上下文的组件提供程序，用于将Vue与MDX结合起来。
 
 ## 我应该什么时候使用这个?
 

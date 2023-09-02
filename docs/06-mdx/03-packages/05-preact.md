@@ -14,30 +14,35 @@ Preact context for MDX.
 
 ## Contents
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Install](#install)
-- [Use](#use)
-- [API](#api)
-  - [`MDXProvider(props?)`](#mdxproviderprops)
-  - [`useMDXComponents(components?)`](#usemdxcomponentscomponents)
-  - [`MDXContext`](#mdxcontext)
-  - [`withMDXComponents(Component)`](#withmdxcomponentscomponent)
-- [Types](#types)
-- [Security](#security)
-- [Contribute](#contribute)
-- [License](#license)
+- [`@mdx-js/preact`](#mdx-jspreact)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
+  - [使用](#使用)
+  - [API](#api)
+    - [`MDXProvider(props?)`](#mdxproviderprops)
+      - [`props`](#props)
+        - [`props.components`](#propscomponents)
+        - [`props.disableParentContext`](#propsdisableparentcontext)
+        - [`props.children`](#propschildren)
+      - [返回](#返回)
+    - [`useMDXComponents(components?)`](#usemdxcomponentscomponents) - [`components`](#components) - [Returns](#returns)
+    - [`MDXContext`](#mdxcontext)
+    - [`withMDXComponents(Component)`](#withmdxcomponentscomponent)
+  - [Types](#types)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [许可证](#许可证)
 
 ## 这是什么?
 
-This package is a context based components provider for combining Preact with
-MDX.
+这个包是一个基于上下文的组件提供程序，用于组合Preact和MDX。
 
 ## 我应该什么时候使用这个?
 
-This package is not needed for MDX to work with Preact.
-See [¶ MDX provider in § Using MDX][use-provider] for when and how to use an MDX
-provider.
+MDX与Preact一起工作不需要这个包。
+关于何时以及如何使用MDX提供程序，请参阅§Using MDX中的[¶MDX提供程序][use-provider]。
 
 ## 安装
 

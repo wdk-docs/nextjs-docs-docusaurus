@@ -7,39 +7,36 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Node hook to require MDX.
+需要MDX的Node挂钩。
 
 <!-- more -->
 
-> 🪦 **Legacy**: This package is not recommended for use as it depends on
-> deprecated Node features.
+> 🪦 **遗产**: 不建议使用此包，因为它依赖于已弃用的Node特性。
 
 ## Contents
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Install](#install)
-- [Use](#use)
-- [API](#api)
-- [Types](#types)
-- [Security](#security)
-- [Contribute](#contribute)
-- [License](#license)
+- [`@mdx-js/register`](#mdx-jsregister)
+  - [Contents](#contents)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
+  - [使用](#使用)
+  - [API](#api)
+  - [Types](#types)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [许可证](#许可证)
 
-## What is this?
+## 这是什么?
 
-This package is a Node CommonJS hook to support MDX.
-[`require.extensions`][require-extensions] is a deprecated feature in Node which
-lets projects “hijack” `require` calls to do fancy things, in this case it let’s
-you `require` MD(X) files.
+这个包是一个支持MDX的Node CommonJS钩子。
+[`require.extensions`][require-extensions]是Node中一个被弃用的特性，它允许项目“hijack” `require`调用来做一些奇特的事情，在这种情况下，它允许你`require` MD(X)文件。
 
 ## 我应该什么时候使用这个?
 
-This integration is useful if you’re using Node, for some reason have to use
-CJS, and want to require MDX files from the file system.
+如果您正在使用Node，由于某种原因不得不使用CJS，并且希望从文件系统中获取MDX文件，那么这种集成非常有用。
 
-At this point in time, you’re better off with `@mdx-js/node-loader`, even though
-it uses an experimental Node API.
+此时，您最好使用`@mdx-js/node-loader`，即使它使用实验性的Node API。
 
 ## 安装
 
@@ -57,9 +54,9 @@ npm install @mdx-js/register
 yarn add @mdx-js/register
 ```
 
-## Use
+## 使用
 
-Say we have an MDX document, `example.mdx`:
+假设我们有一个MDX文档， `example.mdx`:
 
 ```mdx
 export const Thing = () => <>World!</>
@@ -67,7 +64,7 @@ export const Thing = () => <>World!</>
 # Hello, <Thing />
 ```
 
-…and our module `example.cjs` looks as follows:
+…我们的模块`example.cjs`看起来如下:
 
 ```js
 'use strict'
@@ -79,13 +76,13 @@ const Content = require('./example.mdx')
 console.log(renderToStaticMarkup(React.createElement(Content)))
 ```
 
-…then running that with:
+…然后运行它:
 
 ```sh
 node -r @mdx-js/register example.cjs
 ```
 
-…yields:
+…收益率:
 
 ```html
 <h1>Hello, World!</h1>
@@ -93,8 +90,7 @@ node -r @mdx-js/register example.cjs
 
 ## API
 
-> 🪦 **Legacy**: This package is not recommended for use as it depends on
-> deprecated Node features.
+> 🪦 **遗产**: 不建议使用此包，因为它依赖于已弃用的Node特性。
 
 This package does not export anything.
 It changes Node’s internals.
@@ -123,11 +119,11 @@ That means `import` (and `export … from`) are not supported when requiring
 This package is not typed as [TypeScript][] seems to not support `.cjs` files
 yet.
 
-## Security
+## 安全
 
 See [§ Security][security] on our website for information.
 
-## Contribute
+## 贡献
 
 See [§ Contribute][contribute] on our website for ways to get started.
 See [§ Support][support] for ways to get help.
@@ -136,7 +132,7 @@ This project has a [code of conduct][coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
-## License
+## 许可证
 
 [MIT][] © [Titus Wormer][author]
 

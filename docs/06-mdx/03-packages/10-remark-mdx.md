@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-remark plugin to support the MDX syntax (JSX, expressions, import/exports).
+remark 插件来支持MDX语法 (JSX, 表达式, import/exports).
 
 <!-- more -->
 
@@ -16,18 +16,18 @@ remark plugin to support the MDX syntax (JSX, expressions, import/exports).
 
 - [remark-mdx](#remark-mdx)
   - [Contents](#contents)
-  - [What is this?](#what-is-this)
-  - [When should I use this?](#when-should-i-use-this)
-  - [Install](#install)
+  - [这是什么?](#这是什么)
+  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
+  - [安装](#安装)
   - [Use](#use)
   - [API](#api)
     - [`unified().use(remarkMdx)`](#unifieduseremarkmdx)
-  - [Syntax](#syntax)
-  - [Syntax tree](#syntax-tree)
+  - [语法](#语法)
+  - [语法树](#语法树)
   - [Types](#types)
-  - [Security](#security)
-  - [Contribute](#contribute)
-  - [License](#license)
+  - [安全](#安全)
+  - [贡献](#贡献)
+  - [许可证](#许可证)
 
 ## 这是什么?
 
@@ -35,7 +35,7 @@ remark plugin to support the MDX syntax (JSX, expressions, import/exports).
 
 ## 我应该什么时候使用这个?
 
-这个插件是有用的，如果你正在处理MDX语法和集成的remark, rehype，和其他统一。
+这个插件是有用的，如果你正在处理MDX语法和集成的remark, rehype，和其他unified。
 一些示例用例是当您想要检测语法或将其编译为JavaScript以外的东西时。
 
 **remark** is an AST (abstract syntax tree) based transform project.
@@ -105,7 +105,7 @@ import/exports).
 It doesn’t do anything with the syntax: you can
 [create your own plugin][create-plugin] to transform them.
 
-## Syntax
+## 语法
 
 This plugin applies several micromark extensions to parse the syntax.
 See their readmes for parse details:
@@ -119,7 +119,7 @@ See their readmes for parse details:
 - [`micromark-extension-mdx-md`](https://github.com/micromark/micromark-extension-mdx-md#mdxmd)
   — Turn off HTML, autolinks, and indented code
 
-## Syntax tree
+## 语法树
 
 This plugin applies several mdast utilities to build and serialize the AST.
 See their readmes for the node types supported in the tree:
@@ -172,11 +172,11 @@ export default function myRemarkPlugin() => {
 }
 ```
 
-## Security
+## 安全
 
 See [§ Security][security] on our website for information.
 
-## Contribute
+## 贡献
 
 See [§ Contribute][contribute] on our website for ways to get started.
 See [§ Support][support] for ways to get help.
@@ -185,7 +185,7 @@ This project has a [code of conduct][coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
-## License
+## 许可证
 
 [MIT][] © [Titus Wormer][author]
 

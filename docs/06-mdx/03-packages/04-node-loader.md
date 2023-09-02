@@ -11,8 +11,7 @@ Node loader for MDX.
 
 <!-- more -->
 
-> 💡 **Experiment**: this is an experimental package that might not work
-> well and might change in minor releases.
+> 💡 **实验**: 这是一个实验包，可能不能很好地工作，并且可能在次要版本中进行更改。
 
 ## Contents
 
@@ -29,20 +28,15 @@ Node loader for MDX.
 
 ## 这是什么?
 
-This package is a Node ESM loader to support MDX.
-[ESM loaders][loader] are an experimental feature in Node, slated to change.
-They let projects “hijack” imports to do all sorts of fancy things, in this
-case it let’s you `import` MD(X) files.
+这个包是一个支持MDX的Node ESM加载器。
+[ESM加载器][loader]是Node中的一个实验性特性，预计会更改。
+他们让项目“劫持”导入来做各种各样奇特的事情，在这种情况下，它让你`import`MD(X)文件。
 
 ## 我应该什么时候使用这个?
 
-This integration is useful if you’re using Node and want to import MDX files
-from the file system.
+如果您正在使用Node并希望从文件系统导入MDX文件，那么这种集成非常有用。
 
-If you’re using a bundler (webpack, Rollup, esbuild), or a site builder (Gatsby,
-Next.js) or build system (Vite, WMR) which comes with a bundler, you’re better
-off using another integration: see
-[§ Integrations][integrations].
+如果你使用的是一个捆绑器(webpack, Rollup, esbuild)，或者一个站点构建器(Gatsby, Next.js)，或者一个自带捆绑器的构建系统(Vite, WMR)，你最好使用另一个集成:参见[§Integrations][Integrations]。
 
 ## 安装
 
@@ -62,7 +56,7 @@ yarn add @mdx-js/node-loader
 
 ## 使用
 
-Say we have an MDX document, `example.mdx`:
+假设我们有一个MDX文档， `example.mdx`:
 
 ```mdx
 export const Thing = () => <>World!</>
@@ -70,7 +64,7 @@ export const Thing = () => <>World!</>
 # Hello, <Thing />
 ```
 
-…and our module `example.js` looks as follows:
+…我们的模块`example.js`看起来如下:
 
 ```js
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -80,7 +74,7 @@ import Content from './example.mdx'
 console.log(renderToStaticMarkup(React.createElement(Content)))
 ```
 
-…then running that with:
+…然后用:
 
 ```sh
 node --experimental-loader=@mdx-js/node-loader example.js
@@ -94,20 +88,19 @@ node --experimental-loader=@mdx-js/node-loader example.js
 
 ## API
 
-> 💡 **Experiment**: this is an experimental package that might not work
-> well and might change in minor releases.
+> 💡 **实验**: 这是一个实验包，可能不能很好地工作，并且可能在次要版本中进行更改。
 
-This package exports a Node [ESM loader][loader].
-It also exports the following identifier: `createLoader`.
+这个包导出一个Node [ESM加载程序][loader]。
+它还导出以下标识符:`createLoader`。
 
 ### `createLoader(options?)`
 
-Create a Node ESM loader to compile MDX to JS.
+创建一个Node ESM加载器，将MDX编译为JS。
 
 ##### `options`
 
 `options` are the same as [`compile` from `@mdx-js/mdx`][options].
-One extra field is supported:
+支持一个额外字段:
 
 ###### `options.fixRuntimeWithoutExportMap`
 
@@ -143,23 +136,22 @@ multiple loaders with [`@node-loader/core`][node-loader-core].
 
 ## Types
 
-This package is fully typed with [TypeScript][].
-See [§ Types][types] on our website for information.
+这个包是完全使用[TypeScript][]类型的。
+请参阅我们网站上的[§Types][Types]获取信息。
 
-An `Options` type is exported, which represents acceptable configuration.
+导出`Options`类型，它表示可接受的配置。
 
 ## 安全
 
-See [§ Security][security] on our website for information.
+详见我们网站上的[§Security][Security]。
 
 ## 贡献
 
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
+请参阅我们网站上的[§Contribute][Contribute]了解开始的方法。
+参见[§Support][Support]获取帮助的方法。
 
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+这个项目有[行为准则][coc]。
+通过与此存储库、组织或社区进行交互，您同意遵守其条款。
 
 ## 许可证
 
