@@ -149,7 +149,7 @@ export default async function Image() {
 }
 ```
 
-```jsxtitle="app/about/opengraph-image.js" switcher
+```jsx title="app/about/opengraph-image.js" switcher
 import { ImageResponse } from 'next/server'
 
 // Route segment config
@@ -228,7 +228,7 @@ export default function Image({ params }: { params: { slug: string } }) {
 }
 ```
 
-```jsxtitle="app/shop/[slug]/opengraph-image.js" switcher
+```jsx title="app/shop/[slug]/opengraph-image.js" switcher
 export default function Image({ params }) {
   // ...
 }
@@ -265,7 +265,7 @@ export const alt = 'My images alt text'
 export default function Image() {}
 ```
 
-```jsxtitle="opengraph-image.js / twitter-image.js" switcher
+```jsx title="opengraph-image.js / twitter-image.js" switcher
 export const alt = 'My images alt text'
 
 export default function Image() {}
@@ -283,7 +283,7 @@ export const size = { width: 1200, height: 630 }
 export default function Image() {}
 ```
 
-```jsxtitle="opengraph-image.js / twitter-image.js" switcher
+```jsx title="opengraph-image.js / twitter-image.js" switcher
 export const size = { width: 1200, height: 630 }
 
 export default function Image() {}
@@ -302,7 +302,7 @@ export const contentType = 'image/png'
 export default function Image() {}
 ```
 
-```jsxtitle="opengraph-image.js / twitter-image.js" switcher
+```jsx title="opengraph-image.js / twitter-image.js" switcher
 export const contentType = 'image/png'
 
 export default function Image() {}
@@ -329,7 +329,7 @@ export const runtime = 'edge'
 export default function Image() {}
 ```
 
-```jsxtitle="app/opengraph-image.js" switcher
+```jsx title="app/opengraph-image.js" switcher
 export const runtime = 'edge'
 
 export default function Image() {}
@@ -384,7 +384,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 }
 ```
 
-```jsxtitle="app/posts/[slug]/opengraph-image.js" switcher
+```jsx title="app/posts/[slug]/opengraph-image.js" switcher
 import { ImageResponse } from 'next/server'
 
 export const runtime = 'edge'

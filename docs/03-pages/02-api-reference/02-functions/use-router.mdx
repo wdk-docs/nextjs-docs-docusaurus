@@ -135,7 +135,7 @@ export default function Page() {
 
 When navigating to the same page in Next.js, the page's state **will not** be reset by default as React does not unmount unless the parent component has changed.
 
-```jsxtitle="pages/[slug].js"
+```jsx title="pages/[slug].js"
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
@@ -168,7 +168,7 @@ If you do not want this behavior, you have a couple of options:
 
 - Use a React `key` to [tell React to remount the component](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key). To do this for all pages, you can use a custom app:
 
-  ```jsxtitle="pages/_app.js"
+  ```jsx title="pages/_app.js"
   import { useRouter } from 'next/router'
 
   export default function MyApp({ Component, pageProps }) {

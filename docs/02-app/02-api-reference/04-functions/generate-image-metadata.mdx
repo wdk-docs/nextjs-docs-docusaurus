@@ -32,7 +32,7 @@ export function generateImageMetadata({
 }
 ```
 
-```jsxtitle="icon.js" switcher
+```jsx title="icon.js" switcher
 export function generateImageMetadata({ params }) {
   // ...
 }
@@ -96,7 +96,7 @@ export default function Icon({ id }: { id: string }) {
 }
 ```
 
-```jsxtitle="icon.js" switcher
+```jsx title="icon.js" switcher
 import { ImageResponse } from 'next/server'
 
 export function generateImageMetadata() {
@@ -188,7 +188,7 @@ export default async function Image({
 }
 ```
 
-```jsxtitle="app/products/[id]/opengraph-image.js" switcher
+```jsx title="app/products/[id]/opengraph-image.js" switcher
 import { ImageResponse } from 'next/server'
 import { getCaptionForImage, getOGImages } from '@/app/utils/images'
 

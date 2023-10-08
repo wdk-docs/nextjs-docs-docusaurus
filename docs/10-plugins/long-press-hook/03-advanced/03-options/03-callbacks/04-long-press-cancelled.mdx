@@ -1,0 +1,29 @@
+# 长按取消
+
+当在阈值时间之前释放时，或有条件触发取消
+
+## 名字
+
+onCancel
+
+## 类型
+
+```ts
+(event, meta) => void
+(
+event:
+| ReactMouseEvent<Target>
+| ReactTouchEvent<Target>
+| ReactPointerEvent<Target>,
+meta: { context?: Context; reason?: LongPressCallbackReason }
+) => void
+```
+
+## 默认值
+
+undefined
+
+## 描述
+
+在按下时间之前被释放时调用，因此在按下时间之前可能发生。
+这个回调通常在元参数中被合理调用。有关可能的原因值，请参见。

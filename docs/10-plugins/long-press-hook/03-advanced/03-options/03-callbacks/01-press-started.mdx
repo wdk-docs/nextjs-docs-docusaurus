@@ -1,0 +1,28 @@
+# 按下开始
+
+元素最初被按压时
+
+## 名字
+
+onStart
+
+## 类型
+
+```ts
+(event, meta) => void
+(
+event:
+| ReactMouseEvent<Target>
+| ReactTouchEvent<Target>
+| ReactPointerEvent<Target>,
+meta: { context?: Context; reason?: LongPressCallbackReason }
+) => void
+```
+
+## 默认值
+
+undefined
+
+## 描述
+
+当元素最初被点击/触摸/指向时调用，在开始倒数时间之前

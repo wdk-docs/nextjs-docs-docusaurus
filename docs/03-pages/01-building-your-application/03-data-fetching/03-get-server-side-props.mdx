@@ -31,7 +31,7 @@ export default function Page({
 }
 ```
 
-```jsxtitle="pages/index.js" switcher
+```jsx title="pages/index.js" switcher
 export const getServerSideProps = async () => {
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
   const repo = await res.json()
@@ -80,7 +80,7 @@ Take the following example. An API route is used to fetch some data from a CMS. 
 
 You can explicitly set the runtime on a per-page basis by modifying the `config`, for example:
 
-```jsxtitle="pages/index.js"
+```jsx title="pages/index.js"
 export const config = {
   runtime: 'nodejs', // or "edge"
 }

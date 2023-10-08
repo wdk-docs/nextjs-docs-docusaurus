@@ -46,7 +46,7 @@ export default async function Page() {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsxtitle="app/page.js" switcher
+```jsx title="app/page.js" switcher
 async function getData() {
   const res = await fetch('https://api.example.com/...')
   // The return value is *not* serialized
@@ -169,7 +169,7 @@ export default async function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsxtitle="app/artist/[username]/page.js" switcher
+```jsx title="app/artist/[username]/page.js" switcher
 import Albums from './albums'
 
 async function getArtist(username) {
@@ -256,7 +256,7 @@ async function Albums({ promise }: { promise: Promise<Album[]> }) {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsxtitle="artist/[username]/page.js" switcher
+```jsx title="artist/[username]/page.js" switcher
 import { getArtist, getArtistAlbums } from './api'
 
 export default async function Page({ params: { username } }) {
@@ -344,7 +344,7 @@ export default async function Page({
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsxtitle="app/artist/page.js" switcher
+```jsx title="app/artist/page.js" switcher
 // ...
 
 async function Playlists({ artistID }) {
@@ -436,7 +436,7 @@ export default async function Page() {
 </TabItem>
 <TabItem value="jsx" label="JavaScript">
 
-```jsxtitle="app/page.js" switcher
+```jsx title="app/page.js" switcher
 import prisma from './lib/prisma'
 
 export const revalidate = 3600 // revalidate every hour

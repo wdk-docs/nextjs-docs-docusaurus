@@ -9,25 +9,25 @@ description: 学习如何将Next.js应用部署到生产环境中，无论是托
 
 ## Next.js 构建 API
 
-`next build` generates an optimized version of your application for production. This standard output includes:
+`next build` 生成用于生产的应用程序的优化版本。这个标准输出包括:
 
-- HTML files for pages using `getStaticProps` or [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization)
-- CSS files for global styles or for individually scoped styles
-- JavaScript for pre-rendering dynamic content from the Next.js server
-- JavaScript for interactivity on the client-side through React
+- 使用`getStaticProps`或[自动静态优化](/docs/pages/building-your-application/rendering/automatic-static-optimization)的页面的HTML文件
+- 全局样式或单独作用域样式的CSS文件
+- 用于预呈现来自Next.js服务器的动态内容的JavaScript
+- JavaScript通过React在客户端进行交互
 
-This output is generated inside the `.next` folder:
+这个输出是在`.next`文件夹中生成的:
 
-- `.next/static/chunks/pages` – Each JavaScript file inside this folder relates to the route with the same name. For example, `.next/static/chunks/pages/about.js` would be the JavaScript file loaded when viewing the `/about` route in your application
-- `.next/static/media` – Statically imported images from `next/image` are hashed and copied here
-- `.next/static/css` – Global CSS files for all pages in your application
-- `.next/server/pages` – The HTML and JavaScript entry points prerendered from the server. The `.nft.json` files are created when [Output File Tracing](/docs/pages/api-reference/next-config-js/output) is enabled and contain all the file paths that depend on a given page.
-- `.next/server/chunks` – Shared JavaScript chunks used in multiple places throughout your application
-- `.next/cache` – Output for the build cache and cached images, responses, and pages from the Next.js server. Using a cache helps decrease build times and improve performance of loading images
+- `.next/static/chunks/pages` – 这个文件夹中的每个JavaScript文件都与同名的路由相关。例如，`.next/static/chunks/pages/about.js`将是在应用程序中查看`/about`路由时加载的JavaScript文件
+- `.next/static/media` – 从`next/image`静态导入的图像在这里被散列和复制
+- `.next/static/css` – 应用程序中所有页面的全局CSS文件
+- `.next/server/pages` – 从服务器预呈现的HTML和JavaScript入口点。当[输出文件跟踪](/docs/pages/api-reference/next-config-js/ Output)被启用时，`.nft.json`文件被创建，并包含依赖于给定页面的所有文件路径。
+- `.next/server/chunks` – 在整个应用程序的多个地方使用的共享JavaScript块
+- `.next/cache` – 来自Next.js服务器的构建缓存和缓存图像、响应和页面的输出。使用缓存有助于减少构建时间并提高加载映像的性能
 
-All JavaScript code inside `.next` has been **compiled** and browser bundles have been **minified** to help achieve the best performance and support [all modern browsers](/docs/architecture/supported-browsers).
+`.next`中的所有JavaScript代码都已被**编译**，并且浏览器包已被**最小化**，以帮助实现最佳性能并支持[所有现代浏览器](/docs/architecture/supported-browsers)。
 
-## Managed Next.js with Vercel
+## 使用Vercel管理Next.js
 
 [Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) is the fastest way to deploy your Next.js application with zero configuration.
 
@@ -52,15 +52,15 @@ In addition, Vercel provides features like:
 
 [Deploy a Next.js application to Vercel](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/hello-world&project-name=hello-world&repository-name=hello-world&utm_source=next-site&utm_medium=docs&utm_campaign=next-website) for free to try it out.
 
-## Self-Hosting
+## 自托管
 
-You can self-host Next.js with support for all features using Node.js or Docker. You can also do a Static HTML Export, which [has some limitations](/docs/app/building-your-application/deploying/static-exports).
+你可以使用Node.js或Docker自托管Next.js，支持所有功能。你也可以做一个静态的HTML导出，这[有一些限制](/docs/app/building-your-application/deploying/static-exports)。
 
-### Node.js Server
+### Node.js 服务器
 
-Next.js can be deployed to any hosting provider that supports Node.js. For example, [AWS EC2](https://aws.amazon.com/ec2/) or a [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/).
+Next.js可以部署到任何支持Node.js的托管提供商。例如，[AWS EC2](https://aws.amazon.com/ec2/)或[DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/)。
 
-First, ensure your `package.json` has the `"build"` and `"start"` scripts:
+首先，确保你的`package.json`有`build`和`start`脚本:
 
 ```json title="package.json"
 {
@@ -72,7 +72,7 @@ First, ensure your `package.json` has the `"build"` and `"start"` scripts:
 }
 ```
 
-Then, run `npm run build` to build your application. Finally, run `npm run start` to start the Node.js server. This server supports all features of Next.js.
+然后，运行`npm run build`来构建你的应用。最后，运行`npm run start`启动Node.js服务器。该服务器支持Next.js的所有功能。
 
 > If you are using [`next/image`](/docs/pages/building-your-application/optimizing/images), consider adding `sharp` for more performant [Image Optimization](/docs/pages/building-your-application/optimizing/images) in your production environment by running `npm install sharp` in your project directory. On Linux platforms, `sharp` may require [additional configuration](https://sharp.pixelplumbing.com/install#linux-memory-allocator) to prevent excessive memory usage.
 
@@ -87,28 +87,28 @@ Next.js can be deployed to any hosting provider that supports [Docker](https://w
 
 If you need to use different Environment Variables across multiple environments, check out our [with-docker-multi-env](https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env) example.
 
-### Static HTML Export
+### 静态HTML导出
 
-If you’d like to do a static HTML export of your Next.js app, follow the directions on our [Static HTML Export documentation](/docs/app/building-your-application/deploying/static-exports).
+如果你想做一个静态HTML导出你的Next.js应用程序，按照我们的指导[静态HTML导出文档](/docs/app/building-your-application/deploying/static-exports).
 
-## Other Services
+## 其他服务
 
-The following services support Next.js `v12+`. Below, you’ll find examples or guides to deploy Next.js to each service.
+以下服务支持Next.js `v12+`。下面，您将找到将Next.js部署到每个服务的示例或指南。
 
-### Managed Server
+### 托管服务器
 
 - [AWS Copilot](https://aws.github.io/copilot-cli/)
-- [Digital Ocean App Platform](https://docs.digitalocean.com/tutorials/app-nextjs-deploy/)
+- [数字海洋应用平台](https://docs.digitalocean.com/tutorials/app-nextjs-deploy/)
 - [Google Cloud Run](https://github.com/vercel/next.js/tree/canary/examples/with-docker)
 - [Heroku](https://elements.heroku.com/buildpacks/mars/heroku-nextjs)
 - [Railway](https://docs.railway.app/getting-started)
 - [Render](https://render.com/docs/deploy-nextjs-app)
 
-> **注意事项**: There are also managed platforms that allow you to use a Dockerfile as shown in the [example above](#docker-image).
+> **注意事项**: 也有一些托管平台允许你使用Dockerfile，如[上例所示](#docker-image).
 
-### Static Only
+### 只静态
 
-The following services only support deploying Next.js using [`output: 'export'`](/docs/app/building-your-application/deploying/static-exports).
+以下服务只支持使用[`output:`export'](/docs/app/building-your-application/deploying/static-exports)部署Next.js.
 
 - [GitHub Pages](https://github.com/vercel/next.js/tree/canary/examples/github-pages)
 
@@ -126,15 +126,15 @@ You can also manually deploy the output from [`output: 'export'`](/docs/app/buil
 
 > **注意事项**: Not all serverless providers implement the [Next.js Build API](#nextjs-build-api) from `next start`. Please check with the provider to see what features are supported.
 
-## Automatic Updates
+## 自动更新
 
-When you deploy your Next.js application, you want to see the latest version without needing to reload.
+在部署Next.js应用程序时，您希望无需重新加载即可看到最新版本。
 
 Next.js will automatically load the latest version of your application in the background when routing. For client-side navigations, `next/link` will temporarily function as a normal `<a>` tag.
 
-> **注意事项**: If a new page (with an old version) has already been prefetched by `next/link`, Next.js will use the old version. Navigating to a page that has _not_ been prefetched (and is not cached at the CDN level) will load the latest version.
+> **注意事项**: 如果一个新页面(旧版本)已经被`next/link`预取，next .js将使用旧版本。导航到没有预取的页面(并且没有在CDN级别缓存)将加载最新版本。
 
-## Manual Graceful shutdowns
+## 手动安全关机
 
 When self-hosting, you might want to run code when the server shuts down on `SIGTERM` or `SIGINT` signals.
 

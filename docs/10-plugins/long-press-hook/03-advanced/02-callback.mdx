@@ -1,0 +1,17 @@
+# 回调
+
+检测到长按时调用的函数
+
+```ts
+useLongPress(callback [, options]): bindFn
+```
+
+钩子的第一个参数callback可以是function也可以是null(如果你想禁用钩子)。
+建议(虽然没有必要)使用useCallback保持记忆回调，因为它是记忆钩子结果的直接依赖。
+
+```ts
+const callback = useCallback(..., [...]);
+const bind = useLongPress(callback, ...);
+```
+
+有关回调结构及其参数的更多信息，请[参见](./options/callbacks)。

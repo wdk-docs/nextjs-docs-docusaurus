@@ -1,0 +1,33 @@
+# 取消外部元素
+
+如果长按，移动到元件外时应取消
+
+## 名字
+
+cancelOutsideElement
+
+## 类型
+
+boolean
+
+## 默认值
+
+true
+
+## 描述
+
+当鼠标/触摸/指针移动到被绑定元素外时，If长按应该取消。
+
+当取消返回
+
+```js
+'cancelled-outside-element'
+```
+
+```ts
+LongPressCallbackReason.CancelledOutsideElement
+```
+
+作为回调中的取消原因。
+
+适用于鼠标和指针事件，触摸事件可能会在未来得到支持。

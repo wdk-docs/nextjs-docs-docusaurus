@@ -1,0 +1,16 @@
+# 基本用法
+
+基本钩子用法的例子，立即开始
+
+```ts
+import React from 'react'; // No longer necessary in newer React versions
+import { useLongPress } from 'use-long-press';
+
+const Example = () => {
+  const bind = useLongPress(() => {
+    alert('Long pressed!');
+  });
+
+  return <button {...bind()}>Press me</button>;
+};
+```

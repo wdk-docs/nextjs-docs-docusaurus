@@ -1,0 +1,60 @@
+# 回调
+
+长按生命周期回调
+
+## 结构
+
+所有回调函数(包括函数)都具有相同的结构。
+
+```ts title="Pseudocode"
+callbackFn(event, meta): void
+```
+
+```ts title="TypeScript"
+type LongPressCallback<Target extends Element = Element, Context = unknown> = (
+  event: LongPressEvent<Target>,
+  meta: LongPressCallbackMeta<Context>,
+) => void
+```
+
+作为第一个参数，回调从一个适当的(例如onMouseDown)接收，作为第二个接收元对象具有以下结构:
+
+```ts title="Pseudocode"
+{ [context: any], [reason: string] }
+export type LongPressCallbackMeta<Context = unknown> = {
+context?: Context;
+reason?: LongPressCallbackReason
+};
+```
+
+两个对象属性都是可选的。
+
+### Context
+
+如果将上下文传递给。查看更多信息。
+
+### Reason
+
+原因将在回调中显示，以指示为什么长按被取消。
+这里列出了所有可能的原因值
+
+```js title="Javascript"
+;'cancelled-by-movement' | 'cancelled-by-release' | 'cancelled-outside-element'
+```
+
+```ts title="TypeScript"
+export enum LongPressCallbackReason {
+  /**
+   * 当 _cancelOnMovement_ 激活时，鼠标/触摸/指针被移出初始按压区域时返回
+   */
+  CancelledByMovement = 'cancelled-by-movement',
+  /**
+   * 点击/轻拍/点在长按检测时间阈值前释放时返回
+   */
+  CancelledByRelease = 'cancelled-by-release',
+  /**
+   * 当鼠标/触摸/指针移动到元素外部并且_cancelOutsideElement_选项被设置为true时返回
+   */
+  CancelledOutsideElement = 'cancelled-outside-element',
+}
+```

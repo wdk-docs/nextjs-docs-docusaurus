@@ -26,7 +26,7 @@ export default function Page() {
 }
 ```
 
-```jsxtitle="app/example-client-component.js" switcher
+```jsx title="app/example-client-component.js" switcher
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -72,7 +72,7 @@ export default function Page() {
 
 You can listen for page changes by composing other Client Component hooks like `usePathname` and `useSearchParams`.
 
-```jsxtitle="app/components/navigation-events.js"
+```jsx title="app/components/navigation-events.js"
 'use client'
 
 import { useEffect } from 'react'
@@ -95,7 +95,7 @@ export function NavigationEvents() {
 
 Which can be imported into a layout.
 
-```jsxtitle="app/layout.js" highlight={2,10-12}
+```jsx title="app/layout.js" highlight={2,10-12}
 import { Suspense } from 'react'
 import { NavigationEvents } from './components/navigation-events'
 

@@ -1,0 +1,20 @@
+# 定义
+
+## 伪代码
+
+```ts
+useLongPress(callback [, options]): bindFn
+```
+
+## TypeScript
+
+```ts
+declare function useLongPress<
+  Target extends Element = Element,
+  Context = unknown,
+  Callback extends LongPressCallback<Target, Context> = LongPressCallback<Target, Context>
+>(
+  callback: Callback | null,
+  options?: LongPressOptions<Target, Context>
+): LongPressResult<LongPressHandlers<Target>, Context>;
+```

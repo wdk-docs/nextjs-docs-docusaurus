@@ -1,0 +1,35 @@
+# 事件检测
+
+钩子将检测哪种类型的事件
+
+## 名字
+
+`detect`
+
+## 类型
+
+```js title="Javascript"
+;'mouse' | 'touch' | 'pointer'
+```
+
+```ts title="TypeScript"
+enum LongPressEventType {
+  Mouse = 'mouse',
+  Touch = 'touch',
+  Pointer = 'pointer',
+}
+```
+
+## 默认值
+
+```js title="Javascript"
+'pointer'
+```
+
+```ts title="TypeScript"
+LongPressEventType.Pointer
+```
+
+## 描述
+
+应该从bind函数返回。

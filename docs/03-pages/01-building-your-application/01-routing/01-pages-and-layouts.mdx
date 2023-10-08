@@ -44,7 +44,7 @@ Next.js supports pages with dynamic routes. For example, if you create a file ca
 
 The React model allows us to deconstruct a [page](/docs/pages/building-your-application/routing/pages-and-layouts) into a series of components. Many of these components are often reused between pages. For example, you might have the same navigation bar and footer on every page.
 
-```jsxtitle="components/layout.js"
+```jsx title="components/layout.js"
 import Navbar from './navbar'
 import Footer from './footer'
 
@@ -65,7 +65,7 @@ export default function Layout({ children }) {
 
 If you only have one layout for your entire application, you can create a [Custom App](/docs/pages/building-your-application/routing/custom-app) and wrap your application with the layout. Since the `<Layout />` component is re-used when changing pages, its component state will be preserved (e.g. input values).
 
-```jsxtitle="pages/_app.js"
+```jsx title="pages/_app.js"
 import Layout from '../components/layout'
 
 export default function MyApp({ Component, pageProps }) {
@@ -81,7 +81,7 @@ export default function MyApp({ Component, pageProps }) {
 
 If you need multiple layouts, you can add a property `getLayout` to your page, allowing you to return a React component for the layout. This allows you to define the layout on a _per-page basis_. Since we're returning a function, we can have complex nested layouts if desired.
 
-```jsxtitle="pages/index.js"
+```jsx title="pages/index.js"
 
 import Layout from '../components/layout'
 import NestedLayout from '../components/nested-layout'
@@ -101,7 +101,7 @@ Page.getLayout = function getLayout(page) {
 }
 ```
 
-```jsxtitle="pages/_app.js"
+```jsx title="pages/_app.js"
 export default function MyApp({ Component, pageProps }) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout || ((page) => page)
@@ -141,7 +141,7 @@ Page.getLayout = function getLayout(page: ReactElement) {
 export default Page
 ```
 
-```jsxtitle="pages/index.js" switcher
+```jsx title="pages/index.js" switcher
 import Layout from '../components/layout'
 import NestedLayout from '../components/nested-layout'
 
@@ -181,7 +181,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 }
 ```
 
-```jsxtitle="pages/_app.js" switcher
+```jsx title="pages/_app.js" switcher
 export default function MyApp({ Component, pageProps }) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page)
@@ -194,7 +194,7 @@ export default function MyApp({ Component, pageProps }) {
 
 Inside your layout, you can fetch data on the client-side using `useEffect` or a library like [SWR](https://swr.vercel.app/). Because this file is not a [Page](/docs/pages/building-your-application/routing/pages-and-layouts), you cannot use `getStaticProps` or `getServerSideProps` currently.
 
-```jsxtitle="components/layout.js"
+```jsx title="components/layout.js"
 import useSWR from 'swr'
 import Navbar from './navbar'
 import Footer from './footer'

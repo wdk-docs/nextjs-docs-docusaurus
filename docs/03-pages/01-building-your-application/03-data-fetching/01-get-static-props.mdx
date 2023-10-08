@@ -31,7 +31,7 @@ export default function Page({
 }
 ```
 
-```jsxtitle="pages/index.js" switcher
+```jsx title="pages/index.js" switcher
 export const getStaticProps = async () => {
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
   const repo = await res.json()
@@ -103,7 +103,7 @@ export async function getStaticProps() {
 }
 ```
 
-```jsxtitle="pages/blog.js" switcher
+```jsx title="pages/blog.js" switcher
 // posts will be populated at build time by getStaticProps()
 export default function Blog({ posts }) {
   return (
@@ -157,7 +157,7 @@ export async function loadPosts() {
 }
 ```
 
-```jsxtitle="pages/blog.js"
+```jsx title="pages/blog.js"
 // pages/blog.js
 import { loadPosts } from '../lib/load-posts'
 

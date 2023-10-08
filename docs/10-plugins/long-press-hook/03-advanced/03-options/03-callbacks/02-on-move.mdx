@@ -1,0 +1,48 @@
+# 在移动
+
+移动元素时
+
+## 名字
+
+onMove
+
+## 类型
+
+```ts
+(event, meta) => void
+(
+event:
+| ReactMouseEvent<Target>
+| ReactTouchEvent<Target>
+| ReactPointerEvent<Target>,
+meta: { context?: Context; reason?: LongPressCallbackReason }
+) => void
+```
+
+## 默认值
+
+undefined
+
+## 描述
+
+移动元素时调用。因为长按会覆盖任何移动处理程序，这个回调在任何移动发生时被调用(不一定是在按下之后)。这样，您仍然可以使用此回调调用常规移动处理程序。
+
+只有当元素被按下并且选项被启用时，所有处理才会发生。
+
+由于当前位置是在调用此回调后从事件中提取的，因此您可以潜在地操纵事件位置来模拟更复杂的行为。
+
+位置提取如下:
+
+```ts
+// Touch event
+return {
+  x: event.touches[0].pageX,
+  y: event.touches[0].pageY,
+}
+
+// Mouse and pointer events
+return {
+  x: event.pageX,
+  y: event.pageY,
+}
+```

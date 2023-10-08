@@ -1,0 +1,24 @@
+# 过滤事件
+
+跳过触发不希望发生的事件的长按
+
+## 名字
+
+filterEvents
+
+## 类型
+
+```ts
+(event) => boolean
+(event: LongPressReactEvents<Target>) => boolean
+```
+
+## 默认值
+
+undefined
+
+## 描述
+
+如果提供，它使您能够忽略在指定条件下的长按检测(例如，在鼠标右键单击时)。
+
+当函数返回false时，它将阻止任何回调触发(包括和)以及。
