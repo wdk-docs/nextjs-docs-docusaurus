@@ -3,6 +3,8 @@ title: 中间件
 description: 了解如何使用中间件在请求完成之前运行代码。
 ---
 
+import PagesOnly from '@site/src/components/PagesOnly'
+
 {/* 这个文档的内容在应用和pages路由器之间共享。 You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 中间件允许您在请求完成之前运行代码。然后，根据传入的请求，您可以通过重写、重定向、修改请求或响应头或直接响应来修改响应。

@@ -236,7 +236,7 @@ Yields:
 }
 ```
 
-[tree-traversal]: /learn/recipe/tree-traversal/
+[tree-traversal]: /tree-traversal/
 [array]: https://developer.mozilla.org/docs/JavaScript/Reference/Global_Objects/Array
 [splice]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 [visit-parents]: https://github.com/syntax-tree/unist-util-visit-parents#visittree-test-visitor-reverse

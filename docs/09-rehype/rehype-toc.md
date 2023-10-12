@@ -1,33 +1,23 @@
 # rehype-toc
 
-Table of Contents plugin for Rehype
+Rehype的目录插件
 
-A [rehype](https://github.com/rehypejs/rehype) plugin that adds a table of contents (TOC) to the page
-
-[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/rehype-toc/actions)
-[![Build Status](https://github.com/JS-DevTools/rehype-toc/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/rehype-toc/actions)
-
-[![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/rehype-toc/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/rehype-toc)
-[![Dependencies](https://david-dm.org/JS-DevTools/rehype-toc.svg)](https://david-dm.org/JS-DevTools/rehype-toc)
-
-[![npm](https://img.shields.io/npm/v/@jsdevtools/rehype-toc.svg)](https://www.npmjs.com/package/@jsdevtools/rehype-toc)
-[![License](https://img.shields.io/npm/l/@jsdevtools/rehype-toc.svg)](LICENSE)
-[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/rehype-toc)
+一个[rehype](https://github.com/rehypejs/rehype)插件，为页面添加一个目录(TOC)
 
 ## Features
 
-- Adds a `<nav>` and `<ol>` list outlining all headings on the page
-- Combine with [rehype-slug](https://github.com/rehypejs/rehype-slug) to create links to each heading
-- Ignores headings outside of `<main>` if it exists
-- You can customize which headings are included (defaults to `<h1>` - `<h6>`)
-- You can customize the CSS classes on every TOC element
-- Hooks give you complete customization of the generated HTML
+- 添加`<nav>`和`<ol>`列表，列出页面上的所有标题
+- 结合[rehype-slug](https://github.com/rehypejs/rehype-slug)创建每个标题的链接
+- 忽略`<main>`以外的标题(如果它存在)
+- 您可以自定义包含哪些标题 (默认为 `<h1>` - `<h6>`)
+- 您可以自定义每个TOC元素上的CSS类
+- Hooks为生成的HTML提供了完全的自定义
 
-## Example
+## 例子
 
 **input.html**
 
-Here's the original HTML file. There are three levels of headings (`<h1>` - `<h3>`), and none of them have IDs.
+这是原始的HTML文件。有三个级别的标题(`<h1>` - `<h3>`)，它们都没有id。
 
 ```html
 <html>
@@ -62,7 +52,8 @@ Here's the original HTML file. There are three levels of headings (`<h1>` - `<h3
 
 **example.js**
 
-This script reads the `input.html` file above writes the results to `output.html` (shown below). The script uses [unified](https://unifiedjs.com/), [rehype-parse](https://github.com/rehypejs/rehype/tree/master/packages/rehype-parse), [rehype-slug](https://github.com/rehypejs/rehype-slug), and [rehype-stringify](https://github.com/rehypejs/rehype/tree/master/packages/rehype-stringify).
+该脚本读取上面的`input.html`文件，并将结果写入`output.html`(如下所示)。
+脚本使用[unified](https://unifiedjs.com/)、[rehype-parse](https://github.com/rehypejs/rehype/tree/master/packages/rehype-parse)、[rehype-slug](https://github.com/rehypejs/rehype-slug)和[rehype-stringify](https://github.com/rehypejs/rehype/tree/master/packages/rehype-stringify)。
 
 ```javascript
 const unified = require('unified')
@@ -89,7 +80,9 @@ async function example() {
 
 **output.html**
 
-Here's the HTML that gets created by the above script. Notice that a table of contents has been added at the top of the `<body>`, with links to each of the headings on the page. The headings also now have IDs, thanks to [rehype-slug](https://github.com/rehypejs/rehype-slug).
+下面是由上述脚本创建的HTML。
+注意，在`<body>`的顶部添加了一个目录，其中包含指向页面上每个标题的链接。
+多亏了[rehype-slug](https://github.com/rehypejs/rehype-slug)，标题现在也有了id。
 
 ```html
 <html>
@@ -173,13 +166,13 @@ Here's the HTML that gets created by the above script. Notice that a table of co
 
 ## 安装
 
-You can install Rehype TOC via [npm](https://docs.npmjs.com/about-npm/).
+你可以通过[npm](https://docs.npmjs.com/about-npm/)安装Rehype TOC。
 
 ```bash
 npm install @jsdevtools/rehype-toc
 ```
 
-You'll probably want to install [unified](https://unifiedjs.com/), [rehype-parse](https://github.com/rehypejs/rehype/tree/master/packages/rehype-parse), [rehype-stringify](https://github.com/rehypejs/rehype/tree/master/packages/rehype-stringify), and [rehype-slug](https://github.com/rehypejs/rehype-slug) as well.
+您可能还需要安装[unified](https://unifiedjs.com/)、[rehype-parse](https://github.com/rehypejs/rehype/tree/master/packages/rehype-parse)、[rehype-stringify](https://github.com/rehypejs/rehype/tree/master/packages/rehype-stringify)和[rehype-slug](https://github.com/rehypejs/rehype-slug)。
 
 ```bash
 npm install unified rehype-parse rehype-stringify rehype-slug
@@ -187,9 +180,10 @@ npm install unified rehype-parse rehype-stringify rehype-slug
 
 ## 使用
 
-Using the Rehype TOC plugin requires an understanding of how to use Unified and Rehype. [Here is an excelleng guide](https://unifiedjs.com/learn/guide/introduction-to-unified/) to learn the basics.
+使用Rehype TOC插件需要了解如何使用Unified和Rehype。
+[这是一个优秀的指南](https://unifiedjs.com/learn/guide/introduction-to-unified/)学习基础知识。
 
-The Rehype TOC plugin works just like any other Rehype plugin. Pass it to [the `.use()` method](https://github.com/unifiedjs/unified#processoruseplugin-options), optionally with an [options object](#options).
+Rehype TOC插件就像任何其他Rehype插件一样工作。将其传递给[`.use()`方法](https://github.com/unifiedjs/unified#processoruseplugin-options)，可选地使用[options 对象](#options)。
 
 ```javascript
 const unified = require('unified')
@@ -210,50 +204,37 @@ unified().use(toc, {
 
 ## 选项
 
-The Rehype TOC plugin supports the following options:
+Rehype TOC插件支持以下选项:
 
-| Option                | Type                   | Default                | Description                                                                                                                                                                                                                                                                                                                                                         |
-| :-------------------- | :--------------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `nav`                 | boolean                | true                   | Determines whether the table of contents is wrapped in a `<nav>` element.                                                                                                                                                                                                                                                                                           |
-| `position`            | string                 | "afterbegin"           | The position at which the table of contents should be inserted, relative to the `<main>` or `<body>` element. Can be "beforebegin", "afterbegin", "beforeend", or "afterend". See [the `insertAdjacentElement()` docs](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement) for an explanation of each value.                            |
-| `headings`            | array of strings       | h1, h2, h3, h4, h5, h6 | The HTML heading tags to include in the table of contents                                                                                                                                                                                                                                                                                                           |
-| `cssClasses.toc`      | string                 | toc                    | The CSS class name for the top-level `<nav>` or `<ol>` element that contains the whole table of contents.                                                                                                                                                                                                                                                           |
-| `cssClasses.list`     | string                 | toc-level              | The CSS class name for all `<ol>` elements in the table of contents, including the top-level one.                                                                                                                                                                                                                                                                   |
-| `cssClasses.listItem` | string                 | toc-item               | The CSS class name for all `<li>` elements in the table of contents.                                                                                                                                                                                                                                                                                                |
-| `cssClasses.link`     | string                 | toc-link               | The CSS class name for all `<a>` elements in the table of contents.                                                                                                                                                                                                                                                                                                 |
-| `customizeTOC`        | function(toc)          |                        | Allows you to customize the table of contents before it is added to the page.<br /><br />The function receives the TOC node tree and can modify it in any way you want. Or you can return a new node tree to use instead. Or return `false` to prevent the the TOC from being added to the page.                                                                    |
-| `customizeTOCItem`    | function(toc, heading) |                        | Allows you to customize each item in the table of contents before it is added to the page.<br /><br />The function receives the TOC item's node tree and the heading node that it refers to. You can modify the nodes in any way you want. Or you can return a new node tree to use instead. Or return `false` to prevent the the TOC from being added to the page. |
+| 选项                  | 类型                   | 默认值                 | 描述                                                                                                                                                                                                                                                |
+| :-------------------- | :--------------------- | :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nav`                 | boolean                | true                   | 确定是否将目录包装在`<nav>`元素中。                                                                                                                                                                                                                 |
+| `position`            | string                 | "afterbegin"           | 相对于`<main>`或`<body>`元素，应该插入目录的位置。可以为`beforebegin`、`afterbegin`、`beforeend`或`afterend`。参见[`insertAdjacentElement()`文档](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement)获取每个值的解释。 |
+| `headings`            | array of strings       | h1, h2, h3, h4, h5, h6 | 要包含在目录中的HTML标题标签                                                                                                                                                                                                                        |
+| `cssClasses.toc`      | string                 | toc                    | 包含整个目录的顶层`<nav>`或`<ol>`元素的CSS类名。                                                                                                                                                                                                    |
+| `cssClasses.list`     | string                 | toc-level              | 目录表中所有`<ol>`元素的CSS类名，包括顶层元素。                                                                                                                                                                                                     |
+| `cssClasses.listItem` | string                 | toc-item               | 目录表中所有`<li>`元素的CSS类名。                                                                                                                                                                                                                   |
+| `cssClasses.link`     | string                 | toc-link               | 目录表中所有`<a>`元素的CSS类名。                                                                                                                                                                                                                    |
+| `customizeTOC`        | function(toc)          |                        | 允许您在将目录添加到页面之前自定义目录。<br /><br />该函数接收TOC节点树，并可以以您想要的任何方式修改它。或者您可以返回一个新的节点树以供使用。或者返回`false`以阻止TOC被添加到页面中。                                                             |
+| `customizeTOCItem`    | function(toc, heading) |                        | 允许您在将目录中的每个项目添加到页面之前自定义它。<br /><br />函数接收TOC项的节点树及其引用的标题节点。您可以以任何需要的方式修改节点。或者您可以返回一个新的节点树以供使用。或者返回`false`以阻止TOC被添加到页面中。                               |
 
 ## 贡献
 
-Contributions, enhancements, and bug-fixes are welcome! [Open an issue](https://github.com/JS-DevTools/rehype-toc/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/rehype-toc/pulls).
+欢迎贡献、增强和bug修复!
+[打开一个问题](https://github.com/JS-DevTools/rehype-toc/issues)在GitHub和[提交拉请求](https://github.com/JS-DevTools/rehype-toc/pulls)。
 
-#### 建筑
+#### 构建
 
-To build the project locally on your computer:
+要在计算机上本地构建项目:
 
-1. **Clone this repo**<br />
+1. **克隆这个仓库**<br />
    `git clone https://github.com/JS-DevTools/rehype-toc.git`
 
-2. **Install dependencies**<br />
+2. **安装依赖关系**<br />
    `npm install`
 
-3. **Build the code**<br />
+3. **构建代码**<br />
    `npm run build`
 
-4. **Run the tests**<br />
+4. **运行测试**<br />
    `npm test`
-
-## 许可证
-
-Rehype TOC is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
-
-This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/JS-DevTools/rehype-toc) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
-
-## 非常感谢
-
-Thanks to these awesome companies for their support of Open Source developers ❤
-
-[![Travis CI](https://jstools.dev/img/badges/travis-ci.svg)](https://travis-ci.com)
-[![SauceLabs](https://jstools.dev/img/badges/sauce-labs.svg)](https://saucelabs.com)
-[![Coveralls](https://jstools.dev/img/badges/coveralls.svg)](https://coveralls.io)

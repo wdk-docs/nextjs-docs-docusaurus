@@ -3,6 +3,8 @@ title: revalidateTag
 description: API Reference for the revalidateTag function.
 ---
 
+import PagesOnly from '@site/src/components/PagesOnly'
+
 `revalidateTag` allows you to revalidate data associated with a specific cache tag. This is useful for scenarios where you want to update your cached data without waiting for a revalidation period to expire.
 
 ```ts title="app/api/revalidate/route.ts" switcher

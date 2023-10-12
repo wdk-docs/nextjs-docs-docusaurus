@@ -1,44 +1,6 @@
 # remark-toc
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
-
 [**remark**][remark]插件生成目录表。
-
-## Contents
-
-- [remark-toc](#remark-toc)
-  - [Contents](#contents)
-  - [这是什么?](#这是什么)
-  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
-  - [安装](#安装)
-  - [使用](#使用)
-  - [API](#api)
-    - [`unified().use(remarkToc[, options])`](#unifieduseremarktoc-options)
-      - [`options`](#options)
-      - [`options.heading`](#optionsheading)
-      - [`options.skip`](#optionsskip)
-        - [`options.maxDepth`](#optionsmaxdepth)
-        - [`options.tight`](#optionstight)
-        - [`options.ordered`](#optionsordered)
-        - [`options.prefix`](#optionsprefix)
-        - [`options.parents`](#optionsparents)
-  - [例子](#例子)
-    - [示例: 不同的标题](#示例-不同的标题)
-    - [示例: 有序、紧凑的列表](#示例-有序紧凑的列表)
-    - [示例: 包括和不包括标题](#示例-包括和不包括标题)
-    - [例如: 添加前缀](#例如-添加前缀)
-  - [Types](#types)
-  - [兼容性](#兼容性)
-  - [安全](#安全)
-  - [相关的](#相关的)
-  - [贡献](#贡献)
-  - [许可证](#许可证)
 
 ## 这是什么?
 

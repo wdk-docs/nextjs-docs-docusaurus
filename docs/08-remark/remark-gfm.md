@@ -1,102 +1,55 @@
 # remark-gfm
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
-
-支持[GFM][]**[remark][]**插件 (autolink literals, footnotes, strikethrough, tables, tasklists).
-
-## Contents
-
-- [remark-gfm](#remark-gfm)
-  - [Contents](#contents)
-  - [这是什么?](#这是什么)
-  - [我应该什么时候使用这个?](#我应该什么时候使用这个)
-  - [安装](#安装)
-  - [使用](#使用)
-  - [API](#api)
-    - [`unified().use(remarkGfm[, options])`](#unifieduseremarkgfm-options)
-      - [`options`](#options)
-        - [`options.singleTilde`](#optionssingletilde)
-        - [`options.tableCellPadding`](#optionstablecellpadding)
-        - [`options.tablePipeAlign`](#optionstablepipealign)
-        - [`options.stringLength`](#optionsstringlength)
-  - [例子](#例子)
-    - [例子: `singleTilde`](#例子-singletilde)
-    - [例子: `stringLength`](#例子-stringlength)
-  - [Types](#types)
-  - [兼容性](#兼容性)
-  - [安全](#安全)
-  - [相关的](#相关的)
-  - [贡献](#贡献)
-  - [许可证](#许可证)
+支持[GFM][]**[remark][]**插件 (自动链接文字，脚注，删除线，表格，任务列表).
 
 ## 这是什么?
 
-This package is a [unified][] ([remark][]) plugin to enable the extensions to
-markdown that GitHub adds: autolink literals (`www.x.com`), footnotes (`[^1]`),
-strikethrough (`~~stuff~~`), tables (`| cell |…`), and tasklists (`* [x]`).
-You can use this plugin to add support for parsing and serializing them.
-These extensions by GitHub to CommonMark are called [GFM][] (GitHub Flavored
-Markdown).
+这个包是一个[unified][] ([remark][])插件，用于启用GitHub添加的扩展标记: 自动链接文字 (`www.x.com`), 脚注 (`[^1]`),删除线 (`~~stuff~~`), 表 (`| cell |…`), 任务列表 (`* [x]`).
 
-**unified** is a project that transforms content with abstract syntax trees
-(ASTs).
-**remark** adds support for markdown to unified.
-**mdast** is the markdown AST that remark uses.
-This is a remark plugin that transforms mdast.
+您可以使用这个插件来添加对解析和序列化它们的支持。
+这些扩展由GitHub到CommonMark被称为[GFM][] (GitHub风味Markdown)。
+
+**unified** 是一个用抽象语法树转换内容的项目 (ASTs).
+**remark** 将`markdown`添加到`unified`的支持.
+**mdast** 是remark使用的标记AST。
+
+这是一个转换mast的注释插件。
 
 ## 我应该什么时候使用这个?
 
-This project is useful when you want to support the same features that GitHub
-does in files in a repo, Gists, and several other places.
-Users frequently believe that some of these extensions, specifically autolink
-literals and tables, are part of normal markdown, so using `remark-gfm` will
-help match your implementation to their understanding of markdown.
-There are several edge cases where GitHub’s implementation works in unexpected
-ways or even different than described in their spec, so _writing_ in GFM is not
-always the best choice.
+当你想在repo、gist和其他地方的文件中支持与GitHub相同的功能时，这个项目非常有用。
+用户经常认为其中一些扩展，特别是自动链接文本和表，是正常标记的一部分，因此使用`remark-gfm`有助于将您的实现与他们对标记的理解相匹配。
+在一些极端情况下，GitHub的实现以意想不到的方式工作，甚至与规范中描述的不同，因此在GFM中进行编写并不总是最好的选择。
 
-This plugin does not handle how markdown is turned to HTML.
-That’s done by [`remark-rehype`][remark-rehype].
-If your content is not in English and uses footnotes, you should configure that
-plugin.
-When generating HTML, you might also want to enable [`rehype-slug`][rehype-slug]
-to add `id`s on headings.
+这个插件不处理markdown是如何转化为HTML的。
+这是通过[`remark-rehype`][remark-rehype]完成的。
+如果您的内容不是英文的，并且使用脚注，您应该配置该插件。
+当生成HTML时，你可能还想启用[`rehype-slug`][rehype-slug]在标题上添加`id`。
 
-A different plugin, [`remark-frontmatter`][remark-frontmatter], adds support for
-frontmatter.
-GitHub supports YAML frontmatter for files in repos and Gists but they don’t
-treat it as part of GFM.
+另一个插件，[`remark-frontmatter`][remark-frontmatter]，增加了对frontmatter的支持。
+GitHub在repos和gist中支持YAML frontmatter文件，但他们不将其视为GFM的一部分。
 
-Another plugin, [`remark-github`][remark-github], adds support for how markdown
-works in relation to a certain GitHub repo in comments, issues, PRs, and
-releases, by linking references to commits, issues, and users.
+另一个插件，[`remark-github`][remark-github]，通过链接提交、问题和用户的引用，增加了对markdown如何在评论、问题、pr和发布中与特定GitHub repo相关的支持。
 
-Yet another plugin, [`remark-breaks`][remark-breaks], turns soft line endings
-(enters) into hard breaks (`<br>`s).
-GitHub does this in a few places (comments, issues, PRs, and releases).
+还有一个插件，[`remark-breaks`][remark-breaks]，把软行结尾(回车)变成硬行结尾(`<br>` s)。
+GitHub在一些地方这样做(评论，问题，pr和发布)。
 
 ## 安装
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+此软件包仅限[ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)。
+在Node.js(12.20+， 14.14+或16.0+版本)中，使用[npm][]安装:
 
 ```sh
 npm install remark-gfm
 ```
 
-In Deno with [`esm.sh`][esmsh]:
+在 Deno 中使用 ['esm.sh'][esmsh]：
 
 ```js
 import remarkGfm from 'https://esm.sh/remark-gfm@3'
 ```
 
-In browsers with [`esm.sh`][esmsh]:
+在浏览器中使用[`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
@@ -106,37 +59,37 @@ In browsers with [`esm.sh`][esmsh]:
 
 ## 使用
 
-Say we have the following file `example.md`:
+假设我们有以下文件`example.md`:
 
 ```markdown
 # GFM
 
-## Autolink literals
+## 自动链接文字
 
-www.example.com, https://example.com, and contact@example.com.
+www.example.com, https://example.com, 和 contact@example.com.
 
-## Footnote
+## 脚注
 
 A note[^1]
 
 [^1]: Big note.
 
-## Strikethrough
+## 删除线
 
 ~one~ or ~~two~~ tildes.
 
-## Table
+## 表格
 
 | a   | b   |   c |  d  |
 | --- | :-- | --: | :-: |
 
-## Tasklist
+## 任务列表
 
 - [ ] to do
 - [x] done
 ```
 
-And our module `example.js` looks as follows:
+我们的模块`example.js`看起来如下:
 
 ```js
 import { read } from 'to-vfile'
@@ -160,7 +113,7 @@ async function main() {
 }
 ```
 
-Now running `node example` yields:
+现在运行`node example`会得到:
 
 ```html
 <h1>GFM</h1>
@@ -228,7 +181,7 @@ Now running `node example` yields:
 
 ### `unified().use(remarkGfm[, options])`
 
-支持[GFM][] (autolink literals, footnotes, strikethrough, tables,tasklists).
+支持[GFM][] (自动链接文字, 脚注, 删除线, 表,任务列表).
 
 ##### `options`
 
@@ -378,18 +331,6 @@ unified集体维护的项目兼容所有维护的Node.js版本。
   — 支持数学
 - [`remark-mdx`](https://github.com/mdx-js/mdx/tree/main/packages/remark-mdx)
   — 支持MDX (JSX, 表达式, ESM)
-
-## 贡献
-
-See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways to get started.
-See [`support.md`][support] for ways to get help.
-
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to abide by its terms.
-
-## 许可证
-
-[MIT][license] © [Titus Wormer][author]
 
 <!-- Definitions -->
 

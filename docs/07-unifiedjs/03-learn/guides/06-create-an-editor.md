@@ -526,4 +526,4 @@ If you haven’t already, check out the other articles in the
 [visit]: https://github.com/syntax-tree/unist-util-visit
 [private]: https://docs.npmjs.com/files/package.json#private
 [debounce]: https://www.npmjs.com/package/debounce
-[learn]: /learn/
+[learn]: ./index

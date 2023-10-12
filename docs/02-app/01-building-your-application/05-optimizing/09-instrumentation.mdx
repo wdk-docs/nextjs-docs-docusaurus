@@ -3,6 +3,8 @@ title: 插装
 description: 学习如何在Next.js应用程序的服务器启动时使用检测来运行代码
 ---
 
+import PagesOnly from '@site/src/components/PagesOnly'
+
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 如果你从项目根目录下的`instrumentation.ts` (or `js`)文件中导出一个名为`register`的函数(如果使用的话，也可以在`src`文件夹中)，我们将在引导新的Next.js服务器实例时调用该函数。

@@ -9,11 +9,11 @@ import TabItem from '@theme/TabItem'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-This API reference will help you understand how to use [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) and [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts). For features and usage, please see the [Optimizing Fonts](/docs/app/building-your-application/optimizing/fonts) page.
+此API参考将帮助您了解如何使用[`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) 和 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts). 有关功能和用法，请参阅[优化字体](/docs/app/building-your-application/optimizing/fonts)页面。
 
-### Font Function Arguments
+### 字体函数参数
 
-For usage, review [Google Fonts](/docs/app/building-your-application/optimizing/fonts#google-fonts) and [Local Fonts](/docs/app/building-your-application/optimizing/fonts#local-fonts).
+有关使用，请查看[谷歌字体](/docs/app/building-your-application/optimizing/fonts#google-fonts)和[本地字体](/docs/app/building-your-application/optimizing/fonts#local-fonts).
 
 | Key                                         | `font/google`       | `font/local`        | Type                       | Required          |
 | ------------------------------------------- | ------------------- | ------------------- | -------------------------- | ----------------- |
@@ -31,13 +31,13 @@ For usage, review [Google Fonts](/docs/app/building-your-application/optimizing/
 
 ### `src`
 
-The path of the font file as a string or an array of objects (with type `Array<{path: string, weight?: string, style?: string}>`) relative to the directory where the font loader function is called.
+相对于调用字体加载器函数的目录，以字符串或对象数组形式(型 `Array<{path: string, weight?: string, style?: string}>`)表示的字体文件的路径。
 
-Used in `next/font/local`
+用于`next/font/local`
 
 - Required
 
-Examples:
+例子:
 
 - `src:'./fonts/my-font.woff2'` where `my-font.woff2` is placed in a directory named `fonts` inside the `app` directory
 - `src:[{path: './inter/Inter-Thin.ttf', weight: '100',},{path: './inter/Inter-Regular.ttf',weight: '400',},{path: './inter/Inter-Bold-Italic.ttf', weight: '700',style: 'italic',},]`
@@ -45,16 +45,16 @@ Examples:
 
 ### `weight`
 
-The font [`weight`](https://fonts.google.com/knowledge/glossary/weight) with the following possibilities:
+字体[`weight`](https://fonts.google.com/knowledge/glossary/weight)具有以下可能性:
 
 - A string with possible values of the weights available for the specific font or a range of values if it's a [variable](https://fonts.google.com/variablefonts) font
 - An array of weight values if the font is not a [variable google font](https://fonts.google.com/variablefonts). It applies to `next/font/google` only.
 
 Used in `next/font/google` and `next/font/local`
 
-- Required if the font being used is **not** [variable](https://fonts.google.com/variablefonts)
+- 如果使用的字体是**不是**[变量](https://fonts.google.com/variablefonts)则需要
 
-Examples:
+例子:
 
 - `weight: '400'`: A string for a single weight value - for the font [`Inter`](https://fonts.google.com/specimen/Inter?query=inter), the possible values are `'100'`, `'200'`, `'300'`, `'400'`, `'500'`, `'600'`, `'700'`, `'800'`, `'900'` or `'variable'` where `'variable'` is the default)
 - `weight: '100 900'`: A string for the range between `100` and `900` for a variable font
@@ -71,7 +71,7 @@ Used in `next/font/google` and `next/font/local`
 
 - Optional
 
-Examples:
+例子:
 
 - `style: 'italic'`: A string - it can be `normal` or `italic` for `next/font/google`
 - `style: 'oblique'`: A string - it can take any value for `next/font/local` but is expected to come from [standard font styles](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
@@ -129,7 +129,7 @@ Examples:
 
 ### `fallback`
 
-The fallback font to use if the font cannot be loaded. An array of strings of fallback fonts with no default.
+无法加载字体时使用的备用字体。没有默认值的备用字体字符串数组。
 
 - Optional
 
@@ -155,7 +155,7 @@ Examples:
 
 ### `variable`
 
-A string value to define the CSS variable name to be used if the style is applied with the [CSS variable method](#css-variables).
+一个字符串值，用于定义如果样式应用于[CSS变量方法](#css-variables)时要使用的CSS变量名。
 
 Used in `next/font/google` and `next/font/local`
 
@@ -167,7 +167,7 @@ Examples:
 
 ### `declarations`
 
-An array of font face [descriptor](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face#descriptors) key-value pairs that define the generated `@font-face` further.
+一个font face [descriptor](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face#descriptors)键值对数组，这些键值对进一步定义生成的`@font-face`。
 
 Used in `next/font/local`
 
@@ -177,17 +177,20 @@ Examples:
 
 - `declarations: [{ prop: 'ascent-override', value: '90%' }]`
 
-## Applying Styles
+## 应用样式
 
-You can apply the font styles in three ways:
+你可以用三种方式应用字体样式:
 
-- [`className`](#classname)
-- [`style`](#style-1)
-- [CSS Variables](#css-variables)
+- [应用样式](#应用样式)
+  - [`className`](#classname)
+  - [`style`](#style-1)
+  - [CSS 变量](#css-变量)
+- [使用字体定义文件](#使用字体定义文件)
+- [版本变化](#版本变化)
 
 ### `className`
 
-Returns a read-only CSS `className` for the loaded font to be passed to an HTML element.
+为要传递给HTML元素的加载字体返回一个只读的CSS `className`。
 
 ```tsx
 <p className={inter.className}>Hello, Next.js!</p>
@@ -195,17 +198,17 @@ Returns a read-only CSS `className` for the loaded font to be passed to an HTML 
 
 ### `style`
 
-Returns a read-only CSS `style` object for the loaded font to be passed to an HTML element, including `style.fontFamily` to access the font family name and fallback fonts.
+返回一个只读的CSS `style`对象，用于将加载的字体传递给HTML元素，包括`style.fontFamily`来访问字体族名称和备用字体。
 
 ```tsx
 <p style={inter.style}>Hello World</p>
 ```
 
-### CSS Variables
+### CSS 变量
 
-If you would like to set your styles in an external style sheet and specify additional options there, use the CSS variable method.
+如果您希望在外部样式表中设置样式并在其中指定其他选项，请使用CSS变量方法。
 
-In addition to importing the font, also import the CSS file where the CSS variable is defined and set the variable option of the font loader object as follows:
+除了导入字体外，还要导入定义CSS变量的CSS文件，并设置字体加载器对象的变量选项如下:
 
 ```tsx title="app/page.tsx" switcher
 import { Inter } from 'next/font/google'
@@ -251,7 +254,7 @@ Define the `text` selector class in the `component.module.css` CSS file as follo
 
 In the example above, the text `Hello World` is styled using the `Inter` font and the generated font fallback with `font-weight: 200` and `font-style: italic`.
 
-## Using a font definitions file
+## 使用字体定义文件
 
 Every time you call the `localFont` or Google font function, that font will be hosted as one instance in your application. Therefore, if you need to use the same font in multiple places, you should load it in one place and import the related font object where you need it. This is done using a font definitions file.
 
@@ -339,7 +342,7 @@ To make it easier to access the font definitions in your code, you can define a 
 }
 ```
 
-You can now import any font definition as follows:
+您现在可以导入任何字体定义如下:
 
 ```tsx title="app/about/page.tsx" switcher
 import { greatVibes, sourceCodePro400 } from '@/fonts'
@@ -349,9 +352,9 @@ import { greatVibes, sourceCodePro400 } from '@/fonts'
 import { greatVibes, sourceCodePro400 } from '@/fonts'
 ```
 
-## Version Changes
+## 版本变化
 
-| Version   | Changes                                                               |
-| --------- | --------------------------------------------------------------------- |
-| `v13.2.0` | `@next/font` renamed to `next/font`. Installation no longer required. |
-| `v13.0.0` | `@next/font` was added.                                               |
+| 版本      | 变化                                          |
+| --------- | --------------------------------------------- |
+| `v13.2.0` | `@next/font`改名为`next/font`。不再需要安装。 |
+| `v13.0.0` | 添加了`@next/font`。                          |
