@@ -6,7 +6,7 @@ description: API reference for the not-found.js file.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-The **not-found** file is used to render UI when the [`notFound`](/docs/app/api-reference/functions/not-found) function is thrown within a route segment. Along with serving a custom UI, Next.js will also return a `404` HTTP status code.
+**not-found**文件用于在路由段中抛出[`notFound`](/docs/app/api-reference/functions/not-found)函数时呈现UI。除了提供自定义UI外，Next.js还将返回一个`404`HTTP状态码。
 
 ```tsx title="app/blog/not-found.tsx" switcher
 import Link from 'next/link'
@@ -40,15 +40,15 @@ export default function NotFound() {
 }
 ```
 
-> **注意事项**: In addition to catching expected `notFound()` errors, the root `app/not-found.js` file also handles any unmatched URLs for your whole application. This means users that visit a URL that is not handled by your app will be shown the UI exported by the `app/not-found.js` file.
+> **注意事项**: 除了捕获预期的`notFound()`错误外，根`app/not-found.js`文件还处理整个应用程序的任何不匹配的url。这意味着用户访问的URL不是你的应用程序处理的，将显示由`app/not-found.js`文件导出的UI。
 
-## Props
+## 属性
 
-`not-found.js` components do not accept any props.
+`not-found.js` 组件不接受任何属性。
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                             |
+| 版本      | 变化                                                |
 | --------- | --------------------------------------------------- |
 | `v13.3.0` | Root `app/not-found` handles global unmatched URLs. |
 | `v13.0.0` | `not-found` introduced.                             |

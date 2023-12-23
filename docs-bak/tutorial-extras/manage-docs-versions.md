@@ -21,7 +21,7 @@ Your docs now have 2 versions:
 - `1.0` at `http://localhost:3000/docs/` for the version 1.0 docs
 - `current` at `http://localhost:3000/docs/next/` for the **upcoming, unreleased docs**
 
-## Add a Version Dropdown
+## Add a 版本 Dropdown
 
 To navigate seamlessly across versions, add a version dropdown.
 
@@ -40,12 +40,12 @@ module.exports = {
       ],
     },
   },
-};
+}
 ```
 
 The docs version dropdown appears in your navbar:
 
-![Docs Version Dropdown](./img/docsVersionDropdown.png)
+![Docs 版本 Dropdown](./img/docsVersionDropdown.png)
 
 ## Update an existing version
 

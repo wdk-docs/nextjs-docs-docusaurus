@@ -41,7 +41,7 @@ export default function Page() {
 
 下面是Image组件可用的属性总结:
 
-| 属性                                      | 例子                                    | 类型            | 要求 |
+| 属性                                      | 例子                                    | 类型            | 必须 |
 | ----------------------------------------- | --------------------------------------- | --------------- | ---- |
 | [`src`](#src)                             | `src="/profile.png"`                    | String          | Yes  |
 | [`width`](#width)                         | `width={500}`                           | Integer (px)    | Yes  |
@@ -187,8 +187,8 @@ fill={true} // {true} | {false}
 
 `sizes`属性有两个与图像性能相关的重要目的:
 
-- 首先，浏览器使用`sizes`的值来确定要从`next/image`自动生成的源集中下载的图像的大小。当浏览器选择时，它还不知道页面上图像的大小，因此它选择与视窗大小相同或更大的图像。`尺寸`属性允许你告诉浏览器图像实际上会小于全屏。如果你没有在带有`填充`属性的图像中指定`大小`值，则使用默认值`100vw`(全屏宽度)。
-- 其次，`sizes`属性配置`next/image`如何自动生成图像源集。如果没有`大小`值，则生成一个小的源集，适合固定大小的图像。如果定义了`大小`，则会生成一个大的源集，适合于响应式图像。如果`size`属性包含了`50vw`这样的大小，它代表了视口宽度的一个百分比，那么源集就会被修剪成不包含任何太小而不必要的值。
+- 首先，浏览器使用`sizes`的值来确定要从`next/image`自动生成的源集中下载的图像的大小。当浏览器选择时，它还不知道页面上图像的大小，因此它选择与视窗大小相同或更大的图像。`尺寸`属性允许你告诉浏览器图像实际上会小于全屏。如果你没有在带有`填充`属性的图像中指定`sizes`值，则使用默认值`100vw`(全屏宽度)。
+- 其次，`sizes`属性配置`next/image`如何自动生成图像源集。如果没有`sizes`值，则生成一个小的源集，适合固定大小的图像。如果定义了`sizes`，则会生成一个大的源集，适合于响应式图像。如果`size`属性包含了`50vw`这样的大小，它代表了视口宽度的一个百分比，那么源集就会被修剪成不包含任何太小而不必要的值。
 
 例如，如果你知道你的样式将导致图像在移动设备上是全宽的，在平板电脑上是两列布局，在桌面显示器上是三列布局，你应该包括一个大小属性，如下所示:
 
@@ -208,9 +208,9 @@ export default function Page() {
 }
 ```
 
-这个`大小`示例可能对性能指标产生巨大影响。如果没有`33vw`大小，从服务器中选择的图像将是所需宽度的3倍。因为文件大小与宽度的平方成正比，如果没有`大小`，用户下载的图像就会比需要的大9倍。
+这个`sizes`示例可能对性能指标产生巨大影响。如果没有`33vw`大小，从服务器中选择的图像将是所需宽度的3倍。因为文件大小与宽度的平方成正比，如果没有`sizes`，用户下载的图像就会比需要的大9倍。
 
-Learn more about `srcset` and `sizes`:
+了解更多关于`srcset`和`sizes`的信息:
 
 - [web.dev](https://web.dev/learn/design/responsive-images/#sizes)
 - [mdn](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes)
@@ -229,8 +229,8 @@ quality={75} // {number 1-100}
 priority={false} // {false} | {true}
 ```
 
-当为true时，该图像将被视为高优先级和
-(预)(https://web.dev/preload-responsive-images/)。使用`priority`会自动禁用图像的延迟加载。
+当为`true`时，图像将被视为高优先级和[预加载](https://web.dev/preload-responsive-images/)。
+使用`priority`的图像自动禁用延迟加载。
 
 您应该在任何检测到的图像上使用`priority`属性作为[最大内容绘制(LCP)](https://nextjs.org/learn/seo/web-performance/lcp)元素。拥有多个优先级图像可能是合适的，因为不同的图像可能是不同视口大小的LCP元素。
 
@@ -242,19 +242,21 @@ priority={false} // {false} | {true}
 placeholder = 'empty' // {empty} | {blur}
 ```
 
-在图像加载时使用的占位符。可能的值是`blur`或`empty`。默认为`空`。
+在图像加载时使用的占位符。可能的值是`blur`或`empty`。默认为`empty`。
 
-当`blur`时，[`blurDataURL`](# blurDataURL)属性将被用作占位符。如果`src`是来自[静态导入](/docs/app/building-your-application/ optimization /images#local-images)的对象，并且导入的图像是`.jpg`， `.png`， `.jpg`， '。Webp '， or '。`avif`，然后`blurDataURL`将自动填充。
+当`blur`时，[`blurDataURL`](#blurDataURL)属性将被用作占位符。
+如果`src`是来自[静态导入](/docs/app/building-your-application/optimization/images#local-images)的对象，并且导入的图像是`.jpg`, `.png`, `.webp`, 或 `.avif`，然后`blurDataURL`将自动填充。
 
-对于动态图像，您必须提供[`blurDataURL`](# blurDataURL)属性。解决方案，如[Plaiceholder](https://github.com/joe-bell/plaiceholder)可以帮助`base64`的生成。
+对于动态图像，您必须提供[`blurDataURL`](#blurDataURL)属性。
+解决方案，如[Plaiceholder](https://github.com/joe-bell/plaiceholder)可以帮助`base64`的生成。
 
-当`空`时，在图像加载时将没有占位符，只有空白空间。
+当`empty`时，在图像加载时将没有占位符，只有空白空间。
 
 试试吧:
 
-- [Demo the `blur` placeholder](https://image-component.nextjs.gallery/placeholder)
-- [Demo the shimmer effect with `blurDataURL` 属性](https://image-component.nextjs.gallery/shimmer)
-- [Demo the color effect with `blurDataURL` 属性](https://image-component.nextjs.gallery/color)
+- [演示`blur`占位符](https://image-component.nextjs.gallery/placeholder)
+- [用`blurDataURL`演示闪烁效果](https://image-component.nextjs.gallery/shimmer)
+- [用`blurDataURL`演示颜色效果](https://image-component.nextjs.gallery/color)
 
 ## 高级属性
 
@@ -291,7 +293,7 @@ export default function ProfileImage() {
 
 <AppOnly>
 
-> **注意事项**: 使用像`onLoadingComplete`这样接受函数的道具，需要使用[Client Components](/docs/getting-started/react-essentials# Client - Components)来序列化所提供的函数。
+> **注意事项**: 使用像`onLoadingComplete`这样接受函数的道具，需要使用[客户端组件](/docs/getting-started/react-essentials#Client-Components)来序列化所提供的函数。
 
 </AppOnly>
 
@@ -303,11 +305,11 @@ export default function ProfileImage() {
 
 加载图像时调用的回调函数。
 
-加载事件可能在图像占位符被删除和图像完全解码之前发生。如果你想等到图片完全加载，使用[`onLoadingComplete`](# onLoadingComplete)代替。
+加载事件可能在图像占位符被删除和图像完全解码之前发生。如果你想等到图片完全加载，使用[`onLoadingComplete`](#onLoadingComplete)代替。
 
 <AppOnly>
 
-> **注意事项**: 使用像`onLoad`这样接受函数的属性，需要使用[Client Components](/docs/getting-started/react-essentials# Client - Components)来序列化所提供的函数。
+> **注意事项**: 使用像`onLoad`这样接受函数的属性，需要使用[客户端组件](/docs/getting-started/react-essentials#Client-Components)来序列化所提供的函数。
 
 </AppOnly>
 
@@ -321,7 +323,7 @@ export default function ProfileImage() {
 
 <AppOnly>
 
-> **注意事项**: 使用像`onError`这样接受函数的属性，需要使用[Client Components](/docs/getting-started/react-essentials# Client - Components)来序列化所提供的函数。
+> **注意事项**: 使用像`onError`这样接受函数的属性，需要使用[客户端组件](/docs/getting-started/react-essentials#Client-Components)来序列化所提供的函数。
 
 </AppOnly>
 
@@ -337,7 +339,7 @@ loading = 'lazy' // {lazy} | {eager}
 
 当`lazy`时，延迟加载图像，直到它达到从视窗计算的距离。
 
-当`急切`时，立即加载图像。
+当`eager`时，立即加载图像。
 
 了解更多关于[`loading`属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-loading)。
 
@@ -385,12 +387,12 @@ module.exports = {
 
 `<Image />`组件上的其他属性将被传递给底层的`img`元素，但以下属性除外:
 
-- `srcSet`. Use [Device Sizes](#devicesizes) instead.
-- `decoding`. It is always `"async"`.
+- `srcSet`. 使用[设备尺寸](#devicesize)代替。
+- `decoding`. 它总是 `"async"`.
 
 ## 配置选项
 
-除了属性，你还可以在`next.config.js`中配置Image Component。以下选项可用:
+除了属性，你还可以在`next.config.js`中配置图像组件。以下选项可用:
 
 ### `remotePatterns`
 
@@ -439,9 +441,9 @@ module.exports = {
 
 ### `domains`
 
-> **Warning**: 我们建议配置strict [`remotePatterns`](# remotePatterns)而不是`domains`，以保护您的应用程序免受恶意用户的攻击。只有当你拥有该域名提供的所有内容时，才使用`域名`。
+> **Warning**: 我们建议配置strict [`remotePatterns`](#remotePatterns)而不是`domains`，以保护您的应用程序免受恶意用户的攻击。只有当你拥有该域名提供的所有内容时，才使用`domains`。
 
-与[`remotePatterns`](# remotePatterns)类似，`domains`配置可用于为外部映像提供允许的主机名列表。
+与[`remotePatterns`](#remotePatterns)类似，`domains`配置可用于为外部映像提供允许的主机名列表。
 
 但是，`domains`配置不支持通配符模式匹配，也不能限制协议、端口或路径名。
 
@@ -486,7 +488,7 @@ export default function myImageLoader({ src, width, quality }) {
 
 <AppOnly>
 
-> **注意事项**: 自定义接受函数的图像加载器文件需要使用[Client Components](/docs/getting-started/react-essentials# Client - Components)来序列化所提供的函数。
+> **注意事项**: 自定义接受函数的图像加载器文件需要使用[客户端组件](/docs/getting-started/react-essentials#Client-Components)来序列化所提供的函数。
 
 </AppOnly>
 
@@ -496,7 +498,7 @@ export default function myImageLoader({ src, width, quality }) {
 
 ### `deviceSizes`
 
-如果你知道你的用户期望的设备宽度，你可以使用`next.config.js`中的`devicesize`属性指定设备宽度断点列表。当`next/image`组件使用[`sizes`](#sizes) 属性来确保为用户的设备提供正确的图像时，使用这些宽度。
+如果你知道你的用户期望的设备宽度，你可以使用`next.config.js`中的`deviceSizes`属性指定设备宽度断点列表。当`next/image`组件使用[`sizes`](#sizes) 属性来确保为用户的设备提供正确的图像时，使用这些宽度。
 
 如果没有提供配置，则使用下面的默认值。
 
@@ -510,9 +512,10 @@ module.exports = {
 
 ### `imageSizes`
 
-您可以使用`images.`命令指定图像宽度列表。在你的next.config.js文件中设置imagesize属性。这些宽度与[device sizes]数组(#devicesize)连接起来，形成用于生成图像[srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)s)的完整大小数组。
+您可以在你的`next.config.js`文件中使用`images.imageSizes`命令指定图像宽度列表。这些宽度与[设备尺寸](#devicesize)数组连接起来，形成用于生成图像[srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)的完整大小数组。
 
-有两个单独列表的原因是imagesize仅用于提供[`sizes`](#sizes)属性的图像，这表明图像小于屏幕的全宽度。\*\*因此，imagesize中的大小都应该小于devicesize中的最小大小
+有两个单独列表的原因是`imageSizes`仅用于提供[`sizes`](#sizes)属性的图像，这表明图像小于屏幕的全宽度。
+**因此，`imageSizes`中的大小都应该小于`deviceSizes`中的最小大小**
 
 如果没有提供配置，则使用下面的默认值。
 
@@ -559,7 +562,7 @@ module.exports = {
 
 下面描述了默认[loader](#loader)的缓存算法。对于所有其他加载程序，请参考您的云提供商的文档。
 
-图像根据请求进行动态优化，并存储在`<distDir>/cache/ Images`目录中。优化后的映像文件将用于后续请求，直到过期为止。当发出与缓存但已过期的文件匹配的请求时，将立即提供过期的图像。然后在后台再次优化图像(也称为重新验证)，并使用新的过期日期保存到缓存中。
+图像根据请求进行动态优化，并存储在`<distDir>/cache/images`目录中。优化后的映像文件将用于后续请求，直到过期为止。当发出与缓存但已过期的文件匹配的请求时，将立即提供过期的图像。然后在后台再次优化图像(也称为重新验证)，并使用新的过期日期保存到缓存中。
 
 图像的缓存状态可以通过读取`x-nextjs-cache`响应头的值来确定。取值范围如下:
 
@@ -567,15 +570,15 @@ module.exports = {
 - `STALE` - 路径在缓存中，但超过了重新验证时间，因此它将在后台更新
 - `HIT` - 路径在缓存中，未超过重新验证时间
 
-过期(或者更确切地说是最大年龄)由[`minimumCacheTTL`](# minimumCacheTTL)配置或上游图像`Cache-Control`头定义，以较大的为准。具体来说，使用`Cache-Control`报头的`max-age`值。如果同时找到`s-maxage`和`max-age`，则优先选择`s-maxage`。`max-age`也会传递到任何下游客户端，包括cdn和浏览器。
+过期(或者更确切地说是最大年龄)由[`minimumCacheTTL`](#minimumCacheTTL)配置或上游图像`Cache-Control`头定义，以较大的为准。具体来说，使用`Cache-Control`报头的`max-age`值。如果同时找到`s-maxage`和`max-age`，则优先选择`s-maxage`。`max-age`也会传递到任何下游客户端，包括cdn和浏览器。
 
-- 你可以配置[`minimumCacheTTL`](# minimumCacheTTL)来增加缓存持续时间，当上游图像不包括`cache - control`头或值很低时。
+- 你可以配置[`minimumCacheTTL`](#minimumCacheTTL)来增加缓存持续时间，当上游图像不包括`cache-control`头或值很低时。
 - 您可以配置[`devicesize`](#devicesize)和[`imagesize`](#devicesize)来减少可能生成的图像的总数。
 - 您可以配置[formats](#formats)来禁用多种格式，以支持单一图像格式。
 
 ### `minimumCacheTTL`
 
-可以为缓存的优化图像配置生存时间(TTL)，以秒为单位。在许多情况下，最好使用[静态图像导入](/docs/app/build -your-application/ optimization /images#local-images)，它会自动散列文件内容，并以`cache - control`头`immutable`永久缓存图像。
+可以为缓存的优化图像配置生存时间(TTL)，以秒为单位。在许多情况下，最好使用[静态图像导入](/docs/app/build-your-application/optimization/images#local-images)，它会自动散列文件内容，并以`cache-control`头`immutable`永久缓存图像。
 
 ```js title="next.config.js"
 module.exports = {
@@ -593,7 +596,7 @@ module.exports = {
 
 ### `disableStaticImages`
 
-默认行为允许您导入静态文件，例如`import icon from`./icon.png '，然后将其传递给`src`属性。
+默认行为允许您导入静态文件，例如`import icon from './icon.png'`，然后将其传递给`src`属性。
 
 在某些情况下，如果此功能与其他希望导入行为不同的插件冲突，您可能希望禁用此功能。
 

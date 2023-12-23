@@ -6,9 +6,9 @@ description: API reference for the loading.js  file.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-A **loading** file can create instant loading states built on [Suspense](/docs/app/building-your-application/routing/loading-ui-and-streaming).
+一个**加载**文件可以创建即时加载状态，建立在[悬念](/docs/app/building-your-application/routing/loading-ui-and-streaming).
 
-By default, this file is a [Server Component](/docs/getting-started/react-essentials#server-components) - but can also be used as a Client Component through the `"use client"` directive.
+默认情况下，该文件是一个[服务器组件](/docs/getting-started/react-essentials#server-components)，但也可以通过`use Client`指令作为客户端组件使用。
 
 ```tsx title="app/feed/loading.tsx" switcher
 export default function Loading() {
@@ -24,14 +24,14 @@ export default function Loading() {
 }
 ```
 
-Loading UI components do not accept any parameters.
+加载UI组件不接受任何参数。
 
 > **注意事项**
 >
-> - While designing loading UI, you may find it helpful to use the [React Developer Tools](https://react.dev/learn/react-developer-tools) to manually toggle Suspense boundaries.
+> - 在设计加载UI时，你可能会发现使用[React开发工具](https://react.dev/learn/react-developer-tools)手动切换悬念边界很有帮助。
 
-## Version History
+## 版本历史
 
-| Version   | Changes               |
+| 版本      | 变化                  |
 | --------- | --------------------- |
 | `v13.0.0` | `loading` introduced. |

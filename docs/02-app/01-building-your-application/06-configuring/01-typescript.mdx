@@ -1,15 +1,15 @@
 ---
 title: TypeScript
-description: Next.js provides a TypeScript-first development experience for building your React application.
+description: Next.js为构建React应用提供了typescript优先的开发体验。
 ---
 
 import PagesOnly from '@site/src/components/PagesOnly'
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Next.js provides a TypeScript-first development experience for building your React application.
+Next.js为构建React应用提供了TypeScript优先的开发体验。
 
-It comes with built-in TypeScript support for automatically installing the necessary packages and configuring the proper settings.
+它带有内置的TypeScript支持，可以自动安装必要的包并配置适当的设置。
 
 <AppOnly>
 
@@ -19,7 +19,7 @@ As well as a [TypeScript Plugin](#typescript-plugin) for your editor.
 
 </AppOnly>
 
-## New Projects
+## 新项目
 
 `create-next-app` now ships with TypeScript by default.
 
@@ -27,13 +27,13 @@ As well as a [TypeScript Plugin](#typescript-plugin) for your editor.
 npx create-next-app@latest
 ```
 
-## Existing Projects
+## 现有项目
 
 Add TypeScript to your project by renaming a file to `.ts` / `.tsx`. Run `next dev` and `next build` to automatically install the necessary dependencies and add a `tsconfig.json` file with the recommended config options.
 
 <AppOnly>
 
-## TypeScript Plugin
+## TypeScript 插件
 
 Next.js includes a custom TypeScript plugin and type checker, which VSCode and other code editors can use for advanced type-checking and auto-completion.
 
@@ -53,7 +53,7 @@ You can enable the plugin in VS Code by:
 
 Now, when editing files, the custom plugin will be enabled. When running `next build`, the custom type checker will be used.
 
-### Plugin Features
+### 插件的功能
 
 The TypeScript plugin can help with:
 
@@ -66,13 +66,13 @@ The TypeScript plugin can help with:
 
 </AppOnly>
 
-## Minimum TypeScript Version
+## 最小TypeScript版本
 
 It is highly recommended to be on at least `v4.5.2` of TypeScript to get syntax features such as [type modifiers on import names](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) and [performance improvements](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native).
 
 <AppOnly>
 
-## Statically Typed Links
+## 静态类型链接
 
 Next.js can statically type links to prevent typos and other errors when using `next/link`, improving type safety when navigating between pages.
 
@@ -122,11 +122,11 @@ function Card<T extends string>({ href }: { href: Route<T> | URL }) {
 }
 ```
 
-> **How does it work?**
+> **它是如何工作的?**
 >
 > When running `next dev` or `next build`, Next.js generates a hidden `.d.ts` file inside `.next` that contains information about all existing routes in your application (all valid routes as the `href` type of `Link`). This `.d.ts` file is included in `tsconfig.json` and the TypeScript compiler will check that `.d.ts` and provide feedback in your editor about invalid links.
 
-## End-to-End Type Safety
+## 端到端类型安全
 
 Next.js 13 has **enhanced type safety**. This includes:
 
@@ -154,13 +154,13 @@ export default async function Page() {
 
 For _complete_ end-to-end type safety, this also requires your database or content provider to support TypeScript. This could be through using an [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) or type-safe query builder.
 
-## Async Server Component TypeScript Error
+## Async Server组件TypeScript错误
 
 To use an `async` Server Component with TypeScript, ensure you are using TypeScript `5.1.3` or higher and `@types/react` `18.2.8` or higher.
 
 If you are using an older version of TypeScript, you may see a `'Promise<Element>' is not a valid JSX element` type error. Updating to the latest version of TypeScript and `@types/react` should resolve this issue.
 
-## Passing Data Between Server & Client Components
+## 在服务器和客户端组件之间传递数据
 
 When passing data between a Server and Client Component through props, the data is still serialized (converted to a string) for use in the browser. However, it does not need a special type. It’s typed the same as passing any other props between components.
 
@@ -170,7 +170,7 @@ Further, there is less code to be serialized, as un-rendered data does not cross
 
 <PagesOnly>
 
-## Static Generation and Server-side Rendering
+## 静态生成和服务器端呈现
 
 For [`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths), and [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props), you can use the `GetStaticProps`, `GetStaticPaths`, and `GetServerSideProps` types respectively:
 
@@ -190,9 +190,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 ```
 
-## API Routes
+## API 路由
 
-The following is an example of how to use the built-in types for API routes:
+下面是如何在API路由中使用内置类型的示例:
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -219,7 +219,7 @@ export default function handler(
 }
 ```
 
-## Custom `App`
+## 自定义 `App`
 
 If you have a [custom `App`](/docs/pages/building-your-application/routing/custom-app), you can use the built-in type `AppProps` and change file name to `./pages/_app.tsx` like so:
 
@@ -233,7 +233,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 </PagesOnly>
 
-## Path aliases and baseUrl
+## 路径别名和baseUrl
 
 Next.js automatically supports the `tsconfig.json` `"paths"` and `"baseUrl"` options.
 
@@ -249,7 +249,7 @@ You can learn more about this feature on the [Module Path aliases documentation]
 
 </PagesOnly>
 
-## Type checking next.config.js
+## 类型检查next.config.js
 
 The `next.config.js` file must be a JavaScript file as it does not get parsed by Babel or TypeScript, however you can add some type checking in your IDE using JSDoc as below:
 
@@ -270,7 +270,7 @@ module.exports = nextConfig
 
 Since `v10.2.1` Next.js supports [incremental type checking](https://www.typescriptlang.org/tsconfig#incremental) when enabled in your `tsconfig.json`, this can help speed up type checking in larger applications.
 
-## Ignoring TypeScript Errors
+## 忽略TypeScript错误
 
 Next.js fails your **production build** (`next build`) when TypeScript errors are present in your project.
 
@@ -292,9 +292,9 @@ module.exports = {
 }
 ```
 
-## Version Changes
+## 版本变化
 
-| Version   | Changes                                                                                                                              |
+| 版本      | 变化                                                                                                                                 |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `v13.2.0` | Statically typed links are available in beta.                                                                                        |
 | `v12.0.0` | [SWC](/docs/architecture/nextjs-compiler) is now used by default to compile TypeScript and TSX for faster builds.                    |

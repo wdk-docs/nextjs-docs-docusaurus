@@ -1,20 +1,20 @@
 ---
 title: cookies
-description: API Reference for the cookies function.
+description: cookie函数的API参考。
 related:
   title: Next Steps
-  description: For more information on what to do next, we recommend the following sections
+  description: 有关下一步操作的更多信息，我们建议阅读以下部分
   links:
     - app/building-your-application/data-fetching/server-actions
 ---
 
-The `cookies` function allows you to read the HTTP incoming request cookies from a [Server Component](/docs/getting-started/react-essentials) or write outgoing request cookies in a [Server Action](/docs/app/building-your-application/data-fetching/server-actions) or [Route Handler](/docs/app/building-your-application/routing/router-handlers).
+`cookies`函数允许你从[服务器组件](/docs/getting-started/react-essentials)读取HTTP传入请求cookie，或者在[服务器操作](/docs/app/building-your-application/data-fetching/server-actions)或[路由处理程序](/docs/app/building-your-application/routing/router-handlers)中写入传出请求cookie。
 
 > **注意事项**: `cookies()` is a **[Dynamic Function](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)** whose returned values cannot be known ahead of time. Using it in a layout or page will opt a route into **[dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering)** at request time.
 
 ## `cookies().get(name)`
 
-A method that takes a cookie name and returns an object with name and value. If a cookie with `name` isn't found, it returns `undefined`. If multiple cookies match, it will only return the first match.
+一个方法，它接受一个cookie名称并返回一个带有名称和值的对象。如果没有找到带有`name`的cookie，则返回`undefined`。如果多个cookie匹配，它将只返回第一个匹配。
 
 ```jsx title="app/page.js"
 import { cookies } from 'next/headers'
@@ -28,7 +28,7 @@ export default function Page() {
 
 ## `cookies().getAll()`
 
-A method that is similar to `get`, but returns a list of all the cookies with a matching `name`. If `name` is unspecified, it returns all the available cookies.
+一个类似于`get`的方法，但返回所有具有匹配`name`的cookie的列表。如果`name`未指定，则返回所有可用的cookie。
 
 ```jsx title="app/page.js"
 import { cookies } from 'next/headers'
@@ -46,7 +46,7 @@ export default function Page() {
 
 ## `cookies().has(name)`
 
-A method that takes a cookie name and returns a `boolean` based on if the cookie exists (`true`) or not (`false`).
+一个方法，它接受一个cookie名称并根据cookie是否存在(`true`)或不存在(`false`)返回一个`boolean`。
 
 ```jsx title="app/page.js"
 import { cookies } from 'next/headers'
@@ -60,7 +60,7 @@ export default function Page() {
 
 ## `cookies().set(name, value, options)`
 
-A method that takes a cookie name, value, and options and sets the outgoing request cookie.
+一个接受cookie名称、值和选项并设置传出请求cookie的方法。
 
 > **注意事项**: `.set()` is only available in a [Server Action](/docs/app/building-your-application/data-fetching/server-actions) or [Route Handler](/docs/app/building-your-application/routing/router-handlers).
 
@@ -83,7 +83,7 @@ async function create(data) {
 }
 ```
 
-## Deleting cookies
+## 删除cookie
 
 To "delete" a cookie, you must set a new cookie with the same name and an empty value. You can also set the `maxAge` to `0` to expire the cookie immediately.
 
@@ -104,10 +104,10 @@ async function create(data) {
 }
 ```
 
-You can only set cookies that belong to the same domain from which `.set()` is called. Additionally, the code must be executed on the same protocol (HTTP or HTTPS) as the cookie you want to update.
+您只能设置属于调用`.set()`的同一域的cookie。此外，代码必须在与要更新的cookie相同的协议(HTTP或HTTPS)上执行。
 
-## Version History
+## 版本历史
 
-| Version   | Changes               |
+| 版本      | 变化                  |
 | --------- | --------------------- |
 | `v13.0.0` | `cookies` introduced. |

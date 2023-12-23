@@ -6,7 +6,7 @@ description: API reference for the headers function.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-The `headers` function allows you to read the HTTP incoming request headers from a [Server Component](/docs/getting-started/react-essentials).
+`headers`函数允许你从[服务器组件](/docs/getting-started/react-essentials)中读取HTTP传入请求的报头。
 
 ## `headers()`
 
@@ -44,11 +44,11 @@ export default function Page() {
 const headersList = headers()
 ```
 
-#### Parameters
+#### 参数
 
 `headers` does not take any parameters.
 
-#### Returns
+#### 返回
 
 `headers` returns a **read-only** [Web Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) object.
 
@@ -59,7 +59,7 @@ const headersList = headers()
 - [`Headers.keys()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/keys): Returns an [`iterator`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) allowing you to go through all keys of the key/value pairs contained in this object.
 - [`Headers.values()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/values): Returns an [`iterator`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) allowing you to go through all values of the key/value pairs contained in this object.
 
-### Examples
+### 例子
 
 #### Usage with Data Fetching
 
@@ -84,8 +84,8 @@ export default async function UserPage() {
 }
 ```
 
-## Version History
+## 版本历史
 
-| Version   | Changes               |
+| 版本      | 变化                  |
 | --------- | --------------------- |
 | `v13.0.0` | `headers` introduced. |

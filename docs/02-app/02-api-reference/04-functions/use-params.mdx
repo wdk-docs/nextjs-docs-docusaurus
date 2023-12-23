@@ -6,7 +6,7 @@ description: API Reference for the useParams hook.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-`useParams` is a **Client Component** hook that lets you read a route's [dynamic params](/docs/app/building-your-application/routing/dynamic-routes) filled in by the current URL.
+`useParams`是一个**客户端组件**钩子，可以让你读取由当前URL填写的路由的[动态参数](/docs/app/building-your-application/routing/dynamic-routes)。
 
 ```tsx title="app/example-client-component.tsx" switcher
 'use client'
@@ -42,7 +42,7 @@ export default function ExampleClientComponent() {
 }
 ```
 
-## Parameters
+## 参数
 
 ```tsx
 const params = useParams()
@@ -50,7 +50,7 @@ const params = useParams()
 
 `useParams` does not take any parameters.
 
-## Returns
+## 返回
 
 `useParams` returns an object containing the current route's filled in [dynamic parameters](/docs/app/building-your-application/routing/dynamic-routes).
 
@@ -69,8 +69,8 @@ For example:
 | `app/shop/[tag]/[item]/page.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
 | `app/shop/[...slug]/page.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
-## Version History
+## 版本历史
 
-| Version   | Changes                 |
+| 版本      | 变化                    |
 | --------- | ----------------------- |
 | `v13.3.0` | `useParams` introduced. |

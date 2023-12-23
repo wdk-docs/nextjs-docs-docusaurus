@@ -116,7 +116,7 @@ Configuration (`Object`, optional).
 Mapping of names for JSX components to Vue components
 (`Record<string, string|Component|Components>`, optional).
 
-##### Returns
+##### 返回
 
 Fragment (with the default slot if given).
 
@@ -124,7 +124,7 @@ Fragment (with the default slot if given).
 
 Get current components from the MDX Context.
 
-###### Returns
+###### 返回
 
 `Components`.
 

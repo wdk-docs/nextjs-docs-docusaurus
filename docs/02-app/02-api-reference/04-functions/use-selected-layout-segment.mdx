@@ -6,9 +6,9 @@ description: API Reference for the useSelectedLayoutSegment hook.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-`useSelectedLayoutSegment` is a **Client Component** hook that lets you read the active route segment **one level below** the Layout it is called from.
+`useSelectedLayoutSegment` 是一个**客户端组件**钩子，它可以让你读取比被调用的布局**低一级的活动路由段**。
 
-It is useful for navigation UI, such as tabs inside a parent layout that change style depending on the active child segment.
+它对于导航UI很有用，比如父布局中的选项卡，它会根据活动的子段改变样式。
 
 ```tsx title="app/example-client-component.tsx" switcher
 'use client'
@@ -39,7 +39,7 @@ export default function ExampleClientComponent() {
 > - Since `useSelectedLayoutSegment` is a [Client Component](/docs/getting-started/react-essentials#client-components) hook, and Layouts are [Server Components](/docs/getting-started/react-essentials#server-components) by default, `useSelectedLayoutSegment` is usually called via a Client Component that is imported into a Layout.
 > - `useSelectedLayoutSegment` only returns the segment one level down. To return all active segments, see [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)
 
-## Parameters
+## 参数
 
 ```tsx
 const segment = useSelectedLayoutSegment()
@@ -47,7 +47,7 @@ const segment = useSelectedLayoutSegment()
 
 `useSelectedLayoutSegment` does not take any parameters.
 
-## Returns
+## 返回
 
 `useSelectedLayoutSegment` returns a string of the active segment or `null` if one doesn't exist.
 
@@ -62,7 +62,7 @@ For example, given the Layouts and URLs below, the returned segment would be:
 | `app/dashboard/layout.js` | `/dashboard/analytics`         | `'analytics'`    |
 | `app/dashboard/layout.js` | `/dashboard/analytics/monthly` | `'analytics'`    |
 
-## Examples
+## 例子
 
 ### Creating an active link component
 
@@ -168,8 +168,8 @@ export default async function Layout({ children }) {
 }
 ```
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                |
+| 版本      | 变化                                   |
 | --------- | -------------------------------------- |
 | `v13.0.0` | `useSelectedLayoutSegment` introduced. |

@@ -1,16 +1,16 @@
 ---
-title: favicon, icon, and apple-icon
-description: API Reference for the Favicon, Icon and Apple Icon file conventions.
+title: favicon, icon, 和 apple-icon
+description: 关于Favicon, Icon和Apple Icon文件约定的API参考。
 ---
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-The `favicon`, `icon`, or `apple-icon` file conventions allow you to set icons for your application.
+`favicon`， `icon`或`apple-icon`文件约定允许您为应用程序设置图标。
 
-They are useful for adding app icons that appear in places like web browser tabs, phone home screens, and search engine results.
+它们对于在网页浏览器标签页、手机主屏幕和搜索引擎结果中添加应用程序图标非常有用。
 
-There are two ways to set app icons:
+设置应用图标有两种方法:
 
 - [Using image files (.ico, .jpg, .png)](#image-files-ico-jpg-png)
 - [Using code to generate an icon (.js, .ts, .tsx)](#generate-icons-using-code-js-ts-tsx)
@@ -179,11 +179,11 @@ export default function Icon() {
 > - You can generate multiple icons in the same file using [`generateImageMetadata`](/docs/app/api-reference/functions/generate-image-metadata).
 > - You cannot generate a `favicon` icon. Use [`icon`](#icon) or a [favicon.ico](#favicon) file instead.
 
-### Props
+### 属性
 
 The default export function receives the following props:
 
-#### `params` (optional)
+#### `params` (可选)
 
 An object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to the segment `icon` or `apple-icon` is colocated in.
 
@@ -206,7 +206,7 @@ export default function Icon({ params }) {
 | `app/shop/[tag]/[item]/icon.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
 | `app/shop/[...slug]/icon.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
-### Returns
+### 返回
 
 The default export function should return a `Blob` | `ArrayBuffer` | `TypedArray` | `DataView` | `ReadableStream` | `Response`.
 
@@ -280,8 +280,8 @@ export const runtime = 'edge'
 export default function Icon() {}
 ```
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                      |
+| 版本      | 变化                                         |
 | --------- | -------------------------------------------- |
 | `v13.3.0` | `favicon` `icon` and `apple-icon` introduced |

@@ -507,7 +507,7 @@ provide it.
 
 ###### `options.SourceMapGenerator`
 
-The `SourceMapGenerator` class from [`source-map`][source-map] (optional).
+The `SourceMapGenerator` class from [`source-map`][source-map] (可选).
 When given, the resulting file will have a `map` field set to a source map (in
 object form).
 
@@ -763,7 +763,7 @@ default: `'dom'`).
 This casing is used for hast elements, not for embedded MDX JSX nodes
 (components that someone authored manually).
 
-###### Returns
+###### 返回
 
 `Promise<VFile>` — Promise that resolves to the compiled JS as a [vfile][].
 
@@ -876,7 +876,7 @@ const { default: Content } = await evaluate('# hi', {
 
 </details>
 
-###### Returns
+###### 返回
 
 `Promise<MDXModule>` — Promise that resolves to something that looks a bit like
 a module: an object with a `default` field set to the component and anything
@@ -941,7 +941,7 @@ compiled with `options.providerImportSource: '#'` (the exact value of this
 compile option doesn’t matter).
 All other options have to be passed to `compile` instead.
 
-###### Returns
+###### 返回
 
 `Promise<MDXModule>` — See `evaluate`
 

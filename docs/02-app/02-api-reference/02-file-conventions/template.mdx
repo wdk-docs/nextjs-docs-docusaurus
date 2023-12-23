@@ -3,4 +3,53 @@ title: template.js
 description: API Reference for the template.js file.
 ---
 
-This documentation is still being written. Please check back later.
+模板文件类似于[layout](/docs/app/building-your-application/routing/pages-and-layouts#layouts)，因为它封装了每个子布局或页面。与跨路由持久保存和维护状态的布局不同，模板在导航上为它们的每个子实例创建一个新实例。
+
+```tsx title="app/template.tsx" switcher
+export default function Template({ children }: { children: React.ReactNode }) {
+  return <div>{children}</div>
+}
+```
+
+```jsx filename="app/template.jsx" switcher
+export default function Template({ children }) {
+  return <div>{children}</div>
+}
+```
+
+<Image
+  alt="template.js special file"
+  srcLight="/docs/light/template-special-file.png"
+  srcDark="/docs/dark/template-special-file.png"
+  width="1600"
+  height="444"
+/>
+
+虽然不太常见，但如果需要，您可以选择模板而不是布局:
+
+- 依赖于`useEffect`(例如记录页面浏览量)和`useState`(例如每页反馈表单)的功能。
+- 更改默认的框架行为。例如，布局中的悬念边界仅在布局第一次加载时显示回退，而在切换页面时则不显示。对于模板，回退显示在每个导航栏上。
+
+## Props
+
+### `children` (要求)
+
+模板组件应该接受并使用一个`children`属性。`template`在[布局](/docs/app/api-reference/file-conventions/layout)和它的子元素之间呈现。例如:
+
+```jsx filename="Output"
+<Layout>
+  {/* Note that the template is given a unique key. */}
+  <Template key={routeParam}>{children}</Template>
+</Layout>
+```
+
+> **很高兴知道**:
+>
+> - 默认情况下，`template`是一个[服务器组件](/docs/app/building-your-application/rendering/server-components)，但也可以通过`use Client`指令作为一个[客户端组件](/docs/app/building-your-application/rendering/client-components)使用。
+> - 当用户在共享`template`的路由之间导航时，组件的新实例会被挂载，DOM元素会被重新创建，状态不会被保留，效果会被重新同步。
+
+## 版本历史
+
+| 版本      | 变化                   |
+| --------- | ---------------------- |
+| `v13.0.0` | `template` introduced. |

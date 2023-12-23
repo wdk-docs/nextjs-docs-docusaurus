@@ -5,7 +5,7 @@ description: API Reference for the revalidatePath function.
 
 import PagesOnly from '@site/src/components/PagesOnly'
 
-`revalidatePath` allows you to revalidate data associated with a specific path. This is useful for scenarios where you want to update your cached data without waiting for a revalidation period to expire.
+`revalidatePath`允许您重新验证与特定路径相关的数据。这对于希望更新缓存数据而不等待重新验证期到期的场景非常有用。
 
 ```ts title="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
@@ -49,7 +49,7 @@ export async function GET(request) {
 
 </PagesOnly>
 
-## Parameters
+## 参数
 
 ```tsx
 revalidatePath(path: string): void;
@@ -57,11 +57,11 @@ revalidatePath(path: string): void;
 
 - `path`: A string representing the filesystem path associated with the data you want to revalidate. This is **not** the literal route segment (e.g. `/product/123`) but instead the path on the filesystem (e.g. `/product/[id]`).
 
-## Returns
+## 返回
 
 `revalidatePath` does not return any value.
 
-## Examples
+## 例子
 
 ### Node.js Runtime
 

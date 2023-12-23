@@ -207,7 +207,7 @@ The hast tree is discarded in the end.
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.allowDangerousHtml`
 
@@ -330,9 +330,9 @@ useful when passing in your own handlers.
 The `one` export from [`mdast-util-to-hast`][mdast-util-to-hast],
 useful when passing in your own handlers.
 
-## Examples
+## 例子
 
-### Example: supporting HTML in markdown naïvely
+### 例子: supporting HTML in markdown naïvely
 
 If you completely trust the authors of the input markdown and want to allow them
 to write HTML inside markdown, you can pass `allowDangerousHtml` to this plugin
@@ -362,7 +362,7 @@ Running that code yields:
 > ⚠️ **Danger**: Observe that the XSS attack through the `onerror` attribute
 > is still present.
 
-### Example: supporting HTML in markdown properly
+### 例子: supporting HTML in markdown properly
 
 If you do not trust the authors of the input markdown, or if you want to make
 sure that rehype plugins can see HTML embedded in markdown, use
@@ -400,7 +400,7 @@ Running that code yields:
 > 👉 **Note**: Observe that the XSS attack through the `onerror` attribute
 > is no longer present.
 
-### Example: footnotes in languages other than English
+### 例子: footnotes in languages other than English
 
 If you know that the markdown is authored in a language other than English,
 and you’re using `remark-gfm` to match how GitHub renders markdown, and you know

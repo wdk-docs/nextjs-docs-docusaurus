@@ -3,6 +3,8 @@ title: 延迟加载
 description: 惰性加载导入的库和React组件来提高应用程序的加载性能。
 ---
 
+import PagesOnly from '@site/src/components/PagesOnly'
+
 # 延迟加载
 
 Next.js中的[延迟加载](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)通过减少渲染路由所需的JavaScript量来帮助提高应用程序的初始加载性能。
@@ -20,9 +22,9 @@ Next.js中的[延迟加载](https://developer.mozilla.org/en-US/docs/Web/Perform
 
 `next/dynamic`是一个复合的[`React.lazy()`](https://react.dev/reference/react/lazy)和[Suspense](https://react.dev/reference/react/Suspense)。它在`app` 和 `pages`目录中的行为方式相同，以允许增量迁移。
 
-## AppOnly
+<AppOnly>
 
-### 导入客户端组件
+## 导入客户端组件
 
 ```jsx title="app/page.js"
 'use client'
@@ -54,7 +56,7 @@ export default function ClientComponentExample() {
 }
 ```
 
-### 跳过 SSR
+## 跳过 SSR
 
 当使用`React.lazy()`和`Suspense`时，客户端组件将默认预渲染(SSR)。
 
@@ -64,7 +66,7 @@ export default function ClientComponentExample() {
 const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
 ```
 
-### 导入服务器组件
+## 导入服务器组件
 
 如果你动态导入一个服务器组件，那么只有作为服务器组件的子组件的客户端组件才会被惰性加载——而不是服务器组件本身。
 
@@ -83,7 +85,7 @@ export default function ServerComponentExample() {
 }
 ```
 
-### 加载外部库
+## 加载外部库
 
 外部库可以使用[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)函数按需加载。
 这个例子使用外部库`fuse.js`进行模糊搜索。
@@ -119,7 +121,7 @@ export default function Page() {
 }
 ```
 
-### 添加自定义加载组件
+## 添加自定义加载组件
 
 ```jsx title="app/page.js"
 import dynamic from 'next/dynamic'
@@ -141,7 +143,7 @@ export default function Page() {
 }
 ```
 
-### 导入命名导出
+## 导入命名导出
 
 要动态导入一个命名的导出，你可以从[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)函数返回的Promise中返回它:
 
@@ -161,9 +163,11 @@ const ClientComponent = dynamic(() =>
 )
 ```
 
-## PagesOnly
+</AppOnly>
 
-By using `next/dynamic`, the header component will not be included in the page's initial JavaScript bundle. The page will render the Suspense `fallback` first, followed by the `Header` component when the `Suspense` boundary is resolved.
+<PagesOnly>
+
+通过使用`next/dynamic`，头组件将不会包含在页面的初始JavaScript包中。页面将首先渲染悬念'回退'，然后在'悬念'边界被解析时渲染`Header`组件。
 
 ```jsx
 import dynamic from 'next/dynamic'
@@ -183,7 +187,7 @@ In `import('path/to/component')`, the path must be explicitly written. It can't 
 
 :::
 
-### 使用命名的导出
+## 使用命名的导出
 
 To dynamically import a named export, you can return it from the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned by [`import()`](https://github.com/tc39/proposal-dynamic-import#example):
 
@@ -200,7 +204,7 @@ const DynamicComponent = dynamic(() =>
 )
 ```
 
-### 没有SSR
+## 没有SSR
 
 To dynamically load a component on the client side, you can use the `ssr` option to disable server-rendering. This is useful if an external dependency or component relies on browser APIs like `window`.
 
@@ -212,7 +216,7 @@ const DynamicHeader = dynamic(() => import('../components/header'), {
 })
 ```
 
-### 使用外部库
+## 使用外部库
 
 This example uses the external library `fuse.js` for fuzzy search. The module is only loaded in the browser after the user types in the search input.
 
@@ -243,3 +247,5 @@ export default function Page() {
   )
 }
 ```
+
+</PagesOnly>

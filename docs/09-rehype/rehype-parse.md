@@ -126,7 +126,7 @@ Add support for parsing HTML input.
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.fragment`
 
@@ -230,9 +230,9 @@ The list of parse errors:
 
 Add extra positional info (`boolean`, default: `false`).
 
-## Examples
+## 例子
 
-### Example: fragment versus document
+### 例子: fragment versus document
 
 The following example shows the difference between parsing as a document and
 parsing as a fragment:
@@ -288,7 +288,7 @@ async function main() {
 > 👉 **Note**: observe that when a whole document is expected (second example),
 > missing elements are opened and closed.
 
-### Example: whitespace around and inside `<html>`
+### 例子: whitespace around and inside `<html>`
 
 The following example shows how whitespace is handled when around and directly
 inside the `<html>` element:
@@ -341,7 +341,7 @@ The changes to this meaningless whitespace should not matter, except when
 formatting markup, in which case [`rehype-format`][rehype-format] can be used to
 improve the source code.
 
-### Example: parse errors
+### 例子: parse errors
 
 The following example shows how HTML parse errors can be enabled and configured:
 

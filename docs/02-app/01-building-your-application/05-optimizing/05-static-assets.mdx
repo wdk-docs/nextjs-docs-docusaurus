@@ -5,7 +5,9 @@ description: Next.js allows you to serve static files, like images, in the publi
 
 import PagesOnly from '@site/src/components/PagesOnly'
 
+<!--
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+-->
 
 Next.js可以提供静态文件，比如图片，放在根目录下一个名为`public`的文件夹下。`public`中的文件可以由你的代码从基础URL`/`)开始引用。
 
@@ -19,13 +21,15 @@ export function Avatar() {
 }
 ```
 
-### PagesOnly
+<PagesOnly>
 
 此文件夹也适用于`robots.txt`, `favicon.ico`， Google Site Verification和任何其他静态文件(包括`.html`)。
 但是请确保没有一个静态文件与`pages/`目录中的文件同名，因为这会导致错误。
 [阅读更多](/docs/messages/conflicting-public-file-page).
 
-### AppOnly
+</PagesOnly>
+
+<AppOnly>
 
 对于静态元数据文件，如`robots.txt`, `favicon.ico`等，你应该使用`app`文件夹中的[特殊元数据文件](/docs/app/api-reference/file-conventions/metadata)。
 
@@ -37,3 +41,5 @@ export function Avatar() {
   我们建议使用第三方服务，如[AWS S3](https://aws.amazon.com/s3/)进行持久文件存储。
 
 :::
+
+</AppOnly>

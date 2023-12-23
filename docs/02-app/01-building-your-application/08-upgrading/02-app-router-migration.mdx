@@ -17,11 +17,11 @@ import TabItem from '@theme/TabItem'
 
 ### Node.js 版本
 
-The minimum Node.js version is now **v16.8**. See the [Node.js documentation](https://nodejs.org/docs/latest-v16.x/api/) for more information.
+最小的Node.js版本现在是**v16.8**。请参阅[Node.js文档](https://nodejs.org/docs/latest-v16.x/api/)了解更多信息。
 
 ### Next.js 版本
 
-To update to Next.js version 13, run the following command using your preferred package manager:
+要更新到Next.js版本13，使用你喜欢的包管理器运行以下命令:
 
 ```bash title="Terminal"
 npm install next@latest react@latest react-dom@latest
@@ -29,43 +29,45 @@ npm install next@latest react@latest react-dom@latest
 
 ### ESLint 版本
 
-If you're using ESLint, you need to upgrade your ESLint version:
+如果你正在使用ESLint，你需要升级ESLint版本:
 
 ```bash title="Terminal"
 npm install -D eslint-config-next@latest
 ```
 
-> **注意事项**: You may need to restart the ESLint server in VS Code for the ESLint changes to take effect. Open the Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows) and search for `ESLint: Restart ESLint Server`.
+> **注意事项**: 你可能需要在VS Code中重启ESLint服务器，让ESLint的修改生效。 打开命令面板 (在Mac上`cmd+shift+p` ; 在Windows`ctrl+shift+p`上) 然后搜索 `ESLint: Restart ESLint Server`.
 
 ## 下一个步骤
 
-After you've updated, see the following sections for next steps:
+更新后，请参阅以下部分了解下一步操作:
 
-- [Upgrade new features](#upgrading-new-features): A guide to help you upgrade to new features such as the improved Image and Link Components.
-- [Migrate from the `pages` to `app` directory](#migrating-from-pages-to-app): A step-by-step guide to help you incrementally migrate from the `pages` to the `app` directory.
+- [升级新功能](#upgrading-new-features): 帮助您升级到新功能(如改进的图像和链接组件)的指南。
+- [从`pages`目录迁移到`app`目录](#migrating-from-pages-to-app): 帮助你逐步从`pages`目录迁移到`app`目录的分步指南。
 
 ## 升级新特性
 
-Next.js 13 introduced the new [App Router](/docs/app/building-your-application/routing) with new features and conventions. The new Router is available in the `app` directory and co-exists with the `pages` directory.
+js 13引入了新的[应用路由器](/docs/app/building-your-application/routing)，它有新的特性和约定。新的路由器在`app`目录中可用，并与`pages`目录共存。
 
-Upgrading to Next.js 13 does **not** require using the new [App Router](/docs/app/building-your-application/routing#the-app-router). You can continue using `pages` with new features that work in both directories, such as the updated [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), and [Font optimization](#font-optimization).
+升级到Next.js 13不需要使用新的[App Router](/docs/app/building-your-application/routing#the-app-router)。你可以继续使用带有新功能的`pages`，这些功能在两个目录下都可以工作，比如更新的[Image component](# Image -component)， [连接组件](#image-component)， [脚本组件](#link-component)和[字体优化](#font-optimization)。
 
 ### `<Image/>` 组件
 
-Next.js 12 introduced new improvements to the Image Component with a temporary import: `next/future/image`. These improvements included less client-side JavaScript, easier ways to extend and style images, better accessibility, and native browser lazy loading.
+Next.js 12通过临时导入`next/future/image`对Image组件进行了新的改进。这些改进包括更少的客户端JavaScript、更简单的扩展和样式图像的方法、更好的可访问性和本地浏览器延迟加载。
 
-In version 13, this new behavior is now the default for `next/image`.
+在版本13中，这个新行为现在是`next/image`的默认设置。
 
-There are two codemods to help you migrate to the new Image Component:
+有两个代码可以帮助您迁移到新的图像组件:
 
-- [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): Safely and automatically renames `next/image` imports to `next/legacy/image`. Existing components will maintain the same behavior.
-- [**`next-image-experimental` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): Dangerously adds inline styles and removes unused props. This will change the behavior of existing components to match the new defaults. To use this codemod, you need to run the `next-image-to-legacy-image` codemod first.
+- [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): 安全，自动重命名`next/image`导入到`next/legacy/image`。现有组件将保持相同的行为。
+- [**`next-image-experimental` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): 危险地添加内联样式并删除未使用的道具。这将改变现有组件的行为以匹配新的默认值。要使用这个 codemod，您需要首先运行`next-image-to-legacy-image` codemod。
 
 ### `<Link>` 组件
 
-The [`<Link>` Component](/docs/app/building-your-application/routing/linking-and-navigating#link-component) no longer requires manually adding an `<a>` tag as a child. This behavior was added as an experimental option in [version 12.2](https://nextjs.org/blog/next-12-2) and is now the default. In Next.js 13, `<Link>` always renders `<a>` and allows you to forward props to the underlying tag.
+[`<Link>`组件](/docs/app/building-your-application/routing/linking-and-navigating#link-component)不再需要手动添加`<a>`标签作为子标签。
+此行为在[version 12.2](https://nextjs.org/blog/next-12-2)中作为实验选项添加，现在是默认值。
+在Next.js 13中，`<Link>`总是呈现`<a>`，并允许你将props转发到底层标签。
 
-For example:
+例如:
 
 ```jsx
 import Link from 'next/link'
@@ -81,7 +83,7 @@ import Link from 'next/link'
 </Link>
 ```
 
-To upgrade your links to Next.js 13, you can use the [`new-link` codemod](/docs/app/building-your-application/upgrading/codemods#new-link).
+要将链接升级到Next.js 13，你可以使用[`new-link` codemod](/docs/app/building-your-application/upgrading/codemods#new-link).
 
 ### `<Script>` 组件
 
@@ -93,7 +95,7 @@ The behavior of [`next/script`](/docs/app/api-reference/components/script) has b
 
 ### 字体优化
 
-Previously, Next.js helped you optimize fonts by [inlining font CSS](/docs/app/building-your-application/optimizing/fonts). Version 13 introduces the new [`next/font`](/docs/app/building-your-application/optimizing/fonts) module which gives you the ability to customize your font loading experience while still ensuring great performance and privacy. `next/font` is supported in both the `pages` and `app` directories.
+Previously, Next.js helped you optimize fonts by [inlining font CSS](/docs/app/building-your-application/optimizing/fonts). 版本 13 introduces the new [`next/font`](/docs/app/building-your-application/optimizing/fonts) module which gives you the ability to customize your font loading experience while still ensuring great performance and privacy. `next/font` is supported in both the `pages` and `app` directories.
 
 While [inlining CSS](/docs/app/building-your-application/optimizing/fonts) still works in `pages`, it does not work in `app`. You should use [`next/font`](/docs/app/building-your-application/optimizing/fonts) instead.
 
@@ -122,17 +124,18 @@ We recommend reducing the combined complexity of these updates by breaking down 
 
 ### 步骤1:创建`app`目录
 
-Update to the latest Next.js version (requires 13.4 or greater):
+更新到最新的Next.js版本(需要13.4或更高版本):
 
 ```bash
 npm install next@latest
 ```
 
-Then, create a new `app` directory at the root of your project (or `src/` directory).
+然后，在你的项目的根目录下创建一个新的app目录(或者`src/`目录)。
 
 ### 步骤2:创建根布局
 
-Create a new `app/layout.tsx` file inside the `app` directory. This is a [root layout](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) that will apply to all routes inside `app`.
+在`app`目录下创建一个新的`app/layout.tsx`文件。
+这是一个[根布局](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required)，它将应用于`app`中的所有路由。
 
 ```tsx title="app/layout.tsx" switcher
 export default function RootLayout({
@@ -164,12 +167,12 @@ export default function RootLayout({
 }
 ```
 
-- The `app` directory **must** include a root layout.
-- The root layout must define `<html>`, and `<body>` tags since Next.js does not automatically create them
-- The root layout replaces the `pages/_app.tsx` and `pages/_document.tsx` files.
-- `.js`, `.jsx`, or `.tsx` extensions can be used for layout files.
+- `app`目录**必须**包含根目录。
+- 根布局必须定义`<html>`和`<body>`标签，因为Next.js不会自动创建它们
+- 根布局取代`pages/_app.tsx`和`pages/_document.tsx`文件。
+- `.js`, `.jsx`, 或 `.tsx` 扩展可以用于布局文件。
 
-To manage `<head>` HTML elements, you can use the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata):
+要管理`<head>`HTML元素，您可以使用[内置SEO支持](/docs/app/building-your-application/optimizing/metadata):
 
 ```tsx title="app/layout.tsx" switcher
 import { Metadata } from 'next'
@@ -189,16 +192,16 @@ export const metadata = {
 
 #### 迁移 `_document.js` and `_app.js`
 
-If you have an existing `_app` or `_document` file, you can copy the contents (e.g. global styles) to the root layout (`app/layout.tsx`). Styles in `app/layout.tsx` will _not_ apply to `pages/*`. You should keep `_app`/`_document` while migrating to prevent your `pages/*` routes from breaking. Once fully migrated, you can then safely delete them.
+如果你有一个`_app`或`_document`文件，你可以将内容(例如全局样式)复制到根布局(`app/layout.tsx`)。`app/layout.tsx`中的样式将不适用于`pages/*`。你应该在迁移时保留`_app` / `_document`，以防止`pages/*`路由被破坏。一旦完全迁移，您就可以安全地删除它们。
 
-If you are using any React Context providers, they will need to be moved to a [Client Component](/docs/getting-started/react-essentials).
+如果你正在使用任何React上下文提供程序，它们将需要移动到[客户端组件](/docs/getting-started/react-essentials).
 
-#### 迁移 the `getLayout()` pattern to Layouts (Optional)
+#### 迁移`getLayout()`模式到布局 (可选)
 
 Next.js recommended adding a [property to Page components](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern#per-page-layouts) to achieve per-page layouts in the `pages` directory. This pattern can be replaced with native support for [nested layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts) in the `app` directory.
 
 <details>
-  <summary>See before and after example</summary>
+  <summary>看看前后对比的例子</summary>
 
 **Before**
 

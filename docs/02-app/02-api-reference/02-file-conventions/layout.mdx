@@ -6,7 +6,7 @@ description: API reference for the layout.js file.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-A **layout** is UI that is shared between routes.
+**布局**是路由之间共享的UI。
 
 ```tsx title="app/dashboard/layout.tsx" switcher
 export default function DashboardLayout({
@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-A **root layout** is the top-most layout in the root `app` directory. It is used to define the `<html>` and `<body>` tags and other globally shared UI.
+**根布局**是根`app`目录中最顶层的布局。它用于定义`<html>`和`<body>`标签以及其他全局共享的UI。
 
 ```tsx title="app/layout.tsx" switcher
 export default function RootLayout({
@@ -50,13 +50,13 @@ export default function RootLayout({ children }) {
 }
 ```
 
-## Props
+## 属性
 
-### `children` (required)
+### `children` (必须)
 
 Layout components should accept and use a `children` prop. During rendering, `children` will be populated with the route segments the layout is wrapping. These will primarily be the component of a child [Layout](/docs/app/building-your-application/routing/pages-and-layouts#pages) (if it exists) or [Page](/docs/app/building-your-application/routing/pages-and-layouts#pages), but could also be other special files like [Loading](/docs/app/building-your-application/routing/loading-ui-and-streaming) or [Error](/docs/app/building-your-application/routing/error-handling) when applicable.
 
-### `params` (optional)
+### `params` (可选)
 
 The [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to that layout.
 
@@ -93,9 +93,9 @@ export default function ShopLayout({ children, params }) {
 }
 ```
 
-## Good to know
+## 很高兴知道
 
-### Layout's do not receive `searchParams`
+### 布局不接收 `searchParams`
 
 Unlike [Pages](/docs/app/api-reference/file-conventions/page), Layout components **do not** receive the `searchParams` prop. This is because a shared layout is [not re-rendered during navigation](/docs/app/building-your-application/routing#partial-rendering) which could lead to stale `searchParams` between navigations.
 
@@ -121,7 +121,7 @@ Because `dashboard/layout.tsx` doesn't re-render, the `searchParams` prop in the
 
 - Instead, use the Page [`searchParams`](/docs/app/api-reference/file-conventions/page) prop or the [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook in a Client Component, which is re-rendered on the client with the latest `searchParams`.
 
-### Root Layouts
+### 根布局
 
 - The `app` directory **must** include a root `app/layout.js`.
 - The root layout **must** define `<html>` and `<body>` tags.
@@ -129,8 +129,8 @@ Because `dashboard/layout.tsx` doesn't re-render, the `searchParams` prop in the
 - You can use [route groups](/docs/app/building-your-application/routing/route-groups) to create multiple root layouts.
   - Navigating **across multiple root layouts** will cause a **full page load** (as opposed to a client-side navigation). For example, navigating from `/cart` that uses `app/(shop)/layout.js` to `/blog` that uses `app/(marketing)/layout.js` will cause a full page load. This **only** applies to multiple root layouts.
 
-## Version History
+## 版本历史
 
-| Version   | Changes              |
+| 版本      | 变化                 |
 | --------- | -------------------- |
 | `v13.0.0` | `layout` introduced. |

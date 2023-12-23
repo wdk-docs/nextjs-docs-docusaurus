@@ -3,75 +3,36 @@
 :::note
 
 遇到了这里没有解释但应该解释的问题?
-请告诉我们。参见[§Contribute][Contribute]了解如何提供帮助。
+请告诉我们。参见[§贡献][Contribute]了解如何提供帮助。
 
 :::
 
 本文讨论了使用MDX时可能出现的几个常见问题和错误。 {/* more */}
-要了解MDX格式是如何工作的，我们建议您从[§什么是MDX][什么]开始。
+要了解MDX格式是如何工作的，我们建议您从[§什么是MDX][what]开始。
 如何使用[我们的包](/packages/)在它们的自述中有文档说明。
 要迁移到最新的MDX，请参见[§从v1迁移到v2][migration-v2]。
-
-## Contents
-
-- [故障排除MDX](#故障排除mdx)
-  - [Contents](#contents)
-  - [整合MDX的问题](#整合mdx的问题)
-    - [ESM](#esm)
-  - [使用MDX的问题](#使用mdx的问题)
-    - [```options.renderer` is no longer supported``](#optionsrenderer-is-no-longer-supported)
-    - [``Incorrect `format: 'detect'```](#incorrect-format-detect)
-    - [``Missing `pragma`in classic runtime with`pragmaImportSource```](#missing-pragma-in-classic-runtime-with-pragmaimportsource)
-    - [``Expected `Fragment`given to`evaluate```](#expected-fragment-given-to-evaluate)
-    - [``Expected `jsx`given to`evaluate```](#expected-jsx-given-to-evaluate)
-    - [``Expected `jsxs`given to`evaluate```](#expected-jsxs-given-to-evaluate)
-  - [编写MDX的问题](#编写mdx的问题)
-    - [`Could not parse import/exports with acorn: $error`](#could-not-parse-importexports-with-acorn-error)
-    - [``Unexpected `$type` in code: only import/exports are supported``](#unexpected-type-in-code-only-importexports-are-supported)
-    - [``Unexpected end of file in expression, expected a corresponding closing brace for `{```](#unexpected-end-of-file-in-expression-expected-a-corresponding-closing-brace-for-)
-    - [`Could not parse expression with acorn: $error`](#could-not-parse-expression-with-acorn-error)
-    - [`Could not parse expression with acorn: Unexpected content after expression`](#could-not-parse-expression-with-acorn-unexpected-content-after-expression)
-    - [`Unexpected extra content in spread: only a single spread is supported`](#unexpected-extra-content-in-spread-only-a-single-spread-is-supported)
-    - [``Unexpected `$type` in code: only spread elements are supported``](#unexpected-type-in-code-only-spread-elements-are-supported)
-    - [`Unexpected empty expression`](#unexpected-empty-expression)
-    - [`Unexpected end of file $at, expected $expect`](#unexpected-end-of-file-at-expected-expect)
-    - [`Unexpected character $at, expected $expect`](#unexpected-character-at-expected-expect)
-    - [``Unexpected closing slash `/` in tag, expected an open tag first``](#unexpected-closing-slash--in-tag-expected-an-open-tag-first)
-    - [`Unexpected attribute in closing tag, expected the end of the tag`](#unexpected-attribute-in-closing-tag-expected-the-end-of-the-tag)
-    - [``Unexpected self-closing slash `/` in closing tag, expected the end of the tag``](#unexpected-self-closing-slash--in-closing-tag-expected-the-end-of-the-tag)
-    - [``Unexpected closing tag `</$tag>`, expected corresponding closing tag for `<$tag>` ($at)``](#unexpected-closing-tag-tag-expected-corresponding-closing-tag-for-tag-at)
-    - [``Cannot close `$type` ($at): a different token (`$type`, $at) is open``](#cannot-close-type-at-a-different-token-type-at-is-open)
-    - [``Cannot close document, a token (`$type`, $at) is still open``](#cannot-close-document-a-token-type-at-is-still-open)
 
 ## 整合MDX的问题
 
 ### ESM
 
-If you’re having problems integrating MDX with different tools, that’s likely
-due to ESM: ECMAScript modules.
-They’ve been in the works since 2015, we’ve supported them in MDX files from the
-start, and in MDX version 2 we completely switched to them.
-Many tools support ESM already.
-Most other tools are working hard to support them.
-Some still require extra configuration.
+如果您在将MDX与不同的工具集成时遇到问题，那很可能是由于ESM: ECMAScript模块。
+它们自2015年以来一直在工作，我们从一开始就在MDX文件中支持它们，在MDX版本2中我们完全切换到它们。
+许多工具已经支持ESM。
+大多数其他工具正在努力支持它们。
+有些仍然需要额外的配置。
 
-There’s a great [Gist by
-**@sindresorhus**](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
-which explains in detail how to use ESM with many different tools.
-If you’re having trouble with MDX, some other tool, and ESM,
-you’ll likely find what you’re looking for there.
-Please give it a thorough read.
-If you’re still having problems, the issue tracker of the tools you’re
-integrating MDX with might provide the answer.
+有一个很棒的[Gist by **@sindresorhus**](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)，它详细解释了如何将ESM与许多不同的工具一起使用。
+如果您在使用MDX、其他工具和ESM时遇到了问题，那么您可能会在这里找到所需的工具。
+请把它通读一下。
+如果仍然有问题，与MDX集成的工具的问题跟踪器可能会提供答案。
 
-If you’re having trouble with tools that don’t support ESM, such as Electron,
-one short-term solution is to use a bundler to make a CJS version.
+如果您在使用不支持ESM的工具(如Electron)时遇到麻烦，一个短期解决方案是使用捆绑器来制作CJS版本。
 
 <details>
-  <summary>Expand example of making a CJS bundle</summary>
+  <summary>展开一个制作CJS包的例子</summary>
 
-With [esbuild](https://esbuild.github.io), this bundles the ESM package
-`@mdx-js/mdx` as CJS in `vendor/mdx.js`:
+使用[esbuild](https://esbuild.github.io)，这将ESM包`@mdx-js/mdx`捆绑为`vendor/mdx.js`中的CJS:
 
 ```sh
 npx esbuild @mdx-js/mdx --bundle --platform=node --outfile=vendor/mdx.js
@@ -81,24 +42,18 @@ npx esbuild @mdx-js/mdx --bundle --platform=node --outfile=vendor/mdx.js
 
 ## 使用MDX的问题
 
-Problems that occur when using MDX typically have to do with the APIs of
-[our packages](/packages/) and how to use them.
-Please see the documentation of the packages, functions, and options you are
-using for more info and examples.
+使用MDX时出现的问题通常与[我们的包](/packages/)的api以及如何使用它们有关。
+有关更多信息和示例，请参阅所使用的包、函数和选项的文档。
 
-### `` `options.renderer` is no longer supported ``
+### `` `options.renderer`不再被支持 ``
 
-This error is thrown by [`@mdx-js/loader`](/packages/loader/), our webpack
-loader.
-It was introduced in version 2 to help with migration.
+这个错误是由我们的webpack加载器[`@mdx-js/loader`](/packages/loader/)抛出的。
+它是在版本2中引入以帮助迁移的。
 
-The `renderer` option allowed arbitrary text to be injected before each compiled
-MDX file.
-This was typically used to support frameworks other than React such as Preact.
-We now have options such as `jsxImportSource` for that and arbitrary JavaScript
-can be added with `recmaPlugins`.
-Because version 2 uses an AST based approach, it is no longer feasible to
-support a `renderer`, so it was removed.
+`renderer`选项允许在每个编译的MDX文件之前注入任意文本。
+这通常用于支持React以外的框架，如Preact。
+我们现在有了诸如`jsxImportSource`之类的选项，并且可以使用`recmaPlugins`添加任意JavaScript。
+因为版本2使用基于AST的方法，所以支持`渲染器`不再可行，所以它被删除了。
 
 Please see [¶ Preact in § Getting started](/docs/getting-started/#preact) for
 how to support Preact.
@@ -436,4 +391,4 @@ See the rules on
 
 [contribute]: /community/contribute/
 [what]: /docs/what-is-mdx/
-[migation-v2]: /migrating/v2/
+[migration-v2]: /migrating/v2/

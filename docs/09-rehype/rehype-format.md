@@ -89,7 +89,7 @@ In browsers with [`esm.sh`][esmsh]:
 Say we have the following file `index.html`:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Hello!</title>
@@ -151,7 +151,7 @@ Format whitespace in HTML.
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.indent`
 
@@ -172,9 +172,9 @@ These tags, when next to each other, are joined by a blank line (`\n\n`).
 For example, when `['head', 'body']` is given, a blank line is added between
 these two.
 
-## Examples
+## 例子
 
-### Example: markdown input (remark)
+### 例子: markdown input (remark)
 
 The following example shows how remark and rehype can be combined to turn
 markdown into HTML, using this plugin to pretty print the HTML:
@@ -218,7 +218,7 @@ Yields:
 </html>
 ```
 
-### Example: tabs and blank lines (`indent`, `blanks`)
+### 例子: tabs and blank lines (`indent`, `blanks`)
 
 The following example shows how this plugin can format with tabs instead of
 spaces by passing the `indent` option and how blank lines can be added between

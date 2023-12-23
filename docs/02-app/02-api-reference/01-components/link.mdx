@@ -10,14 +10,14 @@ import PagesOnly from '@site/src/components/PagesOnly'
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 <details>
-  <summary>Examples</summary>
+  <summary>例子</summary>
 
 - [Hello World](https://github.com/vercel/next.js/tree/canary/examples/hello-world)
 - [Active className on Link](https://github.com/vercel/next.js/tree/canary/examples/active-class-name)
 
 </details>
 
-`<Link>` is a React component that extends the HTML `<a>` element to provide [prefetching](/docs/app/building-your-application/routing/linking-and-navigating#prefetching) and client-side navigation between routes. It is the primary way to navigate between routes in Next.js.
+`<Link>`是一个React组件，它扩展了HTML `<a>`元素，以提供[prefetch](/docs/app/building-your-application/routing/linking-and-navigating#prefetching)和路由之间的客户端导航。这是Next.js中导航路由的主要方式。
 
 <AppOnly>
 
@@ -41,13 +41,13 @@ export default function Page() {
 
 <PagesOnly>
 
-For an example, consider a `pages` directory with the following files:
+例如，考虑一个`pages`目录，其中包含以下文件:
 
 - `pages/index.js`
 - `pages/about.js`
 - `pages/blog/[slug].js`
 
-We can have a link to each of these pages like so:
+我们可以有一个链接到这些页面，像这样:
 
 ```jsx
 import Link from 'next/link'
@@ -73,9 +73,9 @@ export default Home
 
 </PagesOnly>
 
-## Props
+## 属性
 
-Here's a summary of the props available for the Link Component:
+下面是Link组件可用的道具总结:
 
 | Prop                     | Example             | Type             | Required |
 | ------------------------ | ------------------- | ---------------- | -------- |
@@ -85,15 +85,15 @@ Here's a summary of the props available for the Link Component:
 
 > **注意事项**: `<a>` tag attributes such as `className` or `target="_blank"` can be added to `<Link>` as props and will be passed to the underlying `<a>` element.
 
-### `href` (required)
+### `href` (必须)
 
-The path or URL to navigate to.
+要导航到的路径或URL。
 
 ```jsx
 <Link href="/dashboard">Dashboard</Link>
 ```
 
-`href` can also accept an object, for example:
+`href` 也可以接受一个对象，例如:
 
 ```jsx
 // Navigate to /about?name=test
@@ -167,7 +167,7 @@ export default function Page() {
 
 <PagesOnly>
 
-## Other Props
+## 其它属性
 
 ### `legacyBehavior`
 
@@ -193,15 +193,15 @@ The active locale is automatically prepended. `locale` allows for providing a di
 
 </PagesOnly>
 
-## Examples
+## 例子
 
-### Linking to Dynamic Routes
+### 动态路由链接
 
-For dynamic routes, it can be handy to use template literals to create the link's path.
+对于动态路由，使用模板字面量来创建链接的路径是很方便的。
 
 <PagesOnly>
 
-For example, you can generate a list of links to the dynamic route `pages/blog/[slug].js`
+例如，你可以生成一个指向动态路由`pages/blog/[slug].js`的链接列表。
 
 ```jsx title="pages/blog/index.js"
 import Link from 'next/link'
@@ -225,7 +225,7 @@ export default Posts
 
 <AppOnly>
 
-For example, you can generate a list of links to the dynamic route `app/blog/[slug]/page.js`:
+例如，你可以生成一个指向动态路由`app/blog/[slug]/page.js`的链接列表:
 
 ```jsx title="app/blog/page.js"
 import Link from 'next/link'
@@ -284,7 +284,7 @@ export default NavLink
 - If you’re using [emotion](https://emotion.sh/)’s JSX pragma feature (`@jsx jsx`), you must use `passHref` even if you use an `<a>` tag directly.
 - The component should support `onClick` property to trigger navigation correctly
 
-### If the child is a functional component
+### 如果孩子是一个功能组件
 
 If the child of `Link` is a functional component, in addition to using `passHref` and `legacyBehavior`, you must wrap the component in [`React.forwardRef`](https://react.dev/reference/react/forwardRef):
 
@@ -312,7 +312,7 @@ function Home() {
 export default Home
 ```
 
-### With URL Object
+### 使用URL对象
 
 `Link` can also receive a URL object and it will automatically format it to create the URL string. Here's how to do it:
 
@@ -356,7 +356,7 @@ The above example has a link to:
 
 You can use every property as defined in the [Node.js URL module documentation](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
 
-### Replace the URL instead of push
+### 替换URL而不是推送
 
 The default behavior of the `Link` component is to `push` a new URL into the `history` stack. You can use the `replace` prop to prevent adding a new entry, as in the following example:
 
@@ -366,7 +366,7 @@ The default behavior of the `Link` component is to `push` a new URL into the `hi
 </Link>
 ```
 
-### Disable scrolling to the top of the page
+### 禁用滚动到页面顶部
 
 The default behavior of `Link` is to scroll to the top of the page. When there is a hash defined it will scroll to the specific id, like a normal `<a>` tag. To prevent scrolling to the top / hash `scroll={false}` can be added to `Link`:
 
@@ -378,7 +378,7 @@ The default behavior of `Link` is to scroll to the top of the page. When there i
 
 </PagesOnly>
 
-### Middleware
+### 中间件
 
 It's common to use [Middleware](/docs/app/building-your-application/routing/middleware) for authentication or other purposes that involve rewriting the user to a different page. In order for the `<Link />` component to properly prefetch links with rewrites via Middleware, you need to tell Next.js both the URL to display and the URL to prefetch. This is required to avoid un-necessary fetches to middleware to know the correct route to prefetch.
 
@@ -420,9 +420,9 @@ export default function Page() {
 
 </PagesOnly>
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                                                                                                                                                                         |
+| 版本      | 变化                                                                                                                                                                                            |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `v13.0.0` | No longer requires a child `<a>` tag. A [codemod](/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components) is provided to automatically update your codebase. |
 | `v10.0.0` | `href` props pointing to a dynamic route are automatically resolved and no longer require an `as` prop.                                                                                         |

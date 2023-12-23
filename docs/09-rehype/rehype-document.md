@@ -190,7 +190,7 @@ console.log(String(file))
 
 在`body`结尾包含外部脚本 (`string`或`Array<string>`,默认: `[]`).
 
-## Example
+## 例子
 
 ### 例子: language
 

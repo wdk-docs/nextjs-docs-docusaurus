@@ -10,9 +10,9 @@ related:
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-An **error** file defines an error UI boundary for a route segment.
+一个**错误**文件定义了一个路由段的错误UI边界。
 
-It is useful for catching **unexpected** errors that occur in Server Components and Client Components and displaying a fallback UI.
+它对于捕获服务器组件和客户端组件中发生的**意外**错误并显示备用UI非常有用。
 
 ```tsx title="app/dashboard/error.tsx" switcher
 'use client' // Error components must be Client Components
@@ -74,7 +74,7 @@ export default function Error({ error, reset }) {
 }
 ```
 
-## Props
+## 属性
 
 ### `error`
 
@@ -82,27 +82,27 @@ An instance of an [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 
 #### `error.message`
 
-The error message.
+错误信息.
 
-- For errors forwarded from Client Components, this will be the original Error's message.
-- For errors forwarded from Server Components, this will be a generic error message to avoid leaking sensitive details. `errors.digest` can be used to match the corresponding error in server-side logs.
+- 对于从客户端组件转发的错误，这将是原始的错误消息。
+- 对于从服务器组件转发的错误，这将是一个通用错误消息，以避免泄露敏感细节。`errors.digest`可用于匹配服务器端日志中相应的错误。
 
 #### `error.digest`
 
-An automatically generated hash of the error thrown in a Server Component. It can be used to match the corresponding error in server-side logs.
+服务器组件中抛出的错误自动生成的散列。它可以用来匹配服务器端日志中相应的错误。
 
 ### `reset`
 
-A function to reset the error boundary. When executed, the function will try to re-render the Error boundary's contents. If successful, the fallback error component is replaced with the result of the re-render.
+重置错误边界的函数。当执行时，该函数将尝试重新呈现Error边界的内容。如果成功，则回退错误组件将替换为重新呈现的结果。
 
-Can be used to prompt the user to attempt to recover from the error.
+可用于提示用户尝试从错误中恢复。
 
 > **注意事项**:
 >
 > - `error.js` boundaries must be **[Client Components](/docs/getting-started/react-essentials)**.
 > - In Production builds, errors forwarded from Server Components will be stripped of specific error details to avoid leaking sensitive information.
 > - An `error.js` boundary will **not** handle errors thrown in a `layout.js` component in the **same** segment because the error boundary is nested **inside** that layouts component.
->   - To handle errors for a specific layout, place an `error.js` file in the layouts parent segment.
+>   - 要处理特定布局的错误，请在layouts父段中放置一个`error.js`文件。
 >   - To handle errors within the root layout or template, use a variation of `error.js` called `app/global-error.js`.
 
 ## `global-error.js`
@@ -148,11 +148,11 @@ export default function GlobalError({ error, reset }) {
 > **注意事项**:
 >
 > - `global-error.js` replaces the root `layout.js` when active and so **must** define its own `<html>` and `<body>` tags.
-> - While designing error UI, you may find it helpful to use the [React Developer Tools](https://react.dev/learn/react-developer-tools) to manually toggle Error boundaries.
+> - 在设计错误UI时，您可能会发现使用[React开发工具](https://react.dev/learn/react-developer-tools)手动切换错误边界很有帮助。
 
-## Version History
+## 版本历史
 
-| Version   | Changes                    |
-| --------- | -------------------------- |
-| `v13.1.0` | `global-error` introduced. |
-| `v13.0.0` | `error` introduced.        |
+| 版本      | 变化                   |
+| --------- | ---------------------- |
+| `v13.1.0` | `global-error` 介绍了. |
+| `v13.0.0` | `error` 介绍了.        |

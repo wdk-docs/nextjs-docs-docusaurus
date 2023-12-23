@@ -1,11 +1,11 @@
 ---
 title: sitemap.xml
-description: API Reference for the sitemap.xml file.
+description: sitemap.xml文件的API引用。
 ---
 
 Add or generate a `sitemap.xml` file that matches the [Sitemaps XML format](https://www.sitemaps.org/protocol.html) in the **root** of `app` directory to help search engine crawlers crawl your site more efficiently.
 
-## Static `sitemap.xml`
+## 静态 `sitemap.xml`
 
 ```xmltitle="app/sitemap.xml"
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -24,9 +24,9 @@ Add or generate a `sitemap.xml` file that matches the [Sitemaps XML format](http
 </urlset>
 ```
 
-## Generate a Sitemap
+## 生成一个站点地图
 
-Add a `sitemap.js` or `sitemap.ts` file that returns [`Sitemap`](#sitemap-return-type).
+添加一个`sitemap.js`或`sitemap.ts`。返回[`Sitemap`]的文件(#sitemap-return-type).
 
 ```ts title="app/sitemap.ts" switcher
 import { MetadataRoute } from 'next'
@@ -100,8 +100,8 @@ type Sitemap = Array<{
 >
 > - In the future, we will support multiple sitemaps and sitemap indexes.
 
-## Version History
+## 版本历史
 
-| Version   | Changes               |
+| 版本      | 变化                  |
 | --------- | --------------------- |
 | `v13.3.0` | `sitemap` introduced. |

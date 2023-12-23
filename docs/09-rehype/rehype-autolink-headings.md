@@ -172,7 +172,7 @@ Add links to headings with `id`s back to themselves.
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.behavior`
 
@@ -226,9 +226,9 @@ Can be used to link only `<h1>` through `<h3>` (with `['h1', 'h2', 'h3']`), or
 for example all except `<h1>` (with `['h2', 'h3', 'h4', 'h5', 'h6']`).
 A function can be given to do more complex things.
 
-## Examples
+## 例子
 
-### Example: different behaviors
+### 例子: different behaviors
 
 This example shows what each behavior generates by default.
 
@@ -275,7 +275,7 @@ Yields:
 <a href="#after"><span class="icon icon-link"></span></a>
 ```
 
-### Example: content from `h` builder
+### 例子: content from `h` builder
 
 The following example passes `content` as a function, to generate an accessible
 description of each link.
@@ -316,7 +316,7 @@ Yields:
 </h1>
 ```
 
-### Example: content from `fromHtml` builder
+### 例子: content from `fromHtml` builder
 
 The following example passes `content` as a function, to generate an accessible
 description of each link.
@@ -355,7 +355,7 @@ Yields:
 </h1>
 ```
 
-### Example: group
+### 例子: group
 
 The following example passes `group` as a function, to dynamically generate a
 differing element that wraps the heading.

@@ -119,7 +119,7 @@ Add `id`s to headings.
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.prefix`
 

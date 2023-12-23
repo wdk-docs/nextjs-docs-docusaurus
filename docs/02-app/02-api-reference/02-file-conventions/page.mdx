@@ -6,7 +6,7 @@ description: API reference for the page.js file.
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-A **page** is UI that is unique to a route.
+**page**是路由唯一的UI。
 
 ```tsx title="app/blog/[slug]/page.tsx" switcher
 export default function Page({
@@ -26,11 +26,11 @@ export default function Page({ params, searchParams }) {
 }
 ```
 
-## Props
+## 属性
 
-### `params` (optional)
+### `params` (可选)
 
-An object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) from the root segment down to that page. For example:
+一个对象，包含从根段到该页面的[动态路由参数](/docs/app/building-your-application/routing/dynamic-routes)。例如:
 
 | Example                              | URL         | `params`                       |
 | ------------------------------------ | ----------- | ------------------------------ |
@@ -38,9 +38,9 @@ An object containing the [dynamic route parameters](/docs/app/building-your-appl
 | `app/shop/[category]/[item]/page.js` | `/shop/1/2` | `{ category: '1', item: '2' }` |
 | `app/shop/[...slug]/page.js`         | `/shop/1/2` | `{ slug: ['1', '2'] }`         |
 
-### `searchParams` (optional)
+### `searchParams` (可选)
 
-An object containing the [search parameters](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL#parameters) of the current URL. For example:
+包含当前URL的[搜索参数](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL#parameters)的对象。例如:
 
 | URL             | `searchParams`       |
 | --------------- | -------------------- |
@@ -53,8 +53,8 @@ An object containing the [search parameters](https://developer.mozilla.org/en-US
 > - `searchParams` is a **[Dynamic API](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)** whose values cannot be known ahead of time. Using it will opt the page into **[dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering)** at request time.
 > - `searchParams` returns a plain JavaScript object and not a `URLSearchParams` instance.
 
-## Version History
+## 版本历史
 
-| Version   | Changes            |
+| 版本      | 变化               |
 | --------- | ------------------ |
 | `v13.0.0` | `page` introduced. |

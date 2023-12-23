@@ -6,20 +6,20 @@ description: API Reference for the Open Graph Image and Twitter Image file conve
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-The `opengraph-image` and `twitter-image` file conventions allow you to set Open Graph and Twitter images for a route segment.
+`opengraph-image`和`Twitter -image`文件约定允许你为一个路由段设置Open Graph和Twitter图像。
 
-They are useful for setting the images that appear on social networks and messaging apps when a user shares a link to your site.
+当用户分享到你的网站的链接时，它们对于设置出现在社交网络和消息应用程序上的图像很有用。
 
-There are two ways to set Open Graph and Twitter images:
+有两种方法可以设置Open Graph和Twitter图片:
 
-- [Using image files (.jpg, .png, .gif)](#image-files-jpg-png-gif)
-- [Using code to generate images (.js, .ts, .tsx)](#generate-images-using-code-js-ts-tsx)
+- [使用映像文件 (.jpg, .png, .gif)](#image-files-jpg-png-gif)
+- [使用代码生成图像 (.js, .ts, .tsx)](#generate-images-using-code-js-ts-tsx)
 
-## Image files (.jpg, .png, .gif)
+## 图像文件 (.jpg, .png, .gif)
 
-Use an image file to set a route segment's shared image by placing an `opengraph-image` or `twitter-image` image file in the segment.
+通过在段中放置一个`opengraph-image`或`twitter-image`图像文件，使用图像文件来设置路由段的共享图像。
 
-Next.js will evaluate the file and automatically add the appropriate tags to your app's `<head>` element.
+Next.js将评估该文件，并自动为应用程序的`<head>`元素添加适当的标签。
 
 | File convention                                 | Supported file types            |
 | ----------------------------------------------- | ------------------------------- |
@@ -30,7 +30,7 @@ Next.js will evaluate the file and automatically add the appropriate tags to you
 
 ### `opengraph-image`
 
-Add an `opengraph-image.(jpg|jpeg|png|gif)` image file to any route segment.
+添加一个`opengraph-image.(jpg|jpeg|png|gif)`的图像文件到任何路由段。
 
 ```htmltitle="<head> output"
 <meta property="og:image" content="<generated>" />
@@ -41,7 +41,7 @@ Add an `opengraph-image.(jpg|jpeg|png|gif)` image file to any route segment.
 
 ### `twitter-image`
 
-Add a `twitter-image.(jpg|jpeg|png|gif)` image file to any route segment.
+添加一个`twitter-image.(jpg|jpeg|png|gif)`图像文件到任何路由段。
 
 ```htmltitle="<head> output"
 <meta name="twitter:image" content="<generated>" />
@@ -214,11 +214,11 @@ export default function Image() {
 <meta property="og:image:height" content="630" />
 ```
 
-### Props
+### 属性
 
 The default export function receives the following props:
 
-#### `params` (optional)
+#### `params` (可选)
 
 An object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to the segment `opengraph-image` or `twitter-image` is colocated in.
 
@@ -241,7 +241,7 @@ export default function Image({ params }) {
 | `app/shop/[tag]/[item]/opengraph-image.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
 | `app/shop/[...slug]/opengraph-image.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
-### Returns
+### 返回
 
 The default export function should return a `Blob` | `ArrayBuffer` | `TypedArray` | `DataView` | `ReadableStream` | `Response`.
 
@@ -335,9 +335,9 @@ export const runtime = 'edge'
 export default function Image() {}
 ```
 
-### Examples
+### 例子
 
-#### Using external data
+#### 使用外部数据
 
 This example uses the `params` object and external data to generate the image.
 
@@ -424,8 +424,8 @@ export default async function Image({ params }) {
 }
 ```
 
-## Version History
+## 版本历史
 
-| Version   | Changes                                           |
+| 版本      | 变化                                              |
 | --------- | ------------------------------------------------- |
 | `v13.3.0` | `opengraph-image` and `twitter-image` introduced. |

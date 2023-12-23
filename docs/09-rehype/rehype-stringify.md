@@ -123,7 +123,7 @@ Options are passed to [`hast-util-to-html`][hast-util-to-html].
 
 ##### `options`
 
-Configuration (optional).
+Configuration (可选).
 
 ###### `options.entities`
 

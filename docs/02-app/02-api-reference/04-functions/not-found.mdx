@@ -3,7 +3,7 @@ title: notFound
 description: API Reference for the notFound function.
 ---
 
-The `notFound` function allows you to render the [`not-found file`](/docs/app/api-reference/file-conventions/not-found) within a route segment as well as inject a `<meta name="robots" content="noindex" />` tag.
+`notFound`函数允许你在路由段中呈现['未找到的文件'](/docs/app/api-reference/file-conventions/not-found)，并注入一个`<meta name="robots" content="noindex" />`标签。
 
 ## `notFound()`
 
@@ -31,8 +31,8 @@ export default async function Profile({ params }) {
 
 > **注意事项**: `notFound()` does not require you to use `return notFound()` due to using the TypeScript [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) type.
 
-## Version History
+## 版本历史
 
-| Version   | Changes                |
+| 版本      | 变化                   |
 | --------- | ---------------------- |
 | `v13.0.0` | `notFound` introduced. |

@@ -3,11 +3,11 @@ title: route.js
 description: API reference for the route.js special file.
 ---
 
-Route Handlers allow you to create custom request handlers for a given route using the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) APIs.
+路由处理程序允许您使用Web [request](https://developer.mozilla.org/en-US/docs/Web/API/Request)和[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) api为给定的路由创建自定义请求处理程序。
 
-## HTTP Methods
+## HTTP 方法
 
-A **route** file allows you to create custom request handlers for a given route. The following [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, and `OPTIONS`.
+**route**文件允许你为给定的路由创建自定义请求处理程序。支持以下[HTTP方法](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods): `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, 和 `OPTIONS`.
 
 ```ts title="route.ts" switcher
 export async function GET(request: Request) {}
@@ -43,15 +43,15 @@ export async function PATCH(request) {}
 export async function OPTIONS(request) {}
 ```
 
-> **注意事项**: Route Handlers are only available inside the `app` directory. You **do not** need to use API Routes (`pages`) and Route Handlers (`app`) together, as Route Handlers should be able to handle all use cases.
+> **注意事项**: 路由处理程序只能在`app`目录下使用。你**不需要**同时使用API路由(`pages`)和路由处理程序(`app`)，因为路由处理程序应该能够处理所有用例。
 
-## Parameters
+## 参数
 
-### `request` (optional)
+### `request` (可选)
 
 The `request` object is a [NextRequest](/docs/app/api-reference/functions/next-request) object, which is an extension of the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) API. `NextRequest` gives you further control over the incoming request, including easily accessing `cookies` and an extended, parsed, URL object `nextUrl`.
 
-### `context` (optional)
+### `context` (可选)
 
 ```ts title="app/dashboard/[team]/route.js"
 export async function GET(request, context: { params }) {
@@ -71,8 +71,8 @@ Currently, the only value of `context` is `params`, which is an object containin
 
 Route Handlers can extend the Web Response API by returning a `NextResponse` object. This allows you to easily set cookies, headers, redirect, and rewrite. [View the API reference](/docs/app/api-reference/functions/next-response).
 
-## Version History
+## 版本历史
 
-| Version   | Changes                        |
+| 版本      | 变化                           |
 | --------- | ------------------------------ |
 | `v13.2.0` | Route handlers are introduced. |
